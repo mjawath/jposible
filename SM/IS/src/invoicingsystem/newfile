@@ -1,9 +1,0 @@
-
-implementing the event model
-change the overiding behaviour of the java default listner model
-add universel listner within that call the
- listed action task in here u will be able to manage order of the event execution
-
-1 gui
-2 object transfer through network--------object tranfer over network using json -- pojo to json , json to pojo 
-3 managing syncronisation of local and remote db 
