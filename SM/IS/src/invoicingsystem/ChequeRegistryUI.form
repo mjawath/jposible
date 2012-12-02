@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="777" max="-2" attributes="0"/>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="486" max="-2" attributes="0"/>
+              <EmptySpace pref="186" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="tab1">
+                <Property name="tabTitle" type="java.lang.String" value="tab1"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="193" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                              <Component id="tbank" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="tcustomer" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="tcustomer1" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="tcheckno" min="-2" pref="218" max="-2" attributes="0"/>
+                          <Component id="tcheckno1" min="-2" pref="218" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="302" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" alignment="0" min="-2" pref="350" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="tcheckno" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="tcheckno1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="tbank" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="tcustomer" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="tcustomer1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="org.components.controls.CTextField" name="tcustomer1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="customer"/>
+              </Properties>
+            </Component>
+            <Component class="org.components.controls.CTextField" name="tcheckno1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Bank"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="org.components.controls.CTableMaster" name="cTableMaster1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="3" rowCount="0">
+                        <Column editable="true" title="Customer Name" type="java.lang.Object"/>
+                        <Column editable="true" title="Bank" type="java.lang.Object"/>
+                        <Column editable="true" title="Cheque No" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="org.components.controls.CTextField" name="tbank">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cheque"/>
+              </Properties>
+            </Component>
+            <Component class="org.components.controls.CTextField" name="tcustomer">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="customer Accounts"/>
+              </Properties>
+            </Component>
+            <Component class="org.components.controls.CTextField" name="tcheckno">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Bank Accounts"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel2">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Bank Deposit">
+                <Property name="tabTitle" type="java.lang.String" value="Bank Deposit"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane2" alignment="1" pref="772" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cLabel1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="cTextFieldPopUp1" min="-2" pref="116" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Component id="cTextFieldPopUp1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="232" max="-2" attributes="0"/>
+                      <EmptySpace pref="135" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="org.components.controls.CTextFieldPopUp" name="cTextFieldPopUp1">
+            </Component>
+            <Component class="org.components.controls.CLabel" name="cLabel1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Bank"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="org.components.controls.CTableMaster" name="cTableMaster2">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="6" rowCount="0">
+                        <Column editable="true" title="Deposite" type="java.lang.Boolean"/>
+                        <Column editable="true" title="Cheque" type="java.lang.Object"/>
+                        <Column editable="true" title="Customer" type="java.lang.Object"/>
+                        <Column editable="true" title="Amount" type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel3">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Bank Deposited Bank Cheque">
+                <Property name="tabTitle" type="java.lang.String" value="Bank Deposited Bank Cheque"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="jScrollPane5" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cPanel3" min="-2" pref="106" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="151" max="-2" attributes="0"/>
+                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <Component id="jScrollPane5" min="-2" pref="157" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="org.components.controls.CTableMaster" name="tchequeDated">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="6" rowCount="0">
+                        <Column editable="true" title="Deposite" type="java.lang.Boolean"/>
+                        <Column editable="true" title="Cheque" type="java.lang.Object"/>
+                        <Column editable="true" title="Customer" type="java.lang.Object"/>
+                        <Column editable="true" title="Amount" type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="org.components.containers.CPanel" name="cPanel3">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Component id="cLabel13" min="-2" pref="274" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="cLabel11" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tbankdetail" min="-2" pref="101" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="cLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cTextFieldPopUp8" alignment="1" min="-2" pref="112" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="cLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tdateBank" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="162" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="cLabel13" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cTextFieldPopUp8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tdateBank" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tbankdetail" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="org.components.controls.CLabel" name="cLabel11">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Bank"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CLabel" name="cLabel12">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Customer"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CTextFieldPopUp" name="cTextFieldPopUp8">
+                </Component>
+                <Component class="org.components.controls.CLabel" name="cLabel13">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Filter by....."/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CLabel" name="cLabel14">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Date"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CDatePicker" name="tdateBank">
+                </Component>
+                <Component class="com.components.custom.TextFieldWithPopUP" name="tbankdetail">
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="org.components.controls.CTableMaster" name="tchequeToBeBanked">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="6" rowCount="0">
+                        <Column editable="true" title="Deposite" type="java.lang.Boolean"/>
+                        <Column editable="true" title="Cheque" type="java.lang.Object"/>
+                        <Column editable="true" title="Customer" type="java.lang.Object"/>
+                        <Column editable="true" title="Amount" type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel4">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Return Cheque ">
+                <Property name="tabTitle" type="java.lang.String" value="Return Cheque "/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane4" alignment="1" pref="772" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cPanel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="cPanel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jScrollPane4" min="-2" pref="232" max="-2" attributes="0"/>
+                      <EmptySpace pref="95" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="org.components.controls.CTableMaster" name="cTableMaster4">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="6" rowCount="0">
+                        <Column editable="true" title="Deposite" type="java.lang.Boolean"/>
+                        <Column editable="true" title="Cheque" type="java.lang.Object"/>
+                        <Column editable="true" title="Customer" type="java.lang.Object"/>
+                        <Column editable="true" title="Amount" type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                        <Column editable="true" title="..." type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="org.components.containers.CPanel" name="cPanel1">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                          <Component id="cTextFieldPopUp3" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="cTextFieldPopUp4" min="-2" pref="112" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="cLabel3" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="cLabel4" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="cLabel6" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cDatePicker1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                  <Component id="cLabel5" min="-2" pref="274" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="151" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="cLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cTextFieldPopUp3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cTextFieldPopUp4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cDatePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="org.components.controls.CTextFieldPopUp" name="cTextFieldPopUp3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="cTextFieldPopUp1"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CLabel" name="cLabel3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Bank"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CLabel" name="cLabel4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Customer"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CTextFieldPopUp" name="cTextFieldPopUp4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="cTextFieldPopUp1"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CLabel" name="cLabel5">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Filter by....."/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CLabel" name="cLabel6">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Date"/>
+                  </Properties>
+                </Component>
+                <Component class="org.components.controls.CDatePicker" name="cDatePicker1">
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

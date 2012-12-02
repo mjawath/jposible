@@ -1,0 +1,426 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-119,0,0,3,3"/>
+  </AuxValues>
+
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+    <Property name="useNullLayout" type="boolean" value="true"/>
+  </Layout>
+  <SubComponents>
+    <Component class="org.components.controls.CLabel" name="cLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Address"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="410" y="110" width="63" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CComboBox" name="tCusType">
+      <Properties>
+        <Property name="editable" type="boolean" value="true"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="140" y="140" width="180" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="City"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="410" y="180" width="31" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Custmer Code"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="10" width="239" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Phone"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="410" y="220" width="48" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Discount (%)"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="180" width="119" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Custmer Name "/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="330" y="10" width="119" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusName">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusNameActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="330" y="40" width="275" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusDiscount">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusDiscountActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="140" y="180" width="180" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Title"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="260" y="10" width="40" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CComboBox" name="tCusTitle">
+      <Properties>
+        <Property name="editable" type="boolean" value="true"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="260" y="40" width="63" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CDatePicker" name="tCusDOB">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="610" y="40" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DOB"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="610" y="10" width="110" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CButton" name="cClose">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Goto List"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="470" y="350" width="90" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CButton" name="cSave">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Save"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cSaveActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="280" y="350" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CButton" name="dDelete">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Delete"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dDeleteActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="400" y="350" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusAdd1">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusAdd1ActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="480" y="110" width="284" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusAdd2">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusAdd2ActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="480" y="140" width="284" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusCity">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusCityActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="480" y="180" width="284" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusPhone">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusPhoneActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="480" y="220" width="284" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mobile"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="410" y="260" width="48" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusMobile">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusMobileActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="480" y="260" width="284" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel10">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Email"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="410" y="300" width="48" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusEmail">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusEmailActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="480" y="300" width="284" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel11">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="S.Rep"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="240" width="130" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel12">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Company Name"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="80" width="130" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CComboBox" name="tCusSalesRep">
+      <Properties>
+        <Property name="editable" type="boolean" value="true"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="140" y="240" width="180" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusCompany">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusCompanyActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="140" y="80" width="239" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel13">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Type"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="140" width="119" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CComboBox" name="tCusReligion">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="5">
+            <StringItem index="0" value="..."/>
+            <StringItem index="1" value="Buddhist"/>
+            <StringItem index="2" value="Hindu"/>
+            <StringItem index="3" value="Muslim"/>
+            <StringItem index="4" value="Christian"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="140" y="110" width="180" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel14">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Loyalty Card"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="270" width="119" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusLoyalty">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusLoyaltyActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="140" y="270" width="230" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel15">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Credit Limit"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="210" width="119" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusCreditLimit">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusCreditLimitActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="140" y="210" width="180" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusCode">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusCodeActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="40" width="239" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel16">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Religion"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="110" width="119" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel17">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="NIC"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="410" y="80" width="48" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CTextField" name="tCusNIC">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCusNICActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="480" y="80" width="284" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CButton" name="cClear1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Clear"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cClear1ActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="340" y="350" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+  </SubComponents>
+</Form>
