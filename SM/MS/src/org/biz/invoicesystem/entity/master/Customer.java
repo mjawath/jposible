@@ -1,5 +1,3 @@
- 
-
 package org.biz.invoicesystem.entity.master;
 
 import java.util.Collections;
@@ -14,11 +12,10 @@ import javax.persistence.Temporal;
  * @author mjawath
  */
 @Entity
-public class Customer  extends Persons {
-  
-  
-     private String code;
-      private String customerID;
+public class Customer extends Persons {
+
+    private String code;
+    private String customerID;
     private String customerName;
     private String companyName;
     private String designation;
@@ -28,18 +25,17 @@ public class Customer  extends Persons {
     private Double discount;
     private String salesRep;
     private String address;
-     private String address2;
+    private String address2;
     private String city;
     private String district;
     private String nicno;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date   crtDate;
+    private Date crtDate;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date   dob;
-
+    private Date dob;
     //   Boolean isSentToMaster;
     private Boolean isDeleted;
-  //  private String loggedinStaff;
+    //  private String loggedinStaff;
     private String religion;
     private String groupOfCustomer;
     private String signatureImage;
@@ -64,8 +60,6 @@ public class Customer  extends Persons {
     public void setAddress(String address) {
         this.address = address;
     }
-
-   
 
     public String getCity() {
         return city;
@@ -155,15 +149,10 @@ public class Customer  extends Persons {
         this.groupOfCustomer = groupOfCustomer;
     }
 
-   
-
-  
-    
     public static Customer find(String code, List<Customer> lst) {
 
 
         Comparator<Customer> com = new Comparator<Customer>() {
-
             public int compare(Customer o1, Customer o2) {
                 return o1.getId().compareTo(o2.getId());
             }
@@ -197,7 +186,6 @@ public class Customer  extends Persons {
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
- 
 
     public String getLoyaltyCardNo() {
         return loyaltyCardNo;
@@ -313,5 +301,7 @@ public class Customer  extends Persons {
         this.phone = phone;
     }
     
+    
+     
     
 }

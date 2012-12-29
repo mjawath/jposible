@@ -23,3 +23,15 @@ public class Warehouse extends BusObj {
         this.code = code;
     }
 }
+/**
+ * defining hirachical structure for the location 
+ * 
+ * location 
+ *      location 
+ *          rack 
+ *              bin
+ * Tree structure 
+ * 
+ * 
+ * 
+ */

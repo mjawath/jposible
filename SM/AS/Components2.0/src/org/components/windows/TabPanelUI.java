@@ -54,7 +54,9 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
         setLayout(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public abstract String getTabName();
+    public  String getTabName(){
+    return this.toString();
+    }
 
     public  JPanel getJPanel(){return this;};
 
