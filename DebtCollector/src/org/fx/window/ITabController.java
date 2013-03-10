@@ -4,6 +4,8 @@
  */
 package org.fx.window;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 /**
@@ -11,5 +13,7 @@ import javafx.fxml.Initializable;
  * @author d
  */
 public interface ITabController  extends Initializable{
+    
+    public void init(URL location, ResourceBundle resources);
     
 }

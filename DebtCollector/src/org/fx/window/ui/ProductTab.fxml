@@ -12,12 +12,16 @@
     <TableView fx:id="tableView" layoutX="59.0" layoutY="125.0" prefHeight="238.0" prefWidth="351.0">
       <columns>
         <TableColumn prefWidth="75.0" text="ID" fx:id="id" />
-        <TableColumn prefWidth="75.0" text="Name" fx:id="name" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="271.0" text="Name" fx:id="name" />
       </columns>
     </TableView>
     <TextField id="text" fx:id="txtname" layoutX="135.0" layoutY="53.0" prefWidth="200.0" />
-    <Button fx:id="button" layoutX="135.0" layoutY="87.0" mnemonicParsing="false" text="*" />
+    <Button id="button" fx:id="btnAdd" layoutX="135.0" layoutY="87.0" mnemonicParsing="false" onAction="#newEntity" text="*" />
     <TextField id="text" fx:id="textid" layoutX="135.0" layoutY="24.0" prefWidth="200.0" />
     <Label layoutX="69.0" layoutY="59.0" text="Label" />
+    <Button id="button" fx:id="btnDelete" layoutX="168.0" layoutY="87.0" mnemonicParsing="false" onAction="#delete" text="Delete" />
+    <Button id="button" fx:id="btnClear" layoutX="235.0" layoutY="87.0" mnemonicParsing="false" onAction="#clear" prefWidth="55.0" text="Clear" />
+    <Button id="button" fx:id="btnSave" layoutX="300.0" layoutY="87.0" mnemonicParsing="false" onAction="#save" prefWidth="46.0" text="Save" />
+    <Button id="button" fx:id="btnCopy" layoutX="353.0" layoutY="87.0" mnemonicParsing="false" onAction="#copy" prefWidth="55.0" text="Copy" />
   </children>
 </AnchorPane>

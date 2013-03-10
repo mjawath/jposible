@@ -17,7 +17,16 @@
               <expandedPane>
                 <TitledPane fx:id="x2" animated="false" text="Billing">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                        <VBox layoutX="7.0" layoutY="41.0" prefHeight="200.0" prefWidth="100.0">
+                          <children>
+                            <Button mnemonicParsing="false" text="Button" />
+                            <Button mnemonicParsing="false" onAction="#onProduct" text="Button" />
+                          </children>
+                        </VBox>
+                      </children>
+                    </AnchorPane>
                   </content>
                 </TitledPane>
               </expandedPane>
@@ -39,11 +48,7 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
-            <PasswordField layoutX="72.0" layoutY="70.0" prefWidth="200.0" />
-            <TextField layoutX="72.0" layoutY="21.0" prefWidth="200.0" />
-            <Label layoutX="5.0" layoutY="27.0" text="User Name" />
-            <Label layoutX="14.0" layoutY="76.0" text="Password" />
-            <TabPane id="tab" fx:id="tabpane" prefHeight="223.0" prefWidth="332.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="129.0" AnchorPane.topAnchor="131.0">
+            <TabPane id="tab" fx:id="tabpane" prefHeight="398.0" prefWidth="475.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
                 <Tab text="Untitled Tab 1">
                   <content>
@@ -57,7 +62,6 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Button layoutX="172.0" layoutY="101.0" mnemonicParsing="false" onAction="#onLogin" text="Button" />
           </children>
         </AnchorPane>
       </items>

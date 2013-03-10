@@ -10,10 +10,11 @@ package org.system.util;
  */
 public class Tracer {
     
-    public static void printTracer(String message){
+    public static void printTracer(Object message){
     if(!getTracerState())return;
         System.out.println(message);
     }
+    
     
     public static boolean getTracerState(){
     return true;

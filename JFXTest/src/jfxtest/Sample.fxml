@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="402.0" prefWidth="525.0" styleClass="label" xmlns:fx="http://javafx.com/fxml" fx:controller="jfxtest.SampleController">
+  <children>
+    <Button fx:id="button" layoutX="300.0" layoutY="184.0" onAction="#handleButtonAction" text="PUSH" />
+    <Label fx:id="label" layoutX="254.0" layoutY="82.0" minHeight="16.0" minWidth="69.0" prefHeight="16.0" prefWidth="204.0" />
+    <Accordion id="accordion1" layoutX="14.0" layoutY="22.0">
+      <expandedPane>
+        <TitledPane id="titledPane1" fx:id="x2" animated="false" text="Medical  profosional">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <Button id="button1" layoutY="37.0" text="Button" AnchorPane.leftAnchor="59.0" />
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+      </expandedPane>
+      <panes>
+        <fx:reference source="x2" />
+        <TitledPane id="titledPane2" fx:id="x1" animated="false" text="Insuranse">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <HBox id="hBox1" layoutX="40.0" layoutY="31.0" prefHeight="100.0" prefWidth="200.0" />
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+      </panes>
+    </Accordion>
+    <TextField fx:id="textf" layoutX="256.0" layoutY="46.0" prefWidth="200.0" text="TextFieccccld" />
+  </children>
+  <stylesheets>
+    <URL value="@sty.css" />
+    <URL value="@sty2.css" />
+  </stylesheets>
+</AnchorPane>

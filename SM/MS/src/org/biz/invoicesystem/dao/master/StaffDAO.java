@@ -3,9 +3,7 @@ package org.biz.invoicesystem.dao.master;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
 import org.biz.dao.service.GenericDAO;
-import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Staff;
 
  

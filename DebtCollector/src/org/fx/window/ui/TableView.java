@@ -8,5 +8,12 @@ package org.fx.window.ui;
  *
  * @author d
  */
-public class TableView<S> extends javafx.scene.control.TableView<S>{    
+public class TableView<S> extends javafx.scene.control.TableView<S>{ 
+
+    public TableView() {
+    super();
+    System.out.println("------intialised my own table view");
+    }
+    
+    
 }

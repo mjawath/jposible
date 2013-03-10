@@ -12,15 +12,16 @@ import org.system.util.Tracer;
  *
  * @author d
  */
-public class TabController implements ITabController{
+public class TabController implements ITabController {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-      
+    public void initialize(URL location, ResourceBundle resources) {    
+    init(location,resources);
     }
-    
-    public void printTracer(String message ){
-    Tracer.printTracer(message);
+
+    public void init(URL location, ResourceBundle resources){
     }
-    
+    public void printTracer(Object message) {
+        Tracer.printTracer(message);
+    }
+
 }

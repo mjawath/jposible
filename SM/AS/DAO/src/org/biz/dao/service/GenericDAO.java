@@ -6,12 +6,15 @@ import javax.persistence.Query;
 import org.dao.util.JPAUtil;
 import org.eclipse.persistence.queries.ScrollableCursor;
 //http://code.google.com/p/krank/wiki/UsingDAO
+
 /**
  *
  * @author mjawath
  */
 public class GenericDAO<T> {
+
     protected List list;
+
     public static void main(String[] args) {
     }
     private EntityManager em;
@@ -106,7 +109,7 @@ public class GenericDAO<T> {
 //        getEm().clear();
         return GenericDAOUtil.getAll(orderby, cls);
     }
-    
+
 //    public List<T> getLastModefied() {
 ////        getEm().clear();
 //        
@@ -115,7 +118,6 @@ public class GenericDAO<T> {
 //    }
     // save array of objects may be used to persist different kind of objects
     // eg car , dog ,customer in same time 
-
     public void save(Object... ob) {
         GenericDAOUtil.save(ob);
     }
@@ -156,7 +158,6 @@ public class GenericDAO<T> {
     //use  this to execute the query  string
     //@param query object is a string of jpql
     public List<T> ExecuteQuery(String qryString) {
-
         return GenericDAOUtil.ExecuteQuery(qryString, cls);
     }
 
@@ -166,7 +167,7 @@ public class GenericDAO<T> {
     }
 
     public T ExecuteQuerySR(String qryString) {
-        qryString=createSelect()+qryString;
+        qryString = createSelect() + qryString;
         return GenericDAOUtil.ExecuteQuerySR(qryString, cls);
     }
 
@@ -181,17 +182,17 @@ public class GenericDAO<T> {
         return cc;
     }
 
-    public void addPagedData(String qry, int pageNo,List addto) {
-       addto.clear();
-        List list=pagedData(qry, pageNo);
-        if (list!=null || !list.isEmpty()) {
+    public void addPagedData(String qry, int pageNo, List addto) {
+        addto.clear();
+        List list = pagedData(qry, pageNo);
+        if (list != null || !list.isEmpty()) {
             addto.addAll(list);
-        
+
         }
     }
-    
+
     public List pagedData(String qry, int pageNo) {
-        String sq  = createWhere(qry);
+        String sq = createWhere(qry);
 //        List lst=GenericDAOUtil.getCache().getbySpecialKey(classname, sq,pageNo);
 //        if(lst!=null && !lst.isEmpty()){
 //            System.out.println("dddddddddf");
@@ -199,7 +200,7 @@ public class GenericDAO<T> {
 //        }
         Query qu = GenericDAOUtil.getQuery(sq);
 
-      
+
         int fr = pageNo == 0 ? 0 : pageNo * noofrows;
         qu.setFirstResult(fr);//firstresult
         qu.setMaxResults(noofrows); //max result = noofrows+ 0
@@ -222,8 +223,8 @@ public class GenericDAO<T> {
     }
 
     public List<T> getByCode(String code) {
-        
-        String qry=" c.code like '%"+code+"'";
+
+        String qry = " c.code like '%" + code + "'";
         return pagedData(code, 0);
     }
 
@@ -232,7 +233,7 @@ public class GenericDAO<T> {
         int cpageno = getCupage(qryname);
         Long count = getcount(qry);
         int pages = (int) Math.ceil(count / noofrows);
-        if (pages-1 <= cpageno) {
+        if (pages - 1 <= cpageno) {
             cpageno = pages;
         } else {
             cpageno++;
@@ -241,7 +242,7 @@ public class GenericDAO<T> {
         ch.setCount(count);
         ch.setCurrentPage(cpageno);
         ch.list = pagedData(qry, cpageno);
-        System.out.println("size "+cpageno);
+        System.out.println("size " + cpageno);
     }
 
     public void getPreviousPage(String qryname) {
@@ -256,32 +257,30 @@ public class GenericDAO<T> {
         ch.setCount(count);
         ch.setCurrentPage(cpageno - 1);
         ch.list = pagedData(qry, cpageno - 1);
-System.out.println("size "+cpageno);
+        System.out.println("size " + cpageno);
     }
 
-    public void firstPage(String qryname){
+    public void firstPage(String qryname) {
         String qry = getquery(qryname);
         Long count = getcount(qry);
         Cache ch = getCache().getbyQueryName(qryname);
         ch.setCount(count);
         ch.setCurrentPage(0);
-        ch.list = pagedData(qry,0);
-    System.out.println("size "+0);
+        ch.list = pagedData(qry, 0);
+        System.out.println("size " + 0);
     }
-    
-    public void lastPage(String qryname){
+
+    public void lastPage(String qryname) {
         String qry = getquery(qryname);
         Long count = getcount(qry);
-        int pages = (int) Math.floor(count / noofrows);        
+        int pages = (int) Math.floor(count / noofrows);
         Cache ch = getCache().getbyQueryName(qryname);
         ch.setCount(count);
         ch.setCurrentPage(pages);
-        ch.list = pagedData(qry,pages);
-    System.out.println("size "+pages);
+        ch.list = pagedData(qry, pages);
+        System.out.println("size " + pages);
     }
-    
-    
-    
+
     public List pagedData(String qry) {
 //        String sq = createWhere(qry);
 //        
@@ -315,15 +314,15 @@ System.out.println("size "+cpageno);
 
     public String createWhere(String whr) {
 
-        return createSelect() + " where  "+whr;
+        return createSelect() + " where  " + whr;
     }
     /*
-    ///////////////
-    //
-    T ->
+     ///////////////
+     //
+     T ->
      * retruns the unique  type querys with the 
-    <T ->
-    /////////
+     <T ->
+     /////////
      * 
      */
 
@@ -345,17 +344,17 @@ System.out.println("size "+cpageno);
     int getCupage(String qryname) {
         return getCache().getbyQueryName(qryname).getCurrentPage();
     }
-    
-   public void getGeneratedQuery(){
+
+    public void getGeneratedQuery() {
 //   Session session =  getEm().unwrap(JpaEntityManager.class).getActiveSession();
 //DatabaseQuery databaseQuery = ((EJBQueryImpl)Query).getDatabaseQuery();
 //databaseQuery.prepareCall(session, new DatabaseRecord());
 //String sqlString = databaseQuery.getSQLString();
 //       System.out.println("exe cuting twoooo22..."+sqlString); 
-   } 
-    
-    public static  void createNewDatabase(){
-    GenericDAOUtil.createEMFWithCustomProperties();
+    }
+
+    public static void createNewDatabase() {
+        GenericDAOUtil.createEMFWithCustomProperties();
     }
 }
 

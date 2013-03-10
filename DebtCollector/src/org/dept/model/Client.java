@@ -35,5 +35,10 @@ public class Client extends BusObj{
         this.name = name;
         this.address = address;
     }
+
+    public Client() {
+    super();
+    }
+    
     
 }
