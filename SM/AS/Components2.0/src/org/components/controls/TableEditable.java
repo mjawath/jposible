@@ -32,15 +32,14 @@ import org.components.parent.controls.editors.TableActions;
  */
 public class TableEditable extends PxTable {
 
-    
-    
-    /** Creates new form BeanForm */
+    /**
+     * Creates new form BeanForm
+     */
     public TableEditable() {
         initComponents();
         this.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         this.setSurrendersFocusOnKeystroke(true);
         ActionListener al = new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
             }
         };
@@ -48,27 +47,23 @@ public class TableEditable extends PxTable {
         // so we can imlplement our own way of navigation 
         this.registerKeyboardAction(al, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 //        this.registerKeyboardAction(al, KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        this.setDefaultRenderer(String.class, new CustomRenderer());
-        this.setDefaultRenderer(Double.class, new CustomRenderer());
-        this.setDefaultRenderer(Object.class, new CustomRenderer());
-        action=new TableActions(this, new HashMap<Integer, TableColumnAction>());
+//        this.setDefaultRenderer(String.class, new CustomRenderer());
+//        this.setDefaultRenderer(Double.class, new CustomRenderer());
+//        this.setDefaultRenderer(Object.class, new CustomRenderer());
+        action = new TableActions(this, new HashMap<Integer, TableColumnAction>());
     }
 
- 
-
-
-
-    
     @Override
     public void editingStopped(ChangeEvent e) {
-        super.editingStopped(e);        
+        super.editingStopped(e);
 //        if(TableUtil.newRowID.equals( TableUtil.getSelectedValue(this, 0))){
 //           this.setValueAt( TableUtil.getNewRowId(), this.getSelectedRow(), 0);
 //        }
-        action.selectionAction();
-        
-                
-                
+        if (action != null) {
+            action.selectionAction();
+        }
+
+
 //                boolean ab = //Action will return true if it need new row or 
 //                if (((rowcount-1 )==selrow) && ab) { //false normal selection           
 //                    TableUtil.addrow(this, new Object[]{});                    
@@ -83,23 +78,24 @@ public class TableEditable extends PxTable {
 //                selcol = (colcount - 1) == selcol ? selcol : ++selcol;
 //                this.changeSelection(selrow, selcol, false, false);
 //                }
-                
-                    
+
+
     }
-    public void setTableAction(TableActions action ){
-        this.action=action;
+
+    public void setTableAction(TableActions action) {
+        this.action = action;
         action.setTbl(this);
     }
-    
-    public TableActions getTableSelection( ){
+
+    public TableActions getTableSelection() {
         return action;
     }
-    
     TableActions action;
-    public boolean action(){            
+
+    public boolean action() {
         return false;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -125,21 +121,17 @@ public class TableEditable extends PxTable {
     // End of variables declaration//GEN-END:variables
     @Override
     public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
-       
-        int sr=getSelectedRow();
-        
-        if(sr ==-1 || sr==rowIndex || ( sr!=rowIndex && action.rowValid())){
-            super.changeSelection(rowIndex, columnIndex, toggle, extend);
-            action.commitChanges(sr);
-//            editCellAt(rowIndex, columnIndex);
-//            prepareEditor(this.getCellEditor(rowIndex, columnIndex), rowIndex, columnIndex);
-        }
+
+        int sr = getSelectedRow();
+
+//        if(sr ==-1 || sr==rowIndex || ( sr!=rowIndex && action.rowValid())){
+//            super.changeSelection(rowIndex, columnIndex, toggle, extend);
+//            action.commitChanges(sr);
+////            editCellAt(rowIndex, columnIndex);
+////            prepareEditor(this.getCellEditor(rowIndex, columnIndex), rowIndex, columnIndex);
+//        }
         editCellAt(sr, columnIndex);
     }
-
-    
-    
-
 
     class CustomRenderer extends DefaultTableCellRenderer {
 
@@ -148,8 +140,8 @@ public class TableEditable extends PxTable {
             if (isSelected && hasFocus) {
                 c.setBackground(Color.red);
             }
-            int sr=table.getSelectedRow();
-            int sc=table.getSelectedColumn();
+            int sr = table.getSelectedRow();
+            int sc = table.getSelectedColumn();
 //            if (sr==row && sc== column) {
 //                c.setBackground(Color.red);
 //            }
@@ -161,16 +153,13 @@ public class TableEditable extends PxTable {
 
     @Override
     public boolean editCellAt(int row, int column, EventObject e) {
-    
-        if(isCellSelected(row, column)){
-           boolean b=  super.editCellAt(row, column, e);
+
+        if (isCellSelected(row, column)) {
+            boolean b = super.editCellAt(row, column, e);
 //           Component jc= getEditorComponent();
 //           jc.dispatchEvent(new AWTEvent(e.getSource(),e.) {});
-        return b;
+            return b;
+        }
+        return false;
     }
-    return false; 
-    }
-
-   
-    
 }

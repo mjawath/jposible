@@ -197,6 +197,7 @@ public class TableActions {
     }
 
     public boolean isUnSelectableColumn(int x) {
+        if(unSelectableColumns==null)return false;
         for (Integer integer : unSelectableColumns) {
             if (integer != null && integer == x) {
                 return true;
