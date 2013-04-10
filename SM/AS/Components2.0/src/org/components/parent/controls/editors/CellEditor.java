@@ -5,6 +5,7 @@
 package org.components.parent.controls.editors;
 
 import javax.swing.AbstractCellEditor;
+import javax.swing.JTable;
 
 /**
  *
@@ -12,7 +13,8 @@ import javax.swing.AbstractCellEditor;
  */
 public abstract  class CellEditor extends  AbstractCellEditor
         implements ICellEditor {
-    
+    JTable tbl;
+
     //for the sace of column value validation
      public boolean isCellValid() {
         return true;
@@ -26,6 +28,11 @@ public abstract  class CellEditor extends  AbstractCellEditor
     @Override
     public void getEditingValue() {
         
+    }
+
+    @Override
+    public void setTable(JTable tbl) {
+      this.tbl=tbl;  
     }
 
    

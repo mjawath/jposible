@@ -171,7 +171,6 @@ public class InvoiceMasterUIV3 extends TabPanelUI {
 
             @Override
             public void actionCall() {
-
                 String ob = cuspop.getSelectedID();
                 Customer cus = null;
                 //find Item

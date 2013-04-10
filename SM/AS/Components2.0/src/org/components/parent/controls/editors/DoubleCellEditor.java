@@ -18,11 +18,14 @@ import org.biz.app.ui.util.ComponentFactory;
 public class DoubleCellEditor extends CellEditor {
 
     JTextField component;
-    JTable tbl;
     // This method is called when a cell value is edited by the user.
 
     public DoubleCellEditor(JTable jt) {
         init(jt);
+    }
+
+    public DoubleCellEditor() {
+        init(tbl);
     }
 
     public JTable getTbl() {
@@ -82,4 +85,6 @@ public class DoubleCellEditor extends CellEditor {
     public JTextField getComponent() {
         return component;
     }
+
+    
 }

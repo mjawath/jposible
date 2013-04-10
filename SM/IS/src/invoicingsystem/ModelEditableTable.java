@@ -7,6 +7,7 @@ package invoicingsystem;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.EventObject;
@@ -20,14 +21,19 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
+import org.biz.app.ui.util.ReflectionUtility;
+import org.components.parent.controls.PxTable;
+
 
 /**
  *
  * @author d
  */
-public class ModelEditableTable extends javax.swing.JTable {
+public class ModelEditableTable<T> extends PxTable implements ListSelectionListener{
 
+    public static int ROW_OBJECT_INDEX=0; 
     private TableInteractionListner tableInteractionListner;
     private boolean isCellEditableOnCellSelection; //responsible for defining weather cell is editable or not
     private boolean isCellBeingEditedWhileChanging; // set to true when selection changing so if other editors calles the stop 
@@ -45,10 +51,12 @@ public class ModelEditableTable extends javax.swing.JTable {
         };
         this.setSurrendersFocusOnKeystroke(true);
         setCellEditableOnCellSelection(true);
+        setAutoCreateRowSorter(false);//
         tableInteractionListner = new TableInteractionListner(this);
         getColumnModel().getColumn(0).setCellEditor(new mce(this));
         getColumnModel().getColumn(1).setCellEditor(new mce(this));
 
+        
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -59,6 +67,9 @@ public class ModelEditableTable extends javax.swing.JTable {
             }
         });
         makeCellEditorsNavigatable();
+        this.getSelectionModel().addListSelectionListener(this);
+        
+        /* default setters */
         /*
          key stroke        
          table.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "doMyArrowDown");
@@ -72,13 +83,14 @@ public class ModelEditableTable extends javax.swing.JTable {
 //            this.registerKeyboardAction(al, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 //        this.unregisterKeyboardAction(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
 //        this.unregisterKeyboardAction(KeyStroke.getKeyStroke(KeyEvent.VK_UP));
-        this.unregisterKeyboardAction(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
+//        this.unregisterKeyboardAction(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
         InputMap im = getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 //        im.put(KeyStroke.getKeyStroke("DOWN"), "none");
 //        im.put(KeyStroke.getKeyStroke("UP"), "none");
 //        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "none");
 //         im.put(KeyStroke.getKeyStroke("UP"), "TABLE_KEY_UP_EVENT");
 
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_F,InputEvent.CTRL_MASK), "TABLE_KEY_UP_EVENT");
         ActionMap actionmap = getActionMap();
         actionmap.put("TABLE_KEY_UP_EVENT", keyUP);
         
@@ -165,6 +177,7 @@ public class ModelEditableTable extends javax.swing.JTable {
     @Override
     public boolean editCellAt(int row, int column, EventObject e) {
 //        onBeforeEditStart();
+        if(row<0 || column<0)return false;
         if (!this.isCellSelected(row, column)) {
             return false;
         }
@@ -196,6 +209,22 @@ public class ModelEditableTable extends javax.swing.JTable {
         }
     }
 
+    @Override
+    public void setValueAt(Object aValue, int row, int column) {
+        super.setValueAt(aValue, row, column);
+        //get the object bi of row
+        Object model=getValueAt(row, ROW_OBJECT_INDEX);
+        String attr=getAttriuteNameForColumn(column);
+        ReflectionUtility.setProperty(model, attr, aValue);        
+    }
+    
+    public String getAttriuteNameForColumn(int column){
+        int col=convertColumnIndexToModel(column);
+        if(getPropertiesEL().length<=col)return null;
+        return getPropertiesEL()[col];
+    }
+    
+    
     @Override
     public TableCellEditor getCellEditor() {
         return super.getCellEditor();
@@ -246,8 +275,12 @@ public class ModelEditableTable extends javax.swing.JTable {
     public void setTableInteractionListner(TableInteractionListner tableInteractionListner) {
         this.tableInteractionListner = tableInteractionListner;
     }
-}
 
+    public void setEditorForColumn(int column,TableCellEditor cellEditor) {
+        
+    }
+
+}
 class mce extends DefaultCellEditor {
 
     TableInteractionListner listner;

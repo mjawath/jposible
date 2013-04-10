@@ -5,15 +5,22 @@
 package org.components.parent.controls.editors;
 
 import javax.swing.JComponent;
+import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 /**
  *
  * @author nnjj
  */
-public interface  ICellEditor extends TableCellEditor{
-  void getEditingValue();
-     JComponent getComponent();
+public interface ICellEditor extends TableCellEditor {
+
+    void getEditingValue();
+
+    JComponent getComponent();
+
     void actionPerformed();
-   boolean isCellValid();
+
+    boolean isCellValid();
+    
+    void setTable(JTable tbl);
 }

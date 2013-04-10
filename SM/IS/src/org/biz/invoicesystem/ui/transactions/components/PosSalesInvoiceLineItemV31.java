@@ -236,7 +236,7 @@ public class PosSalesInvoiceLineItemV31 extends LineItemPanel {
     }
 
     public void selectEty() {
-        salesline = jt.getSelectedObject(SalesInvoiceLineItem.class);
+//        salesline = jt.getSelectedObject(SalesInvoiceLineItem.class);
         selectedEtyToPanel();
     }
 

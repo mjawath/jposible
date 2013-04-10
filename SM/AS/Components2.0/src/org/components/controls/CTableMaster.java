@@ -56,7 +56,7 @@ public class CTableMaster extends PxTable implements IComponent{
                 "col 1", "col 2", "col 3", "col 4"
             }
         ));
-        setEditable(false);
+        
         setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         setIntercellSpacing(new java.awt.Dimension(10, 5));
         setRowHeight(30);

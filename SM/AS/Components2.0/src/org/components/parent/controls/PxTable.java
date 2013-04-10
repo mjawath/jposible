@@ -12,25 +12,29 @@ package org.components.parent.controls;
 
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
+import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
-import org.jdesktop.swingx.JXTable;
+import org.components.parent.controls.editors.CellEditor;
 
 /**
  *
  * @author nano
  */
-public class PxTable extends JXTable implements IComponent {
+public class PxTable<T> extends JTable implements IComponent {
 
     protected IContainer container;
-    private Class modelClass;
+    private Class modelClass; 
     private String[] propertiesEL;
     private List modelCollection;
     private String newRowId = newRowId_cons;
-    private static final String newRowId_cons = "NewRow#";
-    private int newRowId_SEED = 1001;
+    private static final String newRowId_cons = "#NewRow#";
+    private int newRowId_SEED = -10000001;
 
     @Override
     public void setContainer(IContainer con) {
@@ -51,8 +55,9 @@ public class PxTable extends JXTable implements IComponent {
     }
 
     public void setColumnHeader(String[] title) {
-
-        TableUtil.createTableModel(this, title);
+        if( propertiesEL==null)return;       
+        Class [] cls= ReflectionUtility.getFieldTypesForAttributesForTable(getModelClass(), getPropertiesEL());        
+        TableUtil.createTableModel(this, title,cls);
     }
 
     public Class getModelClass() {
@@ -63,21 +68,20 @@ public class PxTable extends JXTable implements IComponent {
         this.modelClass = modelClass;
     }
 
-    public List getModelCollection() {
+    public List<T> getModelCollection() {
         return modelCollection;
     }
 
-    public void setModelCollection(List modelCollection) {
+    public void setModelCollection(List<T> modelCollection) {        
         clear();
         this.modelCollection = modelCollection;
-//        newRowId_SEED=10000;
-//        for (int i = 0; i < modelCollection.size(); i++) {
-//            Object object = modelCollection.get(i);
-//            if(ReflectionUtility.getValue(object, "id")==null || StringUtility.isEmptyString( ReflectionUtility.getValue(object, "id"))){                
-//                newRowId = newRowId_cons  +(++newRowId_SEED);                        
-//                ReflectionUtility.setProperty(object, "id", newRowId);                 
-//            }
-//        }
+        //for each item set values to table model
+        if (modelCollection == null) {
+            return;
+        }
+        for (Object obj : modelCollection) {
+            addModelToTable(obj);
+        }
     }
 
     /**
@@ -88,7 +92,6 @@ public class PxTable extends JXTable implements IComponent {
     }
 
     public void clear() {
-
         if (modelCollection != null) {
             TableUtil.cleardata(this);
             modelCollection.clear();
@@ -97,6 +100,12 @@ public class PxTable extends JXTable implements IComponent {
     }
 
     public void addModelToTable(Object obj) {
+       //obj should hv an unique id 
+        Object bb=ReflectionUtility.getValue(obj, "id");
+//        Object val=ReflectionUtility.getValue(getSelectedObject(), "id");
+        if(bb==null ){
+        ReflectionUtility.setValue(obj, "id", newRowId_SEED++ +newRowId_cons);
+        }//sould check existing id , objects
         modelCollection.add(obj);
         TableUtil.addModelToTable(obj, this);
     }
@@ -127,16 +136,39 @@ public class PxTable extends JXTable implements IComponent {
     }
 
     public void replaceModel(Object obj) {
-
         TableUtil.replaceSelectedModel(this, obj);
-
     }
 
     public void removeSelectedRow() {
-        int sr=getSelectedRow();
-        TableUtil.removerow(this, sr);
+        if(modelCollection==null)return;
+        int sr = getSelectedRow();
+        if (sr < 0) {
+            return;
+        }
+        Object sele = this.getSelectedObject();
+        Iterator it = modelCollection.iterator();
+        for (; it.hasNext();) {
+            Object obj1 = ReflectionUtility.getValue(sele, "id");
+            Object obj2 = ReflectionUtility.getValue(it.next(), "id");
+            if (obj1 != null && obj1.equals(obj2)) {
+                it.remove();
+                TableUtil.removerow(this, sr);
+                return;
+            }
+        }
+
+    }
+    
+    public void removeSelectedObject(){
+    
     }
 
+    public void copySelectedElement() {
+           Object object= getSelectedObject();
+           if(object!=null){
+           //object.clone
+           }
+    }
     
     public Object getSelectedObject() {
         //loop the collection//TODO : Set collection??TODO: all the way exception ...
@@ -151,12 +183,32 @@ public class PxTable extends JXTable implements IComponent {
         return (T) TableUtil.getSelectedTableObject(this,cls);
 
     }
+    
     public void addrow(Object[] row) {
         TableUtil.addrow(this, row);
     }
 
     public Object[][] getTableRows() {
         return TableUtil.getDataObject(this);
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int row, int column) {
+        super.setValueAt(aValue, row, column);
+    }
+
+    @Override
+    public Component prepareEditor(TableCellEditor editor, int row, int column) {
+       Component com= super.prepareEditor(editor, row, column);
+        return com;
+    }
+    
+    
+    
+    public void setCellEditor(int column, CellEditor ce){
+    
+        ce.setTable(this);
+        this.getColumnModel().getColumn(column).setCellEditor(ce);        
     }
 
     /**
@@ -201,8 +253,7 @@ public class PxTable extends JXTable implements IComponent {
         ));
         setRowHeight(25);
         setRowHeight(12);
-        setTerminateEditOnFocusLost(false);
-    }// </editor-fold>//GEN-END:initComponents
+           }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

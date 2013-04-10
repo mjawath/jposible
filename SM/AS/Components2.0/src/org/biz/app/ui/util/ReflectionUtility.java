@@ -528,6 +528,58 @@ public class ReflectionUtility {
     return classfield;
   }
 
+    public static Field getFieldMemberx(Class cls, String attrName) {
+        Field classfield = null;
+        while (cls != null) {
+
+            try {
+                classfield = cls.getField(attrName.trim());// Get declared field, but no private access
+            } catch (NoSuchFieldException e) {
+                try {
+                    classfield = cls.getDeclaredField(attrName.trim());// Get declared field with private access
+                    classfield.setAccessible(true);// Set accessibility of the private field
+
+                } catch (NoSuchFieldException ex) {
+                }
+            }
+            if (classfield == null) {
+                cls = cls.getSuperclass();                
+            }else{
+            return classfield;
+                    
+            }
+        }
+        return classfield;
+    }
+  
+    public static Class getFieldType(Class cls, String attrName) {
+        Field field = getFieldMemberx(cls, attrName);
+        Class type = field.getType();//GenericType();
+        return type;
+    }
+  
+  public static Class[] getFieldTypesForAttributes(Class objcls, String[] attrName ){  
+      Class[] cls=new Class[attrName.length];
+      int x=0;      
+        for(String name: attrName){            
+           Class clsa= getFieldType(objcls, name);
+           cls[x]=clsa;
+           x++;
+        }
+        return cls;
+  }
+  
+  public static Class[] getFieldTypesForAttributesForTable(Class obj, String[] attrName){
+    Class [] cls= getFieldTypesForAttributes(obj, attrName);
+    Class[] cls2=  new Class[cls.length+1];
+    cls2[0]=Object.class;
+      for (int i = 0; i < cls.length; i++) {
+          Class class1 = cls[i];
+          cls2[i+1]=class1;
+      }
+    return cls2; 
+  }
+
   /**
    * Returns getter method name based on given field name by following
    * java naming convension.
@@ -659,15 +711,13 @@ public class ReflectionUtility {
        
    }
 
-    public static void setProperty(Object object,String property,Object value){
+   public static void setProperty(Object object, String property, Object value) {
         try {
-                ex.setProperty(object, property,value);
-    
+            ex.setProperty(object, property, value);
         } catch (Exception e) {
-        
+            e.printStackTrace();
         }
-       
-   }   
+    }
 
    public static <T> T findByID(List<T> list,Object idTofind){
         if(list==null || list.isEmpty() ) return null;

@@ -6,8 +6,6 @@ package org.biz.app.ui.util;
 
 import java.awt.event.KeyEvent;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
@@ -37,7 +35,7 @@ public class TableUtil {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return true;
             }
             Class[] types = columntypes;
 
@@ -45,6 +43,8 @@ public class TableUtil {
             public Class<?> getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
+            
+            
         };
 
         jTable.setModel(dtm);
@@ -485,17 +485,13 @@ public class TableUtil {
         Vector row = new Vector();
 
         String[] prop = table.getPropertiesEL();
-
-
+        if(prop==null)return;
+        row.add(obj);
         for (String var : prop) {
             Object ob = ReflectionUtility.getProperty(obj, var);
             row.add(ob);
-        }
-
+        }        
         addrow(table, row);
-
-//        Expression e = jexl.createExpression("cus.code()");
-
     }
 
     public static void replaceModel(PxTable table, Object obj, int point) {
