@@ -11,8 +11,13 @@ import org.fx.window.SimpleCrudController;
  * @author d
  */
 public class ProductController extends SimpleCrudController{   
+
+    @Override
+    public void save() {
+       
+        setUIToObject();
+        super.save();
+    }    
     
     
-    
-   
 }
