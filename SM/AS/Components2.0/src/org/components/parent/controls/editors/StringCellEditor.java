@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.components.controls.ModelEditableTable;
 
 /**
  *
@@ -20,7 +21,8 @@ public class StringCellEditor extends CellEditor {
     JTextField component;
     JTable tbl;
 
-    public StringCellEditor(JTable tbl) {
+    public StringCellEditor(ModelEditableTable tbl) {
+        super(tbl);
         init(tbl);
     }
 

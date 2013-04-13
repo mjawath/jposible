@@ -136,7 +136,7 @@ public class InvoiceMasterUi extends TabPanelUI {
         itemService = new ItemService();
 
 
-        TablePopUpCellEditor tb = new TablePopUpCellEditor(tblInvoice) {
+        TablePopUpCellEditor tb = new TablePopUpCellEditor(null) {
 
             public boolean action() {
                 return false;
@@ -219,7 +219,7 @@ public class InvoiceMasterUi extends TabPanelUI {
                 }
             }
         });
-        ce=new ComboBoxCellEditor(tblInvoice);
+    /*    ce=new ComboBoxCellEditor(tblInvoice);
 //        tblInvoice.getColumnModel().getColumn(2).setCellEditor(tb);      
         TableUtil.setColumnEditor(tblInvoice, 1, tb);
         TableUtil.setColumnEditor(tblInvoice, 2, new StringCellEditor(tblInvoice));
@@ -249,7 +249,7 @@ public class InvoiceMasterUi extends TabPanelUI {
         };
 
         TableUtil.setColumnEditor(tblInvoice, 6, dce);
-
+*/
 
 
         custService = new CustomerService();
@@ -447,7 +447,7 @@ public class InvoiceMasterUi extends TabPanelUI {
          String st=it.getUnitOne();
          String st2=it.getUnitOne();
          String [] stx= st2==null?new String[]{st}:new String[]{st,st2};         
-         UIEty.setcombomodel(stx, (JComboBox)ce.getComponent());
+//         UIEty.setcombomodel(stx, (JComboBox)ce.getComponent());
         
     }
     

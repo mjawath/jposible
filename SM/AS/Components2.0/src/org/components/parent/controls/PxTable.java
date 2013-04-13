@@ -205,11 +205,6 @@ public class PxTable<T> extends JTable implements IComponent {
     
     
     
-    public void setCellEditor(int column, CellEditor ce){
-    
-        ce.setTable(this);
-        this.getColumnModel().getColumn(column).setCellEditor(ce);        
-    }
 
     /**
      * get the list of object from the table

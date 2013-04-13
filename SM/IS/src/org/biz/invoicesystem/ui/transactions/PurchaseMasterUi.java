@@ -306,7 +306,7 @@ public class PurchaseMasterUi extends TabPanelUI implements CrudControl{
         String st = it.getUnitOne();
         String st2 = it.getUnitTwo();
         String[] stx = new String[]{st, st2, "d", "Y"};
-        UIEty.cmbModelWithoutNull(stx, (JComboBox) ce.getComponent());
+//        UIEty.cmbModelWithoutNull(stx, (JComboBox) ce.getComponent());
 
     }
 

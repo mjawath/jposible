@@ -12,6 +12,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.components.controls.ModelEditableTable;
 
 /**
  *
@@ -25,7 +26,8 @@ public class TablePopUpCellEditor extends CellEditor
     JTextField component;
 
     // This method is called when a cell value is edited by the user.
-    public TablePopUpCellEditor(PagedPopUpPanel popUpComponent, JTable tbl) {
+    public TablePopUpCellEditor(PagedPopUpPanel popUpComponent, ModelEditableTable tbl) {
+        this(tbl);
         this.popUpComponent = popUpComponent;
         init(tbl);
 
@@ -35,14 +37,10 @@ public class TablePopUpCellEditor extends CellEditor
         
     }
 
-  
-
-   
-
-    public TablePopUpCellEditor(JTable jt) {
+    
+    public TablePopUpCellEditor(ModelEditableTable jt) {
+        super(jt);
         init(jt);
-
-
     }
     private void init(JTable jt) {
         //specify

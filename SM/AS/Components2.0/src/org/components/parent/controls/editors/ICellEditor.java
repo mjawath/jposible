@@ -16,8 +16,6 @@ public interface ICellEditor extends TableCellEditor {
 
     void getEditingValue();
 
-    JComponent getComponent();
-
     void actionPerformed();
 
     boolean isCellValid();

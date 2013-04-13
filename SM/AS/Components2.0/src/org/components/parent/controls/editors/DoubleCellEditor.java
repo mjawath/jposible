@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import org.biz.app.ui.util.ComponentFactory;
+import org.components.controls.ModelEditableTable;
 
 /**
  *
@@ -17,29 +18,17 @@ import org.biz.app.ui.util.ComponentFactory;
  */
 public class DoubleCellEditor extends CellEditor {
 
-    JTextField component;
     // This method is called when a cell value is edited by the user.
 
-    public DoubleCellEditor(JTable jt) {
+    public DoubleCellEditor(ModelEditableTable jt) {
+        super(jt);
         init(jt);
     }
 
-    public DoubleCellEditor() {
-        init(tbl);
-    }
-
-    public JTable getTbl() {
-        return tbl;
-    }
-
-    public void setTbl(JTable tbl) {
-        this.tbl = tbl;
-    }
-
-    private void init(JTable jt) {
+    private void init(ModelEditableTable jt) {
         //specify
 
-        tbl = jt;
+        table = jt;
         component = new JTextField();
         ComponentFactory.createDoubleTextField(component);
         component.addActionListener(new AbstractAction() {
@@ -64,6 +53,7 @@ public class DoubleCellEditor extends CellEditor {
         // Configure the component with the specified value
         ((JTextField) component).setText("" + value);
         ((JTextField) component).selectAll();
+        ((JTextField) component).requestFocus();
 
         // Return the configured component
         return component;
@@ -80,11 +70,5 @@ public class DoubleCellEditor extends CellEditor {
         }
         return null;
     }
-
-    @Override
-    public JTextField getComponent() {
-        return component;
-    }
-
-    
+   
 }

@@ -49,6 +49,7 @@ public class DoubleDocument extends PlainDocument {
             super.insertString(offs, str, a);
         } catch (NumberFormatException e) {
             Toolkit.getDefaultToolkit().beep();
+            //here i should comenting it becas on sound
         }
 
 

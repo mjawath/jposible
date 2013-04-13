@@ -4,38 +4,25 @@
  */
 package org.components.parent.controls.editors;
 
-import javax.swing.AbstractCellEditor;
-import javax.swing.JTable;
+import org.components.controls.ModelEditableTable;
 
 /**
  *
  * @author nnjj
  */
-public abstract  class CellEditor extends  AbstractCellEditor
-        implements ICellEditor {
-    JTable tbl;
+public abstract  class CellEditor extends  mce {
+    
+    public CellEditor(ModelEditableTable table) {
+        super(table);
+    }   
+    
 
     //for the sace of column value validation
      public boolean isCellValid() {
         return true;
-    }
-
-    @Override
-    public void actionPerformed() {
-       
-    }
-
-    @Override
-    public void getEditingValue() {
-        
-    }
-
-    @Override
-    public void setTable(JTable tbl) {
-      this.tbl=tbl;  
-    }
-
-   
+    }      
     
-     
+     public void setTable(ModelEditableTable tbl) {
+        this.table = tbl;
+    } 
 }

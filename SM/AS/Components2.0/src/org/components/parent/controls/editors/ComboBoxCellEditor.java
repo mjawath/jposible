@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.text.JTextComponent;
+import org.components.controls.ModelEditableTable;
 
 /**
  *
@@ -23,7 +24,8 @@ public class ComboBoxCellEditor extends CellEditor {
     private JTable tbl;
     // This method is called when a cell value is edited by the user.
 
-    public ComboBoxCellEditor(JTable tbl) {
+    public ComboBoxCellEditor(ModelEditableTable tbl) {
+        super(tbl);
         this.tbl = tbl;
         init();
     }
@@ -106,8 +108,6 @@ public class ComboBoxCellEditor extends CellEditor {
 
     }
 
-   
-
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 //        ((JTextComponent)((JComboBox) component).getEditor().getEditorComponent()).setText("" + value);
@@ -124,13 +124,4 @@ public class ComboBoxCellEditor extends CellEditor {
         return component.getEditor().getItem();
     }
 
-    @Override
-    public JComponent getComponent() {
-        return component;
     }
-
-    @Override
-    public void getEditingValue() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-}

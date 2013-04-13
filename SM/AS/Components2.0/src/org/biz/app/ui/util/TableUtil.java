@@ -4,6 +4,7 @@
  */
 package org.biz.app.ui.util;
 
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 import javax.swing.JComboBox;
@@ -327,7 +328,7 @@ public class TableUtil {
                 TableCellEditor ce = jt.getCellEditor();
                 try {
 
-                    JComponent jc = ((CellEditor) ce).getComponent();
+                    Component jc = ((CellEditor) ce).getComponent();
                     if (jc instanceof JTextComponent) {
                         return ((JTextComponent) jc).getText();
 
@@ -354,7 +355,7 @@ public class TableUtil {
                 TableCellEditor ce = jt.getCellEditor();
                 try {
 
-                    JComponent jc = ((CellEditor) ce).getComponent();
+                    Component jc = ((CellEditor) ce).getComponent();
                     if (jc instanceof JTextComponent) {
                         return ((JTextComponent) jc).getText();
 

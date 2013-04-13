@@ -48,7 +48,7 @@ public class FormBase extends javax.swing.JPanel implements ListSelectionListene
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        modelEditableTable1 = new invoicingsystem.ModelEditableTable();
+        modelEditableTable1 = new org.components.controls.ModelEditableTable();
         jButton4 = new javax.swing.JButton();
         formDetail1 = new invoicingsystem.FormDetail();
 
@@ -159,7 +159,7 @@ public class FormBase extends javax.swing.JPanel implements ListSelectionListene
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
-    private invoicingsystem.ModelEditableTable modelEditableTable1;
+    private org.components.controls.ModelEditableTable modelEditableTable1;
     // End of variables declaration//GEN-END:variables
 
     @Override

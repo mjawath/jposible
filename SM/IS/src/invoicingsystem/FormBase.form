@@ -91,7 +91,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="invoicingsystem.ModelEditableTable" name="modelEditableTable1">
+        <Component class="org.components.controls.ModelEditableTable" name="modelEditableTable1">
         </Component>
       </SubComponents>
     </Container>
