@@ -571,11 +571,12 @@ public class ReflectionUtility {
   
   public static Class[] getFieldTypesForAttributesForTable(Class obj, String[] attrName){
     Class [] cls= getFieldTypesForAttributes(obj, attrName);
-    Class[] cls2=  new Class[cls.length+1];
+    Class[] cls2=  new Class[cls.length+2];
     cls2[0]=Object.class;
+    cls2[1]=String.class;
       for (int i = 0; i < cls.length; i++) {
           Class class1 = cls[i];
-          cls2[i+1]=class1;
+          cls2[i+2]=class1;
       }
     return cls2; 
   }

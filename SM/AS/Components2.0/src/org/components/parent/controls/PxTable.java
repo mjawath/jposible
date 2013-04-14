@@ -55,9 +55,16 @@ public class PxTable<T> extends JTable implements IComponent {
     }
 
     public void setColumnHeader(String[] title) {
-        if( propertiesEL==null)return;       
+        if( propertiesEL==null)return;
+        String [] tit=new String[(title.length+2)];
+        tit[0]="objecyOF";
+        tit[1]="id";
+        int c=2;
+        for (String str : title) {
+            tit[c++]=str;
+        }
         Class [] cls= ReflectionUtility.getFieldTypesForAttributesForTable(getModelClass(), getPropertiesEL());        
-        TableUtil.createTableModel(this, title,cls);
+        TableUtil.createTableModel(this, tit,cls);
     }
 
     public Class getModelClass() {

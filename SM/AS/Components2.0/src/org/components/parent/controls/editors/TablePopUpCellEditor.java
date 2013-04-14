@@ -18,8 +18,7 @@ import org.components.controls.ModelEditableTable;
  *
  * @author nnjj
  */
-public class TablePopUpCellEditor extends CellEditor
-         {
+public class TablePopUpCellEditor extends CellEditor {
 
     private JTable tbl;
     PagedPopUpPanel popUpComponent;
@@ -33,15 +32,11 @@ public class TablePopUpCellEditor extends CellEditor
 
     }
 
-    public static void main(String[] args) {
-        
-    }
-
-    
     public TablePopUpCellEditor(ModelEditableTable jt) {
         super(jt);
         init(jt);
     }
+
     private void init(JTable jt) {
         //specify
 
@@ -49,21 +44,21 @@ public class TablePopUpCellEditor extends CellEditor
         component = new JTextField();
 
         component.addActionListener(new AbstractAction() {
-
             public void actionPerformed(ActionEvent e) {
-              if (isCellValid()) {
+                if (isCellValid()) {
                     stopCellEditing();
-                       component.setText("");
+                    component.setText("");
                 }
             }
         });
 
     }
+
     public Component getTableCellEditorComponent(JTable table, Object value,
             boolean isSelected, int rowIndex, int vColIndex) {
-        
-   //   init(tbl);
-      
+
+        //   init(tbl);
+
         // 'value' is value contained in the cell located at (rowIndex, vColIndex)
         if (!isSelected) {
             JLabel jl = new JLabel();
@@ -74,7 +69,7 @@ public class TablePopUpCellEditor extends CellEditor
 //            }
             return jl;
         }
-        
+
         // Configure the component with the specified value
         if (value != null) {
             ((JTextField) component).setText("" + value);
@@ -85,14 +80,13 @@ public class TablePopUpCellEditor extends CellEditor
         return component;
     }
 
-    
-     @Override
+    @Override
     public boolean shouldSelectCell(EventObject anEvent) {
         System.out.println("calling.........shuld select cellll");
         component.setText("");
         return true;
     }
-    
+
     // This method is called when editing is completed.
     // It must return the new value to be stored in the cell.
     public Object getCellEditorValue() {

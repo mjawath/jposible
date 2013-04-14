@@ -48,6 +48,7 @@ public class mce extends AbstractCellEditor implements IComponent,TableCellEdito
                 table.setValueAt(textField.getText(), table.getEditingRow(), table.getEditingColumn());
             }
         });
+        component=textField;
     }
 
     public mce(ModelEditableTable table) {
@@ -89,7 +90,7 @@ public class mce extends AbstractCellEditor implements IComponent,TableCellEdito
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return component;
     }
     
     
