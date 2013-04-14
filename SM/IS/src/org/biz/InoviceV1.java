@@ -4,6 +4,7 @@
  */
 package org.biz;
 
+import com.components.custom.PagedPopUpPanel;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
@@ -12,8 +13,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
+import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.components.parent.controls.editors.DoubleCellEditor;
+import org.components.parent.controls.editors.ObjectCellEditor;
+import org.components.parent.controls.editors.TablePopUpCellEditor;
 
 /**
  *
@@ -39,11 +43,16 @@ public class InoviceV1 extends javax.swing.JPanel {
         }
         tblInvoiceLine1.setModelCollection(lineItems);
         tblInvoiceLine1.setModelClass(SalesInvoiceLineItem.class);
-        tblInvoiceLine1.setPropertiesEL(new String[]{"id","qty","price","lineAmount","item"});       
-        tblInvoiceLine1.setColumnHeader(new String[]{"ID","QTY","Price","Amount","Item"});        
+        tblInvoiceLine1.setPropertiesEL(new String[]{"qty","item"});       
+        tblInvoiceLine1.setColumnHeader(new String[]{"QTY","Item"});        
         tblInvoiceLine1.setCellEditor(2,new DoubleCellEditor(tblInvoiceLine1));
-        tblInvoiceLine1.setCellEditor(3,new DoubleCellEditor(tblInvoiceLine1));
-        tblInvoiceLine1.setCellEditor(4,new DoubleCellEditor(tblInvoiceLine1));
+//        tblInvoiceLine1.setCellEditor(3,new DoubleCellEditor(tblInvoiceLine1));
+        PagedPopUpPanel<Item> popUpPanel =new PagedPopUpPanel<Item>() {
+        
+        };
+        TablePopUpCellEditor tpc=new TablePopUpCellEditor(popUpPanel,tblInvoiceLine1);
+//        tpc.(tblInvoiceLine);
+        tblInvoiceLine1.setCellEditor(3,new ObjectCellEditor(tblInvoiceLine1));
         //customer selector
         //in  table , item selector
         
