@@ -4,20 +4,16 @@
  */
 package org.biz;
 
-import com.components.custom.PagedPopUpPanel;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.components.parent.controls.editors.DoubleCellEditor;
 import org.components.parent.controls.editors.ObjectCellEditor;
-import org.components.parent.controls.editors.TablePopUpCellEditor;
 
 /**
  *
@@ -33,30 +29,36 @@ public class InoviceV1 extends javax.swing.JPanel {
     public InoviceV1() {
         initComponents();
         lineItems= new ArrayList<>();
-        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);
-        DefaultCellEditor singleclick = new DefaultCellEditor(new JTextField());
-        singleclick.setClickCountToStart(1);
-
-        //set the editor as default on every column
-        for (int i = 0; i < tblInvoiceLine.getColumnCount(); i++) {
-            tblInvoiceLine.setDefaultEditor(tblInvoiceLine.getColumnClass(i), singleclick);
+        for (int i = 0; i < 10; i++) {
+            SalesInvoiceLineItem it=new SalesInvoiceLineItem();
+            
+            it.setId(i+"id ");
+            it.setQty(Double.valueOf(i));
+            lineItems.add(it);
+            
         }
-        tblInvoiceLine1.setModelCollection(lineItems);
+        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);     
+        
         tblInvoiceLine1.setModelClass(SalesInvoiceLineItem.class);
         tblInvoiceLine1.setPropertiesEL(new String[]{"qty","item"});       
         tblInvoiceLine1.setColumnHeader(new String[]{"QTY","Item"});        
-        tblInvoiceLine1.setCellEditor(2,new DoubleCellEditor(tblInvoiceLine1));
-//        tblInvoiceLine1.setCellEditor(3,new DoubleCellEditor(tblInvoiceLine1));
-        PagedPopUpPanel<Item> popUpPanel =new PagedPopUpPanel<Item>() {
-        
-        };
-        TablePopUpCellEditor tpc=new TablePopUpCellEditor(popUpPanel,tblInvoiceLine1);
-//        tpc.(tblInvoiceLine);
-        tblInvoiceLine1.setCellEditor(3,new ObjectCellEditor(tblInvoiceLine1));
-        //customer selector
-        //in  table , item selector
-        
+        tblInvoiceLine1.setCellEditor(1,new DoubleCellEditor(tblInvoiceLine1));
+        tblInvoiceLine1.modelToTable(lineItems);
+        ObjectCellEditor<Item> itce=new ObjectCellEditor(tblInvoiceLine1);
+        itce.initPopup(getItems(),new String[]{"id","code"}, new String[]{"ID","Code"},"id");
+        tblInvoiceLine1.setCellEditor(2,itce);       
     }
+    
+    private  List  getItems(){
+        ArrayList al=new ArrayList();
+        for (int i = 0; i < 100; i++) {
+            Item item=new Item();
+            item.setId(i+"id ");
+            item.setCode(i+"code ");
+            al.add(item);
+        }
+        return al;
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.

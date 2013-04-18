@@ -10,9 +10,11 @@ import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractCellEditor;
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
+import org.components.controls.CTextField;
 import org.components.controls.ModelEditableTable;
 
 
@@ -23,19 +25,19 @@ import org.components.controls.ModelEditableTable;
  */
 public class mce extends AbstractCellEditor implements IComponent,TableCellEditor{
 
-    JTextField component;
+    JComponent component;
     TableInteractionListner listner;
-    JTextField txt;
+    CTextField txt;
     ModelEditableTable table;    
 
         
-    public mce(final JTextField textField) {
+    public mce(final CTextField textField) {
         super();
         textField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    table.selectNextCell();
+                    table.selectNextCell();//should call stop cell editing
 //                    stopCellEditing();
                     return;
                 }
@@ -44,21 +46,22 @@ public class mce extends AbstractCellEditor implements IComponent,TableCellEdito
 //                    stopCellEditing();
                     return;
                 }
-                //stop editig
-                table.setValueAt(textField.getText(), table.getEditingRow(), table.getEditingColumn());
+//                table.setValueAt(textField.getText(), table.getEditingRow(), table.getEditingColumn());
             }
         });
         component=textField;
+        
     }
 
     public mce(ModelEditableTable table) {
         this(createTextField());
         this.table = table;
+        
         listner = ((ModelEditableTable) table).getTableInteractionListner();
     }
 
-    static JTextField createTextField() {
-        return new JTextField();
+    static CTextField createTextField() {
+        return new CTextField();
     }
 
     public Component getComponent(){

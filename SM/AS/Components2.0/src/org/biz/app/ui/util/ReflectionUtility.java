@@ -554,6 +554,7 @@ public class ReflectionUtility {
   
     public static Class getFieldType(Class cls, String attrName) {
         Field field = getFieldMemberx(cls, attrName);
+        if(field==null)return null;
         Class type = field.getType();//GenericType();
         return type;
     }
@@ -563,22 +564,25 @@ public class ReflectionUtility {
       int x=0;      
         for(String name: attrName){            
            Class clsa= getFieldType(objcls, name);
-           cls[x]=clsa;
-           x++;
+           if(clsa!=null){
+               cls[x] = clsa;               
+           }else{
+               cls[x] = Object.class;
+           }
+            x++;
         }
         return cls;
   }
   
   public static Class[] getFieldTypesForAttributesForTable(Class obj, String[] attrName){
     Class [] cls= getFieldTypesForAttributes(obj, attrName);
-    Class[] cls2=  new Class[cls.length+2];
-    cls2[0]=Object.class;
-    cls2[1]=String.class;
-      for (int i = 0; i < cls.length; i++) {
-          Class class1 = cls[i];
-          cls2[i+2]=class1;
-      }
-    return cls2; 
+//    Class[] cls2=  new Class[cls.length];
+////    cls2[0]=Object.class;
+//      for (int i = 0; i < cls.length; i++) {
+//          Class class1 = cls[i];
+//          cls2[i]=class1;
+//      }
+    return cls; 
   }
 
   /**

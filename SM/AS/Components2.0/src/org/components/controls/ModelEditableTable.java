@@ -36,9 +36,6 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
     private TableInteractionListner tableInteractionListner;
     private boolean isCellEditableOnCellSelection; //responsible for defining weather cell is editable or not
     private boolean isCellBeingEditedWhileChanging; // set to true when selection changing so if other editors calles the stop 
-    private boolean goingToStopEditing;
-    private boolean isCellSelectionGoingToChange;
-    private boolean isMos;
     
     
  // cell eding we can escapre from duplicate method calls  of edit cell at
@@ -87,10 +84,10 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
             @Override
             public void keyPressed(KeyEvent e) {
             
-                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT){
-                    System.out.println("--------------"+e);
-                    e.consume();
-                }
+//                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT){
+//                    System.out.println("--------------"+e);
+//                    e.consume();
+//                }
         
             }
         
@@ -188,11 +185,9 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
     @Override
     public boolean editCellAt(int row, int column, EventObject e) {
 //        onBeforeEditStart();
-        if(e!=null)isMos=true;
         boolean edit = super.editCellAt(row, column, e);
         System.out.println("************editing started s " + row + "-" + column);
 //        onAfterEditStart();
-        if (e != null)isMos=false;
         return edit;
     }
 
@@ -215,7 +210,15 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
 
     @Override
     protected void processKeyEvent(KeyEvent e) {
+        
         super.processKeyEvent(e);        
+        if(e.getKeyCode()==KeyEvent.VK_ENTER){
+            System.out.println("change selection endter");
+        }
+        
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            System.out.println("change selection left");
+        }
     }
     
     
@@ -233,8 +236,8 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
     
     public String getAttriuteNameForColumn(int column){
         int col=convertColumnIndexToModel(column);
-        if(column<=2 || getPropertiesEL().length<=col-2)return null;
-        return getPropertiesEL()[col-2];
+        if(column<=0 || getPropertiesEL().length<=col-1)return null;
+        return getPropertiesEL()[col];//column 
     }
     
     

@@ -56,6 +56,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     List<ActionTask> actionTasks;
     private String selectedProperty;
     private Object model;
+    private JPopupMenu jpm;
 
     public int getSelectedColumn() {
         return selectedColumn;
@@ -164,8 +165,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         initComponents();
         tbl = new JTable();
     }
-    JPopupMenu jpm;
-
+    
     public void showPopUp() {
         try {
             if (getPropertiesEL() == null || getPropertiesEL().length == 0) {
@@ -196,7 +196,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     public void init() {
         actionTasks = new ArrayList<ActionTask>();
         textField.addaction(0, new ActionTask() {
-
             @Override
             public boolean action() {
                 System.out.println("====----***action task one **----====");
@@ -306,9 +305,12 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
             try {
+                long x=System.currentTimeMillis();
                 search(textField.getText());
                 setObjectToTable(list);
                 showPopUp();
+                x=System.currentTimeMillis()-x;
+                System.out.println(x);
 
             } catch (Exception ee) {
                 ee.printStackTrace();
@@ -454,16 +456,9 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         if (ob != null) {
             //find object from list and select
             if (textField instanceof JTextField) {
-                selectedID = ob.toString();
+                selectedObject = (T)ob;
                 //get selected object
-                for (Object object : list) {
-                    //compare property with Object property ob.equals(object);
-                    if (ob.equals(ReflectionUtility.getProperty(object, "id"))) {
-                        selectedObject = (T) object;//selected object can i make it generic
-                        UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
-
-                    }
-                }
+                UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
                 action();
             }
 
@@ -522,7 +517,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     }
 
     public void setTitle(String[] title) {
-        TableUtil.createTableModel(cxTable1, title);
+        cxTable1.setColumnHeader(title);
     }
 
     public void setText(String txt) {

@@ -20,7 +20,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
-import org.components.parent.controls.editors.CellEditor;
 
 /**
  *
@@ -50,16 +49,22 @@ public class PxTable<T> extends JTable implements IComponent {
     }
 
     public void setPropertiesEL(String[] propertiesEL) {
-        this.propertiesEL = propertiesEL;
+        String [] prop = propertiesEL;
+        this.propertiesEL =new String[propertiesEL.length+1];
+        this.propertiesEL[0]="line";
+        int x=1;
+        for (String str : prop) {
+            this.propertiesEL[x++]=str;
+        }
+
 //     TableUtil.createTableModel(this, propertiesEL);   
     }
 
     public void setColumnHeader(String[] title) {
         if( propertiesEL==null)return;
-        String [] tit=new String[(title.length+2)];
+        String [] tit=new String[(title.length+1)];
         tit[0]="objecyOF";
-        tit[1]="id";
-        int c=2;
+        int c=1;
         for (String str : title) {
             tit[c++]=str;
         }
@@ -81,7 +86,7 @@ public class PxTable<T> extends JTable implements IComponent {
 
     public void setModelCollection(List<T> modelCollection) {        
         clear();
-        this.modelCollection = modelCollection;
+        this.modelCollection=new ArrayList();
         //for each item set values to table model
         if (modelCollection == null) {
             return;
@@ -118,7 +123,8 @@ public class PxTable<T> extends JTable implements IComponent {
     }
 
     public void modelToTable(List list) {
-//        clear();
+        clear();
+        modelCollection = new ArrayList();
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -126,8 +132,11 @@ public class PxTable<T> extends JTable implements IComponent {
             modelCollection.add(row);
             TableUtil.addModelToTable(row, this);
         }
-
-
+    }
+    
+    
+    public void setCollectionToTable(List list){
+        TableUtil.setCollectionToTable(list, this);
     }
 
     public void refreshModel() {
@@ -201,6 +210,7 @@ public class PxTable<T> extends JTable implements IComponent {
 
     @Override
     public void setValueAt(Object aValue, int row, int column) {
+        System.out.println("setting value at"+aValue+" "+row+" "+column);
         super.setValueAt(aValue, row, column);
     }
 

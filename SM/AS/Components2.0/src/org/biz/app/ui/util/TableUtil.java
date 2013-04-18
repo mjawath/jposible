@@ -6,12 +6,16 @@ package org.biz.app.ui.util;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
 //import org.apache.commons.beanutils.BeanUtils;
 import org.components.parent.controls.PxTable;
@@ -110,9 +114,8 @@ public class TableUtil {
      */
 
     public static void addrow(JTable jTable, Vector row) {
-        jTable.scrollRectToVisible(jTable.getCellRect(jTable.getRowCount(), 0, true));
+        jTable.scrollRectToVisible(jTable.getCellRect(jTable.getRowCount(), 0, true));        
         getdtm(jTable).addRow(row);
-
     }
 
     public static void addrow(JTable jTable, Object[] row) {
@@ -475,26 +478,53 @@ public class TableUtil {
 
     /**
      * EL implementation of the table -we can call it the model table
-     * 
-     */
-    public static void addModelToTable(Object obj, PxTable table) {
-        //table has properties
+     *  //table has properties
         //loop the properties 
         //get the valude 
         // create the row 
         //add the row to table
+       
+     */
+    public static void addModelToTable(Object obj, PxTable table) {
         Vector row = new Vector();
-
         String[] prop = table.getPropertiesEL();
         if(prop==null)return;
         row.add(obj);
-        for (String var : prop) {
+        for (int i = 1; i < prop.length; i++) {            
+            String var = prop[i];
             Object ob = ReflectionUtility.getProperty(obj, var);
-            row.add(ob);
-        }        
+            row.add(ob);            
+        }
         addrow(table, row);
     }
+    
+    public static void setCollectionToTable(List listobj, PxTable table) {
+        Vector data = new Vector();
 
+        for (Object obj : listobj) {
+            Vector row = new Vector();
+
+            String[] prop = table.getPropertiesEL();
+            if (prop == null) {
+                return;
+            }
+            row.add(obj);
+            for (int i = 1; i < prop.length; i++) {
+                String var = prop[i];
+                Object ob = ReflectionUtility.getProperty(obj, var);
+                row.add(ob);
+            }
+            data.add(row);
+        }
+
+        Enumeration<TableColumn> tc = ((PxTable) table).getColumnModel().getColumns();
+        Vector al = new Vector();
+        while (tc.hasMoreElements()) {
+            al.add(tc.nextElement().getIdentifier());
+        }
+        getdtm(table).setDataVector(data, al);
+    }
+    
     public static void replaceModel(PxTable table, Object obj, int point) {
 
         String[] prop = table.getPropertiesEL();
