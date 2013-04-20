@@ -13,6 +13,7 @@ import java.util.EventObject;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
+import javax.swing.CellEditor;
 import javax.swing.InputMap;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
@@ -21,7 +22,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.components.parent.controls.PxTable;
-import org.components.parent.controls.editors.CellEditor;
+import org.components.parent.controls.editors.mce;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.parent.controls.editors.mce;
 
@@ -296,7 +297,7 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         
     }
 
-    public void setCellEditor(int column, CellEditor ce) {
+    public void setCellEditor(int column, mce ce) {
         ce.setTable(this);
         this.getColumnModel().getColumn(column).setCellEditor(ce);
     }

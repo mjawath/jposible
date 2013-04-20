@@ -16,7 +16,7 @@ import org.components.controls.ModelEditableTable;
  *
  * @author nnjj
  */
-public class DoubleCellEditor extends CellEditor {
+public class DoubleCellEditor extends mce {
 
     // This method is called when a cell value is edited by the user.
 
@@ -30,8 +30,8 @@ public class DoubleCellEditor extends CellEditor {
 
         table = jt;
         component = new JTextField();
-        ComponentFactory.createDoubleTextField(component);
-        component.addActionListener(new AbstractAction() {
+        ComponentFactory.createDoubleTextField((JTextField)component);
+        ((JTextField)component).addActionListener(new AbstractAction() {
 
             @Override
             public void actionPerformed(ActionEvent e) {

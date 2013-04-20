@@ -5,7 +5,11 @@
 package org.components.parent.controls.editors;
 
 import com.components.custom.PagedPopUpPanel;
+import com.components.custom.TextFieldWithPopUP;
+import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 import org.components.controls.CTextField;
 import org.components.controls.ModelEditableTable;
 
@@ -13,28 +17,46 @@ import org.components.controls.ModelEditableTable;
  *
  * @author d
  */
-public class ObjectCellEditor<T> extends CellEditor{
+public class ObjectCellEditor<T> extends mce {
+
+    PagedPopUpPanel<T> pagedPopup;
+    TextFieldWithPopUP<T> fieldWithPopUP;
 
     public ObjectCellEditor(ModelEditableTable table) {
         super(table);
-       }
-
-    public void initPopup(List item,String [] properties,String [] titles,String selected){
-        pagedPopup = new PagedPopUpPanel<T>((CTextField) component) {
-        };        
-        pagedPopup.setObjectToTable(item);
-        pagedPopup.setPropertiesEL(properties);
-        pagedPopup.setTitle(titles);
-        pagedPopup.setSelectedProperty(selected);    
+        fieldWithPopUP = new TextFieldWithPopUP<T>();
     }
-    
+
+    public void initPopup(List item, String[] properties, String[] titles, String selected) {
+        pagedPopup = new PagedPopUpPanel<T>((CTextField) component) {
+        };
+        fieldWithPopUP.setObjectToTable(item);
+        fieldWithPopUP.setPropertiesEL(properties);
+        fieldWithPopUP.setTitle(titles);
+        fieldWithPopUP.setSelectedProperty(selected);
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        if (value != null) {
+            clear();
+            fieldWithPopUP.setSelectedObject((T) value);
+        }else{
+        fieldWithPopUP.clear();
+        }//set the value to compoenent
+        return fieldWithPopUP;
+    }
+
     @Override
     public Object getCellEditorValue() {
-        System.out.println("editor  valide"+pagedPopup.getSelectedObject());
-        return  pagedPopup.getSelectedObject();
+        System.out.println("editor  valide" + fieldWithPopUP.getSelectedObject());
+        return fieldWithPopUP.getSelectedObject();
     }
-    
-    
-    PagedPopUpPanel<T> pagedPopup;
 
+    @Override
+    public void clear() {
+        //clear goes hear
+        pagedPopup.setSelectedObject(null);
+        pagedPopup.setSelectedID(null);
+    }
 }

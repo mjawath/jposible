@@ -33,22 +33,6 @@ public class mce extends AbstractCellEditor implements IComponent,TableCellEdito
         
     public mce(final CTextField textField) {
         super();
-        textField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    table.selectNextCell();//should call stop cell editing
-//                    stopCellEditing();
-                    return;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    table.selectPreviousCell();
-//                    stopCellEditing();
-                    return;
-                }
-//                table.setValueAt(textField.getText(), table.getEditingRow(), table.getEditingColumn());
-            }
-        });
         component=textField;
         
     }
@@ -56,7 +40,23 @@ public class mce extends AbstractCellEditor implements IComponent,TableCellEdito
     public mce(ModelEditableTable table) {
         this(createTextField());
         this.table = table;
-        
+        component.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                   mce.this. table.selectNextCell();//should call stop cell editing
+//                    stopCellEditing();
+                    return;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    mce.this.table.selectPreviousCell();
+//                    stopCellEditing();
+                    return;
+                }
+//                table.setValueAt(textField.getText(), table.getEditingRow(), table.getEditingColumn());
+            }
+        });
+    
         listner = ((ModelEditableTable) table).getTableInteractionListner();
     }
 
@@ -92,9 +92,21 @@ public class mce extends AbstractCellEditor implements IComponent,TableCellEdito
     }
 
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {        
+        if(value!=null){
+        clear();
+        }
         return component;
     }
     
+    public void  clear(){
+    }
+     
+    public boolean isCellValid() {
+        return true;
+    }      
     
+     public void setTable(ModelEditableTable tbl) {
+        this.table = tbl;
+    } 
 }

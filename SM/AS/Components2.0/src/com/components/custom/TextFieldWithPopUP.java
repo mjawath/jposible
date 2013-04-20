@@ -87,15 +87,16 @@ public class TextFieldWithPopUP<T> extends CTextField {
     }
 
     public String getSelectedID() {
-return        pagedPopUpPanel.getSelectedID();
+        return        pagedPopUpPanel.getSelectedID();
     }
 
     public void setSelectedObject(T it) {
         pagedPopUpPanel.setSelectedObject(it);
-    }
+        pagedPopUpPanel.setSelectedText();
+       }
 
     public void setObjectToTable(List<T> listCust) {
-pagedPopUpPanel.setObjectToTable(listCust);
+        pagedPopUpPanel.setObjectToTable(listCust);
     }
 
     @Override

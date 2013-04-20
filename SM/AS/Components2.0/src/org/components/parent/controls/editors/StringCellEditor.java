@@ -16,7 +16,7 @@ import org.components.controls.ModelEditableTable;
  *
  * @author nnjj
  */
-public class StringCellEditor extends CellEditor {
+public class StringCellEditor extends mce {
 
     JTextField component;
     JTable tbl;

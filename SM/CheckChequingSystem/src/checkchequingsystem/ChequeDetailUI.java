@@ -64,11 +64,11 @@ public class ChequeDetailUI extends TabPanelUI {
 
             @Override
             public void action() {
-                Bank bank = (Bank) getModel();
-                selectedBankBranch.setBank(bank);
+//                Bank bank = (Bank) getModel();
+//                selectedBankBranch.setBank(bank);
                 //load branches of the specific bank
-                lstbankBranch = branchService.getDao().byBankCode(bank.getId());
-                branchPopUpPanel.setList(lstbankBranch);
+//                lstbankBranch = branchService.getDao().byBankCode(bank.getId());
+//                branchPopUpPanel.setList(lstbankBranch);
             }
         };
         bankPopUpPanel.setPropertiesEL(new String[]{"id", "code", "name", "num"});
@@ -82,8 +82,8 @@ public class ChequeDetailUI extends TabPanelUI {
 
             @Override
             public void action() {
-                BankBranch bankBranch = (BankBranch) getModel();
-                cheques.setBankBranch(bankBranch);
+//                BankBranch bankBranch = (BankBranch) getModel();
+//                cheques.setBankBranch(bankBranch);
 
             }
         };

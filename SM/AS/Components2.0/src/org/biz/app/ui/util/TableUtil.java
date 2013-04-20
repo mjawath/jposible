@@ -6,12 +6,11 @@ package org.biz.app.ui.util;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.CellEditor;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
@@ -19,7 +18,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
 //import org.apache.commons.beanutils.BeanUtils;
 import org.components.parent.controls.PxTable;
-import org.components.parent.controls.editors.CellEditor;
+import org.components.parent.controls.editors.mce;
 
 /**
  *
@@ -331,7 +330,7 @@ public class TableUtil {
                 TableCellEditor ce = jt.getCellEditor();
                 try {
 
-                    Component jc = ((CellEditor) ce).getComponent();
+                    Component jc = ((mce) ce).getComponent();
                     if (jc instanceof JTextComponent) {
                         return ((JTextComponent) jc).getText();
 
@@ -358,7 +357,7 @@ public class TableUtil {
                 TableCellEditor ce = jt.getCellEditor();
                 try {
 
-                    Component jc = ((CellEditor) ce).getComponent();
+                    Component jc = ((mce) ce).getComponent();
                     if (jc instanceof JTextComponent) {
                         return ((JTextComponent) jc).getText();
 

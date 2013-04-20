@@ -18,7 +18,7 @@ import org.components.controls.ModelEditableTable;
  *
  * @author nnjj
  */
-public class ComboBoxCellEditor extends CellEditor {
+public class ComboBoxCellEditor extends mce {
 
     private JComboBox component;
     private JTable tbl;

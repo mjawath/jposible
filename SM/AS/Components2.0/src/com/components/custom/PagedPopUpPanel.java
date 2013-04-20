@@ -55,7 +55,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     boolean moveTonextcom = true;
     List<ActionTask> actionTasks;
     private String selectedProperty;
-    private Object model;
     private JPopupMenu jpm;
 
     public int getSelectedColumn() {
@@ -75,14 +74,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
     public void setSelectedProperty(String property) {
         this.selectedProperty = property;
-    }
-
-    public Object getModel() {
-        return model;
-    }
-
-    public void setModel(Object model) {
-        this.model = model;
     }
 
     public T getSelectedObject() {
@@ -305,7 +296,10 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
             try {
-                long x=System.currentTimeMillis();
+                long x=System.currentTimeMillis();//this should be performed within worker
+                // and datble should be udated
+                //first key waits for sql retruns data
+                //time delay should be applyed to query
                 search(textField.getText());
                 setObjectToTable(list);
                 showPopUp();
@@ -450,9 +444,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void selectItem() {
-
         Object ob = TableUtil.getSelectedModelsValueAt(cxTable1, getSelectedColumn());
-
         if (ob != null) {
             //find object from list and select
             if (textField instanceof JTextField) {
@@ -461,11 +453,15 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
                 UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
                 action();
             }
-
-
         }
         closePopup();
-
+    }
+    
+    public void setSelectedText() {
+        if (textField instanceof JTextField) {
+            //get selected object
+            UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
+        }
     }
 
     public void closePopup() {
