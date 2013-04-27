@@ -15,6 +15,7 @@ public class ControlPanel extends javax.swing.JPanel {
     public ControlPanel() {
         initComponents();
     }
+    
     CrudControl control;
 
     public void setCrudController(CrudControl control) {

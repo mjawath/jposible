@@ -72,6 +72,14 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
     public void save() {
     
     }
+    
+    //save should be encapsulated by a method
+    // objects should be persistable ,updatable, deletable
+    //also should add audit info
+    //
+    public void save(Object [] persited,Object [] updatated,Object [] deleted){
+    
+    }
 
     
     public void delete() {

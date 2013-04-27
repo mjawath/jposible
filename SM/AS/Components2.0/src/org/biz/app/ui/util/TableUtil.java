@@ -18,7 +18,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
 //import org.apache.commons.beanutils.BeanUtils;
 import org.components.parent.controls.PxTable;
-import org.components.parent.controls.editors.mce;
+import org.components.parent.controls.editors.BaseCellEditor;
 
 /**
  *
@@ -330,7 +330,7 @@ public class TableUtil {
                 TableCellEditor ce = jt.getCellEditor();
                 try {
 
-                    Component jc = ((mce) ce).getComponent();
+                    Component jc = ((BaseCellEditor) ce).getComponent();
                     if (jc instanceof JTextComponent) {
                         return ((JTextComponent) jc).getText();
 
@@ -357,7 +357,7 @@ public class TableUtil {
                 TableCellEditor ce = jt.getCellEditor();
                 try {
 
-                    Component jc = ((mce) ce).getComponent();
+                    Component jc = ((BaseCellEditor) ce).getComponent();
                     if (jc instanceof JTextComponent) {
                         return ((JTextComponent) jc).getText();
 

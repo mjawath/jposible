@@ -17,18 +17,24 @@ import org.components.controls.ModelEditableTable;
  *
  * @author d
  */
-public class ObjectCellEditor<T> extends mce {
+public class ObjectCellEditor<T> extends BaseCellEditor {
 
     PagedPopUpPanel<T> pagedPopup;
+    
     TextFieldWithPopUP<T> fieldWithPopUP;
 
+    public ObjectCellEditor(){
+        super();        
+    }
+    
     public ObjectCellEditor(ModelEditableTable table) {
         super(table);
-        fieldWithPopUP = new TextFieldWithPopUP<T>();
     }
 
     public void initPopup(List item, String[] properties, String[] titles, String selected) {
-        pagedPopup = new PagedPopUpPanel<T>((CTextField) component) {
+        
+         fieldWithPopUP = new TextFieldWithPopUP<T>();
+         pagedPopup = new PagedPopUpPanel<T>((CTextField) fieldWithPopUP) {
         };
         fieldWithPopUP.setObjectToTable(item);
         fieldWithPopUP.setPropertiesEL(properties);
@@ -59,4 +65,10 @@ public class ObjectCellEditor<T> extends mce {
         pagedPopup.setSelectedObject(null);
         pagedPopup.setSelectedID(null);
     }
+    
+    
+    
 }
+
+
+

@@ -1,6 +1,7 @@
 package org.biz.invoicesystem.dao.master;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -152,7 +153,32 @@ public class ItemDAO extends GenericDAO<Item> {
     }
     //////////////////////////////////////////////////////
 
-    
+    public void createTestData() {
+        System.out.println("persist working.....");
+
+        for (int x = 0; x < 150; x++) {
+            Item ii = new Item();
+
+            ii.setId("" + x);
+            ii.setCode("" + x);
+            ii.setCommission(1000d);
+            ii.setCost(3200d);
+            ii.setDescription("des");
+            ii.setDifferent(7);
+            ii.setDiscount(5d);
+            ii.setUnitOne("ggg");
+            ii.setUnitTwo("dddd");
+            ii.setSalesPrice(600d);
+            ii.setSupplierId("seeeee");
+            ii.setCrDate(new Date());
+            ii.setSavedDate(new Date());
+            ii.setEditedDate(new Date());
+            this.save(ii);
+
+        }
+        System.out.println("saved....");
+//      
+    }
     
     public static void main(String[] args) {
 
@@ -162,29 +188,8 @@ public class ItemDAO extends GenericDAO<Item> {
         //   System.out.println("l size s "+ls.getListSize());
         System.out.println("l size s " + ls.size());
 //   //     i.deleteItemByid("1000");
-//////        
-//        for(int x=0;x<150;x++){
-//            System.out.println("persist working.....");
-//      Item ii=new Item();
-//      
-//      ii.setId(""+x);
-//      ii.setCarton(00d);          
-//      ii.setCategory("catt");
-//      ii.setCode(""+x);
-//      ii.setCommission(1000d);
-//      ii.setCost(3200d);
-//      ii.setDescription("des");
-//      ii.setDifferent(7);
-//      ii.setDiscount(5d);
-//      ii.setUnitOne("ggg");
-//      ii.setUnitTwo("dddd");
-//      ii.setSalesPrice(600d);
-//      ii.setSupplierId("seeeee");
-//      
-//      i.save(ii);
-//              
-//              
-//              }
+//////    
+        
         System.out.println("saved....");
 //      List<Item> lst=i.getIndexItems(0,500);
 //      List<Item> lst1=i.getIndexItems(501, 1000);

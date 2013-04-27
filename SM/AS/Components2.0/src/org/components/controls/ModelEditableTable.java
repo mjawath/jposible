@@ -13,7 +13,6 @@ import java.util.EventObject;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
-import javax.swing.CellEditor;
 import javax.swing.InputMap;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
@@ -22,9 +21,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.components.parent.controls.PxTable;
-import org.components.parent.controls.editors.mce;
 import org.components.parent.controls.editors.TableInteractionListner;
-import org.components.parent.controls.editors.mce;
+import org.components.parent.controls.editors.BaseCellEditor;
 
 
 /**
@@ -36,8 +34,6 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
     public static int ROW_OBJECT_INDEX=0; 
     private TableInteractionListner tableInteractionListner;
     private boolean isCellEditableOnCellSelection; //responsible for defining weather cell is editable or not
-    private boolean isCellBeingEditedWhileChanging; // set to true when selection changing so if other editors calles the stop 
-    
     
  // cell eding we can escapre from duplicate method calls  of edit cell at
     /**
@@ -55,8 +51,8 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         setCellEditableOnCellSelection(true);
         setAutoCreateRowSorter(false);//
         tableInteractionListner = new TableInteractionListner(this);
-        getColumnModel().getColumn(0).setCellEditor(new mce(this));
-        getColumnModel().getColumn(1).setCellEditor(new mce(this));
+        getColumnModel().getColumn(0).setCellEditor(new BaseCellEditor(this));
+        getColumnModel().getColumn(1).setCellEditor(new BaseCellEditor(this));
 
         
         this.addKeyListener(new KeyAdapter() {
@@ -164,7 +160,7 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
             }
         ));
         setCellSelectionEnabled(true);
-        setRowHeight(24);
+        setRowHeight(38);
         setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -220,10 +216,7 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             System.out.println("change selection left");
         }
-    }
-    
-    
-    
+    }   
 
     @Override
     public void setValueAt(Object aValue, int row, int column) {
@@ -239,8 +232,7 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         int col=convertColumnIndexToModel(column);
         if(column<=0 || getPropertiesEL().length<=col-1)return null;
         return getPropertiesEL()[col];//column 
-    }
-    
+    }    
     
     @Override
     public TableCellEditor getCellEditor() {
@@ -253,7 +245,6 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
     public void selectNextCell() {
         int col = this.getSelectedColumn();
         int row = this.getSelectedRow();
-        if (!isCellBeingEditedWhileChanging) {
             col = convertColumnIndexToModel(col);
             row = convertRowIndexToModel(row);
             if (col < getColumnCount() - 1 && row < getRowCount()) {
@@ -261,10 +252,9 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
             } else if (col == getColumnCount() - 1 && row < getRowCount() - 1) {
                 changeSelection(++row, 0, false, false);
             }
-        }
     }
     /**
-     * * selects cell which is previouse  to currently selected cell
+     * selects cell which is previouse  to currently selected cell
      */
     public void selectPreviousCell() {
         int col = this.getSelectedColumn();
@@ -297,7 +287,7 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         
     }
 
-    public void setCellEditor(int column, mce ce) {
+    public void setCellEditor(int column, BaseCellEditor ce) {
         ce.setTable(this);
         this.getColumnModel().getColumn(column).setCellEditor(ce);
     }

@@ -1,5 +1,6 @@
-package org.biz.invoicesystem.master.ui;
+package org.biz.master.ui;
 
+import org.biz.invoicesystem.master.ui.*;
 import java.awt.AWTKeyStroke;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -15,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +32,7 @@ import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.Validator;
 import org.biz.app.ui.util.UIEty;
+import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.SupplierDAO;
 import org.biz.invoicesystem.entity.master.Category;
@@ -63,7 +66,7 @@ public class ItemMasterUI2 extends TabPanelUI {
     public ItemMasterUI2() {
         initComponents();
 //        keyListeners();
-//        init();
+        init();
     }
 
     /////////////////////////////////////
@@ -137,7 +140,7 @@ public class ItemMasterUI2 extends TabPanelUI {
                     return "Images Only";
                 }
             });
-            chooser.setCurrentDirectory(null);
+            chooser.setCurrentDirectory(null);           
             UOM.setUOMType(tunittype);
 
 //            tunittype.setModel(new DefaultComboBoxModel(new String[]{"3","4"}));
@@ -327,29 +330,6 @@ public class ItemMasterUI2 extends TabPanelUI {
     }
 
    
-    public void clear() {
-        try {
-
-            tPriceRange.setSelectedItem("");
-            tRngeValue.setText("");
-            TableUtil.cleardata(tblPriceRanges);
-            TableUtil.cleardata(tblBarcode);
-            tblunitprices.clear();
-
-            titemmark.setText("");
-            tItemBarcode.setText("");
-            etyToUI(new Item());
-
-            cPanel4.removeAll();
-            cPanel4.revalidate();
-
-            images.clear();
-            tItemcode.requestFocus();
-        } catch (Exception e) {
-        }
-
-    }
-
     private void deleteUnitRow() {
         //should check for primary keys deletion !!!!!
 
@@ -395,7 +375,6 @@ public class ItemMasterUI2 extends TabPanelUI {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        componentFactory1 = new org.components.util.ComponentFactory();
         tItemTrakSerial = new org.components.controls.CCheckBox();
         tItemCostPrice = new org.components.controls.CTextField();
         tItemMinimumStock = new org.components.controls.CTextField();
@@ -498,7 +477,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         tSupplierItem.setEditable(true);
         add(tSupplierItem);
-        tSupplierItem.setBounds(80, 110, 210, 20);
+        tSupplierItem.setBounds(80, 110, 210, 30);
         add(tItemDescription);
         tItemDescription.setBounds(80, 50, 210, 25);
 
@@ -829,13 +808,13 @@ public class ItemMasterUI2 extends TabPanelUI {
         add(cLabel8);
         cLabel8.setBounds(20, 130, 40, 20);
         add(ttype);
-        ttype.setBounds(80, 140, 210, 20);
+        ttype.setBounds(80, 150, 210, 30);
 
         cLabel9.setText("Model");
         add(cLabel9);
         cLabel9.setBounds(20, 160, 50, 20);
         add(ttype1);
-        ttype1.setBounds(80, 170, 210, 20);
+        ttype1.setBounds(80, 190, 210, 30);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1060,11 +1039,11 @@ public class ItemMasterUI2 extends TabPanelUI {
 //        ReflectionUtility.executeOnSW(this, "xx", "yy");
 
         try {
-            //validate vendor..
-            //code
-            //description
-            //salesprice
-
+            //validation of form
+            //validation of the bus obj
+            //persist
+            //update ui
+            
             if (UIEty.isTxtFieldNullOrEmpty(tItemcode)) {
                 MessageBoxes.wrnmsg(null, "Please Type Item Code", "Empty Item Code");
                 tItemcode.requestFocus();
@@ -1077,6 +1056,11 @@ public class ItemMasterUI2 extends TabPanelUI {
 
             Item exist = itemService.getDao().findItemByCode(selectedItem.getCode());
             if (exist == null || Validator.isEmptyOrNull(selectedItem.getId())) {
+                Date cDate= GenericDAOUtil.currentTime();
+                Date mDate= GenericDAOUtil.currentTime();
+                selectedItem.setCrDate(cDate);
+                selectedItem.setSavedDate(cDate);
+                selectedItem.setEditedDate(mDate);
                 itemService.getDao().save(selectedItem);
                 saveImages(selectedItem.getCode(), images);
             } else {
@@ -1085,12 +1069,14 @@ public class ItemMasterUI2 extends TabPanelUI {
                 int PromptResult = JOptionPane.showOptionDialog(null, "Item Already Exist Do You Want to Update it?", "Item Form", -1, 2, null, ObjButtons, ObjButtons[1]);
                 if (PromptResult == 0) {
                     selectedItem.setId(exist.getId());
+                    Date mDate= GenericDAOUtil.currentTime();
+                    selectedItem.setEditedDate(mDate);
+                    
                     itemService.getDao().update(selectedItem);
 
                     //put to thread 
                     deleteImages(selectedItem.getCode());
-                    saveImages(selectedItem.getCode(), images);
-
+                    saveImages(selectedItem.getCode(), images); 
 
                 } else {
 
@@ -1108,6 +1094,71 @@ public class ItemMasterUI2 extends TabPanelUI {
         selectedItem = new Item();
 
     }
+    
+    
+    public void delete() {
+        try {
+
+            if (UIEty.tcToStr(tItemcode) == null || UIEty.tcToStr(tItemcode).equals("")) {
+                MessageBoxes.wrnmsg(null, "Please Type Item Code", "Empty Item Code");
+                return;
+            }
+            //validate
+            // validate existing item for bus logic
+            //ask confirmation
+            //delete 
+            //delete any dependancies
+            // update ui
+            Item item = uiToEty(new Item());
+
+            Item exist = itemService.getDao().findItemByCode(item.getCode());
+            if (exist != null) {
+
+                String[] ObjButtons = {"Yes", "No"};
+                int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?", "Item Form", -1, 2, null, ObjButtons, ObjButtons[1]);
+
+
+                if (PromptResult == 0) {
+                    itemService.getDao().delete(exist);
+                    deleteImages(exist.getCode());
+                }
+
+            } else {
+//                MessageBoxes.errormsg(null, "No Item Found.", getTabName());
+                return;
+
+            }
+            clear();
+        } catch (Exception e) {
+
+//            MessageBoxes.errormsg(null, e.getMessage(), getTabName());
+        }
+
+    }
+
+    
+    public void clear() {
+        try {
+
+            tPriceRange.setSelectedItem("");
+            tRngeValue.setText("");
+            TableUtil.cleardata(tblPriceRanges);
+            TableUtil.cleardata(tblBarcode);
+            tblunitprices.clear();
+
+            titemmark.setText("");
+            tItemBarcode.setText("");
+            etyToUI(new Item());
+
+            cPanel4.removeAll();
+            cPanel4.revalidate();
+
+            images.clear();
+            tItemcode.requestFocus();
+        } catch (Exception e) {
+        }
+    }
+
 
     public Object[] xx() {
         System.out.println("xxx");
@@ -1239,72 +1290,8 @@ public class ItemMasterUI2 extends TabPanelUI {
         return extension;
     }
 
-//    try {
-//            if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-//                //need to clear table before adding rows....
-//                addToExtraPriceTbl();
-//                tPriceRange.setSelectedItem("");
-//                tRngeValue.setText("");
-//                tPriceRange.getEditor().getEditorComponent().requestFocus();
-//
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//      try {
-//
-//            if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-//                //need to clear table before adding rows....
-//                addToVariationTbl();
-//
-//                tVariationName.setSelectedItem("");
-//                tVariationPrice1.setText("");
-//                tVariationPrice2.setText("");
-//
-//                tVariationName.getEditor().getEditorComponent().requestFocus();
-//
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     private void tRngeValueKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tRngeValueKeyTyped
     }//GEN-LAST:event_tRngeValueKeyTyped
-
-    public void delete() {
-        try {
-
-            if (UIEty.tcToStr(tItemcode) == null || UIEty.tcToStr(tItemcode).equals("")) {
-                MessageBoxes.wrnmsg(null, "Please Type Item Code", "Empty Item Code");
-                return;
-            }
-
-            Item item = uiToEty(new Item());
-
-            Item exist = itemService.getDao().findItemByCode(item.getCode());
-            if (exist != null) {
-
-                String[] ObjButtons = {"Yes", "No"};
-                int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?", "Item Form", -1, 2, null, ObjButtons, ObjButtons[1]);
-
-
-                if (PromptResult == 0) {
-                    itemService.getDao().delete(exist);
-                    deleteImages(exist.getCode());
-                }
-
-            } else {
-                MessageBoxes.errormsg(null, "No Item Found.", getTabName());
-                return;
-
-            }
-            clear();
-        } catch (Exception e) {
-
-            MessageBoxes.errormsg(null, e.getMessage(), getTabName());
-        }
-
-    }
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
         try {
@@ -1449,6 +1436,7 @@ public class ItemMasterUI2 extends TabPanelUI {
         jl.setIcon(i12);
         return jl;
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
     private org.components.controls.CButton cButton2;
@@ -1467,7 +1455,6 @@ public class ItemMasterUI2 extends TabPanelUI {
     private org.components.containers.CPanel cPanel6;
     private org.components.controls.CScrollPane cScrollPane1;
     private org.components.controls.CScrollPane cScrollPane2;
-    private org.components.util.ComponentFactory componentFactory1;
     private com.components.custom.ControlPanel crudcontrolPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1530,15 +1517,7 @@ public class ItemMasterUI2 extends TabPanelUI {
     private org.components.controls.CComboBox tunittype;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public String getTabName() {
-        return "Item Master";
-    }
-
-    @Override
-    public JPanel getJPanel() {
-        return this;
-    }
+    
     //////////////////////////////////////////////
 
     public Supplier getSupplier(String typedName) throws Exception {

@@ -13,21 +13,6 @@ import javax.swing.SwingUtilities;
  */
 public class FormService {
 
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame("Test Form");
-                frame.setSize(800, 600);
-                frame.setVisible(true);
-                FormService service= new FormService();                
-                FormBase formUI = new FormBase(service);
-                frame.getContentPane().add(formUI);
-            }
-        });
-
-    }
 
     void save() {
         throw new UnsupportedOperationException("Not yet implemented");

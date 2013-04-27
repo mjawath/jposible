@@ -1,11 +1,9 @@
 package org.biz.invoicesystem.entity.master;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,10 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import org.biz.entity.BusObj;
 import org.biz.invoicesystem.system.SystemUtil;
 
 @Entity
-public class Item implements Serializable {
+public class Item extends BusObj{
     //   private static final long serialVersionUID = 1L;
 
     @Id

@@ -80,6 +80,12 @@ public class PxTable<T> extends JTable implements IComponent {
         this.modelClass = modelClass;
     }
 
+    public void initTable(Class modelClass,String[] propertiesEL,String[] title){
+        setModelClass(modelClass);
+        setPropertiesEL(propertiesEL);
+        setColumnHeader(title);        
+    }
+    
     public List<T> getModelCollection() {
         return modelCollection;
     }

@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.apache.derby.impl.jdbc.EmbedCallableStatement;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 public class JPAUtil {
@@ -17,13 +18,14 @@ public class JPAUtil {
     static int etyOldvertion = 0;
     private static EntityManagerFactory entityManagerFactory;
     private static EntityManager entityManager;
+    private static final String PU="InvoicingSystemPU";
 
     static {
         try {
             //how to start derby database
 
-           entityManagerFactory = Persistence.createEntityManagerFactory("InvoicingSystemPU");
-            entityManager = entityManagerFactory.createEntityManager();
+//           entityManagerFactory = Persistence.createEntityManagerFactory(PU);
+//            entityManager = entityManagerFactory.createEntityManager();
 
         } catch (Throwable e) {
             e.printStackTrace();
@@ -31,12 +33,24 @@ public class JPAUtil {
         }
     }
 
+    /*
+     * create entitimanager factory if there is not any 
+     */
     public static EntityManager getEntityManager() {
+        if (entityManager == null) {
+                entityManager=getEntityManagerFactory().createEntityManager();
+                return entityManager;
+        }
 
         return entityManagerFactory.createEntityManager();
     }
 
     public static EntityManagerFactory getEntityManagerFactory() {
+         if (entityManagerFactory == null) {
+
+            entityManagerFactory = Persistence.createEntityManagerFactory("InvoicingSystemPU");
+            return entityManagerFactory;
+        }
         return entityManagerFactory;
     }
 
@@ -104,12 +118,13 @@ public class JPAUtil {
 //        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
         props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("InvoicingSystemPU", props);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU, props);
 
         entityManagerFactory = emf;
         for (String string : emf.getProperties().keySet()) {
             System.out.println(emf.getProperties().get(string));
         }
+        entityManager=entityManagerFactory.createEntityManager();
      List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
         System.out.println(s);
     }

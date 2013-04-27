@@ -30,8 +30,7 @@ public class TextFieldWithPopUP<T> extends CTextField {
 
             @Override
             public void search(String qry) {
-                if(searchActionTask!=null)searchActionTask.actionCall(qry);
-                
+                if(searchActionTask!=null)searchActionTask.actionCall(qry);                
             }
         
         };
@@ -82,6 +81,7 @@ public class TextFieldWithPopUP<T> extends CTextField {
     public void setTitle(String[] title) {
         pagedPopUpPanel.setTitle(title);
     }
+    
     public void setSelectedProperty(String property) {
         pagedPopUpPanel.setSelectedProperty(property);
     }

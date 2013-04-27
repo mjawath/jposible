@@ -40,10 +40,6 @@ public class SalesInvoice extends BusObj implements Serializable {
     private List<SalesInvoiceLineItem> lineItems;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date docdate;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date saveddate;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    Date editeddate;
     @OneToOne
     private Shop shop;
     @OneToOne
@@ -71,22 +67,6 @@ public class SalesInvoice extends BusObj implements Serializable {
 
     public void setStatus(byte status) {
         this.status = status;
-    }
-
-    public Date getEditeddate() {
-        return editeddate;
-    }
-
-    public void setEditeddate(Date editeddate) {
-        this.editeddate = editeddate;
-    }
-
-    public Date getSaveddate() {
-        return saveddate;
-    }
-
-    public void setSaveddate(Date saveddate) {
-        this.saveddate = saveddate;
     }
 
     public Customer getCustomer() {

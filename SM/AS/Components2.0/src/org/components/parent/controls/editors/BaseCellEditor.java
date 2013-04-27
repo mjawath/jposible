@@ -23,33 +23,36 @@ import org.components.controls.ModelEditableTable;
  *
  * @author d
  */
-public class mce extends AbstractCellEditor implements IComponent,TableCellEditor{
+public class BaseCellEditor extends AbstractCellEditor implements IComponent,TableCellEditor{
 
     JComponent component;
     TableInteractionListner listner;
     CTextField txt;
     ModelEditableTable table;    
 
-        
-    public mce(final CTextField textField) {
+    public BaseCellEditor(){
+        super();        
+    }
+    
+    
+    public BaseCellEditor(final CTextField textField) {
         super();
-        component=textField;
-        
+        component=textField;        
     }
 
-    public mce(ModelEditableTable table) {
+    public BaseCellEditor(ModelEditableTable table) {
         this(createTextField());
         this.table = table;
         component.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                   mce.this. table.selectNextCell();//should call stop cell editing
+                   BaseCellEditor.this. table.selectNextCell();//should call stop cell editing
 //                    stopCellEditing();
                     return;
                 }
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    mce.this.table.selectPreviousCell();
+                    BaseCellEditor.this.table.selectPreviousCell();
 //                    stopCellEditing();
                     return;
                 }
@@ -108,5 +111,10 @@ public class mce extends AbstractCellEditor implements IComponent,TableCellEdito
     
      public void setTable(ModelEditableTable tbl) {
         this.table = tbl;
+        init();
+    } 
+     
+    public void init(){
+        
     } 
 }

@@ -44,9 +44,11 @@ this.param=obj;
     public void actionCall(Object obj){
 
     }
+    
     public void actionCall(){
 
     }
+    
     public void actionPerformed(ActionEvent e) {
         if(! validate()){
         return;

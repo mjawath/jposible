@@ -18,7 +18,7 @@ import org.components.controls.ModelEditableTable;
  *
  * @author nnjj
  */
-public class TablePopUpCellEditor extends mce {
+public class TablePopUpCellEditor extends BaseCellEditor {
 
     private JTable tbl;
     PagedPopUpPanel popUpComponent;

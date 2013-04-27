@@ -18,7 +18,7 @@ import org.components.controls.ModelEditableTable;
  *
  * @author nnjj
  */
-public class ComboBoxCellEditor extends mce {
+public class ComboBoxCellEditor extends BaseCellEditor {
 
     private JComboBox component;
     private JTable tbl;
@@ -61,7 +61,7 @@ public class ComboBoxCellEditor extends mce {
         return true;
     }
 
-    private void init() {
+    public void init() {
         //specify
         component = new JComboBox();
 //        component.setEditable(true);

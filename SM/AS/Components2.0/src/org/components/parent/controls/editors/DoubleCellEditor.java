@@ -16,19 +16,22 @@ import org.components.controls.ModelEditableTable;
  *
  * @author nnjj
  */
-public class DoubleCellEditor extends mce {
+public class DoubleCellEditor extends BaseCellEditor {
 
     // This method is called when a cell value is edited by the user.
 
     public DoubleCellEditor(ModelEditableTable jt) {
         super(jt);
-        init(jt);
+        table=jt;
+        init();
     }
 
-    private void init(ModelEditableTable jt) {
-        //specify
+    public DoubleCellEditor() {
+        super();        
+    }
 
-        table = jt;
+    public void init() {
+        //specify
         component = new JTextField();
         ComponentFactory.createDoubleTextField((JTextField)component);
         ((JTextField)component).addActionListener(new AbstractAction() {

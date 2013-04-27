@@ -41,12 +41,13 @@ public class CustomerListUi extends TabPanelUI   {
         }
         
     }
+    
     public CustomerListUi() {
         initComponents();
     }
  
      //////////////////////////////////////////////////
-      public void fillItemTbl(){
+    public void fillItemTbl(){
       TableUtil.cleardata(tblCustomerList);
       
           try {

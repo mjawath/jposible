@@ -175,8 +175,8 @@ public class PosInvoiceV3 extends TabPanelUI {
         invoice.setDiscount(UIEty.tcToDouble(tdis));
         invoice.setCashRecieveds(UIEty.tcToDouble(tcashrecieved));
 //        invoice.setRemarks(uiEty.tcToStr(tremark));
-        invoice.setEditeddate(SystemEntityUtil.getSystemDate());
-        invoice.setSaveddate(SystemEntityUtil.getSystemDate());
+//        invoice.setEditeddate(SystemEntityUtil.getSystemDate());
+//        invoice.setSaveddate(SystemEntityUtil.getSystemDate());
 //        invoice.setLineItems(lineItems);
 
     }

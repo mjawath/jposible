@@ -24,51 +24,16 @@ import org.components.parent.controls.editors.TableActions;
  */
 public class CxTable extends PxTable {
 
-    
-    
-    /** Creates new form BeanForm */
+    /**
+     * Creates new form BeanForm
+     */
     public CxTable() {
         initComponents();
-        this.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-        this.setSurrendersFocusOnKeystroke(true);
-        ActionListener al = new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
-        // i am disabling the default behaviour of table editing
-        // so we can imlplement our own way of navigation 
-        this.registerKeyboardAction(al, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-//        this.registerKeyboardAction(al, KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         this.setDefaultRenderer(String.class, new CustomRenderer());
         this.setDefaultRenderer(Double.class, new CustomRenderer());
         this.setDefaultRenderer(Object.class, new CustomRenderer());
-//        action=new TableSelectionAction(this, new HashMap<Integer, TableSelectionAction>());
     }
 
-    private boolean isCurrentRowValid=true;
-    
-    public boolean isCurrentRowValid() {
-        return isCurrentRowValid;
-    }
-    
-    public void setCurrentRowValid(boolean rowv) {
-         isCurrentRowValid=rowv;
-    }
-
-    public void setTableSelection(TableActions action ){
-        this.action=action;
-    }
-    
-    public TableActions getTableSelection( ){
-        return action;
-    }
-    
-    TableActions action;
-    public boolean action(){            
-        return false;
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,12 +55,6 @@ public class CxTable extends PxTable {
         setSurrendersFocusOnKeystroke(true);
         getTableHeader().setReorderingAllowed(false);
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    
-   
-
-    
-    
 }

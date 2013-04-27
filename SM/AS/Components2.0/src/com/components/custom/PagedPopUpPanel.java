@@ -25,6 +25,7 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.biz.app.ui.util.BizException;
@@ -135,7 +136,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     public PagedPopUpPanel(CTextField field) {
         initComponents();
         textField = field;
-
 //        this.requestFocusInWindow();
 //        cTextField1.requestFocus();
 
@@ -315,6 +315,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     //serach sort filter cache and within the cache we we do 
     //we find our entity
     public void search(String qry) {
+        System.out.println("-----this should be execucted inside the worker-------------------------");
     }
 
     public void getSeletedValue() {
