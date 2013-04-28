@@ -4,6 +4,7 @@
  */
 package org.biz.app.ui.util;
 
+import com.components.custom.TextFieldWithPopUP;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -403,6 +404,15 @@ public class UIEty {
             jtc.setText(val.toString());
         } else {
             jtc.setText("");
+        }
+
+    }
+    
+    public static void objToUi(TextFieldWithPopUP jtc, Object val) {
+        if (val != null) {
+            jtc.setSelectedObject(val);
+        } else {
+            jtc.clear();
         }
 
     }

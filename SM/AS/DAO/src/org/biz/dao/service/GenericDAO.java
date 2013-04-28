@@ -224,8 +224,8 @@ public class GenericDAO<T> {
 
     public List<T> getByCode(String code) {
 
-        String qry = " c.code like '%" + code + "'";
-        return pagedData(code, 0);
+        String qry = " c.code like '" + code + "%'";
+        return pagedData(qry, 0);
     }
 
     public void getNextPage(String qryname) {

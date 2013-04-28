@@ -6,21 +6,13 @@
  */
 package org.biz.invoicesystem.ui.transactions;
 
-import com.components.custom.ActionTask;
 import com.components.custom.PagedPopUpPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import org.biz.app.ui.util.TableUtil;
-import org.biz.app.ui.util.UIEty;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Item;
-import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
@@ -28,7 +20,6 @@ import org.biz.invoicesystem.service.master.CustomerService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.StaffService;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
-import org.biz.invoicesystem.system.SystemEntityUtil;
 import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 

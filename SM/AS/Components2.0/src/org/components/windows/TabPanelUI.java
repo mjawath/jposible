@@ -102,8 +102,6 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
     }
 
    
-    
-
     public void setobj(Object obj) {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

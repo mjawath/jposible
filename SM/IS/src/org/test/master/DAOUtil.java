@@ -4,6 +4,7 @@
  */
 package org.test.master;
 
+import org.biz.invoicesystem.dao.master.CategoryDAO;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.dao.util.JPAUtil;
 
@@ -18,6 +19,7 @@ public class DAOUtil {
 //        JPAUtil.createEMFWithCustomProperties();
         //create test Items
         new ItemDAO().createTestData();
-        
+                new CategoryDAO().createTestData();
+
     }
 }

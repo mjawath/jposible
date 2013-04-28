@@ -1,5 +1,7 @@
 package org.biz.master.ui;
 
+import com.components.custom.ActionTask;
+import com.components.custom.PopupListner;
 import org.biz.invoicesystem.master.ui.*;
 import java.awt.AWTKeyStroke;
 import java.awt.BorderLayout;
@@ -44,10 +46,10 @@ import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.service.master.CategoryService;
 import org.biz.invoicesystem.service.master.ItemService;
-import org.components.windows.TabPanelUI;
 import org.biz.invoicesystem.ui.list.master.ItemListUi;
+import org.components.windows.DetailPanel;
 
-public class ItemMasterUI2 extends TabPanelUI {
+public class ItemMasterUI2 extends DetailPanel {
 
     List<Item> items;
     List<Category> categorys;
@@ -91,7 +93,7 @@ public class ItemMasterUI2 extends TabPanelUI {
                 locz.add(location);
 
             }
-            UIEty.loadcombo(tItemCategory, catz);
+//            UIEty.loadcombo(tItemCategory, catz);
 
 
         } catch (Exception e) {
@@ -103,7 +105,6 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         try {
             selectedItem = new Item();
-            es = EntityService.getEntityService();
             itemService = new ItemService();
             categoryService =new CategoryService();
 
@@ -152,6 +153,19 @@ public class ItemMasterUI2 extends TabPanelUI {
 //        crudcontrolPanel.set
         tblunitprices.setPropertiesEL(new String[]{"id", "simbol", "salesPrice", "multi"});
 
+        tItemCategory.setObjectToTable(categorys);
+        tItemCategory.setPropertiesEL(new String[]{"id","code","description"});       
+        tItemCategory.setTitle(new String[]{"id","Code","Descrption"});        
+        tItemCategory.setSelectedProperty("code");
+        tItemCategory.getPagedPopUpPanel().setPoplistener(new PopupListner() {
+
+            @Override
+            public List searchItem(Object searchQry) {
+            return categoryService.getDao().getByCode(searchQry.toString());
+            }
+        });
+        
+        
         cPanel6.addToFocus(tunitsymbot);
         cPanel6.addToFocus(tContainsQty);
         cPanel6.addToFocus(tunittype);
@@ -445,13 +459,13 @@ public class ItemMasterUI2 extends TabPanelUI {
         jLabel12 = new javax.swing.JLabel();
         tItemcode = new org.components.controls.CTextField();
         jLabel6 = new javax.swing.JLabel();
-        tItemCategory = new org.components.controls.CComboBox();
         jLabel1 = new javax.swing.JLabel();
         crudcontrolPanel = new com.components.custom.ControlPanel();
         cLabel8 = new org.components.controls.CLabel();
         ttype = new org.components.controls.CTextField();
         cLabel9 = new org.components.controls.CLabel();
         ttype1 = new org.components.controls.CTextField();
+        tItemCategory = new com.components.custom.TextFieldWithPopUP();
 
         tItemTrakSerial.setText("Track Serial Number");
         tItemTrakSerial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -530,7 +544,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         jLabel21.setText("Supplier");
         add(jLabel21);
-        jLabel21.setBounds(20, 110, 50, 20);
+        jLabel21.setBounds(20, 120, 50, 20);
 
         cPanel6.setMinimumSize(new java.awt.Dimension(150, 150));
         cPanel6.setPreferredSize(new java.awt.Dimension(600, 400));
@@ -743,7 +757,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         jLabel4.setText("Category");
         add(jLabel4);
-        jLabel4.setBounds(20, 80, 60, 14);
+        jLabel4.setBounds(10, 240, 60, 14);
         add(tItemReOrder);
         tItemReOrder.setBounds(80, 500, 210, 25);
 
@@ -794,10 +808,6 @@ public class ItemMasterUI2 extends TabPanelUI {
         add(jLabel6);
         jLabel6.setBounds(200, 300, 80, 20);
 
-        tItemCategory.setEditable(true);
-        add(tItemCategory);
-        tItemCategory.setBounds(80, 80, 210, 23);
-
         jLabel1.setText("Item Code");
         add(jLabel1);
         jLabel1.setBounds(20, 20, 50, 20);
@@ -806,15 +816,17 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         cLabel8.setText("Type");
         add(cLabel8);
-        cLabel8.setBounds(20, 130, 40, 20);
+        cLabel8.setBounds(20, 150, 40, 20);
         add(ttype);
         ttype.setBounds(80, 150, 210, 30);
 
         cLabel9.setText("Model");
         add(cLabel9);
-        cLabel9.setBounds(20, 160, 50, 20);
+        cLabel9.setBounds(10, 190, 50, 20);
         add(ttype1);
         ttype1.setBounds(80, 190, 210, 30);
+        add(tItemCategory);
+        tItemCategory.setBounds(86, 230, 210, 25);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1070,8 +1082,7 @@ public class ItemMasterUI2 extends TabPanelUI {
                 if (PromptResult == 0) {
                     selectedItem.setId(exist.getId());
                     Date mDate= GenericDAOUtil.currentTime();
-                    selectedItem.setEditedDate(mDate);
-                    
+                    selectedItem.setEditedDate(mDate);                    
                     itemService.getDao().update(selectedItem);
 
                     //put to thread 
@@ -1482,7 +1493,7 @@ public class ItemMasterUI2 extends TabPanelUI {
     private javax.swing.JTabbedPane jTabbedPane1;
     private org.components.controls.CTextField tContainsQty;
     private org.components.controls.CTextField tItemBarcode;
-    private org.components.controls.CComboBox tItemCategory;
+    private com.components.custom.TextFieldWithPopUP tItemCategory;
     private org.components.controls.CTextField tItemCommission;
     private org.components.controls.CTextField tItemCommissionValue;
     private org.components.controls.CTextField tItemCostPrice;

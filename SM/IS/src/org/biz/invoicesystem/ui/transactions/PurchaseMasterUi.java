@@ -43,7 +43,7 @@ import org.components.windows.TabPanelUI;
  *
  * @author Administrator
  */
-public class PurchaseMasterUi extends TabPanelUI implements CrudControl{
+public class PurchaseMasterUi extends TabPanelUI {
 
     PurchaseInvoice invoice;
     List<PurchaseInvoiceLineItem> lineItems;
