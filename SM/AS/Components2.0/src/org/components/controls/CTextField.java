@@ -101,7 +101,7 @@ public class CTextField extends PTextField {
                         }
                     }
                     if(getContainer()!=null)
-                    getContainer().gotoNextComponent();
+                    getContainer().gotoNextComponent(CTextField.this);
                 }
             }
         });

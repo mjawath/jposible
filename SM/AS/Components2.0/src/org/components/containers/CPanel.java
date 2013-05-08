@@ -17,7 +17,9 @@ import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import org.components.parent.containers.PPanel;
+import org.components.parent.controls.editors.NEWED;
 
 /**
  *
@@ -48,10 +50,10 @@ public class CPanel extends PPanel implements IContainer  {
     }
 
   @Override
-    public void gotoNextComponent() {
+    public void gotoNextComponent(Component jc) {
         //get current focused compnentt
-        Component jc=KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
-
+//        Component jc=KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
+        focus.indexOf(jc);
         //find from compnent list
         int x=0;
         for (IComponent com : focus) {
@@ -68,10 +70,9 @@ public class CPanel extends PPanel implements IContainer  {
     }
   
 
-    public void addToFocus(IComponent com){
-    focus.add(com);
-    com.setContainer(this);
-    
+    public void addToFocus(IComponent com) {
+        focus.add(com);
+        com.setContainer(this);
     }
 
     private List<IComponent> focus;

@@ -12,12 +12,12 @@ import org.biz.invoicesystem.dao.master.ShopDao;
  *
  * @author d
  */
-public class ShopService extends Service{
+public class ShopService extends Service {
 
-    
     ShopDao dao;
+
     public ShopService() {
-    dao=new ShopDao();
+        dao = new ShopDao();
     }
 
     @Override
@@ -26,7 +26,6 @@ public class ShopService extends Service{
     }
 
     public void setList(List shops) {
-       dao.setList(shops); 
+        dao.setList(shops);
     }
-    
 }

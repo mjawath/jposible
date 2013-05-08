@@ -14,56 +14,53 @@ import java.util.List;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.invoicesystem.entity.master.Customer;
-import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.CustomerService;
-import org.components.windows.TabPanelUI;
- 
-public class CustomerListUi extends TabPanelUI   {
+import org.components.windows.ListViewPanel;
 
-       private CustomerService cService;
-  
- // List<Customer> customers;
-  
-  private Customer selectedCus;
+public class CustomerListUi extends ListViewPanel<Customer> {
+
+    private CustomerService cService;
+    // List<Customer> customers;
+    private Customer selectedCus;
 
     @Override
     public void init() {
-  
+
         try {
-           
-   cService=new CustomerService();
-   //customers=new ArrayList<Customer>();
-  // customer=new Customer();
-   
-   
+
+            cService = new CustomerService();
+            //customers=new ArrayList<Customer>();
+            // customer=new Customer();
+
+
         } catch (Exception e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
-        
+
     }
-    
+
     public CustomerListUi() {
         initComponents();
     }
- 
-     //////////////////////////////////////////////////
-    public void fillItemTbl(){
-      TableUtil.cleardata(tblCustomerList);
-      
-          try {
-         List<Customer> lsts=cService.getDao().getAll();   
-              for (Customer i : lsts) {
-    TableUtil.addrow(tblCustomerList, new Object[]{i.getCode(),i.getCustomerName(),i.getPhone(),0.0,true});                                
-              }
-          
-          
-          } catch (Exception e) {
-          e.printStackTrace();
-          }
-           
-      }
-      
- ///////////////////////////////////////////////////// 
+
+    //////////////////////////////////////////////////
+    public void fillItemTbl() {
+        TableUtil.cleardata(tblCustomerList);
+
+        try {
+            List<Customer> lsts = cService.getDao().getAll();
+            for (Customer i : lsts) {
+                TableUtil.addrow(tblCustomerList, new Object[]{i.getCode(), i.getCustomerName(), i.getPhone(), 0.0, true});
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    ///////////////////////////////////////////////////// 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -116,7 +113,7 @@ public class CustomerListUi extends TabPanelUI   {
         tblCustomerList.getColumnModel().getColumn(1).setMaxWidth(150);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(10, 47, 760, 278);
+        jScrollPane1.setBounds(10, 75, 760, 250);
 
         cNewCustomer.setText("New ");
         cNewCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +201,6 @@ public class CustomerListUi extends TabPanelUI   {
     private void cBulkSmsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBulkSmsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cBulkSmsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cBulkMail;
     private org.components.controls.CButton cBulkSms;
@@ -221,12 +217,12 @@ public class CustomerListUi extends TabPanelUI   {
 
     @Override
     public String getTabName() {
-       return "Customer List";
+        return "Customer List";
     }
 
     @Override
     public JPanel getJPanel() {
-    
-        return this;    
+
+        return this;
     }
 }

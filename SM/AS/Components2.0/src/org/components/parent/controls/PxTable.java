@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
+import org.components.parent.controls.editors.TableInteractionListner;
 
 /**
  *
@@ -34,6 +35,8 @@ public class PxTable<T> extends JTable implements IComponent {
     private String newRowId = newRowId_cons;
     private static final String newRowId_cons = "#NewRow#";
     private int newRowId_SEED = -10000001;
+    private TableInteractionListner tableInteractionListner;
+    
 
     @Override
     public void setContainer(IContainer con) {
@@ -225,10 +228,23 @@ public class PxTable<T> extends JTable implements IComponent {
        Component com= super.prepareEditor(editor, row, column);
         return com;
     }
-    
-    
-    
 
+    public TableInteractionListner getTableInteractionListner() {
+        return tableInteractionListner;
+    }
+
+    public void setTableInteractionListner(TableInteractionListner tableInteractionListner) {
+        this.tableInteractionListner = tableInteractionListner;
+        tableInteractionListner.setTable(this);
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        if(tableInteractionListner!=null)tableInteractionListner.isCellEditable(row, column);
+        return false;
+    }
+    
+    
     /**
      * get the list of object from the table
      * @return 

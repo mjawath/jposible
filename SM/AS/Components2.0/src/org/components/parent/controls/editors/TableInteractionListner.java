@@ -18,6 +18,13 @@ public class TableInteractionListner {
         this.table = table;
     }
 
+    public TableInteractionListner() {        
+    }
+    
+    public void setTable(JTable table){
+        this.table=table;
+    }
+    
     public void onCellStartEdit() {
     }
 
@@ -36,5 +43,9 @@ public class TableInteractionListner {
     }
 
     public void moveSelection() {
+    }
+    
+    public boolean isCellEditable(int row,int column){
+        return false;
     }
 }

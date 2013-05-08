@@ -244,7 +244,7 @@ public abstract class LineItemPanel extends CPanel implements IContainer {
     }
 
     @Override
-    public void gotoNextComponent() {
+    public void gotoNextComponent(Component comp) {
         //get current focused compnentt
         Component jc = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
 

@@ -1,23 +1,18 @@
 package org.biz.master.ui;
 
-import com.components.custom.ActionTask;
 import com.components.custom.PopupListner;
 import org.biz.invoicesystem.master.ui.*;
-import java.awt.AWTKeyStroke;
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -49,14 +44,12 @@ import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.ui.list.master.ItemListUi;
 import org.components.windows.DetailPanel;
 
-public class ItemMasterUI2 extends DetailPanel {
+public class ItemMasterUI2 extends DetailPanel<Item> {
 
     List<Item> items;
     List<Category> categorys;
     ItemService itemService;
     CategoryService categoryService;
-    EntityService es;
-
     ItemPopUp ipu;
     private Item selectedItem;
     private ItemMasterTab mastertab;
@@ -152,7 +145,7 @@ public class ItemMasterUI2 extends DetailPanel {
         }
 //        crudcontrolPanel.set
         tblunitprices.setPropertiesEL(new String[]{"id", "simbol", "salesPrice", "multi"});
-
+        
         tItemCategory.setObjectToTable(categorys);
         tItemCategory.setPropertiesEL(new String[]{"id","code","description"});       
         tItemCategory.setTitle(new String[]{"id","Code","Descrption"});        
@@ -337,12 +330,19 @@ public class ItemMasterUI2 extends DetailPanel {
 
                 }
             });
+            
+          addToFocus(tItemcode);
+          addToFocus(tItemDescription);
+          addToFocus(tSupplierItem);
+          addToFocus(ttype);
+          addToFocus(tmodel);
+          addToFocus(tmodel);
+                
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
    
     private void deleteUnitRow() {
         //should check for primary keys deletion !!!!!
@@ -771,7 +771,7 @@ public class ItemMasterUI2 extends DetailPanel {
         tItemTrakExpiry.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         tItemTrakExpiry.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         cPanel2.add(tItemTrakExpiry);
-        tItemTrakExpiry.setBounds(111, 0, 70, 40);
+        tItemTrakExpiry.setBounds(100, 0, 70, 40);
 
         tItemTrakNonStockItem.setText("Non Stock Item");
         tItemTrakNonStockItem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -826,7 +826,7 @@ public class ItemMasterUI2 extends DetailPanel {
         add(ttype1);
         ttype1.setBounds(80, 190, 210, 30);
         add(tItemCategory);
-        tItemCategory.setBounds(86, 230, 210, 25);
+        tItemCategory.setBounds(80, 230, 210, 25);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -957,8 +957,6 @@ public class ItemMasterUI2 extends DetailPanel {
     public void etyToUI(Item i) {
 
         try {
-
-
             UIEty.objToUi(tItemcode, i.getCode());
             UIEty.objToUi(tItemDescription, i.getDescription());
             UIEty.objToUi(tItemCategory, i.getCategory());
@@ -1046,6 +1044,9 @@ public class ItemMasterUI2 extends DetailPanel {
 
     }
 
+    
+    //***************persistence logic*************************//
+    
     public void save() {
 
 //        ReflectionUtility.executeOnSW(this, "xx", "yy");
@@ -1104,8 +1105,7 @@ public class ItemMasterUI2 extends DetailPanel {
         }
         selectedItem = new Item();
 
-    }
-    
+    }    
     
     public void delete() {
         try {
@@ -1146,7 +1146,6 @@ public class ItemMasterUI2 extends DetailPanel {
         }
 
     }
-
     
     public void clear() {
         try {
@@ -1170,7 +1169,9 @@ public class ItemMasterUI2 extends DetailPanel {
         }
     }
 
-
+    
+    
+    
     public Object[] xx() {
         System.out.println("xxx");
         return new Object[]{"asss", new Object()};
@@ -1548,41 +1549,6 @@ public class ItemMasterUI2 extends DetailPanel {
     }
     //////////////////////////////////////////////////////
 
-    public static void main(String[] args) {
-        final JTabbedPane tp = new JTabbedPane();
-
-        // Remove Tab as the focus traversal key - Could always add another key stroke here instead.
-        tp.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.<AWTKeyStroke>emptySet());
-
-        KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0);
-
-        Action nextTab = new AbstractAction("NextTab") {
-
-            public void actionPerformed(ActionEvent evt) {
-                int i = tp.getSelectedIndex();
-                tp.setSelectedIndex(i == tp.getTabCount() - 1 ? 0 : i + 1);
-            }
-        };
-
-        // Register action.
-        tp.getActionMap().put("NextTab", nextTab);
-        tp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, "NextTab");
-
-        tp.addTab("Foo", new JPanel());
-        tp.addTab("Bar", new JPanel());
-        tp.addTab("Baz", new JPanel());
-        tp.addTab("Qux", new JPanel());
-
-        JFrame frm = new JFrame();
-
-        frm.setLayout(new BorderLayout());
-        frm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frm.add(new JButton(nextTab), BorderLayout.NORTH);
-        frm.add(tp, BorderLayout.CENTER);
-        frm.setBounds(50, 50, 400, 300);
-        frm.setVisible(true);
-    }
-
     /**
      * @return the selectedItem
      */
@@ -1662,6 +1628,9 @@ public class ItemMasterUI2 extends DetailPanel {
 
         }
     }
+    
+    
+   
 }
 /*
  ***********************************************************

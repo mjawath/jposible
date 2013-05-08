@@ -4,17 +4,46 @@
  */
 package org.components.windows;
 
+import app.utils.SystemUtil;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import org.components.parent.controls.PxTable;
+
 /**
  *
  * @author d
  */
-public class ListViewPanel extends TabPanelUI {
+public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListener{
 
     /**
      * Creates new form ListViewPanel
      */
     public ListViewPanel() {
+        super();
         initComponents();
+    }
+    
+    public void init(final PxTable tbl){    
+        tbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Object obj = tbl.getSelectedObject();
+                    //get the main window 
+                    //get the detail for this listview
+                    //set obj
+                    if (obj == null) {
+                        return;
+                    }
+                    System.out.println("Detail panel");
+                    DetailPanel dp = (DetailPanel) SystemUtil.getObj("item");
+                    dp.etyToUI(obj);
+                    
+                }
+            }
+        });
     }
 
     /**
@@ -34,9 +63,16 @@ public class ListViewPanel extends TabPanelUI {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 338, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+      
+       
+       
+    }
 }

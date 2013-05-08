@@ -32,7 +32,6 @@ import org.components.parent.controls.editors.BaseCellEditor;
 public class ModelEditableTable<T> extends PxTable implements ListSelectionListener{
 
     public static int ROW_OBJECT_INDEX=0; 
-    private TableInteractionListner tableInteractionListner;
     private boolean isCellEditableOnCellSelection; //responsible for defining weather cell is editable or not
     
  // cell eding we can escapre from duplicate method calls  of edit cell at
@@ -50,7 +49,6 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         this.setSurrendersFocusOnKeystroke(true);
         setCellEditableOnCellSelection(true);
         setAutoCreateRowSorter(false);//
-        tableInteractionListner = new TableInteractionListner(this);
         getColumnModel().getColumn(0).setCellEditor(new BaseCellEditor(this));
         getColumnModel().getColumn(1).setCellEditor(new BaseCellEditor(this));
 
@@ -272,17 +270,6 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
     /**
      * @return the tableInteractionListner
      */
-    public TableInteractionListner getTableInteractionListner() {
-        return tableInteractionListner;
-    }
-
-    /**
-     * @param tableInteractionListner the tableInteractionListner to set
-     */
-    public void setTableInteractionListner(TableInteractionListner tableInteractionListner) {
-        this.tableInteractionListner = tableInteractionListner;
-    }
-
     public void setEditorForColumn(int column,TableCellEditor cellEditor) {
         
     }

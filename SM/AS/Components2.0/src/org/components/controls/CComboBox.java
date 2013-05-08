@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 
 /**
  *
@@ -83,7 +82,7 @@ public class CComboBox<E> extends JComboBox implements IComponent{
     }
 
     public void init() {
-
+        
 
         actionTasks = new ArrayList<ActionTask>();
 
@@ -99,10 +98,11 @@ public class CComboBox<E> extends JComboBox implements IComponent{
                     }
                     // just change the focus
                     if(getContainer()!=null)
-                    getContainer().gotoNextComponent();
+                    getContainer().gotoNextComponent(CComboBox.this);
                 }
             }
         });
+        
 
         getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
 
@@ -115,7 +115,7 @@ public class CComboBox<E> extends JComboBox implements IComponent{
                         }
                     }
                     if(getContainer()!=null)
-                    getContainer().gotoNextComponent();
+                    getContainer().gotoNextComponent(CComboBox.this);
                     // just change the focus 
                 }
             }

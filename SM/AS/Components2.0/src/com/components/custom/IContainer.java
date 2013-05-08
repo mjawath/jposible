@@ -4,6 +4,8 @@
  */
 package com.components.custom;
 
+import java.awt.Component;
+
 /**
  *
  * @author Jawath
@@ -12,6 +14,6 @@ package com.components.custom;
     
     public void callBackAction();
 
-    public void gotoNextComponent();
+    public void gotoNextComponent(Component com);
     
 }

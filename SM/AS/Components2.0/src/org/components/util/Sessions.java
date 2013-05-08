@@ -26,13 +26,14 @@ public class Sessions {
        
     }
 
-    public static void  getSession(){
+    public static Sessions  getSession(){
         if (sessions==null) {
             sessions = new Sessions();
         }
         if (hashMap==null) {
             hashMap = new HashMap<String, Object>();
         }
+        return sessions;
     }
 
     public static void addToSession(String key,Object val){

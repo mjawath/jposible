@@ -5,6 +5,8 @@
 package app.utils;
 
 import java.util.Random;
+import javax.swing.JComponent;
+import org.components.util.Sessions;
 
 /**
  *
@@ -12,6 +14,16 @@ import java.util.Random;
  */
 public class SystemUtil {
 
+    public static Sessions sessions= Sessions.getSession(); 
+    
+    public static void addTabToSessions(String key,Object comp){
+        sessions.addToSession(key, comp);       
+    }
+    
+    public static Object getObj(String key){
+        return sessions.getObj(key);
+    }
+    
     public static  String getKeys() {
         String rn=""+AB.charAt(rnd.nextInt(AB.length()));
         String key = System.currentTimeMillis()+"-"+rn;

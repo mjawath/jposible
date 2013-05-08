@@ -4,7 +4,6 @@
  */
 package org.biz.dao.service;
 
-import java.util.List;
 import org.biz.dao.util.EntityService;
 
 /**

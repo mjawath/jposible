@@ -1,42 +1,36 @@
-
 package org.biz.invoicesystem.service.inventory;
 
 import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
 import org.biz.erp.inventory.dao.TransferOrderDAO;
-import org.biz.invoicesystem.dao.transactions.SalesInvoiceDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 import org.biz.invoicesystem.entity.inventory.TransferOrder;
 import org.biz.invoicesystem.entity.inventory.TransferOrderLineItem;
-import org.biz.invoicesystem.entity.transactions.SalesInvoice;
-import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 
 /**
  *
  * @author d
  */
-public class TransferOrderService extends Service{
+public class TransferOrderService extends Service {
 
     TransferOrderDAO dao;
 
     public TransferOrderService() {
-    dao=new TransferOrderDAO();
+        dao = new TransferOrderDAO();
     }
-
 
     public TransferOrderDAO getDao() {
         return dao;
     }
 
-
-    public void createInventoryJournal(TransferOrder invoice){
-       invoice.setId(EntityService.getKeys());
+    public void createInventoryJournal(TransferOrder invoice) {
+        invoice.setId(EntityService.getKeys());
         //inventory journal for out
-        InventoryJournal ijOut=new InventoryJournal();
-        ijOut.setId(   EntityService.getKeys()) ;
+        InventoryJournal ijOut = new InventoryJournal();
+        ijOut.setId(EntityService.getKeys());
         for (TransferOrderLineItem toli : invoice.getLineItemList()) {
-            InventoryJournalLine ijl=new InventoryJournalLine();
+            InventoryJournalLine ijl = new InventoryJournalLine();
             ijl.setId(toli.getId());
             ijl.setDescription(toli.getId());
             ijl.setItem(toli.getItem());
@@ -49,14 +43,14 @@ public class TransferOrderService extends Service{
             ijOut.addIJLine(ijl);
 //            ijl.setShop(invoice.gets);
 //            jt
-                    //shop ware houses
+            //shop ware houses
 //            ijl.setUom(sl.getQty());
         }
         //inventory journal for in
-InventoryJournal ijIn=new InventoryJournal();
-        ijOut.setId(   EntityService.getKeys()) ;
+        InventoryJournal ijIn = new InventoryJournal();
+        ijOut.setId(EntityService.getKeys());
         for (TransferOrderLineItem toli : invoice.getLineItemList()) {
-            InventoryJournalLine ijl=new InventoryJournalLine();
+            InventoryJournalLine ijl = new InventoryJournalLine();
             ijl.setId(toli.getId());
             ijl.setDescription(toli.getId());
             ijl.setItem(toli.getItem());
@@ -69,9 +63,9 @@ InventoryJournal ijIn=new InventoryJournal();
             ijIn.addIJLine(ijl);
 //            ijl.setShop(invoice.gets);
 //            jt
-                    //shop ware houses
+            //shop ware houses
 //            ijl.setUom(sl.getQty());
         }
-        dao.save(invoice,ijOut,ijIn);
+        dao.save(invoice, ijOut, ijIn);
     }
 }
