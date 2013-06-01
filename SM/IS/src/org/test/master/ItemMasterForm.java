@@ -38,7 +38,7 @@ public class ItemMasterForm extends javax.swing.JPanel {
         modelEditableTable1.setModelCollection(lineItems);
         modelEditableTable1.setCellEditor(1,new DoubleCellEditor());
         ObjectCellEditor<Item> itemCell=new ObjectCellEditor<Item>();
-        itemCell.initPopup(getItems(), new String[]{},new String[]{},"code");        
+        itemCell.initPopup( new String[]{},new String[]{},"code");        
         modelEditableTable1.setCellEditor(2, itemCell);
     }
         

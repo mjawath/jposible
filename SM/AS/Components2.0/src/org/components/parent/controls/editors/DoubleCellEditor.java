@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import org.biz.app.ui.util.ComponentFactory;
 import org.components.controls.ModelEditableTable;
 
@@ -44,6 +46,36 @@ public class DoubleCellEditor extends BaseCellEditor {
                 }
             }
         });
+        ((JTextField)component).getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                TableInteractionListner til = table.getTableInteractionListner();
+                if (til != null) {
+                    //set the value to the table setvalue at pls 
+                    // of the specified column           
+                    int col = table.getEditingColumn();
+                    int row = table.getEditingRow();
+                    if (col > -1 && row > -1) {
+                        Object value =getCellEditorValue();                        
+                        table.setValueAt(value, row, col);
+                        System.out.println("Table value " + value);
+                        til.onCellEditing(table.getSelectedObject(), table.getEditingColumn());
+                    }
+                }
+            }
+        });
+        
 
     }
 

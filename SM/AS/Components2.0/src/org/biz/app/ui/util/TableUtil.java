@@ -9,14 +9,13 @@ import java.awt.event.KeyEvent;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.CellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
-//import org.apache.commons.beanutils.BeanUtils;
+import org.components.controls.ModelEditableTable;
 import org.components.parent.controls.PxTable;
 import org.components.parent.controls.editors.BaseCellEditor;
 
@@ -189,6 +188,20 @@ public class TableUtil {
         point = jTable.convertRowIndexToModel(point);
         getdtm(jTable).removeRow(point);
 
+    }
+    
+    public static void moveRow(JTable jTable, int point, int pointDest) {
+        point = jTable.convertRowIndexToModel(point);
+        if ((point + pointDest) > -1 && (point + pointDest) < getdtm(jTable).getRowCount()) {
+            TableCellEditor tce = jTable.getCellEditor();
+            int editingcol = jTable.getEditingColumn();
+            int editingrow = jTable.getEditingRow();
+            if (tce != null) {
+                tce.cancelCellEditing();
+            }
+            getdtm(jTable).moveRow(point, point, point + pointDest);
+            jTable.changeSelection(point+pointDest, editingcol>-1?editingcol:jTable.getSelectedColumn(), true, false);
+        }
     }
 
     public static void findRemoverow(JTable jTable, String code, int point) {
@@ -485,16 +498,8 @@ public class TableUtil {
        
      */
     public static void addModelToTable(Object obj, PxTable table) {
-        Vector row = new Vector();
-        String[] prop = table.getPropertiesEL();
-        if(prop==null)return;
-        row.add(obj);
-        for (int i = 1; i < prop.length; i++) {            
-            String var = prop[i];
-            Object ob = ReflectionUtility.getProperty(obj, var);
-            row.add(ob);            
-        }
-        addrow(table, row);
+        
+        addrow(table, setRow(table, obj));
     }
     
     public static void setCollectionToTable(List listobj, PxTable table) {
@@ -526,17 +531,23 @@ public class TableUtil {
     
     public static void replaceModel(PxTable table, Object obj, int point) {
 
-        String[] prop = table.getPropertiesEL();
-        Vector row = new Vector();
-
-        for (String var : prop) {
-            Object ob = ReflectionUtility.getProperty(obj, var);
-            row.add(ob);
-        }
-
-        replacerow(table, row, point);
+       replacerow(table, setRow(table, obj), point);
 
     }
+    
+    private static Vector setRow(PxTable table,Object obj){
+    
+        Vector row = new Vector();
+        String[] prop = table.getPropertiesEL();
+        if(prop==null)return row;
+        row.add(obj);
+        for (int i = 1; i < prop.length; i++) {            
+            String var = prop[i];
+            Object ob = ReflectionUtility.getProperty(obj, var);
+            row.add(ob);            
+        }
+        return row;
+    } 
 
     public static void replaceSelectedModel(PxTable table, Object obj) {
         if (table.getSelectedRow() > -1) {

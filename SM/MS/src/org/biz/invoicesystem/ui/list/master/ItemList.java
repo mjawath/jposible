@@ -17,7 +17,8 @@ import org.components.windows.ListViewPanel;
  */
 public class ItemList extends ListViewPanel {
 
-    ItemService itemService;
+    private ItemService itemService;
+    
     /**
      * Creates new form ItemList
      */

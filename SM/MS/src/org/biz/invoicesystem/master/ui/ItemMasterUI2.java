@@ -1558,41 +1558,6 @@ public class ItemMasterUI2 extends TabPanelUI {
     }
     //////////////////////////////////////////////////////
 
-    public static void main(String[] args) {
-        final JTabbedPane tp = new JTabbedPane();
-
-        // Remove Tab as the focus traversal key - Could always add another key stroke here instead.
-        tp.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.<AWTKeyStroke>emptySet());
-
-        KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0);
-
-        Action nextTab = new AbstractAction("NextTab") {
-
-            public void actionPerformed(ActionEvent evt) {
-                int i = tp.getSelectedIndex();
-                tp.setSelectedIndex(i == tp.getTabCount() - 1 ? 0 : i + 1);
-            }
-        };
-
-        // Register action.
-        tp.getActionMap().put("NextTab", nextTab);
-        tp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, "NextTab");
-
-        tp.addTab("Foo", new JPanel());
-        tp.addTab("Bar", new JPanel());
-        tp.addTab("Baz", new JPanel());
-        tp.addTab("Qux", new JPanel());
-
-        JFrame frm = new JFrame();
-
-        frm.setLayout(new BorderLayout());
-        frm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frm.add(new JButton(nextTab), BorderLayout.NORTH);
-        frm.add(tp, BorderLayout.CENTER);
-        frm.setBounds(50, 50, 400, 300);
-        frm.setVisible(true);
-    }
-
     /**
      * @return the selectedItem
      */

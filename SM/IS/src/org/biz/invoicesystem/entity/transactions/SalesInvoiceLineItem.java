@@ -144,10 +144,8 @@ public class SalesInvoiceLineItem extends BusObj implements Serializable  {
         return price;
     }
 
-    public void calculateLineItem(){
-    
-            setLineAmount(MathUtil.multiply(getQty(), getPrice()));
-    
+    public void calculateLineItem(){    
+        setLineAmount(MathUtil.multiply(getQty(), getPrice()));    
     }
     
 }

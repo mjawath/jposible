@@ -297,18 +297,15 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
             try {
-                        System.out.println("-----this should be execucted inside the worker-------------------------");
+                System.out.println("-----this should be execucted inside the worker-------------------------");
 
-                long x=System.currentTimeMillis();//this should be performed within worker
-                // and datble should be udated
-                //first key waits for sql retruns data
-                //time delay should be applyed to query
                 search(textField.getText());
                 System.out.println("search text "+textField.getText());
                 list= popupListner.searchItem(textField.getText());
-                setObjectToTable(list);
-                showPopUp();
+                long x=System.currentTimeMillis();
+                setObjectToTable(list);//this setting object to table takes lots of time
                 x=System.currentTimeMillis()-x;
+                showPopUp();
                 System.out.println(x);
 
             } catch (Exception ee) {

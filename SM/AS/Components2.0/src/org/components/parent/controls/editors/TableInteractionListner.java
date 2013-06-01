@@ -33,6 +33,10 @@ public class TableInteractionListner {
 
     public void onCellBeforeSelection() {
     }
+    
+    public void onCellEditing(Object cellObj,int column){
+    
+    }
 
     public boolean validateCell() {
 

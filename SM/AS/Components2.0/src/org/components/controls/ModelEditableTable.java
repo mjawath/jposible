@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.EventObject;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -21,7 +22,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.components.parent.controls.PxTable;
-import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.parent.controls.editors.BaseCellEditor;
 
 
@@ -50,7 +50,7 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         setCellEditableOnCellSelection(true);
         setAutoCreateRowSorter(false);//
         getColumnModel().getColumn(0).setCellEditor(new BaseCellEditor(this));
-        getColumnModel().getColumn(1).setCellEditor(new BaseCellEditor(this));
+//        getColumnModel().getColumn(1).setCellEditor(new BaseCellEditor(this));
 
         
         this.addKeyListener(new KeyAdapter() {
@@ -136,6 +136,13 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         this.isCellEditableOnCellSelection = makeCellEditableOnCellSelection;
     }
 
+    @Override
+    public boolean isCellEditable(int row, int column) {
+    if(tableInteractionListner!=null && tableInteractionListner.isCellEditable(row, column))return true;
+        return super.isCellEditable(row, column);
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -274,10 +281,20 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
         
     }
 
+    /*
+     * column index start from 1 ,not 0 becas ,o column is object
+     */    
     public void setCellEditor(int column, BaseCellEditor ce) {
         ce.setTable(this);
         this.getColumnModel().getColumn(column).setCellEditor(ce);
     }
 
+    public void setCellEditors(BaseCellEditor... cels){
+        if(cels==null)return;
+        int x=1;
+        for (BaseCellEditor baseCellEditor : cels) {
+            setCellEditor(x++,baseCellEditor);            
+        }
+    }
 }
 

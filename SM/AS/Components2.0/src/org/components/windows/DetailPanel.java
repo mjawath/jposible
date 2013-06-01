@@ -4,41 +4,67 @@
  */
 package org.components.windows;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author d
  */
 public class DetailPanel<T> extends TabPanelUI {
 
+    protected ArrayList toSave;
+    protected ArrayList toDelete;
+    protected ArrayList toUpdate;
+    
+    protected  T busObject;
+
     /**
      * Creates new form DetailPanel
      */
     public DetailPanel() {
         initComponents();
+        toSave = new ArrayList();
+        toDelete = new ArrayList();
+        toUpdate = new ArrayList();
     }
 
-    public void etyToUI(T obj){
-        
+    public void etyToUI(T obj) {
     }
-    
-    public void UIToEty(){
+
+    public T UIToEty() {
+        return null;
     }
 
     @Override
     public void save() {
         //validate 
-        //save
-        
+        //save  
+        if (!validateEntity()) {
+            return;
+        }
+
+        if (getService() != null) {
+            preSave();
+            
+            getService().getDao().save();
+            postSave();
+        }
         super.save();
-        postSave();
     }
-    
-    public void postSave(){
-    
+
+    public boolean validateEntity() {
+         busObject=UIToEty();       
+        if(busObject==null)
+         return false;
+        return true;
     }
-    
-    
-    
+
+    public void postSave() {
+    }
+
+    public void preSave() {
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

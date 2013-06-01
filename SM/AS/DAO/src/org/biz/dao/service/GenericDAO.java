@@ -1,5 +1,6 @@
 package org.biz.dao.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -130,6 +131,16 @@ public class GenericDAO<T> {
     //save list of items
     public void saveList(List<T> ob) {
         GenericDAOUtil.saveList(ob);
+    }
+    
+    /**
+     * Saves Updates Deletes the entities from specified lists
+     * @param toSave
+     * @param toUpdate
+     * @param toDelete 
+     */
+    public void saveUpdateDelete(ArrayList toSave,ArrayList toUpdate,ArrayList toDelete){            
+        GenericDAOUtil.saveUpdateDelete(toSave, toUpdate, toDelete);    
     }
 
     //use this to delete a certain object 

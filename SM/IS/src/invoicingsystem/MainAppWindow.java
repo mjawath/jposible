@@ -23,8 +23,6 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import org.biz.books.ui.accounts.AccountsCreationUI;
 import org.biz.books.ui.accounts.GeneralLedgerUI;
-import org.biz.dao.service.GenericDAO;
-import org.biz.dao.service.GenericDAOUtil;
 import org.biz.erp.inventory.ui.WareHouseUI;
 import org.biz.invoicesystem.master.ui.ItemMasterTab;
 import org.biz.invoicesystem.master.ui.ShopUI;
@@ -384,24 +382,6 @@ public class MainAppWindow extends AppMainWindow {
         dd.setVisible(true);
     }
 
-    public static void main(String[] args) {
-//        new GenericDAO(). 
-        GenericDAOUtil.createEMFWithCustomProperties();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-
-                final MainAppWindow amw = new MainAppWindow() {
-                };
-             
- Sessions.create();
-        Sessions.addToSession("mainui", amw);
-           amw.init2();
-                amw.setVisible(true);
-//                amw.showlogin();
-            }
-        });
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cstattus;

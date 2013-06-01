@@ -5,6 +5,7 @@
 package org.components.parent.controls.editors;
 
 import com.components.custom.PagedPopUpPanel;
+import com.components.custom.PopupListner;
 import com.components.custom.TextFieldWithPopUP;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -18,10 +19,8 @@ import org.components.controls.ModelEditableTable;
  * @author d
  */
 public class ObjectCellEditor<T> extends BaseCellEditor {
-
-    PagedPopUpPanel<T> pagedPopup;
-    
-    TextFieldWithPopUP<T> fieldWithPopUP;
+ 
+    private TextFieldWithPopUP<T> fieldWithPopUP;
 
     public ObjectCellEditor(){
         super();        
@@ -31,12 +30,10 @@ public class ObjectCellEditor<T> extends BaseCellEditor {
         super(table);
     }
 
-    public void initPopup(List item, String[] properties, String[] titles, String selected) {
+    public void initPopup(String[] properties, String[] titles, String selected) {
         
-         fieldWithPopUP = new TextFieldWithPopUP<T>();
-         pagedPopup = new PagedPopUpPanel<T>((CTextField) fieldWithPopUP) {
-        };
-        fieldWithPopUP.setObjectToTable(item);
+        fieldWithPopUP = new TextFieldWithPopUP<T>();        
+        fieldWithPopUP.setObjectToTable(new ArrayList<T>());
         fieldWithPopUP.setPropertiesEL(properties);
         fieldWithPopUP.setTitle(titles);
         fieldWithPopUP.setSelectedProperty(selected);
@@ -62,11 +59,15 @@ public class ObjectCellEditor<T> extends BaseCellEditor {
     @Override
     public void clear() {
         //clear goes hear
-        pagedPopup.setSelectedObject(null);
-        pagedPopup.setSelectedID(null);
+//        pagedPopup.setSelectedObject(null);
+//        pagedPopup.setSelectedID(null);
+        fieldWithPopUP.clear();
     }
     
-    
+    public void setPopListner(PopupListner popupListner) {
+        fieldWithPopUP.getPagedPopUpPanel().setPoplistener(popupListner);
+    }
+
     
 }
 

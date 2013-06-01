@@ -6,11 +6,13 @@ package org.biz.master.ui;
 
 import app.utils.SystemUtil;
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.biz.invoicesystem.master.ui.CustomerMasterUI2;
 import org.biz.invoicesystem.ui.list.master.CustomerListUi;
 import org.biz.invoicesystem.ui.list.master.ItemList;
+import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 
 /**
@@ -27,16 +29,45 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
 
     }
 
-    public void init(TabPanelUI tab,String detailMas, TabPanelUI listViewUI,String detaillist) {
+    public void init(TabPanelUI tab,String detailMas, TabPanelUI listViewUI) {
         jTabbedPane1.add(tab, detailMas);
-        jTabbedPane1.add(listViewUI, detaillist);
+        tab.setTabName(detailMas+"DETAIL");
+        jTabbedPane1.add(listViewUI, detailMas);
+        listViewUI.setTabName(detailMas+"LIST");
+        
+        SystemUtil.addTabToSessions(detailMas+"DETAIL", tab);
+        SystemUtil.addTabToSessions(detailMas+"LIST", listViewUI);
         jTabbedPane1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 ((TabPanelUI) jTabbedPane1.getSelectedComponent()).updateEntityUI();
             }
         });
+
     }
+    
+    public static void addTabPane(JTabbedPane tab, TabPanelUI panelUI,String tabName ){
+    
+        try {
+            TabPanelUI tpui = (TabPanelUI) Sessions.getObj(tabName);
+            int ix = tab.indexOfTab(tabName);
+            if (tpui == null) {
+//                tpui = (TabPanelUI) Class.forName(cls.getName()).newInstance();
+                tab.add(tabName, tpui);
+                int sx = tab.indexOfTab(tabName);
+                tab.setSelectedIndex(sx);
+                Sessions.addToSession(tabName, tpui);
+
+            } else {
+                tab.setSelectedIndex(ix);
+//                tpui.setobj(obj);
+            }
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,12 +104,8 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
 
                 CustomerMasterUI2 customerMasterUI2 = new CustomerMasterUI2();
                 CustomerListUi custList = new CustomerListUi();
-                it.init(item,"Item", list,"Item List");
-                it.init(customerMasterUI2,"Customer ", custList,"Customer List");
-                SystemUtil.addTabToSessions("item", item);
-                SystemUtil.addTabToSessions("listitem", list);
-                SystemUtil.addTabToSessions("customer", customerMasterUI2);
-                SystemUtil.addTabToSessions("customerlist", custList);
+                it.init(item,"Item", list);
+                it.init(customerMasterUI2,"Customer", custList);
                 JFrame fram = new JFrame();
                 fram.getContentPane().add(it);
                 fram.setSize(700, 700);

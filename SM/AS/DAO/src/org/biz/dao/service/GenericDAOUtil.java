@@ -5,6 +5,7 @@ package org.biz.dao.service;
  * and open the template in the editor.
  */
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -297,6 +298,48 @@ public class GenericDAOUtil<T> {
 
     public static <T> void merge(EntityManager em, T ob) {
         em.merge(ob);
+    }
+   
+    public  static void  saveUpdateDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+
+        EntityManager em = null;
+
+        try {
+            em = GenericDAOUtil.createEmNew();
+            em.getTransaction().begin();
+            if (!toSave.isEmpty()) {
+                //persistence ..save
+                for (Object e : toDelete) {
+                    em.persist(e);
+                }
+            }
+            if (!toDelete.isEmpty()) {
+                for (Object e : toDelete) {
+                    em.remove(em.merge(e));
+                }
+            }
+            if (!toDelete.isEmpty()) {
+                for (Object e : toDelete) {
+                    em.merge(e);
+                }
+            }
+            em.getTransaction().commit();
+        
+        }catch (Exception ex) {
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+            throw new DAOException(ex);
+        } finally {
+            if (em != null) {
+                try {
+                    em.clear();
+                    em.close();
+                } catch (Exception e) {
+                    throw new DAOException(e);
+                }
+            }
+        }
     }
 
     public void begin() {

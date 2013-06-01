@@ -49,7 +49,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     List<Item> items;
     List<Category> categorys;
     ItemService itemService;
-    CategoryService categoryService;
+    CategoryService categoryService;//f
     ItemPopUp ipu;
     private Item selectedItem;
     private ItemMasterTab mastertab;

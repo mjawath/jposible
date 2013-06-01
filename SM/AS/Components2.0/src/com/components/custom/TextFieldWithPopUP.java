@@ -103,6 +103,7 @@ public class TextFieldWithPopUP<T> extends CTextField {
     public void clear() {
         super.clear();
         setSelectedObject(null);
+        pagedPopUpPanel.setSelectedID(null);
     }
 
 

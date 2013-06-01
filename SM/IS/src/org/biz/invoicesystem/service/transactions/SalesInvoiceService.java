@@ -5,7 +5,10 @@
 
 package org.biz.invoicesystem.service.transactions;
 
+import app.utils.SystemUtil;
+import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
+import org.biz.erp.ui.transaction.detail.InvoiceUI;
 import org.biz.invoicesystem.dao.transactions.SalesInvoiceDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
@@ -16,11 +19,16 @@ import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
  *
  * @author mjawath
  */
-public class SalesInvoiceService {
-    SalesInvoiceDAO dao;
+public class SalesInvoiceService extends Service{
+    
+    private SalesInvoiceDAO dao;
+    private InvoiceUI invoiceUI;
 
     public SalesInvoiceService() {
-    dao = new SalesInvoiceDAO();
+        dao = new SalesInvoiceDAO();
+        invoiceUI = new InvoiceUI();
+        invoiceUI.setService(this);
+        SystemUtil.addToMainWindow(invoiceUI, "sales");
     }
 
     public SalesInvoiceDAO getDao() {
@@ -50,7 +58,6 @@ public class SalesInvoiceService {
         }
         dao.save(invoice,ij);
     }
-
 
     public void createInventoryJournalForPos(SalesInvoice invoice){
        invoice.setId(EntityService.getKeys());

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
@@ -35,7 +36,8 @@ public class PxTable<T> extends JTable implements IComponent {
     private String newRowId = newRowId_cons;
     private static final String newRowId_cons = "#NewRow#";
     private int newRowId_SEED = -10000001;
-    private TableInteractionListner tableInteractionListner;
+    protected TableInteractionListner tableInteractionListner;
+    
     
 
     @Override
@@ -54,7 +56,7 @@ public class PxTable<T> extends JTable implements IComponent {
     public void setPropertiesEL(String[] propertiesEL) {
         String [] prop = propertiesEL;
         this.propertiesEL =new String[propertiesEL.length+1];
-        this.propertiesEL[0]="line";
+        this.propertiesEL[0]="obj";
         int x=1;
         for (String str : prop) {
             this.propertiesEL[x++]=str;
@@ -110,6 +112,8 @@ public class PxTable<T> extends JTable implements IComponent {
      */
     public PxTable() {
         initComponents();
+        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);     
+
     }
 
     public void clear() {
@@ -216,7 +220,18 @@ public class PxTable<T> extends JTable implements IComponent {
     public Object[][] getTableRows() {
         return TableUtil.getDataObject(this);
     }
-
+    
+    public void moveSelectedLineUp() {
+        int sr=getSelectedRow();
+        TableUtil.moveRow(this,sr, -1);
+    }
+ 
+    public void moveSelectedLineDown() {
+        int sr = getSelectedRow();
+        TableUtil.moveRow(this, sr, 1);
+        
+    }
+    
     @Override
     public void setValueAt(Object aValue, int row, int column) {
         System.out.println("setting value at"+aValue+" "+row+" "+column);

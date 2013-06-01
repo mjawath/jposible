@@ -6,7 +6,10 @@ package app.utils;
 
 import java.util.Random;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import org.components.util.Sessions;
+import org.components.windows.MainWindow;
+import org.components.windows.TabPanelUI;
 
 /**
  *
@@ -14,25 +17,27 @@ import org.components.util.Sessions;
  */
 public class SystemUtil {
 
-    public static Sessions sessions= Sessions.getSession(); 
-    
-    public static void addTabToSessions(String key,Object comp){
-        sessions.addToSession(key, comp);       
+    public static Sessions sessions = Sessions.getSession();
+
+    public static void addTabToSessions(String key, Object comp) {
+        sessions.addToSession(key, comp);
     }
-    
-    public static Object getObj(String key){
+
+    public static Object getObj(String key) {
         return sessions.getObj(key);
     }
-    
-    public static  String getKeys() {
-        String rn=""+AB.charAt(rnd.nextInt(AB.length()));
-        String key = System.currentTimeMillis()+"-"+rn;
+
+    public static String getKeys() {
+        String rn = "" + AB.charAt(rnd.nextInt(AB.length()));
+        String key = System.currentTimeMillis() + "-" + rn;
         return key;
     }
+
     public static String getKeyStr() {
-    return randomString(15);
+        return randomString(15);
     }
-    static  String  randomString(int len) {
+
+    static String randomString(int len) {
 
 //        Calendar calendar = Calendar.getInstance();
 //        StringBuilder sb = new StringBuilder(len);
@@ -47,12 +52,12 @@ public class SystemUtil {
         }
         return sb.toString();
     }
-   
+
     public String getKey(String shopName) {
 
-        String rn=""+AB.charAt(rnd.nextInt(AB.length()));
-        String rn2=""+AB.charAt(rnd.nextInt(AB.length()));
-        String key = System.currentTimeMillis()+"-"+rn+rn2;
+        String rn = "" + AB.charAt(rnd.nextInt(AB.length()));
+        String rn2 = "" + AB.charAt(rnd.nextInt(AB.length()));
+        String key = System.currentTimeMillis() + "-" + rn + rn2;
 
 // / create a java calendar instance
 
@@ -73,9 +78,9 @@ public class SystemUtil {
 
     public String getKey() {
 
-        String rn=""+AB.charAt(rnd.nextInt(AB.length()));
-        String rn2=""+AB.charAt(rnd.nextInt(AB.length()));
-        String key = System.currentTimeMillis()+"-"+rn+rn2;
+        String rn = "" + AB.charAt(rnd.nextInt(AB.length()));
+        String rn2 = "" + AB.charAt(rnd.nextInt(AB.length()));
+        String key = System.currentTimeMillis() + "-" + rn + rn2;
 
 // / create a java calendar instance
 
@@ -93,8 +98,17 @@ public class SystemUtil {
 
         return key;
     }
-
     static final String AB = "GHIJBK013LO8L2MNOP7ECD456QRS9ABKFTUVWXYZ";
     static Random rnd = new Random();
+    
+    public static void addToMainWindow(final TabPanelUI tab, final String tabname) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainWindow jf = (MainWindow) Sessions.getObj("mainui");
+                jf.addToTabpanelToUI(tab, tabname);
+            }
+        });
 
+    }
 }

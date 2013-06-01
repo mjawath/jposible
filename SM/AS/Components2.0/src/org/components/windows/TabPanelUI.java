@@ -16,7 +16,10 @@ import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import org.biz.dao.service.Service;
 import org.components.containers.CPanel;
+import org.components.util.Sessions;
 
 /**
  *
@@ -24,6 +27,9 @@ import org.components.containers.CPanel;
  */
 public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudControl{
 
+    protected String tabName;      
+    private Service service;
+        
     /** Creates new form TabPanelUI */
     public TabPanelUI() {
         initComponents();
@@ -57,6 +63,10 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
     public  String getTabName(){
     return this.toString();
     }
+    
+    public void setTabName(String tabname){
+    this.tabName=tabname;
+    }
 
     public  JPanel getJPanel(){return this;};
 
@@ -70,7 +80,7 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
 
     
     public void save() {
-    
+        
     }
     
     //save should be encapsulated by a method
@@ -104,6 +114,40 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
    
     public void setobj(Object obj) {
     }
+    
+    public static void addTabPane(JTabbedPane tab, TabPanelUI panelUI,String tabName ){
+    try {
+            TabPanelUI tpui = (TabPanelUI) Sessions.getObj(tabName);
+            int ix = tab.indexOfTab(tabName);
+            if (tpui == null) {
+//                tpui = (TabPanelUI) Class.forName(cls.getName()).newInstance();
+                tab.add(tabName, tpui);
+                int sx = tab.indexOfTab(tabName);
+                tab.setSelectedIndex(sx);
+                Sessions.addToSession(tabName, tpui);
+
+            } else {
+                tab.setSelectedIndex(ix);
+//                tpui.setobj(obj);
+            }
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setService(Service service){
+        this.service=service;
+    }
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    public Service getService() {
+        return service;
+    }
 }

@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.biz.app.ui.util.StringUtility;
 import org.components.parent.controls.PxTable;
 
 /**
@@ -38,9 +39,10 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
                         return;
                     }
                     System.out.println("Detail panel");
-                    DetailPanel dp = (DetailPanel) SystemUtil.getObj("item");
+//                    StringUtility.getHead(tabName, "LIST");
+                    DetailPanel dp = (DetailPanel) SystemUtil.getObj(StringUtility.getHead(tabName, "LIST")+"DETAIL");
                     dp.etyToUI(obj);
-                    
+                                        
                 }
             }
         });

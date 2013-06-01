@@ -34,7 +34,7 @@ public class MainWindow extends JFrame {
         } catch (Exception e) {
         }
 //        initComponents();
-        init();
+//        init();
     }
     String propfile;
     private final String tabBill = "Bill Counter";
@@ -82,7 +82,7 @@ public class MainWindow extends JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(649, Short.MAX_VALUE)
+                .addContainerGap(448, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cstattus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,9 +124,7 @@ public class MainWindow extends JFrame {
 
     }
 
-    public void setjTabbedPane1(JTabbedPane jTabbedPane1) {
-        this.jTabbedPane1 = jTabbedPane1;
-    }
+    
 
     void showError(Throwable e) {
         StringBuilder sb = new StringBuilder();
@@ -172,6 +170,33 @@ public class MainWindow extends JFrame {
         
     }
 
+    public void addToTabpanelToUI(String tabName, Object cls) {
+        try {
+
+            TabPanelUI tpui = (TabPanelUI) Sessions.getObj(tabName);
+
+            if (tpui == null) {
+                tpui = (TabPanelUI)cls;
+                getjTabbedPane1().add(tabName, tpui);
+                int sx = getjTabbedPane1().indexOfTab(tabName);
+                Sessions.addToSession(tabName, tpui);
+                initCloseButtonForTab(getjTabbedPane1(), sx);
+                getjTabbedPane1().setSelectedIndex(sx);
+
+            } else {
+                int ix = getjTabbedPane1().indexOfTab(tabName);
+                getjTabbedPane1().setSelectedIndex(ix);
+                initCloseButtonForTab(getjTabbedPane1(), ix);
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    
     public void addToTabpanelToUI(String tabName, Class cls) {
         addToTabpanelToUI(tabName, cls, null);
     }
@@ -258,7 +283,7 @@ public class MainWindow extends JFrame {
         }
     }
     
-public void closeTabPanel(){
+    public void closeTabPanel(){
     try {
       //  Sessions.
         getjTabbedPane1().setVisible(false);
@@ -349,6 +374,7 @@ e.printStackTrace();
     // End of variables declaration//GEN-END:variables
 
     JTabbedPane jTabbedPane1;
+    
     public javax.swing.JTabbedPane getjTabbedPane1() {
         return jTabbedPane1;
     }

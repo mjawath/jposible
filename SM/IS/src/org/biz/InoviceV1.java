@@ -22,6 +22,8 @@ import org.components.parent.controls.editors.ObjectCellEditor;
 public class InoviceV1 extends javax.swing.JPanel {
 
     
+    
+    
     List<SalesInvoiceLineItem> lineItems;
     /**
      * Creates new form InoviceV1
@@ -37,7 +39,6 @@ public class InoviceV1 extends javax.swing.JPanel {
             lineItems.add(it);
             
         }
-        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);     
         
         tblInvoiceLine1.setModelClass(SalesInvoiceLineItem.class);
         tblInvoiceLine1.setPropertiesEL(new String[]{"qty","item"});       
@@ -45,7 +46,7 @@ public class InoviceV1 extends javax.swing.JPanel {
         tblInvoiceLine1.setCellEditor(1,new DoubleCellEditor(tblInvoiceLine1));
         tblInvoiceLine1.modelToTable(lineItems);
         ObjectCellEditor<Item> itce=new ObjectCellEditor(tblInvoiceLine1);
-        itce.initPopup(getItems(),new String[]{"id","code"}, new String[]{"ID","Code"},"id");
+        itce.initPopup(new String[]{"id","code"}, new String[]{"ID","Code"},"id");
         tblInvoiceLine1.setCellEditor(2,itce);       
         
         textFieldWithPopUP1.setObjectToTable(getItems());
