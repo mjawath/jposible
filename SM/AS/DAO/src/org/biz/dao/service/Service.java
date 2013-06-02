@@ -81,4 +81,11 @@ public class Service {
     public void getFirstPage(String qry) {
        getDao().firstPage(qry);
     }
+    
+    public String getUniqueKey(){
+    return es.getKey("Test");
+    }
+    
+    public void initUI(){
+    }
 }
