@@ -28,7 +28,7 @@ import org.biz.invoicesystem.entity.master.Shop;
  * @author mjawath
  */
 @Entity
-public class SalesInvoice extends BusObj implements Serializable {
+public class SalesInvoice extends BusObj {
 
     private static final long serialVersionUID = 1L;
     @ManyToOne(fetch = FetchType.LAZY)

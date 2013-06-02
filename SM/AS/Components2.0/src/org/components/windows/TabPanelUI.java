@@ -28,7 +28,7 @@ import org.components.util.Sessions;
 public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudControl{
 
     protected String tabName;      
-    private Service service;
+    protected Service service;
         
     /** Creates new form TabPanelUI */
     public TabPanelUI() {
@@ -139,6 +139,7 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
 
     public void setService(Service service){
         this.service=service;
+        init(); 
     }
     
     

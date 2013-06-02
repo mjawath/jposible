@@ -62,9 +62,11 @@ public class EntityService {
         String key = System.currentTimeMillis()+"-"+rn;
         return key;
     }
+    
     public static String getKeyStr() {
     return randomString(15);
     }
+    
     public String getKey(String shopName) {
         
         String rn=""+AB.charAt(rnd.nextInt(AB.length()));
@@ -112,9 +114,10 @@ public class EntityService {
     }
     
     static final String AB = "GHIJBK013LO8L2MNOP7ECD456QRS9ABKFTUVWXYZ";
+    
     static Random rnd = new Random();
-
-  static  String  randomString(int len) {
+  
+    static  String  randomString(int len) {
         
 //        Calendar calendar = Calendar.getInstance();
 //        StringBuilder sb = new StringBuilder(len);
@@ -129,6 +132,7 @@ public class EntityService {
         }
         return sb.toString();
     }
+    
     public static void main(String[] args) {
         for (int i = 0; i < 1000; i++) {
             try {
@@ -140,6 +144,7 @@ public class EntityService {
 
         }
     }
+    
     public String getBetWeen(Date date){
         String dd= new SimpleDateFormat("dd/MM/yyyy").format(date);
         dd=dd.concat(" 00:00:00 ");
@@ -170,14 +175,12 @@ public class EntityService {
 
     }
 
-
-
-
     public String getWithinCurrentDate(){
         Date date = nowDate();
 
         return getBetWeen(date);
     }
+    
     public static Date nowDate() {
     Date date = new Date();
     return date;

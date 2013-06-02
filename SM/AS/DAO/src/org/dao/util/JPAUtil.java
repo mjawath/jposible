@@ -22,10 +22,9 @@ public class JPAUtil {
 
     static {
         try {
-            //how to start derby database
 
-//           entityManagerFactory = Persistence.createEntityManagerFactory(PU);
-//            entityManager = entityManagerFactory.createEntityManager();
+           entityManagerFactory = Persistence.createEntityManagerFactory(PU);
+            entityManager = entityManagerFactory.createEntityManager();
 
         } catch (Throwable e) {
             e.printStackTrace();
@@ -48,7 +47,7 @@ public class JPAUtil {
     public static EntityManagerFactory getEntityManagerFactory() {
          if (entityManagerFactory == null) {
 
-            entityManagerFactory = Persistence.createEntityManagerFactory("InvoicingSystemPU");
+            entityManagerFactory = Persistence.createEntityManagerFactory(PU);
             return entityManagerFactory;
         }
         return entityManagerFactory;

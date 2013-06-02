@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public class DetailPanel<T> extends TabPanelUI {
 
-    protected ArrayList toSave;
-    protected ArrayList toDelete;
-    protected ArrayList toUpdate;
+    final protected ArrayList toSave;
+    final protected ArrayList toDelete;
+    final protected ArrayList toUpdate;
     
     protected  T busObject;
 
@@ -35,27 +35,31 @@ public class DetailPanel<T> extends TabPanelUI {
         return null;
     }
 
-    @Override
+    
+        @Override
     public void save() {
         //validate 
         //save  
-        if (!validateEntity()) {
-            return;
-        }
-
+           
         if (getService() != null) {
             preSave();
-            
-            getService().getDao().save();
+            if (!validateEntity()) {
+                return;
+            }
+            getService().getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
             postSave();
+            toSave.clear();
+            toUpdate.clear();
+            toDelete.clear(); 
+            clear();
         }
         super.save();
     }
 
     public boolean validateEntity() {
-         busObject=UIToEty();       
-        if(busObject==null)
-         return false;
+//         busObject=UIToEty();       
+//        if(busObject==null)
+//         return false;
         return true;
     }
 

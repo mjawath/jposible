@@ -61,7 +61,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public ItemMasterUI2() {
         initComponents();
 //        keyListeners();
-        init();
+//        init();
     }
 
     /////////////////////////////////////
@@ -97,8 +97,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void init() {
 
         try {
+            itemService =(ItemService)service;
             selectedItem = new Item();
-            itemService = new ItemService();
             categoryService =new CategoryService();
 
             items = itemService.getDao().getAll();

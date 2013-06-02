@@ -9,6 +9,7 @@ import app.utils.SystemUtil;
 import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
 import org.biz.erp.ui.transaction.detail.InvoiceUI;
+import org.biz.erp.ui.transactions.posted.PostedInvoicesListUI;
 import org.biz.invoicesystem.dao.transactions.SalesInvoiceDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
@@ -23,12 +24,30 @@ public class SalesInvoiceService extends Service{
     
     private SalesInvoiceDAO dao;
     private InvoiceUI invoiceUI;
+    private PostedInvoicesListUI invoicesListUI;
+    
 
     public SalesInvoiceService() {
-        dao = new SalesInvoiceDAO();
+        super();
+    }
+    
+    public void initUI(){
         invoiceUI = new InvoiceUI();
-        invoiceUI.setService(this);
+        invoicesListUI= new PostedInvoicesListUI();
         SystemUtil.addToMainWindow(invoiceUI, "sales");
+        SystemUtil.addToMainWindow(invoicesListUI, "salesList");
+        new Thread(){
+            @Override
+            public void run() {
+                initServices();
+            }
+        }.start();       
+    }
+    
+    public void initServices() {
+        dao = new SalesInvoiceDAO();
+        invoiceUI.setService(SalesInvoiceService.this);//set other services to                 
+        invoicesListUI.setService(SalesInvoiceService.this);
     }
 
     public SalesInvoiceDAO getDao() {

@@ -6,6 +6,7 @@ package org.biz.invoicesystem.ui.list.master;
 
 import java.util.List;
 import javax.swing.SwingWorker;
+import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.components.parent.controls.editors.TableInteractionListner;
@@ -26,13 +27,22 @@ public class ItemList extends ListViewPanel {
 //        initComponents;
         super();
         initComponents();
+//        init(tbl);
+
+    }
+
+    @Override
+    public void setService(Service service) {
+        super.setService(service);
+        itemService =(ItemService) service;
         init(tbl);
-        itemService = new ItemService();
         tbl.setModelClass(Item.class);        
         tbl.setPropertiesEL(new String[]{"id","code"});
         tbl.setColumnHeader(new String[]{"id","code"});
         tbl.setTableInteractionListner(new TableInteractionListner());
     }
+    
+    
 
     @Override
     public void updateEntityUI() {

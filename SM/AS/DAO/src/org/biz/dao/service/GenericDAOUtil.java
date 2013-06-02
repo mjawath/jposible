@@ -307,25 +307,28 @@ public class GenericDAOUtil<T> {
         try {
             em = GenericDAOUtil.createEmNew();
             em.getTransaction().begin();
-            if (!toSave.isEmpty()) {
+            if (toSave!=null && !toSave.isEmpty()) {
                 //persistence ..save
-                for (Object e : toDelete) {
+                for (Object e : toSave) {
                     em.persist(e);
                 }
+                
             }
-            if (!toDelete.isEmpty()) {
+            if (toUpdate!=null && !toUpdate.isEmpty()) {
+                for (Object e : toUpdate) {
+                    em.merge(e);
+                }
+            }
+            if (toDelete !=null && !toDelete.isEmpty()) {
                 for (Object e : toDelete) {
                     em.remove(em.merge(e));
                 }
             }
-            if (!toDelete.isEmpty()) {
-                for (Object e : toDelete) {
-                    em.merge(e);
-                }
-            }
+            
             em.getTransaction().commit();
         
         }catch (Exception ex) {
+            ex.printStackTrace();
             if (em != null) {
                 em.getTransaction().rollback();
             }

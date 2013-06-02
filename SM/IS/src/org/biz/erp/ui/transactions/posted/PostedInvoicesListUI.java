@@ -23,32 +23,31 @@ import org.components.windows.TabPanelUI;
  */
 public class PostedInvoicesListUI extends TabPanelUI {
 
-    private SalesInvoiceService service;
     private List<SalesInvoice> invoices;
     /** Creates new form PostedInvoicesListUI */
     public PostedInvoicesListUI() {
         initComponents();
-    init();    
+        init();    
     }
 
     @Override
     public void init() {
         super.init();
         
-        service= new SalesInvoiceService();
-        getData(); 
-        
+//        service= new SalesInvoiceService();
+//        getData(); 
+       tblInvoice.initTable(SalesInvoice.class, new String[]{"id","code","total"}, new String[]{"id","code","total"}); 
         
     }
     
     
 
     public void getData(){
-        invoices = service.getDao().getAll();
+        invoices = getService().getDao().getAll();
     }
     
     public void getData(String qry){
-        invoices = service.getDao().getAll();
+        invoices = getService().getDao().getAll();
     }
     
     public void addToTable(List<SalesInvoice> items) {
@@ -56,12 +55,7 @@ public class PostedInvoicesListUI extends TabPanelUI {
         if (items == null || items.isEmpty()) {
             return;
         }
-        for (SalesInvoice item : items) {
-            TableUtil.addrow(tblInvoice, new Object[]{item.getId(),item.getDocdate(), item.getCustomer().getCode()
-                    });
-        }
-
-        TableUtil.addrow(tblInvoice, new Object[]{TableUtil.newRowID});
+        tblInvoice.setModelCollection(items);
     }
 
     
@@ -138,7 +132,8 @@ public class PostedInvoicesListUI extends TabPanelUI {
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
 
-        
+        getData();
+        addToTable(invoices);
     }//GEN-LAST:event_cButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

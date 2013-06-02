@@ -14,8 +14,8 @@ import java.io.StringWriter;
  * @author mjawath
  */
 public class StackTrace {
-  public static String getStackTrace(Throwable t)
-    {
+
+    public static String getStackTrace(Throwable t) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw, true);
         t.printStackTrace(pw);
@@ -24,4 +24,3 @@ public class StackTrace {
         return sw.toString();
     }
 }
-

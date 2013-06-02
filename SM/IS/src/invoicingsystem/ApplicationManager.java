@@ -5,8 +5,7 @@
 package invoicingsystem;
 
 import app.AppMainWindow;
-import app.utils.SystemUtil;
-import org.biz.invoicesystem.master.ui.ItemMasterUI2;
+import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.components.util.Sessions;
 
@@ -30,7 +29,10 @@ public class ApplicationManager {
 
             }
         });
-            SalesInvoiceService sis=new SalesInvoiceService();              
+            SalesInvoiceService sis=new SalesInvoiceService(); 
+            sis.initUI();
+            ItemService itemser=new ItemService();
+            itemser.initUI();
 
     }
     

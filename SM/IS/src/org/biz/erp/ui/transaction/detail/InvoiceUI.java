@@ -13,11 +13,11 @@ import javax.swing.SwingWorker;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
-import org.biz.invoicesystem.service.master.ItemService;
 import org.components.parent.controls.editors.DoubleCellEditor;
 import org.components.parent.controls.editors.ObjectCellEditor;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.DetailPanel;
+
 
 
 /**
@@ -28,6 +28,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
     
     List<Item> items;
+    //finalised swing worker task executer
      class MyKey extends KeyAdapter implements ICommand {
 
         Command com = new Command(this);
@@ -93,7 +94,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
     }
     
     public void init(){
-        items=new ItemService().getDao().getAll();
+//        items=new ItemService().getDao().getAll();
         tblInvoiceLine1.setModelClass(SalesInvoiceLineItem.class);
         tblInvoiceLine1.setPropertiesEL(new String[]{"item","qty","price","lineAmount"});       
         tblInvoiceLine1.setColumnHeader(new String[]{"Item","QTY","Amount","Line Totel"});        
@@ -149,11 +150,18 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
     }
 
     @Override
-    public void save() {
-        System.out.println("+++++++++perisitence begin++++++++++++");
-        
-        super.save();
-    }    
+    public void preSave() {
+        toSave.add(getBusObject());        
+        super.preSave();
+    }
+
+    @Override
+    public void clear() {
+        tblInvoiceLine1.clear();      
+        super.clear();
+    }
+    
+   
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -376,12 +384,18 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         si.setInvNo(tinv.getText());
         List<SalesInvoiceLineItem> salesInvoiceLineItems= tblInvoiceLine1.getModelCollection();
         si.setLineItems(salesInvoiceLineItems);
-        return busObject;
+        //set id for bus obj
+        String uk= service.getUniqueKey();
+        si.setId(uk);
+        int x=1000;
+        for (SalesInvoiceLineItem sl : salesInvoiceLineItems) {
+            sl.setId(uk+x++);
+        }
+        return si;
     }
 
 
 }
-
 class CommandExe extends SwingWorker<Object, Object>{
 
     public ICommand command;
