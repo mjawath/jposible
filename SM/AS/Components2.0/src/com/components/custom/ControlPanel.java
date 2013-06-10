@@ -71,7 +71,7 @@ public class ControlPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsaveActionPerformed
-
+    //run through Back Task not in EDT
         control.save();
     }//GEN-LAST:event_btsaveActionPerformed
 

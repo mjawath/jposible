@@ -18,7 +18,6 @@ public class Service {
     int pageSize;
 
     public Service() {
-        es = EntityService.getEntityService();
     }
 
     /**
@@ -30,7 +29,10 @@ public class Service {
 
 
     public GenericDAO getDao() {
-
+//        
+        if(es==null){
+        es = EntityService.getEntityService();
+        }
         if (dao == null) {
             dao = new GenericDAO();
         }
@@ -83,7 +85,7 @@ public class Service {
     }
     
     public String getUniqueKey(){
-    return es.getKey("Test");
+            return EntityService.getKey("Test");
     }
     
     public void initUI(){

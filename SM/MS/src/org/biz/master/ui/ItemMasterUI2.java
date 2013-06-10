@@ -27,9 +27,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.TableUtil;
-import org.biz.app.ui.util.Validator;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.GenericDAOUtil;
+import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.SupplierDAO;
 import org.biz.invoicesystem.entity.master.Category;
@@ -51,7 +51,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     ItemService itemService;
     CategoryService categoryService;//f
     ItemPopUp ipu;
-    private Item selectedItem;
     private ItemMasterTab mastertab;
     private ItemListUi listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
@@ -59,9 +58,9 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     List<File> images = new ArrayList<File>();
 
     public ItemMasterUI2() {
-        initComponents();
+        initComponents();//pp
 //        keyListeners();
-//        init();
+        init();
     }
 
     /////////////////////////////////////
@@ -97,12 +96,12 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void init() {
 
         try {
-            itemService =(ItemService)service;
-            selectedItem = new Item();
-            categoryService =new CategoryService();
-
-            items = itemService.getDao().getAll();
-            categorys = categoryService.getDao().getAll();
+//            itemService =(ItemService)service;
+            selectedObject = new Item();
+//            categoryService =new CategoryService();
+//            getClass().getFields()[0].equals(ui);
+//            items = itemService.getDao().getAll();
+//            categorys = categoryService.getDao().getAll();
 
             crudcontrolPanel.setCrudController(this);
             ///init filechooser and set filter
@@ -239,17 +238,17 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                             uom.setMulti(tContainsQty.getDoubleValue0());
                             //prime  unit
                             //logic changes type is defined 
-                            if (selectedItem.checkUOMExist(uom)) {
+                            if (selectedObject.checkUOMExist(uom)) {
                                 MessageBoxes.wrnmsg(ItemMasterUI2.this, "unit already exists ", "duplicate uom");
                                 return;
                             }
-                            selectedItem.addUOMorUpdate(uom);//should change to keep list of uoms
+                            selectedObject.addUOMorUpdate(uom);//should change to keep list of uoms
 //we can skip current primary uom setting becas we r using only one primary key
                             // we cannnot give only primary key
                             // 
                             //set it when we save data ..
 
-                            addUnitToTable(selectedItem);
+                            addUnitToTable(selectedObject);
                             cleatUOM();
                             tunitsymbot.requestFocus();
 
@@ -272,7 +271,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                             String barcode = UIEty.tcToStr(tItemBarcode);
                             ItemBarcode itemBarcode = new ItemBarcode(type, barcode);
                             //validate 
-                            selectedItem.addItemBarCode(itemBarcode);
+                            selectedObject.addItemBarCode(itemBarcode);
 
                             addToBarcode();
                         }
@@ -312,7 +311,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                     //get selected uom from list
                     Object id = TableUtil.getSelectedValue(tblunitprices, 0);
 
-                    for (UOM uom : selectedItem.getUoms()) {
+                    for (UOM uom : selectedObject.getUoms()) {
                         if (uom.getId().equals(id)) {
                             //set uom to UI
                             UIEty.objToUi(tunitprice, uom.getSalesPrice());
@@ -349,10 +348,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         Object ob = TableUtil.getSelectedValue(tblunitprices, 0);
         if (ob != null) {
-            for (Iterator<UOM> it = selectedItem.getUoms().iterator(); it.hasNext();) {
+            for (Iterator<UOM> it = selectedObject.getUoms().iterator(); it.hasNext();) {
                 if (ob.equals(it.next().getId())) {
                     it.remove();
-                    addUnitToTable(selectedItem);
+                    addUnitToTable(selectedObject);
                     break;
                 }
             }
@@ -365,8 +364,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 //            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
 //                        um.getMulti(), u});
         tblunitprices.modelToTable(item.getUoms());
-        tblunitprices.addModelToTable(new UOM());
-//        TableUtil.addnewrow(tblunitprices);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -376,7 +373,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void addToBarcode() {
 
         TableUtil.cleardata(tblunitprices);
-        for (UOM um : selectedItem.getUoms()) {
+        for (UOM um : selectedObject.getUoms()) {
             String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
             TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
                         um.getMulti(), u});
@@ -957,32 +954,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void etyToUI(Item i) {
 
         try {
-            UIEty.objToUi(tItemcode, i.getCode());
-            UIEty.objToUi(tItemDescription, i.getDescription());
-            UIEty.objToUi(tItemCategory, i.getCategory());
-            UIEty.objToUi(tSupplierItem, i.getSupplierId());
-            UIEty.objToUi(tItemCostPrice, i.getCost());
-            UIEty.objToUi(tItemLandingCost, i.getLandCost());
-            UIEty.objToUi(tItemMinimumPrice, i.getMinSalesPrice());
-            UIEty.objToUi(tItemdiscount, i.getDiscount());
-            UIEty.objToUi(tItemdiscValue, i.getDiscountValue());
-            UIEty.objToUi(tItemCommission, i.getCommission());
-            UIEty.objToUi(tItemCommissionValue, i.getCommission());
-            UIEty.objToUi(tItemLocation, i.getLocation());
-            UIEty.objToUi(tItemMinimumStock, i.getMinStock());
-            UIEty.objToUi(tItemReOrder, i.getReOrder());
-            UIEty.objToUi(tItemTrakSerial, i.getTrackSerial());
-            UIEty.objToUi(tItemTrakExpiry, i.getTrackExpiry());
-            UIEty.objToUi(tItemTrakNonStockItem, i.getNonStockItems());
-            UIEty.objToUi(tItemTrakManfctringItem, i.getManufactItem());
-            UIEty.objToUi(tItemTrakInactive, i.getInactive());
-            UIEty.objToUi(tWholesalePrice, i.getWholesalePrice());
-            UIEty.objToUi(tMetaInfo, i.getMetaInfo());
-            itemVariation2Ui(i.getVariations());
-            extraSalesPrice2Ui(i.getExtrasalespriceCollection());
-
-            addUnitToTable(i);
-            loadImagesToPanel(i.getCode());
+          
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1047,138 +1019,141 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     
     //***************persistence logic*************************//
     
-    public void save() {
+    public void preSave() {
 
-//        ReflectionUtility.executeOnSW(this, "xx", "yy");
+        busObject = getBusObject();
+        toSave.add(busObject);
 
-        try {
-            //validation of form
-            //validation of the bus obj
-            //persist
-            //update ui
-            
-            if (UIEty.isTxtFieldNullOrEmpty(tItemcode)) {
-                MessageBoxes.wrnmsg(null, "Please Type Item Code", "Empty Item Code");
-                tItemcode.requestFocus();
-                return;
-            }
+    }
+    
 
+    @Override
+    public void postCreate() {
+        Date cDate = GenericDAOUtil.currentTime();
+        Date mDate = GenericDAOUtil.currentTime();
+        selectedObject.setCrDate(cDate);
+        selectedObject.setSavedDate(cDate);
+        selectedObject.setEditedDate(mDate);
+        itemService.getDao().save(selectedObject);
+        saveImages(selectedObject.getCode(), images);
+    }
 
-            uiToEty(selectedItem);
-//            setuoms();
+    @Override
+    public void postUpdate() {
 
-            Item exist = itemService.getDao().findItemByCode(selectedItem.getCode());
-            if (exist == null || Validator.isEmptyOrNull(selectedItem.getId())) {
-                Date cDate= GenericDAOUtil.currentTime();
-                Date mDate= GenericDAOUtil.currentTime();
-                selectedItem.setCrDate(cDate);
-                selectedItem.setSavedDate(cDate);
-                selectedItem.setEditedDate(mDate);
-                itemService.getDao().save(selectedItem);
-                saveImages(selectedItem.getCode(), images);
-            } else {
-                //item exist so ask user to update ...
-                String[] ObjButtons = {"Yes", "No"};
-                int PromptResult = JOptionPane.showOptionDialog(null, "Item Already Exist Do You Want to Update it?", "Item Form", -1, 2, null, ObjButtons, ObjButtons[1]);
-                if (PromptResult == 0) {
-                    selectedItem.setId(exist.getId());
-                    Date mDate= GenericDAOUtil.currentTime();
-                    selectedItem.setEditedDate(mDate);                    
-                    itemService.getDao().update(selectedItem);
+        //        selectedItem.setId(get.getId());
+        Date mDate = GenericDAOUtil.currentTime();
+        selectedObject.setEditedDate(mDate);
+        itemService.getDao().update(selectedObject);
 
-                    //put to thread 
-                    deleteImages(selectedItem.getCode());
-                    saveImages(selectedItem.getCode(), images); 
-
-                } else {
-
-                    return;
-                }
-
-            }
-            // addToTable(items);
-//        ipu.populateTable(items);
-            clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-            MessageBoxes.errormsg(null, e.getMessage(), "Error");
-        }
-        selectedItem = new Item();
+        //put to thread 
+        deleteImages(selectedObject.getCode());
+        saveImages(selectedObject.getCode(), images);
 
     }    
-    
-    public void delete() {
-        try {
 
-            if (UIEty.tcToStr(tItemcode) == null || UIEty.tcToStr(tItemcode).equals("")) {
-                MessageBoxes.wrnmsg(null, "Please Type Item Code", "Empty Item Code");
-                return;
-            }
-            //validate
-            // validate existing item for bus logic
-            //ask confirmation
-            //delete 
-            //delete any dependancies
-            // update ui
-            Item item = uiToEty(new Item());
-
-            Item exist = itemService.getDao().findItemByCode(item.getCode());
-            if (exist != null) {
-
-                String[] ObjButtons = {"Yes", "No"};
-                int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?", "Item Form", -1, 2, null, ObjButtons, ObjButtons[1]);
-
-
-                if (PromptResult == 0) {
-                    itemService.getDao().delete(exist);
-                    deleteImages(exist.getCode());
-                }
-
-            } else {
-//                MessageBoxes.errormsg(null, "No Item Found.", getTabName());
-                return;
-
-            }
-            clear();
-        } catch (Exception e) {
-
-//            MessageBoxes.errormsg(null, e.getMessage(), getTabName());
-        }
-
-    }
-    
-    public void clear() {
-        try {
-
-            tPriceRange.setSelectedItem("");
-            tRngeValue.setText("");
-            TableUtil.cleardata(tblPriceRanges);
-            TableUtil.cleardata(tblBarcode);
-            tblunitprices.clear();
-
-            titemmark.setText("");
-            tItemBarcode.setText("");
-            etyToUI(new Item());
-
-            cPanel4.removeAll();
-            cPanel4.revalidate();
-
-            images.clear();
+    @Override
+    public boolean validateEntity() {
+        if (UIEty.isTxtFieldNullOrEmpty(tItemcode)) {
+            MessageBoxes.wrnmsg(null, "Please Type Item Code", "Empty Item Code");
             tItemcode.requestFocus();
-        } catch (Exception e) {
+            return false;
         }
+        return super.validateEntity();
+    }
+            
+    public void delete() {
+
+        if (UIEty.tcToStr(tItemcode) == null || UIEty.tcToStr(tItemcode).equals("")) {
+            MessageBoxes.wrnmsg(null, "Please Type Item Code", "Empty Item Code");
+            return;
+        }
+        super.delete();
     }
 
-    
-    
-    
-    public Object[] xx() {
-        System.out.println("xxx");
-        return new Object[]{"asss", new Object()};
+    public void clear() {
+        tPriceRange.setSelectedItem("");
+        tRngeValue.setText("");
+        TableUtil.cleardata(tblPriceRanges);
+        TableUtil.cleardata(tblBarcode);
+        tblunitprices.clear();
+
+        titemmark.setText("");
+        tItemBarcode.setText("");
+        setBusObject(new Item());
+
+        cPanel4.removeAll();
+        cPanel4.revalidate();
+
+        images.clear();
+        tItemcode.requestFocus();
     }
 
-    public void yy(Object[] ob) {
-        System.out.println("yyy");
+    public Item getBusObject() {
+        Item item =new Item();
+        item.setId(EntityService.getEntityService().getKey(""));
+        item.setCode(UIEty.tcToStr(tItemcode));
+        item.setDescription(UIEty.tcToStr(tItemDescription));
+//            i.setCategory(UIEty.cmbtostr(tItemCategory)); //    combo
+        item.setSupplierId(UIEty.cmbtostr(tSupplierItem)); //    combo
+        item.setCost(UIEty.tcToDble0(tItemCostPrice));//tItemCostPrice
+        item.setLandCost(UIEty.tcToDble0(tItemLandingCost)); //tItemLandingCost
+        item.setMinSalesPrice(UIEty.tcToDble0(tItemMinimumPrice)); //tItemMinimumPrice
+        item.setDiscount(UIEty.tcToDble0(tItemdiscount));//tItemdiscount
+        item.setDiscountValue(UIEty.tcToDble0(tItemdiscValue));
+        item.setCommission(UIEty.tcToDble0(tItemCommission));//tItemCommission
+        item.setCommissionValue(UIEty.tcToDble0(tItemCommissionValue));//tItemCommission
+        item.setLocation(UIEty.cmbtostr(tItemLocation));//tItemLocation   combo
+        item.setMinStock(UIEty.tcToDble0(tItemMinimumStock));//tItemMinimumStock
+        item.setReOrder(UIEty.tcToDble0(tItemReOrder)); //tItemReOrder
+        item.setTrackSerial(tItemTrakSerial.isSelected());  //tItemTrakSerial chk
+        item.setTrackExpiry(tItemTrakExpiry.isSelected());  //tItemTrakExpiry chk
+        item.setNonStockItems(tItemTrakNonStockItem.isSelected());//tItemTrakNonStockItem chk
+        item.setManufactItem(tItemTrakManfctringItem.isSelected());//tItemTrakManfctringItem chk      
+        item.setInactive(tItemTrakInactive.isSelected());//tItemTrakInactive chk      
+        item.setWholesalePrice(UIEty.tcToDble0(tWholesalePrice));//tWholesalePrice
+        item.setMetaInfo(tMetaInfo.getText());  //tMetaInfo
+        item.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, item.getId()));
+        item.setModel(UIEty.tcToStr(tmodel));
+        item.setType(UIEty.tcToStr(ttype));
+
+        item.setCategory(null);
+        return item;
+    }
+    
+    public void setBusObject(Item obj) {
+        UIEty.objToUi(tItemcode, obj.getCode());
+        UIEty.objToUi(tItemDescription, obj.getDescription());
+        UIEty.objToUi(tItemCategory, obj.getCategory());
+        UIEty.objToUi(tSupplierItem, obj.getSupplierId());
+        UIEty.objToUi(tItemCostPrice, obj.getCost());
+        UIEty.objToUi(tItemLandingCost, obj.getLandCost());
+        UIEty.objToUi(tItemMinimumPrice, obj.getMinSalesPrice());
+        UIEty.objToUi(tItemdiscount, obj.getDiscount());
+        UIEty.objToUi(tItemdiscValue, obj.getDiscountValue());
+        UIEty.objToUi(tItemCommission, obj.getCommission());
+        UIEty.objToUi(tItemCommissionValue, obj.getCommission());
+        UIEty.objToUi(tItemLocation, obj.getLocation());
+        UIEty.objToUi(tItemMinimumStock, obj.getMinStock());
+        UIEty.objToUi(tItemReOrder, obj.getReOrder());
+        UIEty.objToUi(tItemTrakSerial, obj.getTrackSerial());
+        UIEty.objToUi(tItemTrakExpiry, obj.getTrackExpiry());
+        UIEty.objToUi(tItemTrakNonStockItem, obj.getNonStockItems());
+        UIEty.objToUi(tItemTrakManfctringItem, obj.getManufactItem());
+        UIEty.objToUi(tItemTrakInactive, obj.getInactive());
+        UIEty.objToUi(tWholesalePrice, obj.getWholesalePrice());
+        UIEty.objToUi(tMetaInfo, obj.getMetaInfo());
+        itemVariation2Ui(obj.getVariations());
+        extraSalesPrice2Ui(obj.getExtrasalespriceCollection());
+
+        addUnitToTable(obj);
+        loadImagesToPanel(obj.getCode());
+    }
+
+    @Override
+    public void setService(Service service) {
+        super.setService(service);
+        itemService=(ItemService)service;
     }
 
     public void saveImages(String itemid, List<File> images) {
@@ -1553,14 +1528,14 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
      * @return the selectedItem
      */
     public Item getSelectedItem() {
-        return selectedItem;
+        return selectedObject;
     }
 
     /**
      * @param selectedItem the selectedItem to set
      */
     public void setSelectedItem(Item selectedItem) {
-        this.selectedItem = selectedItem;
+        this.selectedObject = selectedItem;
     }
 
     /**
@@ -1606,7 +1581,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     }
 
     private void setuoms() {
-        List<UOM> uoms = selectedItem.getUoms();
+        List<UOM> uoms = selectedObject.getUoms();
 
 //        if(){}
 

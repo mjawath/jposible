@@ -25,8 +25,8 @@ public class ItemService extends Service{
     public void initUI() {
         itemMasterUI2 = new ItemMasterUI2();
         itemList = new ItemList();
-        SystemUtil.addToMainWindow(itemMasterUI2, "item");
-        SystemUtil.addToMainWindow(itemList, "itemList");
+        SystemUtil.addToMainWindow(itemMasterUI2, "ITEMDETAIL");
+        SystemUtil.addToMainWindow(itemList, "ITEMLIST");
         new Thread() {
             @Override
             public void run() {

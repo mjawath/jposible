@@ -41,7 +41,8 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
                     System.out.println("Detail panel");
 //                    StringUtility.getHead(tabName, "LIST");
                     DetailPanel dp = (DetailPanel) SystemUtil.getObj(StringUtility.getHead(tabName, "LIST")+"DETAIL");
-                    dp.etyToUI(obj);
+                    dp.setSelectedBusObj(obj);
+                    dp.setBusObject(obj);
                                         
                 }
             }

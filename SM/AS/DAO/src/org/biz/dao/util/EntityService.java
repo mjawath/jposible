@@ -67,7 +67,7 @@ public class EntityService {
     return randomString(15);
     }
     
-    public String getKey(String shopName) {
+    public  static String getKey(String shopName) {
         
         String rn=""+AB.charAt(rnd.nextInt(AB.length()));
         String rn2=""+AB.charAt(rnd.nextInt(AB.length()));
@@ -90,7 +90,7 @@ public class EntityService {
         return key;
     }
 
-    public String getKey() {
+    public static String getKey() {
         
         String rn=""+AB.charAt(rnd.nextInt(AB.length()));
         String rn2=""+AB.charAt(rnd.nextInt(AB.length()));
@@ -207,5 +207,5 @@ public class EntityService {
 
     }
 
- 
+    
 }

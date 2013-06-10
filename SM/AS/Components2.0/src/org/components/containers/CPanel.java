@@ -14,12 +14,9 @@ package org.components.containers;
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
 import java.awt.Component;
-import java.awt.KeyboardFocusManager;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JComboBox;
 import org.components.parent.containers.PPanel;
-import org.components.parent.controls.editors.NEWED;
 
 /**
  *

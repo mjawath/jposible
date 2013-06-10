@@ -25,7 +25,6 @@ public class SalesInvoiceService extends Service{
     private SalesInvoiceDAO dao;
     private InvoiceUI invoiceUI;
     private PostedInvoicesListUI invoicesListUI;
-    
 
     public SalesInvoiceService() {
         super();

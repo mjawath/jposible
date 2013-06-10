@@ -29,8 +29,8 @@ public class ApplicationManager {
 
             }
         });
-            SalesInvoiceService sis=new SalesInvoiceService(); 
-            sis.initUI();
+//            SalesInvoiceService sis=new SalesInvoiceService(); 
+//            sis.initUI();
             ItemService itemser=new ItemService();
             itemser.initUI();
 

@@ -17,6 +17,7 @@ import org.dao.util.JPAUtil;
 public class ItemDAO extends GenericDAO<Item> {
 
     public static  String findItemListByCode="findItemListByCode";
+    
     public ItemDAO() {
         setCls(Item.class);
     }

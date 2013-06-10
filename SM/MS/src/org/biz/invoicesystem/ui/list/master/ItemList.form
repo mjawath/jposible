@@ -20,7 +20,7 @@
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="375" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="783" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -30,13 +30,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="searchPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="194" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="365" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="168" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="340" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -48,15 +48,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="cButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                   <Component id="cTextField1" min="-2" pref="165" max="-2" attributes="0"/>
-                  <EmptySpace pref="171" max="32767" attributes="0"/>
+                  <EmptySpace pref="283" max="32767" attributes="0"/>
+                  <Component id="tbtn" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="243" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -64,21 +61,22 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="cTextField1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
-                  <Component id="cButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="cTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tbtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="51" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="org.components.controls.CButton" name="cButton1">
+        <Component class="org.components.controls.CButton" name="tbtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Find"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="org.components.controls.CTextField" name="cTextField1">

@@ -247,6 +247,7 @@ public class MainWindow extends JFrame {
                 Sessions.addToSession(title, tpui);
                 initCloseButtonForTab(getjTabbedPane1(), sx);
                 getjTabbedPane1().setSelectedIndex(sx);
+                tpui.tabName=title;
 
             } else {
                  int ix = getjTabbedPane1().indexOfTab(title);

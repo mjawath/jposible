@@ -5,6 +5,10 @@
 package org.components.windows;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import org.biz.app.ui.util.ReflectionUtility;
+import org.biz.app.ui.util.Tracer;
+import org.biz.entity.BusObj;
 
 /**
  *
@@ -15,8 +19,8 @@ public class DetailPanel<T> extends TabPanelUI {
     final protected ArrayList toSave;
     final protected ArrayList toDelete;
     final protected ArrayList toUpdate;
-    
-    protected  T busObject;
+    protected T busObject;
+    protected T selectedObject;
 
     /**
      * Creates new form DetailPanel
@@ -35,28 +39,83 @@ public class DetailPanel<T> extends TabPanelUI {
         return null;
     }
 
-    
-        @Override
+    @Override
     public void save() {
-        //validate 
-        //save  
-           
-        if (getService() != null) {
-            preSave();
-            if (!validateEntity()) {
+        
+        busObject = getBusObject();
+        if (service != null) {
+            if (!isValideEntity()) {
                 return;
             }
-            getService().getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
+            preSave();
+            
+//            if (toSave.isEmpty()) {
+//                Tracer.printToOut("no object found to Save");
+//                return;
+//            }
+            Object key = ReflectionUtility.getDynamicValue(toSave.get(0), "id");//0 is the index of the main object , id is id property
+
+            if (key == null) {
+                Tracer.printToOut("Object id is null");
+                return;
+            }
+            Object obj = service.getDao().find(key);
+            if (obj == null && busObject!=null) {
+                Tracer.printToOut(" Object  is not found  So creation will be called");
+                service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
+                postCreate();
+            }
+            else {
+                Tracer.printToOut("Updation is called  Object  is  found");
+                service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
+                postUpdate();
+            }
             postSave();
             toSave.clear();
             toUpdate.clear();
-            toDelete.clear(); 
+            toDelete.clear();
             clear();
         }
         super.save();
     }
 
-    public boolean validateEntity() {
+    @Override
+    public void delete() {
+        if (service != null) {
+
+            T exist = (T) service.getDao().find(((BusObj) selectedObject).getId());
+            if (exist != null) {
+
+                String[] ObjButtons = {"Yes", "No"};
+                int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?", "Item Form", -1, 2, null, ObjButtons, ObjButtons[1]);
+
+                if (PromptResult == 0) {
+                    service.getDao().delete(exist);
+                    postDelete();
+                    clear();
+                }
+            }
+            else {
+//                MessageBoxes.errormsg(null, "No Item Found.", getTabName());
+                return;
+
+            }
+
+        }
+    }
+
+    public void postDelete() {
+    }
+
+    public void postCreate() {
+        System.out.println("-------+++++++++");
+    }
+
+    public void postUpdate() {
+        System.out.println("---%%%%%%%%%%%----+++++++++");
+    }
+
+    public boolean isValideEntity() {
 //         busObject=UIToEty();       
 //        if(busObject==null)
 //         return false;
@@ -67,6 +126,17 @@ public class DetailPanel<T> extends TabPanelUI {
     }
 
     public void preSave() {
+    }
+    
+    public T getBusObject(){
+    return null;
+    }
+
+    public void setBusObject(T obj) {
+    }
+
+    public void setSelectedBusObj(T obj) {
+        this.selectedObject = obj;
     }
 
     @SuppressWarnings("unchecked")
