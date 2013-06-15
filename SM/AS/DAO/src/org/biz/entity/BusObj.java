@@ -1,4 +1,3 @@
-
 package org.biz.entity;
 //bussiness entity object 
 
@@ -15,8 +14,8 @@ import javax.persistence.Temporal;
  * @author Jawath
  */
 @MappedSuperclass
-public class BusObj implements Serializable{
-    
+public class BusObj implements Serializable {
+
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date editedDate;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -28,8 +27,6 @@ public class BusObj implements Serializable{
     public BusObj(String id) {
         this.id = id;
     }
-    
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected String id;
@@ -37,6 +34,7 @@ public class BusObj implements Serializable{
 //    private Date saveddate;
 //    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
 //    Date editeddate;
+
     public String getId() {
         return id;
     }
@@ -44,8 +42,8 @@ public class BusObj implements Serializable{
     public void setId(String id) {
         this.id = id;
     }
-    
-     public Date getEditedDate() {
+
+    public Date getEditedDate() {
         return editedDate;
     }
 
@@ -53,12 +51,11 @@ public class BusObj implements Serializable{
         this.editedDate = editeddate;
     }
 
-    public Date getSaveddate() {
+    public Date getSavedDate() {
         return savedDate;
     }
 
     public void setSavedDate(Date saveddate) {
         this.savedDate = saveddate;
     }
-    
 }

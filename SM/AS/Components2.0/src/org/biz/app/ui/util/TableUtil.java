@@ -578,11 +578,11 @@ public class TableUtil {
      * @param tbl
      * @return
      */
-    public static Object getSelectedTableObject(PxTable tbl) {
+    public static <T> T getSelectedTableObject(PxTable tbl) {
 
 //        Object ob = TableUtil.getSelectedID(tbl);
         Object ob=getValueat(tbl, tbl.getSelectedRow(),0);
-        return ob;//(Object) ReflectionUtility.findByID(tbl.getModelCollection(), ob);
+        return (T)ob;//(Object) ReflectionUtility.findByID(tbl.getModelCollection(), ob);
     }
 
     public static <T> T getSelectedTableObject(PxTable tbl, Class cls) {

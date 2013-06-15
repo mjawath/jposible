@@ -66,11 +66,13 @@ public class ItemList extends ListViewPanel {
     public void setService(Service service) {
         super.setService(service);
         itemService =(ItemService) service;
+        init();
         init(tbl);
         tbl.setModelClass(Item.class);        
         tbl.setPropertiesEL(new String[]{"id","code"});
         tbl.setColumnHeader(new String[]{"id","code"});
         tbl.setTableInteractionListner(new TableInteractionListner());
+        
     }
     
     

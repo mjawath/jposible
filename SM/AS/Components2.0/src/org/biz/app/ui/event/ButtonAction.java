@@ -7,7 +7,6 @@ package org.biz.app.ui.event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.biz.app.ui.util.Command;
-import org.biz.app.ui.util.CommandTask;
 import org.biz.app.ui.util.ICommand;
 
 /**

@@ -6,7 +6,6 @@ package invoicingsystem;
 
 import app.AppMainWindow;
 import org.biz.invoicesystem.service.master.ItemService;
-import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.components.util.Sessions;
 
 /**

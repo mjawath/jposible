@@ -5,9 +5,12 @@
 package org.components.windows;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
+import org.biz.dao.service.GenericDAOUtil;
+import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
 
 /**
@@ -53,19 +56,27 @@ public class DetailPanel<T> extends TabPanelUI {
 //                Tracer.printToOut("no object found to Save");
 //                return;
 //            }
-            Object key = ReflectionUtility.getDynamicValue(toSave.get(0), "id");//0 is the index of the main object , id is id property
+            Object key = ReflectionUtility.getProperty(selectedObject, "id");//0 is the index of the main object , id is id property
 
-            if (key == null) {
+            if (busObject == null) {
                 Tracer.printToOut("Object id is null");
                 return;
             }
             Object obj = service.getDao().find(key);
-            if (obj == null && busObject!=null) {
+            Date cDate = GenericDAOUtil.currentTime();
+            Date mDate = GenericDAOUtil.currentTime();
+            if (obj == null ) {                
+                ReflectionUtility.setProperty(busObject,"id",EntityService.getKey(""));
+                ReflectionUtility.setProperty(busObject, "savedDate", cDate);
+                toSave.add(busObject);    
                 Tracer.printToOut(" Object  is not found  So creation will be called");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
                 postCreate();
             }
             else {
+                ReflectionUtility.setProperty(busObject, "id", key);
+                ReflectionUtility.setProperty(busObject,"editedDate",mDate);
+                toUpdate.add(busObject);
                 Tracer.printToOut("Updation is called  Object  is  found");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
                 postUpdate();

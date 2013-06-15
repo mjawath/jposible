@@ -32,6 +32,7 @@ import org.biz.app.ui.util.BizException;
 import org.biz.app.ui.util.ComponentFactory;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
+import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
 import org.components.controls.CPopupMenu;
 import org.components.controls.CTextField;
@@ -301,6 +302,9 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
                 search(textField.getText());
                 System.out.println("search text "+textField.getText());
+                if(popupListner==null){
+                    Tracer.printToOut("Popup listner not found");return;
+                }
                 list= popupListner.searchItem(textField.getText());
                 long x=System.currentTimeMillis();
                 setObjectToTable(list);//this setting object to table takes lots of time

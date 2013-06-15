@@ -38,6 +38,8 @@ public class ItemService extends Service{
         }.start();
     }
     
-    
+    public Service categoryServise(){
+            return new CategoryService();//get the service from cache
+    }
     
 }

@@ -9,7 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.SwingWorker;
+import org.biz.app.ui.util.CKeyAdapter;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
@@ -17,8 +17,6 @@ import org.components.parent.controls.editors.DoubleCellEditor;
 import org.components.parent.controls.editors.ObjectCellEditor;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.DetailPanel;
-
-
 
 /**
  *
@@ -29,40 +27,6 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
     
     List<Item> items;
     //finalised swing worker task executer
-     class MyKey extends KeyAdapter implements ICommand {
-
-        Command com = new Command(this);
-
-        public MyKey() {
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-
-            com.setParam("event param ");
-            com.setView("event param ");
-            com.invoke();
-        }
-
-        @Override
-        public Object executeTask() {
-
-            System.out.println("start executing-------" + com.objs);
-            try {
-                Thread.sleep(1000);
-            }
-            catch (Exception e) {
-            }
-            System.out.println("executing task...........");
-            return "key event";
-        }
-
-        @Override
-        public void resultTask(Object objs) {
-            System.out.println("-------result ##########----" + objs);
-
-        }
-    }
     
     /**
 
@@ -146,7 +110,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
              tblInvoiceLine1.replaceModel(cel);             
             }       
         });
-        tinv.addKeyListener(new MyKey());
+        tinv.addKeyListener(new CKeyAdapter());
     }
 
     @Override
@@ -396,66 +360,5 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
 
 }
-class CommandExe extends SwingWorker<Object, Object>{
 
-    public ICommand command;
-   
-    public CommandExe() {
-    }
-    
-    
-    @Override
-    protected Object doInBackground() throws Exception {
-        return command.executeTask();
-    }
-    
-    @Override
-    protected void done() {
-        Object obj=null;
-        try {
-            obj=get();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        System.out.println("Getting result ");
-        command.resultTask(obj);
-    }
 
-}
-
-interface ICommand  {
-
-    public Object executeTask();
-    
-    public void resultTask(Object  objs);
-}
-
-class Command {
-
-    private ICommand command;
-    public ArrayList objs;
-    public ArrayList result;
-
-    public Command(ICommand command) {
-        this.command = command;
-        objs = new ArrayList();
-        result = new ArrayList();
-    }
-
-    public void invoke() {
-       CommandExe com= new CommandExe();
-       com.command = command;
-       
-       com.execute();
-    }
-
-    public void setParam(Object object) {
-        objs.add(object);
-    }
-
-    public void setView(Object object) {
-        result.add(object);
-    }
-
-}

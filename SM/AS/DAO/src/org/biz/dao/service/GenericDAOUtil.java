@@ -268,6 +268,35 @@ public class GenericDAOUtil<T> {
 
     }
 
+    public static <T> void deleteAll( Class cls ) {
+        EntityManager em = null;
+        try {
+            em = createEmNew();
+            em.getTransaction().begin();
+            Query query = em.createQuery(" delete  from  "+cls.getSimpleName()+"  c " );
+            query.executeUpdate();
+//            ExecuteQuery(query);
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+        } finally {
+            if (em != null) {
+                try {
+                    em.clear();
+                    em.close();
+                } catch (Exception e) {
+                }
+
+            }
+        }
+
+    }
+
+    
     public static <T> void update(T ob) {
         EntityManager em = null;
         try {

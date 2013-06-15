@@ -47,16 +47,16 @@ public class dbCreation {
 //                System.out.println(x);
 //            }
 //        }
-        createDataBase();
-       createmster();
-           List lsts = new ArrayList();
+//        createDataBase();
+//       createmster();
+//           List lsts = new ArrayList();
 
-
+            new dbCreation().createCategory();
 //        new GenericDAO<Customer>().saveList(lsts);
 
     }
 
-    public static void createmster() {
+    public  void createmster() {
 
         List lsts = new ArrayList();
 
@@ -75,7 +75,6 @@ public class dbCreation {
             lsts.add(shx);
         }
         new GenericDAO<Customer>().saveList(lsts);
-
 
 
         List lst = new ArrayList();
@@ -150,5 +149,23 @@ public class dbCreation {
        
      List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
 
+    }
+    
+    public void createCategory(){
+        GenericDAO gd=new GenericDAO<Category>();
+        gd.deleteAll(Category.class);
+        System.out.println("ready for category");  
+        List lsts = new ArrayList();
+
+        for (int i = 0; i < 1500; i++) {
+
+            Category shx = new Category();
+            shx.setId(EntityService.getKeyStr());
+            shx.setCode(EntityService.getKeyStr());
+
+            lsts.add(shx);
+        }
+        gd.saveList(lsts);
+        System.out.println(" category finalised");
     }
 }

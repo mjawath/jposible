@@ -30,6 +30,7 @@ public class ControlPanel extends javax.swing.JPanel {
         btdelete = new javax.swing.JButton();
         btclear = new javax.swing.JButton();
         btgrid = new javax.swing.JButton();
+        btclear1 = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -51,14 +52,14 @@ public class ControlPanel extends javax.swing.JPanel {
         add(btdelete);
         btdelete.setBounds(60, 0, 63, 30);
 
-        btclear.setText("Clear");
+        btclear.setText("Copy");
         btclear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btclearActionPerformed(evt);
             }
         });
         add(btclear);
-        btclear.setBounds(130, 0, 70, 30);
+        btclear.setBounds(200, 0, 70, 30);
 
         btgrid.setText("Goto Grid View >>");
         btgrid.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +68,16 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(btgrid);
-        btgrid.setBounds(210, 0, 130, 30);
+        btgrid.setBounds(280, 0, 130, 30);
+
+        btclear1.setText("Clear");
+        btclear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btclear1ActionPerformed(evt);
+            }
+        });
+        add(btclear1);
+        btclear1.setBounds(130, 0, 70, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsaveActionPerformed
@@ -86,8 +96,14 @@ public class ControlPanel extends javax.swing.JPanel {
     private void btgridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btgridActionPerformed
         control.gotoList();        // TODO add your handling code here:
     }//GEN-LAST:event_btgridActionPerformed
+
+    private void btclear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclear1ActionPerformed
+
+    }//GEN-LAST:event_btclear1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btclear;
+    private javax.swing.JButton btclear1;
     private javax.swing.JButton btdelete;
     private javax.swing.JButton btgrid;
     private javax.swing.JButton btsave;
