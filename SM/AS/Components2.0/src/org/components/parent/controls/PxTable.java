@@ -122,8 +122,7 @@ public class PxTable<T> extends JTable implements IComponent {
      */
     public PxTable() {
         initComponents();
-        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);  
-        modelCollection=new ArrayList();
+        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);     
 
     }
 
@@ -138,7 +137,7 @@ public class PxTable<T> extends JTable implements IComponent {
     public void addModelToTable(Object obj) {
         
        //obj should hv an unique id 
-        Object bb=ReflectionUtility.getProperty(obj, "id");
+        Object bb=ReflectionUtility.getValue(obj, "id");
 //        Object val=ReflectionUtility.getValue(getSelectedObject(), "id");
         if(bb==null ){
         ReflectionUtility.setValue(obj, "id", newRowId_SEED++ +newRowId_cons);
