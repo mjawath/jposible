@@ -143,14 +143,14 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tblunitprices.setColumnHeader(new String[]{"Simbol", "Multi", "SalesPrice"});
 
 
-        tItemCategory.setObjectToTable(categorys);
+        tItemCategory.setObjectToTable(categorys);        
         tItemCategory.setPropertiesEL(new String[]{"id", "code", "description"});
         tItemCategory.setTitle(new String[]{"id", "Code", "Descrption"});
         tItemCategory.setSelectedProperty("code");
         tItemCategory.getPagedPopUpPanel().setPoplistener(new PopupListner() {
             @Override
             public List searchItem(Object searchQry) {
-                return itemService.categoryServise().getDao().getAll();
+                return itemService.categoryServise().getDao().ExecuteQueryOB(searchQry.toString());
             }
         });
 

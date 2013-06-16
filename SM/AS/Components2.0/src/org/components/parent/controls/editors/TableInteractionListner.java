@@ -52,4 +52,8 @@ public class TableInteractionListner {
     public boolean isCellEditable(int row,int column){
         return false;
     }
+    
+    public Object[] getTableData(Object row){
+    return new Object[0];
+    }
 }

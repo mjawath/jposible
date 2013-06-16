@@ -102,8 +102,18 @@ public class PxTable<T> extends JTable implements IComponent {
         if (modelCollection == null) {
             return;
         }
+        if(tableInteractionListner!=null){
+          
+            Object [][] data=new Object[modelCollection.size()][];
+            for (int x=0;x< modelCollection.size() ;x++) {
+               Object [] objrow= tableInteractionListner.getTableData(modelCollection.get(x));
+               data[x]=objrow;
+            }
+            TableUtil.filldata(this, data);
+          return;
+        }
         for (Object obj : modelCollection) {
-            addModelToTable(obj);
+            addModelToTable(obj);//slow method , 
         }
     }
 
@@ -126,6 +136,7 @@ public class PxTable<T> extends JTable implements IComponent {
     }
 
     public void addModelToTable(Object obj) {
+        
        //obj should hv an unique id 
         Object bb=ReflectionUtility.getProperty(obj, "id");
 //        Object val=ReflectionUtility.getValue(getSelectedObject(), "id");

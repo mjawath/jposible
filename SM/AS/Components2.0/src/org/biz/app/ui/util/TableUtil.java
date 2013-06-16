@@ -253,6 +253,14 @@ public class TableUtil {
 
     }
 
+    public static void filldata(JTable jTable, Object[] data) {
+        cleardata(jTable);
+        for (Object object : data) {
+            getdtm(jTable).addRow((Object[]) object);
+        }
+
+    }
+    
     public static void filldataObj(JTable jTable, Object[][] data) {
         cleardata(jTable);
         for (Object[] object : data) {

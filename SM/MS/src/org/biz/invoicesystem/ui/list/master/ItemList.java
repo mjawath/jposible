@@ -4,12 +4,9 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.SwingWorker;
 import org.biz.app.ui.event.ButtonAction;
-import org.biz.app.ui.util.ICommand;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.ItemService;
@@ -26,21 +23,34 @@ public class ItemList extends ListViewPanel {
 
     private ItemService itemService;
     private List<Item> items;
+    private TableInteractionListner tableInteractionListner = new TableInteractionListner(){
+
+        @Override
+        public Object[] getTableData(Object row) {
+            Item item= (Item)row;
+            return new Object[]{item.getId(),item.getId(),item.getCode(),item.getDescription()};
+        }
+    
+    };
     private ButtonAction actionX= new ButtonAction(){
 
         @Override
         public Object executeTask() {
-            System.out.println("tell servie fuck the long taks    ");
+            long bm=System.currentTimeMillis();
             System.out.println("Exe   "+cTextField1.getText());
             items=service.getDao().getAll();
+            bm = System.currentTimeMillis() -bm;
+            System.out.println("Item retreval BM "+bm);
             return items;
         }
 
         @Override
-        public void resultTask(Object objs) {
-    
+        public void resultTask(Object objs) {    
+            long bm = System.currentTimeMillis();
             System.out.println("Got result........"+items.size());
             tbl.setModelCollection(items);
+            bm = System.currentTimeMillis() - bm;
+            System.out.println("Table setting BM " + bm);
             super.resultTask(objs);
        
         }        
@@ -71,7 +81,7 @@ public class ItemList extends ListViewPanel {
         tbl.setModelClass(Item.class);        
         tbl.setPropertiesEL(new String[]{"id","code"});
         tbl.setColumnHeader(new String[]{"id","code"});
-        tbl.setTableInteractionListner(new TableInteractionListner());
+        tbl.setTableInteractionListner(tableInteractionListner);
         
     }
     

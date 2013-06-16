@@ -177,6 +177,13 @@ public class GenericDAO<T> {
         return GenericDAOUtil.ExecuteQuery(qryString, cls);
     }
 
+    public List ExecuteQueryOB(String qryString) {
+       Query qry= createQuery(qryString);
+       List list= qry.getResultList();       
+       return list;
+    }
+
+    
     public List<Object[]> ExecuteNativeQuery(String qryString) {
 
         return GenericDAOUtil.ExecuteNativeQuery(qryString);

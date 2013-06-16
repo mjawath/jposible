@@ -25,9 +25,9 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.apache.commons.beanutils.BeanUtils;
 import org.biz.app.ui.util.BizException;
 import org.biz.app.ui.util.ComponentFactory;
 import org.biz.app.ui.util.ReflectionUtility;
@@ -299,18 +299,35 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         if (textField.isFocusOwner() && !popupDisabled) {
             try {
                 System.out.println("-----this should be execucted inside the worker-------------------------");
+                long x = System.currentTimeMillis();
 
                 search(textField.getText());
                 System.out.println("search text "+textField.getText());
                 if(popupListner==null){
                     Tracer.printToOut("Popup listner not found");return;
                 }
-                list= popupListner.searchItem(textField.getText());
-                long x=System.currentTimeMillis();
-                setObjectToTable(list);//this setting object to table takes lots of time
+                String [] columns= getPropertiesEL();
+                StringBuilder qry=new StringBuilder("select ")  ;
+                for(int i=1; i<columns.length;i++){
+                qry.append("c.").append(columns[i]);
+                if(i!=columns.length-1){qry.append(", ");}else{qry.append(" from ");}
+                }
+                qry.append( "Category").append(" c");
+                x=System.currentTimeMillis()-x;
+                System.out.println("Query bench "+x);
+                x=System.currentTimeMillis();
+
+                List  xx= popupListner.searchItem(qry.toString());//i need two d array as result
+                x = System.currentTimeMillis()-x;
+
+                System.out.println("search  query bench " + x);
+                    x = System.currentTimeMillis();
+//                setObjectToTable(list);//this setting object to table takes lots of time
+                TableUtil.filldata(cxTable1, xx.toArray());
+
                 x=System.currentTimeMillis()-x;
                 showPopUp();
-                System.out.println(x);
+                System.out.println(  "fill  data  "+x);
 
             } catch (Exception ee) {
                 ee.printStackTrace();
@@ -491,7 +508,31 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
     public void setObjectToTable(List lst) {
         list = lst;
-        addToTable(lst);
+        long yx = System.currentTimeMillis() ;
+
+        if(lst==null)return;
+        Object [][] x=new Object[lst.size()][];//fro list
+        String[] prop = cxTable1.getPropertiesEL();
+
+        int in=0;
+        for(Object obj:list){
+            x[in]= new Object[prop.length];
+            x[in][0]=obj;
+            for (int i = 1; i < prop.length; i++) {
+                String var = prop[i];
+                Object ob = ReflectionUtility.getProperty(obj, var);
+                x[in][i]=ob;
+            }
+//            BeanUtils.describe(obj);
+//            BeanUtils.populate(obj, null);
+            in++;
+        }
+        long pr=System.currentTimeMillis();
+        yx =  pr- yx;
+        System.out.println("bench mark for looping and object [][] " + x.length + " object  causes " + yx);
+        TableUtil.filldataObj(cxTable1, x);        
+        yx = System.currentTimeMillis() - pr;
+        System.out.println("bench mark for fill table with "+ x.length +" object  causes "+yx);
     }
 
     public void addToTable(List items) {
@@ -532,3 +573,9 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         setPopDesable(false);
     }
 }
+/*
+ searching with the jpa column query is givign bench mark test good result
+ but tryng the getting the object [] from list of object result to set to table
+ * using reflection
+ 
+ */
