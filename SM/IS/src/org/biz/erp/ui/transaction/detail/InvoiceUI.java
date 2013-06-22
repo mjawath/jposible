@@ -10,9 +10,11 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import org.biz.app.ui.util.CKeyAdapter;
+import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
+import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.components.parent.controls.editors.DoubleCellEditor;
 import org.components.parent.controls.editors.ObjectCellEditor;
 import org.components.parent.controls.editors.TableInteractionListner;
@@ -26,6 +28,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
     
     List<Item> items;
+    SalesInvoiceService salesService;
     //finalised swing worker task executer
     
     /**
@@ -68,15 +71,24 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         
         itce.initPopup(new String[]{"id","code"}, new String[]{"ID","Code"},"id");
         itce.setPopListner(new PopupListner() {
+
             @Override
             public List searchItem(Object searchQry) {
-            return items ;
+                items=salesService.getitemService().getDao().getAll();
+                return items;
             }
-        });                
+
+            @Override
+            public Object[] getTableData(Object obj) {
+                Item item=(Item)obj;
+                return new Object[]{item,item.getId(),item.getCode()};
+            }
+        });
         
         tblInvoiceLine1.setCellEditors(itce,dce,dceA);    
         
         tblInvoiceLine1.modelToTable(new ArrayList());
+        
        
         controlPanel1.setCrudController(this);
         tblInvoiceLine1.addModelToTable(new SalesInvoiceLineItem()); 
@@ -115,7 +127,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
     @Override
     public void preSave() {
-        toSave.add(getBusObject());        
+//        toSave.add(getBusObject());        
         super.preSave();
     }
 
@@ -125,7 +137,13 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         super.clear();
     }
     
-   
+       @Override
+    public void setService(Service service) {
+        super.setService(service);
+        salesService = (SalesInvoiceService) service;        
+//        commandGUI.invoke();
+    }
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

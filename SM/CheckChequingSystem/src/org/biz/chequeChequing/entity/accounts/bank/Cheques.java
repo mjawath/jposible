@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import org.biz.books.entity.accounts.bank.BankBranch;
 import org.biz.entity.BusObj;
 
 /**

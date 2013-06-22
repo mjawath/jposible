@@ -13,6 +13,8 @@ import javax.persistence.Persistence;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.*;
+import org.biz.invoicesystem.entity.transactions.SalesInvoice;
+import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 /**
@@ -51,9 +53,12 @@ public class dbCreation {
 //       createmster();
 //           List lsts = new ArrayList();
 
-            new dbCreation().createCategory();
+//            new dbCreation().createCategory();
 //        new GenericDAO<Customer>().saveList(lsts);
 
+        SalesInvoice inv=new SalesInvoice();
+        inv.setId("6777");
+        new SalesInvoiceService().getDao().save(inv);
     }
 
     public  void createmster() {
@@ -126,7 +131,7 @@ public class dbCreation {
 
     }
 
-    public static void createDataBase() {
+    public  void createDataBase() {
         //before call this method should not initialis the emf any where perticularly in static initialisers!!!
 //        JPAUtil.createEMFWithCustomProperties();
 

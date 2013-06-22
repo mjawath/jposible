@@ -14,14 +14,13 @@ import java.util.List;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
-import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
-import org.components.windows.TabPanelUI;
+import org.components.windows.ListViewPanel;
 
 /**
  *
  * @author nnjj
  */
-public class PostedInvoicesListUI extends TabPanelUI {
+public class PostedInvoicesListUI extends ListViewPanel<SalesInvoice> {
 
     private List<SalesInvoice> invoices;
     /** Creates new form PostedInvoicesListUI */

@@ -97,6 +97,7 @@ public class TextFieldWithPopUP<T> extends CTextField {
 
     public void setObjectToTable(List<T> listCust) {
         pagedPopUpPanel.setObjectToTable(listCust);
+        pagedPopUpPanel.showPopUp();
     }
 
     @Override

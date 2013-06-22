@@ -5,7 +5,6 @@
 package org.biz.invoicesystem.ui.list.master;
 
 import java.util.List;
-import javax.swing.SwingWorker;
 import org.biz.app.ui.event.ButtonAction;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Item;
@@ -28,7 +27,7 @@ public class ItemList extends ListViewPanel {
         @Override
         public Object[] getTableData(Object row) {
             Item item= (Item)row;
-            return new Object[]{item.getId(),item.getId(),item.getCode(),item.getDescription()};
+            return new Object[]{item,item.getId(),item.getCode(),item.getDescription()};
         }
     
     };
@@ -90,25 +89,6 @@ public class ItemList extends ListViewPanel {
     @Override
     public void updateEntityUI() {
 
-        new SwingWorker<Object, Object>() {
-            @Override
-            protected Object doInBackground() throws Exception {
-                List<Item> list = itemService.getDao().getAll();
-                System.out.println("fillin with list ");
-                return list;
-            }
-
-            @Override
-            protected void done() {
-                try {
-                    tbl.setModelCollection((List) get());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }.execute();
-
-        super.updateEntityUI(); //To change body of generated methods, choose Tools | Templates.
     }
     
     @SuppressWarnings("unchecked")

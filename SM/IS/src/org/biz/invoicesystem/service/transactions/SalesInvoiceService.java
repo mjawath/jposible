@@ -15,6 +15,7 @@ import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
+import org.biz.invoicesystem.service.master.ItemService;
 
 /**
  *
@@ -28,8 +29,10 @@ public class SalesInvoiceService extends Service{
 
     public SalesInvoiceService() {
         super();
+        dao = new SalesInvoiceDAO();
     }
     
+    @Override
     public void initUI(){
         invoiceUI = new InvoiceUI();
         invoicesListUI= new PostedInvoicesListUI();
@@ -100,6 +103,10 @@ public class SalesInvoiceService extends Service{
 //            ijl.setUom(sl.getQty());
         }
         dao.save(invoice,ij);
+    }
+    
+    public ItemService getitemService(){
+    return new ItemService();
     }
 
 }

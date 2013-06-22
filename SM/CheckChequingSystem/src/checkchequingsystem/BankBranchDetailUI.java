@@ -16,8 +16,8 @@ import java.util.List;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
-import org.biz.chequeChequing.entity.accounts.bank.Bank;
-import org.biz.chequeChequing.entity.accounts.bank.BankBranch;
+import org.biz.books.entity.accounts.bank.Bank;
+import org.biz.books.entity.accounts.bank.BankBranch;
 import org.biz.chequeChequing.entity.service.bank.BankBranchService;
 import org.biz.chequeChequing.entity.service.bank.BankService;
 import org.biz.dao.util.EntityService;
@@ -182,7 +182,7 @@ public class BankBranchDetailUI extends TabPanelUI {
         }
 
         BankBranch item = new BankBranch();
-        item.setId(SystemUtil.timeStampKey());
+//        item.setId(SystemUtil.timeStampKey());
         uiToEty(item);
         service.getDao().save(item);
         branches = service.getDao().getAll();

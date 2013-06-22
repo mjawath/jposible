@@ -15,7 +15,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
-import org.biz.chequeChequing.entity.accounts.bank.Bank;
+import org.biz.books.entity.accounts.bank.Bank;
 import org.biz.chequeChequing.entity.service.bank.BankService;
 import org.biz.dao.util.EntityService;
 import org.components.windows.TabPanelUI;
@@ -159,7 +159,7 @@ public class BankDetailUI extends TabPanelUI {
             return;
         }
         Bank item = new Bank();
-        item.setId(es.getKey());
+//        item.setId(es.getKey());
         uiToEty(item);
         service.getDao().save(item);
         banks = service.getDao().getAll();

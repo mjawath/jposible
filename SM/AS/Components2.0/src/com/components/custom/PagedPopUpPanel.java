@@ -27,8 +27,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.apache.commons.beanutils.BeanUtils;
 import org.biz.app.ui.util.BizException;
+import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.ComponentFactory;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
@@ -59,6 +59,49 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     private String selectedProperty;
     private JPopupMenu jpm;
     private PopupListner popupListner;
+    
+    private Command command=  new Command(){
+
+        @Override
+        public Object executeTask() {
+            if(popupListner==null){
+                Tracer.printToOut("Popuplistner in SW is not ok");
+                return null;
+            }
+//            String text=(String)command.objs.get(0);
+          return  popupListner.searchItem("qry param");
+        }
+
+        @Override
+        public void resultTask(Object objs) {
+            
+//            tItemCategory.setObjectToTable();
+//            Object [][] objas=new Object[0][];
+            setModelCollection((List)objs);
+        }
+            
+        };
+    
+    public void setModelCollection(List<T> modelCollection) {        
+        cxTable1.clear();
+        //for each item set values to table model
+        if (modelCollection == null) {
+            return;
+        }
+        long y=System.currentTimeMillis();
+          
+            Object [][] data=new Object[modelCollection.size()][];
+            for (int x=0;x< modelCollection.size() ;x++) {
+               Object [] objrow= popupListner.getTableData(modelCollection.get(x));
+               data[x]=objrow;
+            }
+            TableUtil.filldata(cxTable1, data);
+            showPopUp();
+         y=System.currentTimeMillis()-y;
+         System.out.println(" BM popuplistner "+y);
+        }
+    
+
 
     public int getSelectedColumn() {
         return selectedColumn;
@@ -297,42 +340,19 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
-            try {
-                System.out.println("-----this should be execucted inside the worker-------------------------");
-                long x = System.currentTimeMillis();
-
-                search(textField.getText());
-                System.out.println("search text "+textField.getText());
-                if(popupListner==null){
-                    Tracer.printToOut("Popup listner not found");return;
-                }
-                String [] columns= getPropertiesEL();
-                StringBuilder qry=new StringBuilder("select ")  ;
-                for(int i=1; i<columns.length;i++){
-                qry.append("c.").append(columns[i]);
-                if(i!=columns.length-1){qry.append(", ");}else{qry.append(" from ");}
-                }
-                qry.append( "Category").append(" c");
-                x=System.currentTimeMillis()-x;
-                System.out.println("Query bench "+x);
-                x=System.currentTimeMillis();
-
-                List  xx= popupListner.searchItem(qry.toString());//i need two d array as result
-                x = System.currentTimeMillis()-x;
-
-                System.out.println("search  query bench " + x);
-                    x = System.currentTimeMillis();
-//                setObjectToTable(list);//this setting object to table takes lots of time
-                TableUtil.filldata(cxTable1, xx.toArray());
-
-                x=System.currentTimeMillis()-x;
-                showPopUp();
-                System.out.println(  "fill  data  "+x);
-
-            } catch (Exception ee) {
-                ee.printStackTrace();
-            }
+            command.objs.add(textField.getText());
+            command.invoke();//
+            //
+            //what ever class 
+            //get item list 
+            // get  attributes from obj
+            //create data array
+            //set to table
         }
+    }
+    
+    public void setCommand(Command command){
+    this.command = command;
     }
     
     public void setPoplistener(PopupListner listener){

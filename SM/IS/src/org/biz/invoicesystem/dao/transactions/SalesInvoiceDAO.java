@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 import org.biz.dao.service.GenericDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;

@@ -5,7 +5,6 @@
 package org.biz.invoicesystem.entity.transactions;
 
 import app.utils.MathUtil;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +29,7 @@ import org.biz.invoicesystem.entity.master.Shop;
 @Entity
 public class SalesInvoice extends BusObj {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 145454545L;
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
     @ManyToOne(fetch = FetchType.LAZY)

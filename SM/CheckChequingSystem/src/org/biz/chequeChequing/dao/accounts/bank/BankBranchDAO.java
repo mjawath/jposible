@@ -5,7 +5,7 @@
 package org.biz.chequeChequing.dao.accounts.bank;
 
 import java.util.List;
-import org.biz.chequeChequing.entity.accounts.bank.BankBranch;
+import org.biz.books.entity.accounts.bank.BankBranch;
 import org.biz.dao.service.GenericDAO;
 
 /**

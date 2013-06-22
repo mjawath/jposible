@@ -18,6 +18,7 @@ public class Service {
     int pageSize;
 
     public Service() {
+        
     }
 
     /**
@@ -89,5 +90,10 @@ public class Service {
     }
     
     public void initUI(){
+    }
+    
+    public void PrintTracer(String msg){
+//        Tracer.printToOut("servies are set ");
+        System.out.println("should move print traeer "+msg);
     }
 }

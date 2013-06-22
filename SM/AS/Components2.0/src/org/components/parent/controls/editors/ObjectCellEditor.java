@@ -4,14 +4,11 @@
  */
 package org.components.parent.controls.editors;
 
-import com.components.custom.PagedPopUpPanel;
 import com.components.custom.PopupListner;
 import com.components.custom.TextFieldWithPopUP;
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JTable;
-import org.components.controls.CTextField;
 import org.components.controls.ModelEditableTable;
 
 /**

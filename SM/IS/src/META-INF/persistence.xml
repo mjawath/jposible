@@ -36,11 +36,7 @@
     <class>org.biz.invoicesystem.entity.transactions.Payment</class>
     <class>org.biz.invoicesystem.entity.transactions.PurchaseInvoice</class>
     <class>org.biz.invoicesystem.entity.transactions.PurchaseInvoiceLineItem</class>
-    <class>org.biz.invoicesystem.entity.transactions.SalesInvoice</class>
     <class>org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem</class>
-    <class>org.biz.chequeChequing.entity.accounts.bank.Bank</class>
-    <class>org.biz.chequeChequing.entity.accounts.bank.BankBranch</class>
-    <class>org.biz.chequeChequing.entity.accounts.bank.Cheques</class>
     <class>org.biz.chequeChequing.entity.accounts.bank.ReturnCheques</class>
     <class>org.biz.invoicesystem.entity.inventory.TransferOrder</class>
     <class>org.biz.chequeChequing.entity.accounts.bank.ChequeState</class>
@@ -59,6 +55,10 @@
     <class>org.biz.books.entity.accounts.payments.PaymentDocument</class>
     <class>org.biz.books.entity.accounts.payments.SupplierPayments</class>
     <class>org.biz.invoicesystem.entity.transactions.ChequeRegistry</class>
+    <class>org.biz.chequeChequing.entity.accounts.bank.Cheques</class>
+    <class>org.biz.books.entity.accounts.bank.Bank</class>
+    <class>org.biz.books.entity.accounts.bank.BankBranch</class>
+    <class>org.biz.invoicesystem.entity.transactions.SalesInvoice</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/invoicesystem"/>
       <property name="javax.persistence.jdbc.password" value="123"/>

@@ -15,18 +15,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import org.biz.entity.BusObj;
 
 /**
  *
  * @author mjawath
  */
 @Entity
-public class UOM implements Serializable {
+public class UOM extends BusObj {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
     private String simbol;
 //    @Enumerated(EnumType.ORDINAL)
     private Byte type;// this can be primary ,carton, wholsale ..others

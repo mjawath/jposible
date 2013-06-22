@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import org.apache.commons.jexl2.JexlEngine;
 import org.components.parent.controls.PxTable;
+import org.components.windows.TabPanelUI;
 
 
 
@@ -73,7 +74,19 @@ public class ReflectionUtility {
     }
   }
 
-
+  public static Object getDynamicInstance(Class cls){
+      try {
+          Object obj= Class.forName(cls.getName()).newInstance();
+          return obj;
+      }
+      catch (Exception e) {
+          Tracer.printToOut(e.getMessage());
+      }
+      return null;
+//      Object obj= Class.forName(cls.getName()).newInstance();
+//                     tpui = (TabPanelUI) Class.forName(cls.getName()).newInstance();
+     
+  }
   /**
    * Invokes the Dynamic method on the Object
    *
