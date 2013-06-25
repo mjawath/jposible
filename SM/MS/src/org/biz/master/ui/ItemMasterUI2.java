@@ -319,6 +319,12 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                     if (equals(e.getValueIsAdjusting())) {
                         return;
                     }
+                    //get selected uom from list
+                    UOM uom = TableUtil.getSelectedTableObject(tblunitprices);
+                    if(uom==null)return;//set uom to UI
+                    UIEty.objToUi(tunitprice, uom.getSalesPrice());
+                    UIEty.objToUi(tContainsQty, uom.getMulti());
+                    UIEty.objToUi(tunitsymbot, uom.getSimbol());
                     
                 }
             });
@@ -374,6 +380,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         //set combo 
 
     }
+    
     private void addUnitToTable(Item item) {
 //            String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
 //            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
@@ -978,16 +985,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
     }
 
-    ////////////////////////////
-    public void etyToUI(Item i) {
-
-        try {
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void itemVariation2Ui(List<ItemVariation> lstOfVariation) {
 
         try {
@@ -1064,8 +1061,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void postUpdate() {
 
         //        selectedItem.setId(get.getId());
-        Date mDate = GenericDAOUtil.currentTime();
-        selectedObject.setEditedDate(mDate);
+//        Date mDate = GenericDAOUtil.currentTime();
+//        selectedObject.setEditedDate(mDate);
 //        itemService.getDao().update(selectedObject);
 
         //put to thread 
@@ -1111,6 +1108,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tItemcode.requestFocus();
     }
 
+    @Override
     public Item getBusObject() {
         Item item = new Item();
 //        item.setId(EntityService.getEntityService().getKey(""));

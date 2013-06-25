@@ -16,6 +16,7 @@ public class ItemService extends Service{
 
     public ItemService() {
         dao=new ItemDAO();
+        
     }
 
     public ItemDAO getDao() {

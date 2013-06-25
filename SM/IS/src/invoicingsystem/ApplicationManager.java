@@ -37,8 +37,8 @@ public class ApplicationManager {
 //              app.addToTabpanelToUI("Item",ItemMasterUI2.class);
               app.setVisible(true);  
               System.out.println("=========00000000000000======================");
-              initUI(ItemService.class,ItemMasterUI2.class , ItemList.class);              
-              initUI(SalesInvoiceService.class,InvoiceUI.class , PostedInvoicesListUI.class);              
+              initUI(ItemService.class,"ITem",ItemMasterUI2.class , ItemList.class);              
+              initUI(SalesInvoiceService.class,"Sales",InvoiceUI.class , PostedInvoicesListUI.class);              
             }
         });
 //            SalesInvoiceService sis=new SalesInvoiceService(); 
@@ -50,12 +50,12 @@ public class ApplicationManager {
 
     }
     
-        public static void initUI(final Class service, Class dp, Class lv) {
+        public static void initUI(final Class service,String title, Class dp, Class lv) {
         try {
             final DetailPanel obj2 = (DetailPanel) ReflectionUtility.getDynamicInstance(dp);
             final ListViewPanel obj3 = (ListViewPanel) ReflectionUtility.getDynamicInstance(lv);
-            SystemUtil.addToMainWindow(obj2, dp.getName());
-            SystemUtil.addToMainWindow(obj3, lv.getName());
+            SystemUtil.addToMainWindow(obj2, title +"DETAIL");
+            SystemUtil.addToMainWindow(obj3, title+"LIST");
             Tracer.printToOut("servies are set ");
 
             new Thread(new Runnable() {

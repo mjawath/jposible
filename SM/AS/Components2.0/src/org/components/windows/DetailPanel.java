@@ -76,6 +76,8 @@ public class DetailPanel<T> extends TabPanelUI {
             else {
                 ReflectionUtility.setProperty(busObject, "id", key);
                 ReflectionUtility.setProperty(busObject,"editedDate",mDate);
+                ReflectionUtility.setProperty(busObject, "savedDate", ((BusObj)obj).getSavedDate());
+
                 toUpdate.add(busObject);
                 Tracer.printToOut("Updation is called  Object  is  found");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
@@ -86,6 +88,7 @@ public class DetailPanel<T> extends TabPanelUI {
             toUpdate.clear();
             toDelete.clear();
             clear();
+            selectedObject=null;
         }
         super.save();
     }
@@ -140,7 +143,7 @@ public class DetailPanel<T> extends TabPanelUI {
     }
     
     public T getBusObject(){
-    return null;
+        return null;
     }
 
     public void setBusObject(T obj) {
