@@ -16,7 +16,7 @@ import javax.persistence.Temporal;
 @MappedSuperclass
 public class BusObj implements Serializable {
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)//these auditable datas can be put to emeded entity as one one relationship
     private Date editedDate;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date savedDate;

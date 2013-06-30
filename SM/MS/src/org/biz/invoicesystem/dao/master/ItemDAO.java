@@ -20,6 +20,7 @@ public class ItemDAO extends GenericDAO<Item> {
     
     public ItemDAO() {
         setCls(Item.class);
+        orderby ="c.editedDate , c.savedDate ";
     }
 
     

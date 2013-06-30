@@ -21,7 +21,7 @@ public class GenericDAO<T> {
     private EntityManager em;
     String classname;
     Class<T> cls;
-    String orderby = "";
+    protected String orderby = "";
     protected Cache cache;
     int noofrows = 100;
 
