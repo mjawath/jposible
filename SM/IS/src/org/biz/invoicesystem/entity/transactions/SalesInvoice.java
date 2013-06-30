@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import org.biz.app.ui.util.Tracer;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Staff;
@@ -239,7 +240,7 @@ public class SalesInvoice extends BusObj {
         setTotal(db);
         Double bal = db;
         bal = MathUtil.sub(bal, getCashRecieveds());
-        System.out.println("totel  " + bal);
+        Tracer.printToOut("Invoice totel  " + bal);
         return bal;
 
     }
