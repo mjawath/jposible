@@ -92,6 +92,8 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     public List<T> getModelCollection() {
+        //should get the collection from the tables 
+        
         return modelCollection;
     }
 
@@ -196,7 +198,8 @@ public class PxTable<T> extends JTable implements IComponent {
                 TableUtil.removerow(this, sr);
                 return;
             }
-        }
+        }/*row remove logic*/
+        TableUtil.removerow(this, sr);
 
     }
     
