@@ -107,10 +107,6 @@ public class TextFieldWithPopUP<T> extends CTextField {
         pagedPopUpPanel.setSelectedID(null);
     }
 
-    public void initPopup(Class cls,Class[] columnsType, String[] columns, String selectedProp, PopupListner listner) {
-        pagedPopUpPanel.setPoplistener(listner);        
-        pagedPopUpPanel.setTableType(cls);        
-        pagedPopUpPanel.setTitle(columnsType, columns);
-        pagedPopUpPanel.setSelectedProperty(selectedProp);
-    }
+
+
 }

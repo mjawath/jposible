@@ -49,18 +49,16 @@ public class dbCreation {
 //                System.out.println(x);
 //            }
 //        }
-        dbCreation db=new dbCreation();
-        db.
 //        createDataBase();
-       createmster();
+//       createmster();
 //           List lsts = new ArrayList();
 
 //            new dbCreation().createCategory();
 //        new GenericDAO<Customer>().saveList(lsts);
 
-//        SalesInvoice inv=new SalesInvoice();
-//        inv.setId("677fdfd7");
-//        new SalesInvoiceService().getDao().save(inv);
+        SalesInvoice inv=new SalesInvoice();
+        inv.setId("6777");
+        new SalesInvoiceService().getDao().save(inv);
     }
 
     public  void createmster() {
@@ -160,7 +158,7 @@ public class dbCreation {
     
     public void createCategory(){
         GenericDAO gd=new GenericDAO<Category>();
-//        gd.deleteAll(Category.class);
+        gd.deleteAll(Category.class);
         System.out.println("ready for category");  
         List lsts = new ArrayList();
 

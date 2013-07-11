@@ -10,7 +10,13 @@
  */
 package org.components.controls;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 import org.components.parent.controls.PxTable;
+import org.components.parent.controls.editors.TableActions;
 
 /**
  *
@@ -22,7 +28,10 @@ public class CxTable extends PxTable {
      * Creates new form BeanForm
      */
     public CxTable() {
-        super();      
+        initComponents();
+        this.setDefaultRenderer(String.class, new CustomRenderer());
+        this.setDefaultRenderer(Double.class, new CustomRenderer());
+        this.setDefaultRenderer(Object.class, new CustomRenderer());
     }
 
     @SuppressWarnings("unchecked")

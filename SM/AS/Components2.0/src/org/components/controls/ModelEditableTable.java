@@ -173,7 +173,8 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
 
     @Override
     public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
-        super.changeSelection(rowIndex, columnIndex, toggle, extend);        
+        super.changeSelection(rowIndex, columnIndex, toggle, extend);
+        System.out.println("##########---selection changed " + rowIndex + "-" + columnIndex);
 //        editCellAt(rowIndex, columnIndex);
     }
 
@@ -186,7 +187,8 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
     @Override
     public boolean editCellAt(int row, int column, EventObject e) {
 //        onBeforeEditStart();
-        boolean edit = super.editCellAt(row, column, e);     
+        boolean edit = super.editCellAt(row, column, e);
+        System.out.println("************editing started s " + row + "-" + column);
 //        onAfterEditStart();
         return edit;
     }

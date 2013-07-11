@@ -59,6 +59,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     private String selectedProperty;
     private JPopupMenu jpm;
     private PopupListner popupListner;
+    
     private Command command=  new Command(){
 
         @Override
@@ -203,9 +204,9 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     
     public void showPopUp() {
         try {
-//            if (getPropertiesEL() == null || getPropertiesEL().length == 0) {
-//                throw new BizException("not specified properties ");
-//            }
+            if (getPropertiesEL() == null || getPropertiesEL().length == 0) {
+                throw new BizException("not specified properties ");
+            }
             if (cxTable1.getColumnCount() == 0) {
                 throw new BizException("not specified column ");
             }
@@ -234,9 +235,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
             @Override
             public boolean action() {
                 System.out.println("====----***action task one **----====");
-                popupDisabled= true;
                 getSeletedValue();
-                popupDisabled = false;
                 return super.action();
             }
         });
@@ -343,7 +342,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         if (textField.isFocusOwner() && !popupDisabled) {
             command.objs.add(textField.getText());
             command.invoke();//
-            System.out.println("Key event ");
             //
             //what ever class 
             //get item list 
@@ -497,7 +495,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         if (ob != null) {
             //find object from list and select
             if (textField instanceof JTextField) {
-                selectedObject = (T) ob;
+                selectedObject = (T)ob;
                 //get selected object
                 UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
                 action();
@@ -509,7 +507,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     public void setSelectedText() {
         if (textField instanceof JTextField) {
             //get selected object
-            if(selectedObject==null ||getSelectedProperty()==null ){UIEty.objToUi(textField,"");return;}
             UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
         }
     }
@@ -594,13 +591,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         setPopDesable(true);
         textField.setText(txt);
         setPopDesable(false);
-    }
-    
-    public void setTableType(Class tableType) {
-        cxTable1.setModelClass(tableType);    
-    }
-    public void setTitle(Class [] column,String[] title) {        
-        cxTable1.setColumnTypes(column, title);
     }
 }
 /*

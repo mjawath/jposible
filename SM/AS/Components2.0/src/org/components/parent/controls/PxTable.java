@@ -18,12 +18,9 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
-import org.components.parent.controls.editors.CustomRenderer;
 import org.components.parent.controls.editors.TableInteractionListner;
 
 /**
@@ -40,45 +37,6 @@ public class PxTable<T> extends JTable implements IComponent {
     private static final String newRowId_cons = "#NewRow#";
     private int newRowId_SEED = -10000001;
     protected TableInteractionListner tableInteractionListner;
-    
-    /**
-     * Creates new form BeanForm
-     */
-    public PxTable() {
-        initComponents();
-        
-//        this.setDefaultRenderer(String.class,new CustomRenderer());
-//        this.setDefaultRenderer(Double.class,new CustomRenderer());
-//        this.setDefaultRenderer(Object.class,new CustomRenderer());
-        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);
-        modelCollection = new ArrayList();
-        getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                //get selected object
-                // set to detail panel  
-                if (!e.getValueIsAdjusting()) {
-                    return;
-                }
-                int row = getSelectedRow();
-                Object obj = getSelectedObject();
-                tableInteractionListner.selectionChanged(obj);
-            }
-        });
-        this.setDefaultRenderer(String.class, new CustomRenderer());
-        this.setDefaultRenderer(Double.class, new CustomRenderer());
-        this.setDefaultRenderer(Object.class, new CustomRenderer());
-    }
-
-    
-    public void init(Class tableType, Class [] classType, String[] title){
-        modelClass=tableType;
-        setColumnTypes(classType, title);
-        //Tables first column which holds the model object will be not visible
-        TableUtil.hideColumn(this, 0);
-      
-        
-    }
     
     
 
@@ -118,26 +76,7 @@ public class PxTable<T> extends JTable implements IComponent {
         Class [] cls= ReflectionUtility.getFieldTypesForAttributesForTable(getModelClass(), getPropertiesEL());        
         TableUtil.createTableModel(this, tit,cls);
     }
-    
-    public void setColumnTypes(Class [] classType, String[] title) {
-//        if( propertiesEL==null)return;
-        String [] newTitle=new String[(title.length+1)];
-        newTitle[0]="objecyOF";
-        int c=1;
-        for (String str : title) {
-            newTitle[c++]=str;
-        }        
-        c=1;
-        Class[] newclassTypes=new Class[classType.length+1];
-        newclassTypes[0]=modelClass;
-        for (Class  str : classType) {
-            newclassTypes[c++] = str;
-        }
 
-        TableUtil.createTableModel(this, newTitle,newclassTypes);
-    }
-
-    
     public Class getModelClass() {
         return modelClass;
     }
@@ -153,8 +92,6 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     public List<T> getModelCollection() {
-        //should get the collection from the tables 
-        
         return modelCollection;
     }
 
@@ -180,7 +117,16 @@ public class PxTable<T> extends JTable implements IComponent {
         }
     }
 
-   
+    /**
+     * Creates new form BeanForm
+     */
+    public PxTable() {
+        initComponents();
+        UIManager.put("JTable.autoStartsEdit", Boolean.TRUE);  
+        modelCollection=new ArrayList();
+
+    }
+
     public void clear() {
         if (modelCollection != null) {
             TableUtil.cleardata(this);
@@ -190,12 +136,12 @@ public class PxTable<T> extends JTable implements IComponent {
     }
 
     public void addModelToTable(Object obj) {
-
-        //obj should hv an unique id 
-        Object bb = ReflectionUtility.getProperty(obj, "id");
+        
+       //obj should hv an unique id 
+        Object bb=ReflectionUtility.getProperty(obj, "id");
 //        Object val=ReflectionUtility.getValue(getSelectedObject(), "id");
-        if (bb == null) {
-            ReflectionUtility.setValue(obj, "id", newRowId_SEED++ + newRowId_cons);
+        if(bb==null ){
+        ReflectionUtility.setValue(obj, "id", newRowId_SEED++ +newRowId_cons);
         }//sould check existing id , objects
         modelCollection.add(obj);
         TableUtil.addModelToTable(obj, this);
@@ -250,8 +196,7 @@ public class PxTable<T> extends JTable implements IComponent {
                 TableUtil.removerow(this, sr);
                 return;
             }
-        }/*row remove logic*/
-        TableUtil.removerow(this, sr);
+        }
 
     }
     
@@ -266,7 +211,7 @@ public class PxTable<T> extends JTable implements IComponent {
            }
     }
     
-    public T getSelectedObject() {
+    public Object getSelectedObject() {
         //loop the collection//TODO : Set collection??TODO: all the way exception ...
         /// have to modify the setting collection behaviour
         return TableUtil.getSelectedTableObject(this);
@@ -361,18 +306,15 @@ public class PxTable<T> extends JTable implements IComponent {
 
         setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+
             }
         ));
         setRowHeight(25);
-    }// </editor-fold>//GEN-END:initComponents
+        setRowHeight(12);
+           }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

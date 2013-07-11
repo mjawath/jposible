@@ -139,8 +139,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             e.printStackTrace();
         }
 //        crudcontrolPanel.set
-        tblunitprices.setPropertiesEL(new String[]{"simbol", "salesPrice","type", "multi"});
-        tblunitprices.setColumnHeader(new String[]{"Simbol", "SalesPrice","Type" ,"Multi"});
+        tblunitprices.setPropertiesEL(new String[]{"simbol", "multi", "salesPrice"});
+        tblunitprices.setColumnHeader(new String[]{"Simbol", "Multi", "SalesPrice"});
 
 
         tItemCategory.setObjectToTable(categorys);        
@@ -166,9 +166,9 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
 
         cPanel6.addToFocus(tunitsymbot);
-        cPanel6.addToFocus(tunitprice);
-        cPanel6.addToFocus(tunittype);
         cPanel6.addToFocus(tContainsQty);
+        cPanel6.addToFocus(tunittype);
+        cPanel6.addToFocus(tunitprice);
 
     }
 
@@ -215,7 +215,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             ////////////////////////////////////////////////////////////////////////////
 
 
-            tContainsQty.addKeyListener(new KeyAdapter() {
+            tunitprice.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
                     try {
                         if (e.getKeyChar() == KeyEvent.VK_ENTER) {
@@ -229,7 +229,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                             // add new or replace current one
                             //update table
                             UOM uom = new UOM();
-                            UOM object = (UOM) TableUtil.getSelectedTableObject(tblunitprices);
+                            UOM object = (UOM) TableUtil.getSelectedValue(tblunitprices, 0);
                             if (object != null) {
                                 uom = object;
                             }
@@ -307,7 +307,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                     //other entries are other type and are allowed multiple time
                     // when deleting a entry chek this contitions
                     //when primary is deleted user should be notified
-                    // symbol | price | type | mutiply* primary unit |
 
 
                 }
@@ -354,20 +353,17 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private void deleteUnitRow() {
         //should check for primary keys deletion !!!!!
 
-//        Object ob = TableUtil.getSelectedValue(tblunitprices, 0);
-//        if (ob != null) {
-//            for (Iterator<UOM> it = selectedObject.getUoms().iterator(); it.hasNext();) {
-//                if (ob.equals(it.next().getId())) {
-//                    it.remove();
-//                    addUnitToTable(selectedObject);
-//                    break;
-//                }
-//            }
-//            //update uom table
-//        }
-        //
-        tblunitprices.removeSelectedRow();
-        cleatUOM();
+        Object ob = TableUtil.getSelectedValue(tblunitprices, 0);
+        if (ob != null) {
+            for (Iterator<UOM> it = selectedObject.getUoms().iterator(); it.hasNext();) {
+                if (ob.equals(it.next().getId())) {
+                    it.remove();
+                    addUnitToTable(selectedObject);
+                    break;
+                }
+            }
+            //update uom table
+        }
     }
 
     
@@ -583,11 +579,11 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             }
         });
         cPanel6.add(tunitprice);
-        tunitprice.setBounds(130, 20, 90, 25);
+        tunitprice.setBounds(340, 20, 90, 25);
         cPanel6.add(tunitsymbot);
-        tunitsymbot.setBounds(20, 20, 100, 25);
+        tunitsymbot.setBounds(20, 20, 90, 25);
         cPanel6.add(tContainsQty);
-        tContainsQty.setBounds(340, 20, 100, 25);
+        tContainsQty.setBounds(130, 20, 100, 25);
 
         cButton2.setText("remove");
         cButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -608,7 +604,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             }
         });
         cPanel6.add(tunittype);
-        tunittype.setBounds(230, 20, 80, 23);
+        tunittype.setBounds(250, 20, 80, 23);
 
         tblunitprices.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -632,19 +628,19 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             }
         });
         cPanel6.add(tadd);
-        tadd.setBounds(440, 20, 70, 23);
+        tadd.setBounds(440, 20, 65, 23);
 
-        cLabel10.setText("Multiply * primUnit");
+        cLabel10.setText("Unit");
         cPanel6.add(cLabel10);
-        cLabel10.setBounds(320, 0, 130, 20);
+        cLabel10.setBounds(134, 0, 90, 20);
 
         cLabel11.setText("Type");
         cPanel6.add(cLabel11);
-        cLabel11.setBounds(230, 0, 70, 20);
+        cLabel11.setBounds(264, 0, 70, 20);
 
         cLabel12.setText("Price");
         cPanel6.add(cLabel12);
-        cLabel12.setBounds(130, 0, 60, 20);
+        cLabel12.setBounds(340, 0, 60, 20);
 
         cScrollPane2.setViewportView(cPanel6);
 
@@ -865,7 +861,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tunitprice.clear();
         tunitsymbot.clear();
         tContainsQty.clear();
-        tblunitprices.clearSelection();
     }
 
     public Item uiToEty(Item i) throws Exception {
