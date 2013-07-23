@@ -7,7 +7,7 @@ package com.components.custom;
 
 /**
  *
- * @author NUZAIR
+ * @author Jawath
  */
 public class ControlPanel extends javax.swing.JPanel {
 

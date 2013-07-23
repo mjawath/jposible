@@ -5,11 +5,14 @@
 package org.biz.erp.ui.transaction.detail;
 
 import com.components.custom.PopupListner;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import org.biz.app.ui.util.CKeyAdapter;
+import org.biz.app.ui.util.Tracer;
+import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
@@ -34,14 +37,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
     /**
 
 * builder pattern to ange the way the  table columns are created and edited  
-* 
-* 
-     
-     * 
-     * 
-     * 
-     */ 
-     
+
     /**......
      * Creates new form InvoiceUI
      */
@@ -61,13 +57,44 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
     }
     
     public void init(){
-//        items=new ItemService().getDao().getAll();
-        tblInvoiceLine1.setModelClass(SalesInvoiceLineItem.class);
-        tblInvoiceLine1.setPropertiesEL(new String[]{"item","qty","price","lineAmount"});       
-        tblInvoiceLine1.setColumnHeader(new String[]{"Item","QTY","Amount","Line Totel"});        
+        
+        
+        tprice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SalesInvoiceLineItem lit = (SalesInvoiceLineItem) tblInvoiceLine1.getSelectedObject();
+//                if (lit == null) {
+//                    addItemToTable();
+//                } else {
+                    //update the row
+                    updateRow(lit);//if this is new row then modify this.                    
+//                }
+               titem.requestFocus(); 
+            }
+        });
+//        items=new ItemService().getDao().getAll();        
+        tblInvoiceLine1.init(SalesInvoiceLineItem.class, new Class[]{Item.class,String.class,String.class,String.class},
+                new String[]{"Item","QTY","Amount","Line Totel"});
+        tblInvoiceLine1.setPropertiesEL(new String[]{"item","qty","price","lineAmount"});
+        
         DoubleCellEditor dce=new DoubleCellEditor();                
         DoubleCellEditor dceA=new DoubleCellEditor();                
         ObjectCellEditor<Item> itce=new ObjectCellEditor(tblInvoiceLine1);
+        
+        titem.initPopup(Item.class,new Class[]{String.class,String.class,String.class}, new String[]{"code","id","desc"}, "code",new PopupListner() {
+
+            @Override
+            public List searchItem(Object searchQry) {
+                items = salesService.getitemService().getDao().getAll();
+                return items;
+            }
+
+            @Override
+            public Object[] getTableData(Object obj) {
+                Item item = (Item) obj;
+                return new Object[]{item, item.getId(), item.getCode()};
+            }
+        } );
         
         itce.initPopup(new String[]{"id","code"}, new String[]{"ID","Code"},"id");
         itce.setPopListner(new PopupListner() {
@@ -91,43 +118,156 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         
        
         controlPanel1.setCrudController(this);
-        tblInvoiceLine1.addModelToTable(new SalesInvoiceLineItem()); 
-        
-        tblInvoiceLine1.setTableInteractionListner( new TableInteractionListner(){
-
+        tblInvoiceLine1.setTableInteractionListner(new TableInteractionListner() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return true;
+                return false;
             }
 
             @Override
-            public void onCellEditing(Object cel,int col) {
-             //get bus object
-             //get table object
-             //get editing row object 
-             //get editing property
-             //validate things   
-             System.out.println(" Row obj "+cel);            
-             //set value for column property
-             //get table object collection
-             //get GUI object
-             /**
-             use the builder pattern to  use the table  to 
-             * column is created with the option to create the column 
-             * 
-             * column option are 
-             */
-             SalesInvoice si=getBusObject();
-             ((SalesInvoiceLineItem)cel).calculateLineItem();
-             tblInvoiceLine1.replaceModel(cel);             
-            }       
-        });
-        tinv.addKeyListener(new CKeyAdapter());
-    }
+            public Object[] getTableData(Object row) {
+                SalesInvoiceLineItem sil=(SalesInvoiceLineItem)row;
+                return new Object[]{sil,sil.getItem(),sil.getQty(),sil.getPrice(),sil.getLineAmount()};
+            }
+            
+            
 
+            @Override
+            public void onCellEditing(Object cel, int col) {
+                //get bus object
+                //get table object
+                //get editing row object 
+                //get editing property
+                //validate things   
+                System.out.println(" Row obj " + cel);
+                //set value for column property
+                //get table object collection
+                //get GUI object
+                /**
+                 * use the builder pattern to use the table to column is created
+                 * with the option to create the column
+                 *
+                 * column option are
+                 */
+                SalesInvoice si = getBusObject();
+                ((SalesInvoiceLineItem) cel).calculateLineItem();
+                tblInvoiceLine1.replaceModel(cel);
+                //set total to ui
+                si.setTotal();
+                UIEty.objToUi(ttotal, si.getTotal());
+            }
+
+            @Override
+            public void selectionChanged(Object newRowObject) {
+                //get selected object
+                // set to detail panel                
+                setLineItemDetail((SalesInvoiceLineItem) newRowObject); 
+            }
+            
+        });
+        addNewToTable();
+        gridControllerPanel1.setTable(tblInvoiceLine1);
+       
+        tpnlLineDetail.addToFocus(titem);
+        tpnlLineDetail.addToFocus(tqty);
+        tpnlLineDetail.addToFocus(tprice); 
+        
+      
+        ActionListener act=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calcualteTotal();
+            }
+        };
+        tqty.setAction(act);
+        tprice.setAction(act);       
+       
+        titem.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    tblInvoiceLine1.selectNextRow();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    tblInvoiceLine1.selectPreRow();
+                }
+            }
+        });
+        
+        tpaid.setAction(act);
+    }
+    
+    
+    
+    private void calcualteTotal(){
+        //get the qty price item lineitem
+        //get 
+         SalesInvoiceLineItem sil = getSalesLine();
+         sil.calculateLineItem();
+         UIEty.objToUi(tline, sil.getLineAmount());
+         tblInvoiceLine1.replaceModel(sil);
+         SalesInvoice si=getBusObject();
+         si.setTotal();
+         UIEty.objToUi(tbal, si.calculateBalance());
+         UIEty.objToUi(ttotal, si.getTotal());
+         //update the table row 
+                  
+    }
+    
+    public SalesInvoiceLineItem getSalesLine() {
+        SalesInvoiceLineItem lineItem=(SalesInvoiceLineItem)tblInvoiceLine1.getSelectedObject();
+        lineItem.setItem(titem.getSelectedObject());
+        lineItem.setQty(UIEty.tcToDouble(tqty));
+        lineItem.setPrice(UIEty.tcToDouble(tprice));
+        lineItem.calculateLineItem();
+        return lineItem;
+    }
+ 
+    private void addNewToTable(){
+        int insertionPoint=tblInvoiceLine1.getRowCount();
+        tblInvoiceLine1.addModelToTable(new SalesInvoiceLineItem());
+        tblInvoiceLine1.changeSelection(insertionPoint);
+    }
+    
+    private void addItemToTable(){    
+
+        SalesInvoiceLineItem lineItem = new SalesInvoiceLineItem();
+        lineItem.setItem(titem.getSelectedObject());
+        lineItem.setQty(UIEty.tcToDouble(tqty));
+        lineItem.setPrice(UIEty.tcToDouble(tprice));
+        lineItem.calculateLineItem();
+        tblInvoiceLine1.addModelToTable(lineItem);
+        addNewToTable();
+    }
+    
+    private void updateRow(SalesInvoiceLineItem lineItem ){        
+        lineItem.setItem(titem.getSelectedObject());
+        lineItem.setQty(UIEty.tcToDouble(tqty));
+        lineItem.setPrice(UIEty.tcToDouble(tprice));
+        lineItem.calculateLineItem();
+        tblInvoiceLine1.replaceModel(lineItem);    
+        //get row number 
+        //if its the last row then add new row
+        //
+        int row=tblInvoiceLine1.getSelectedRow();
+        if(row==tblInvoiceLine1.getRowCount()-1)
+        addNewToTable();    
+    }
+    
+    public void setLineItemDetail(SalesInvoiceLineItem obj){
+        Tracer.printToOut("Table selecteion changed");
+        if(obj==null)return;
+        titem.setSelectedObject(obj.getItem());
+        UIEty.objToUi(tqty,obj.getQty());
+        UIEty.objToUi(tprice,obj.getPrice());
+        UIEty.objToUi(tline,obj.getLineAmount());
+        titem.requestFocus();
+        
+    }
+    
     @Override
     public void preSave() {
-//        toSave.add(getBusObject());        
+        toSave.add(getBusObject());        
         super.preSave();
     }
 
@@ -151,19 +291,39 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         tblInvoiceLine1 = new org.components.controls.ModelEditableTable();
-        controlPanel1 = new com.components.custom.ControlPanel();
         cButton1 = new org.components.controls.CButton();
         tinv = new org.components.controls.CTextField();
-        cButton2 = new org.components.controls.CButton();
-        cButton3 = new org.components.controls.CButton();
-        cButton4 = new org.components.controls.CButton();
-        cButton5 = new org.components.controls.CButton();
-        cButton6 = new org.components.controls.CButton();
-        cButton7 = new org.components.controls.CButton();
-        cButton8 = new org.components.controls.CButton();
         cButton9 = new org.components.controls.CButton();
+        ttotal = new org.components.controls.CLabel();
+        tdiscount = new org.components.controls.CLabel();
+        cLabel1 = new org.components.controls.CLabel();
+        cLabel2 = new org.components.controls.CLabel();
+        cLabel3 = new org.components.controls.CLabel();
+        tpnlLineDetail = new org.components.containers.CPanel();
+        tqty = new org.components.controls.CTextField();
+        tprice = new org.components.controls.CTextField();
+        titem = new com.components.custom.TextFieldWithPopUP<Item>();
+        tline = new org.components.controls.CLabel();
+        controlPanel1 = new com.components.custom.ControlPanel();
+        gridControllerPanel1 = new com.components.custom.GridControllerPanel();
+        tpaid = new org.components.controls.CTextField();
+        tbal = new org.components.controls.CLabel();
 
+        setLayout(null);
+
+        tblInvoiceLine1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         jScrollPane2.setViewportView(tblInvoiceLine1);
+        tblInvoiceLine1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        add(jScrollPane2);
+        jScrollPane2.setBounds(30, 100, 720, 210);
 
         cButton1.setText("Find");
         cButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -171,55 +331,10 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
                 cButton1ActionPerformed(evt);
             }
         });
-
-        cButton2.setText("Add");
-        cButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton2ActionPerformed(evt);
-            }
-        });
-
-        cButton3.setText("Remove");
-        cButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton3ActionPerformed(evt);
-            }
-        });
-
-        cButton4.setText("Copy");
-        cButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton4ActionPerformed(evt);
-            }
-        });
-
-        cButton5.setText("Up");
-        cButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton5ActionPerformed(evt);
-            }
-        });
-
-        cButton6.setText("Down");
-        cButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton6ActionPerformed(evt);
-            }
-        });
-
-        cButton7.setText("Clear");
-        cButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton7ActionPerformed(evt);
-            }
-        });
-
-        cButton8.setText("Clear Line");
-        cButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton8ActionPerformed(evt);
-            }
-        });
+        add(cButton1);
+        cButton1.setBounds(110, 10, 25, 19);
+        add(tinv);
+        tinv.setBounds(10, 10, 93, 25);
 
         cButton9.setText("Top");
         cButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -227,74 +342,57 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
                 cButton9ActionPerformed(evt);
             }
         });
+        add(cButton9);
+        cButton9.setBounds(760, 50, 54, 19);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addComponent(tinv, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(274, 274, 274))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(20, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(controlPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addGap(18, 18, 18)
-                        .addComponent(cButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tinv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62)
-                .addComponent(controlPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-        );
+        ttotal.setText("Total");
+        add(ttotal);
+        ttotal.setBounds(530, 420, 60, 20);
+
+        tdiscount.setText("Discount");
+        add(tdiscount);
+        tdiscount.setBounds(530, 360, 80, 41);
+
+        cLabel1.setText("Paid");
+        add(cLabel1);
+        cLabel1.setBounds(540, 460, 50, 20);
+
+        cLabel2.setText("Tax");
+        add(cLabel2);
+        cLabel2.setBounds(530, 390, 104, 25);
+
+        cLabel3.setText("Sub Total");
+        add(cLabel3);
+        cLabel3.setBounds(520, 340, 80, 20);
+
+        tpnlLineDetail.setLayout(null);
+
+        tqty.setText("Qty");
+        tpnlLineDetail.add(tqty);
+        tqty.setBounds(200, 10, 160, 30);
+
+        tprice.setText("Price");
+        tpnlLineDetail.add(tprice);
+        tprice.setBounds(370, 10, 130, 30);
+
+        titem.setText("Item");
+        tpnlLineDetail.add(titem);
+        titem.setBounds(10, 10, 180, 30);
+
+        tline.setText("Line Amount");
+        tpnlLineDetail.add(tline);
+        tline.setBounds(510, 10, 104, 30);
+
+        add(tpnlLineDetail);
+        tpnlLineDetail.setBounds(50, 50, 650, 50);
+        add(controlPanel1);
+        controlPanel1.setBounds(30, 320, 410, 30);
+        add(gridControllerPanel1);
+        gridControllerPanel1.setBounds(760, 100, 90, 230);
+        add(tpaid);
+        tpaid.setBounds(620, 450, 170, 25);
+        add(tbal);
+        tbal.setBounds(620, 490, 170, 25);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
@@ -304,65 +402,45 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         // get business objects
         //pass uis
         //update uis
-        
+        tblInvoiceLine1.changeSelection(3);
 //        invoker(commandFind);
         System.out.println("finding sinister value...........");        
     }//GEN-LAST:event_cButton1ActionPerformed
 
     
-    private void cButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton2ActionPerformed
-        tblInvoiceLine1.addModelToTable(new SalesInvoiceLineItem());        
-    }//GEN-LAST:event_cButton2ActionPerformed
-
-    private void cButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton3ActionPerformed
-        tblInvoiceLine1.removeSelectedRow();        
-    }//GEN-LAST:event_cButton3ActionPerformed
-
-    private void cButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton7ActionPerformed
-        tblInvoiceLine1.clear();
-    }//GEN-LAST:event_cButton7ActionPerformed
-
-    private void cButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton4ActionPerformed
-        tblInvoiceLine1.copySelectedElement();
-    }//GEN-LAST:event_cButton4ActionPerformed
-
-    private void cButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton5ActionPerformed
-        tblInvoiceLine1.moveSelectedLineUp();
-        
-    }//GEN-LAST:event_cButton5ActionPerformed
-
-    private void cButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton6ActionPerformed
-        tblInvoiceLine1.moveSelectedLineDown();
-    }//GEN-LAST:event_cButton6ActionPerformed
-
-    private void cButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton8ActionPerformed
-
-    }//GEN-LAST:event_cButton8ActionPerformed
-
     private void cButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton9ActionPerformed
 
     }//GEN-LAST:event_cButton9ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
-    private org.components.controls.CButton cButton2;
-    private org.components.controls.CButton cButton3;
-    private org.components.controls.CButton cButton4;
-    private org.components.controls.CButton cButton5;
-    private org.components.controls.CButton cButton6;
-    private org.components.controls.CButton cButton7;
-    private org.components.controls.CButton cButton8;
     private org.components.controls.CButton cButton9;
+    private org.components.controls.CLabel cLabel1;
+    private org.components.controls.CLabel cLabel2;
+    private org.components.controls.CLabel cLabel3;
     private com.components.custom.ControlPanel controlPanel1;
+    private com.components.custom.GridControllerPanel gridControllerPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private org.components.controls.CLabel tbal;
     private org.components.controls.ModelEditableTable tblInvoiceLine1;
+    private org.components.controls.CLabel tdiscount;
     private org.components.controls.CTextField tinv;
+    private com.components.custom.TextFieldWithPopUP<Item> titem;
+    private org.components.controls.CLabel tline;
+    private org.components.controls.CTextField tpaid;
+    private org.components.containers.CPanel tpnlLineDetail;
+    private org.components.controls.CTextField tprice;
+    private org.components.controls.CTextField tqty;
+    private org.components.controls.CLabel ttotal;
     // End of variables declaration//GEN-END:variables
 
+    
     public SalesInvoice getBusObject() {
         
         SalesInvoice si= new SalesInvoice();
-        si.setInvNo(tinv.getText());
+        si.setInvNo(tinv.getText());//should implement invoice number generation l;oic
+        //if empty  if number , if sed from number , if auto generate number, if string ,auto generate string
+        si.setCashRecieveds(UIEty.tcToDouble(tpaid));
         List<SalesInvoiceLineItem> salesInvoiceLineItems= tblInvoiceLine1.getModelCollection();
         si.setLineItems(salesInvoiceLineItems);
         //set id for bus obj
@@ -370,7 +448,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         si.setId(uk);
         int x=1000;
         for (SalesInvoiceLineItem sl : salesInvoiceLineItems) {
-            sl.setId(uk+x++);
+            sl.setId(uk+ x++);
         }
         return si;
     }

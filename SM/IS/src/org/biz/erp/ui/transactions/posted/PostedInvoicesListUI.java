@@ -13,7 +13,11 @@ package org.biz.erp.ui.transactions.posted;
 import java.util.List;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.TableUtil;
+import org.biz.dao.service.Service;
+import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
+import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
+import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
 
 /**
@@ -23,6 +27,15 @@ import org.components.windows.ListViewPanel;
 public class PostedInvoicesListUI extends ListViewPanel<SalesInvoice> {
 
     private List<SalesInvoice> invoices;
+    private SalesInvoiceService salesService;   
+    
+    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
+        @Override
+        public Object[] getTableData(Object row) {
+            SalesInvoice item = (SalesInvoice) row;
+            return new Object[]{item, item.getId(), item.getInvNo(), item.getTotal()};
+        }
+    };
     /** Creates new form PostedInvoicesListUI */
     public PostedInvoicesListUI() {
         initComponents();
@@ -33,16 +46,21 @@ public class PostedInvoicesListUI extends ListViewPanel<SalesInvoice> {
     public void init() {
         super.init();
         
-//        service= new SalesInvoiceService();
-//        getData(); 
-       tblInvoice.initTable(SalesInvoice.class, new String[]{"id","code","total"}, new String[]{"id","code","total"}); 
+        tblInvoice.setTableInteractionListner(tableInteractionListner);
         
     }
+
+    @Override
+    public void setService(Service service) {
+        this.service=service;
+        salesService =(SalesInvoiceService)service;
+    }
+    
     
     
 
     public void getData(){
-        invoices = getService().getDao().getAll();
+        invoices = service.getDao().getAll();
     }
     
     public void getData(String qry){

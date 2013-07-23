@@ -13,8 +13,12 @@ package org.components.parent.controls;
 import app.utils.SystemUtil;
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import org.components.parent.Documents.DocumentListenerx;
 
 /**
  *
@@ -74,7 +78,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     public PTextField() {
         initComponents();
         id=SystemUtil.getKeyStr();
-
+        addDocumentListener(docx);
     }
 
     /** This method is called from within the constructor to
@@ -118,5 +122,34 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     public IContainer getContainer() {
         return container;
     }
+    
+    public void addDocumentListener(DocumentListenerx docx){
+        getDocument().addDocumentListener(docx);
+    }
+    
+    DocumentListenerx docx = new DocumentListenerx() {
+        @Override
+        public void action(DocumentEvent e) {
+            if(docAction==null)return;
+            if(disableDoc==true)return;                    
+            ActionEvent actionEvent=new ActionEvent(e,21,"docaction");
+            docAction.actionPerformed(actionEvent);
+        }
+    };
+    private ActionListener docAction;
+    
+    public void setAction(ActionListener action){
+        
+        docAction =action;
+    }
+
+    boolean disableDoc=false;
+    @Override
+    public void setText(String t) {
+        disableDoc=true;
+        super.setText(t);
+        disableDoc=false;
+    }
+    
     
 }

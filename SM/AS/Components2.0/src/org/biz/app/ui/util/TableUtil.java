@@ -18,6 +18,7 @@ import javax.swing.text.JTextComponent;
 import org.components.controls.ModelEditableTable;
 import org.components.parent.controls.PxTable;
 import org.components.parent.controls.editors.BaseCellEditor;
+import org.components.parent.controls.editors.TableInteractionListner;
 
 /**
  *
@@ -107,6 +108,13 @@ public class TableUtil {
         jt.getColumn(st).setMinWidth(0);
         jt.getColumn(st).setMaxWidth(0);
     }
+    
+    public static void hideColumn(JTable jt, int index) {
+
+        jt.getColumnModel().getColumn(index).setWidth(0);
+        jt.getColumnModel().getColumn(index).setMinWidth(0);
+        jt.getColumnModel().getColumn(index).setMaxWidth(0);
+    }
     /*
      * add new row for table
      */
@@ -168,9 +176,13 @@ public class TableUtil {
     }
 
     public static void replacerow(JTable jTable, Object[] row, int point) {
+           DefaultTableModel dtm= getdtm(jTable);
         point = jTable.convertRowIndexToModel(point);
-        getdtm(jTable).removeRow(point);
-        getdtm(jTable).insertRow(point, row);
+        for (int i = 0; i < row.length; i++) {
+            Object object = row[i];
+            dtm.setValueAt(object, point, i);
+        }
+        
 
     }
 
@@ -543,18 +555,12 @@ public class TableUtil {
 
     }
     
-    private static Vector setRow(PxTable table,Object obj){
-    
-        Vector row = new Vector();
-        String[] prop = table.getPropertiesEL();
-        if(prop==null)return row;
-        row.add(obj);
-        for (int i = 1; i < prop.length; i++) {            
-            String var = prop[i];
-            Object ob = ReflectionUtility.getProperty(obj, var);
-            row.add(ob);            
+    private static Object[] setRow(PxTable table,Object obj){       
+        TableInteractionListner prop = table.getTableInteractionListner();
+        if (prop == null) {
+            return new Object[0];
         }
-        return row;
+        return prop.getTableData(obj);               
     } 
 
     public static void replaceSelectedModel(PxTable table, Object obj) {
@@ -586,11 +592,11 @@ public class TableUtil {
      * @param tbl
      * @return
      */
-    public static Object getSelectedTableObject(PxTable tbl) {
+    public static <T> T getSelectedTableObject(PxTable tbl) {
 
 //        Object ob = TableUtil.getSelectedID(tbl);
         Object ob=getValueat(tbl, tbl.getSelectedRow(),0);
-        return ob;//(Object) ReflectionUtility.findByID(tbl.getModelCollection(), ob);
+        return (T)ob;//(Object) ReflectionUtility.findByID(tbl.getModelCollection(), ob);
     }
 
     public static <T> T getSelectedTableObject(PxTable tbl, Class cls) {

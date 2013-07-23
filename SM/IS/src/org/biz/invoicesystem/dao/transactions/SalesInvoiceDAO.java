@@ -21,6 +21,7 @@ public class SalesInvoiceDAO extends GenericDAO<SalesInvoice>{
     
     public SalesInvoiceDAO() {
         setCls(SalesInvoice.class);
+        orderby ="c.editedDate  desc , c.savedDate  desc ";
     }
 
     public List<SalesInvoice> getByDay(Date date){

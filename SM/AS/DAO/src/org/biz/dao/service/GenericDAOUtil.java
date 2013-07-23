@@ -128,7 +128,7 @@ public class GenericDAOUtil<T> {
 //        getEm().clear();
         String order = "";
         if (!orderby.isEmpty()) {
-            order = "order by  " + orderby + " ASC ";//desc - decending 
+            order = "order by  " + orderby ;//desc - decending 
         }
         Query query = createEmNew().createQuery("select c from " + cls.getSimpleName() + " c   " + order);
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);

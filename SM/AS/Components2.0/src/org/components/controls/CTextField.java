@@ -25,7 +25,7 @@ import org.components.parent.controls.PTextField;
  *
  * @author nano
  */
-public class CTextField extends PTextField {
+  public class CTextField extends PTextField {
 
 
     JComponent nextFocusableComponent;

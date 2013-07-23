@@ -69,6 +69,7 @@ public class GenericDAO<T> {
     }
 
     public T find(Object key) {
+        if(key==null)return null;
         return (T) getEm().find(getCls(), key);
 
     }
@@ -147,6 +148,10 @@ public class GenericDAO<T> {
     //@param is a rerieved object from database with a valid id
     public void delete(T ob) {
         GenericDAOUtil.delete(ob);
+    }
+    
+    public void deleteAll(Class cls){
+        GenericDAOUtil.deleteAll(cls);   
     }
 //may be used to update a database entity
 

@@ -32,6 +32,8 @@ public class CButton extends PButton {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setMargin(new java.awt.Insets(0, 0, 0, 0));
     }// </editor-fold>//GEN-END:initComponents
 
 

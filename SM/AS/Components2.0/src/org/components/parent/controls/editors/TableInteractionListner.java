@@ -56,4 +56,7 @@ public class TableInteractionListner {
     public Object[] getTableData(Object row){
     return new Object[0];
     }
+    
+    public void selectionChanged(Object newRowObject){
+    }
 }

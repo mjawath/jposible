@@ -423,9 +423,8 @@ public class UIEty {
         } else {
             jtc.setText("");
         }
-
     }
-
+    
     public static void objToUi(JComboBox jtc, Object val) {
         if (val != null) {
             jtc.setSelectedItem(val.toString());

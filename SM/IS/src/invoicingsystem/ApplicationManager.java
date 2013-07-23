@@ -14,6 +14,7 @@ import org.biz.erp.ui.transactions.posted.PostedInvoicesListUI;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.biz.invoicesystem.ui.list.master.ItemList;
+import org.biz.invoicesystem.ui.transactions.SimpleBillUI;
 import org.biz.master.ui.ItemMasterUI2;
 import org.components.util.Sessions;
 import org.components.windows.DetailPanel;
@@ -37,6 +38,7 @@ public class ApplicationManager {
                 app.setVisible(true);
                 System.out.println("=========00000000000000======================");
                 initUI(ItemService.class, "ITem", ItemMasterUI2.class, ItemList.class);
+//                initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
                 initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
             }
         });

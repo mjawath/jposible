@@ -12,8 +12,13 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author d
  */
-class CustomRenderer extends DefaultTableCellRenderer {
+public class CustomRenderer extends DefaultTableCellRenderer {
 
+    public CustomRenderer() {
+        super();
+    }
+
+    
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (isSelected && hasFocus) {
