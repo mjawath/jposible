@@ -12,16 +12,19 @@
 package org.components.parent.controls;
 
 import app.utils.SystemUtil;
+import com.components.custom.IComponent;
+import com.components.custom.IContainer;
 import javax.swing.JButton;
 
 /**
  *
  * @author nano
  */
-public class PButton extends JButton {
+public class PButton extends JButton  implements IComponent{
 
     private String id;
-    
+    protected  IContainer container;
+
 
     public String getId() {
         return id;
@@ -47,5 +50,15 @@ public class PButton extends JButton {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setContainer(IContainer con) {
+    this.container=con;
+    }
+
+    @Override
+    public IContainer getContainer() {
+        return container;
+    }
 
 }

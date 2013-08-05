@@ -41,6 +41,17 @@ public class PxTable<T> extends JTable implements IComponent {
     private int newRowId_SEED = -10000001;
     protected TableInteractionListner tableInteractionListner;
     
+    private boolean editable;
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
+    
     /**
      * Creates new form BeanForm
      */
@@ -304,6 +315,7 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     public void changeSelection(int rowIndex) {
+        if(rowIndex>=getRowCount())return;
         changeSelection(rowIndex,0,true , false);        
         changeSelection(rowIndex,getColumnCount()-1,false,true);
         if(tableInteractionListner!=null)tableInteractionListner.selectionChanged(getSelectedObject());

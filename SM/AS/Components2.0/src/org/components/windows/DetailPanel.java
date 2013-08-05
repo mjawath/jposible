@@ -4,14 +4,24 @@
  */
 package org.components.windows;
 
+import com.components.custom.FocusManager;
+import com.components.custom.IComponent;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
+import org.components.containers.CPanel;
+import org.components.parent.controls.PxTable;
+import org.components.util.ComponentFactory;
 
 /**
  *
@@ -24,17 +34,80 @@ public class DetailPanel<T> extends TabPanelUI {
     final protected ArrayList toUpdate;
     protected T busObject;
     protected T selectedObject;
+    protected FocusManager focusManager=new FocusManager();
 
     /**
      * Creates new form DetailPanel
      */
     public DetailPanel() {
-        initComponents();
+//        initComponents();
         toSave = new ArrayList();
         toDelete = new ArrayList();
         toUpdate = new ArrayList();
+        
+        Action topKeyAction=new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Top Focus Execution Focus to Next");
+                focusManager.gotoNextComponent();
+                
+            }
+        };
+        ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_DOWN);//first component specific key events are handled then event is passed to this
+        //action map ..if component specific events does not call e.consume() on thier level
+        Action downKeyAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(" Detail Top Focus Execution Focus to Previous   ");
+                focusManager.gotoPreviousComponent();
+            }
+        };
+        ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
+
+    }
+    
+    public void setNavForTableEditor(final PxTable tbl,CPanel pnl ){
+    
+       Action downKeyAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    tbl.selectNextRow();
+                
+            }
+        };
+        ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_PAGE_DOWN);//first component specific key events are handled then event is passed to this
+        
+        Action upKeyAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    tbl.selectPreRow();
+                
+            }
+        };
+        ComponentFactory.setKeyAction(this, upKeyAction, KeyEvent.VK_PAGE_UP);//first component specific key events are handled then event is passed to this
+
     }
 
+    public void addToFocus(List<IComponent> coms){
+        for (IComponent e : coms) {
+            addToFocus(e);
+//            focusManager.addToFocus(e);
+        }
+    }
+    
+   public void addToFocus(CPanel cp) {
+       List<IComponent> coms= cp.getFocus();
+       if(coms.size()==0)return;
+        
+       addToFocus(coms);
+       
+   }
+   public void addToFocus(IComponent cp) {
+       focusManager.addToFocus(cp);      
+   }
+    
+    
     public void etyToUI(T obj) {
     }
 

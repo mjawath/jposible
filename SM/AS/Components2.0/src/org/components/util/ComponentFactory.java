@@ -120,17 +120,76 @@ public class ComponentFactory {
     }
     static long x=new Random().nextLong();
     
+    
+    
+        //set short cut for 
+        // whole component navigation usign kkeys like up down enter
+        /**
+         * panel.getInputMap(con).put(KeyStroke.getKeyStroke("control I"),
+         * "createNewFood"); panel.getActionMap().put("createNewFood", new
+         * NewFoodAction());
+         *         
+*
+         * short cut key
+         *
+         *
+         * Action action = new AbstractAction("Do It") { ... };
+         *
+         * // This is the component we will register the keyboard shortcut with.
+         * JPanel pnl = new JPanel();
+         *
+         * // Create KeyStroke that will be used to invoke the action. KeyStroke
+         * keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_T,
+         * InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+         *
+         * // Register Action in component's ActionMap.
+         * pnl.getActionMap().put("Do It", action);
+         *
+         * // Now register KeyStroke used to fire the action. I am registering
+         * this with the // InputMap used when the component's parent window has
+         * focus.
+         * pnl.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "Do
+         * It"); *
+         */
+    
     public static void setKeyAction(JComponent component,Action escpli,int keycode){
 
+        setKeyAction(component, escpli, keycode, 0);//0 is no modifier
+    }
+    
+    public static void setKeyAction(JComponent component,Action escpli,int keycode,int keyModifier){
+
         String xx="act"+ ++x;
-        component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke( keycode,0), xx);
+        component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke( keycode,keyModifier), xx);
 
         component.getActionMap().put(xx, escpli);
+        
+        
     }
 
     public static void setKeyAction(JComponent component,Action escpli,String keycode){
         String xx="act"+ ++x;
         component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke( keycode), xx);
+
+        component.getActionMap().put(xx, escpli);
+    }
+    
+    
+    
+    
+    public static void setKeyAction(JComponent component,Action escpli,int keycode,int keyModifier, int focusBehave){
+
+        String xx="act"+ ++x;
+        component.getInputMap(focusBehave).put(KeyStroke.getKeyStroke( keycode,keyModifier), xx);
+
+        component.getActionMap().put(xx, escpli);
+        
+        
+    }
+
+    public static void setKeyAction(JComponent component,Action escpli,String keycode,int focusBehave){
+        String xx="act"+ ++x;
+        component.getInputMap(focusBehave).put(KeyStroke.getKeyStroke( keycode), xx);
 
         component.getActionMap().put(xx, escpli);
     }

@@ -593,9 +593,10 @@ public class TableUtil {
      * @return
      */
     public static <T> T getSelectedTableObject(PxTable tbl) {
-
+        int  sr=tbl.getSelectedRow();
+        if(sr<0)return null;
 //        Object ob = TableUtil.getSelectedID(tbl);
-        Object ob=getValueat(tbl, tbl.getSelectedRow(),0);
+        Object ob=getValueat(tbl,sr ,0);
         return (T)ob;//(Object) ReflectionUtility.findByID(tbl.getModelCollection(), ob);
     }
 

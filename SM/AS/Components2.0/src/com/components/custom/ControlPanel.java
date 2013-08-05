@@ -31,6 +31,7 @@ public class ControlPanel extends javax.swing.JPanel {
         btclear = new javax.swing.JButton();
         btgrid = new javax.swing.JButton();
         btclear1 = new javax.swing.JButton();
+        cButton1 = new org.components.controls.CButton();
 
         setLayout(null);
 
@@ -62,13 +63,14 @@ public class ControlPanel extends javax.swing.JPanel {
         btclear.setBounds(200, 0, 70, 30);
 
         btgrid.setText("Goto Grid View >>");
+        btgrid.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btgrid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btgridActionPerformed(evt);
             }
         });
         add(btgrid);
-        btgrid.setBounds(280, 0, 130, 30);
+        btgrid.setBounds(340, 0, 100, 30);
 
         btclear1.setText("Clear");
         btclear1.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +80,10 @@ public class ControlPanel extends javax.swing.JPanel {
         });
         add(btclear1);
         btclear1.setBounds(130, 0, 70, 30);
+
+        cButton1.setText("Print");
+        add(cButton1);
+        cButton1.setBounds(270, 0, 70, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsaveActionPerformed
@@ -107,5 +113,6 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JButton btdelete;
     private javax.swing.JButton btgrid;
     private javax.swing.JButton btsave;
+    private org.components.controls.CButton cButton1;
     // End of variables declaration//GEN-END:variables
 }

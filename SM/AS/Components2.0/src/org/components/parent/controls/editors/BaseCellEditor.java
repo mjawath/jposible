@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
 import org.components.controls.CTextField;
 import org.components.controls.ModelEditableTable;

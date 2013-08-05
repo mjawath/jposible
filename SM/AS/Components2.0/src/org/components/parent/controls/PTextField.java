@@ -130,8 +130,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     DocumentListenerx docx = new DocumentListenerx() {
         @Override
         public void action(DocumentEvent e) {
-            if(docAction==null)return;
-            if(disableDoc==true)return;                    
+            if(docAction==null || disableDoc)return;//ccc
             ActionEvent actionEvent=new ActionEvent(e,21,"docaction");
             docAction.actionPerformed(actionEvent);
         }

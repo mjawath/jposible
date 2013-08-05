@@ -15,19 +15,38 @@ import com.components.custom.IComponent;
 import com.components.custom.IContainer;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import org.biz.app.ui.util.Tracer;
 import org.components.parent.containers.PPanel;
+import org.components.windows.DetailPanel;
 
 /**
  *
  * @author nano
  */
-public class CPanel extends PPanel implements IContainer  {
+public class CPanel extends PPanel implements IContainer ,IComponent {
 
+    private IContainer container;
+    
+    protected List<IComponent> focus = new ArrayList<IComponent>();
+
+    public List<IComponent> getFocus(){
+    return focus;
+    }
+    
     /** Creates new form BeanForm */
     public CPanel() {
         initComponents();
-        focus = new ArrayList<IComponent>();
+//         Action downKeyAction = new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("panel     **********Top Focus Execution Focus to Previous   ");
+////                gotoPreviousComponent();
+//            }
+//        };
+//        ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_UP,0,JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);//first component specific key events are handled then event is passed to this
+
     }
 
 
@@ -50,7 +69,11 @@ public class CPanel extends PPanel implements IContainer  {
     public void gotoNextComponent(Component jc) {
         //get current focused compnentt
 //        Component jc=KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-        focus.indexOf(jc);
+      if(temCom!=null)  {
+          ((Component)temCom).requestFocus();
+          temCom=null;
+      }
+      focus.indexOf(jc);
         //find from compnent list
         int x=0;
         for (IComponent com : focus) {
@@ -66,11 +89,43 @@ public class CPanel extends PPanel implements IContainer  {
 
     }
   
+  
+    
+    
+    public void requestFocus() {
+        super.requestFocus();
+        IComponent comx = focus.get(0);
+        if (comx != null) {
+            ((Component) comx).requestFocus();
+        }
+    }
+  
+    public Component getcurrentFocused(){
+    return null; 
+    }
 
     public void addToFocus(IComponent com) {
         focus.add(com);
         com.setContainer(this);
     }
+    
+    
 
-    private List<IComponent> focus;
+
+    public void setTempFocusComponent(IComponent com) {
+        temCom = com;
+    }
+    
+    private IComponent temCom;
+
+    @Override
+    public void setContainer(IContainer con) {
+     container=con;
+    }
+
+    @Override
+    public IContainer getContainer() {
+     return null;  
+    }   
+
 }

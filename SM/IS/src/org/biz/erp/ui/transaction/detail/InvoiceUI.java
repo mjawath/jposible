@@ -11,6 +11,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
@@ -42,6 +44,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
      * Creates new form InvoiceUI
      */
     public InvoiceUI() {
+        super();
         initComponents();
         init();
 //        cButton1.addActionListener(commandFind);
@@ -63,13 +66,8 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SalesInvoiceLineItem lit = (SalesInvoiceLineItem) tblInvoiceLine1.getSelectedObject();
-//                if (lit == null) {
-//                    addItemToTable();
-//                } else {
-                    //update the row
-                    updateRow(lit);//if this is new row then modify this.                    
-//                }
-               titem.requestFocus(); 
+                updateRow(lit);
+                focusManager.setTemCom(titem);
             }
         });
 //        items=new ItemService().getDao().getAll();        
@@ -154,7 +152,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
                 tblInvoiceLine1.replaceModel(cel);
                 //set total to ui
                 si.setTotal();
-                UIEty.objToUi(ttotal, si.getTotal());
+                UIEty.objToUi(tsubTotal, si.getTotal());
             }
 
             @Override
@@ -167,10 +165,18 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         });
         addNewToTable();
         gridControllerPanel1.setTable(tblInvoiceLine1);
-       
+        
+        //Focus policy
+        this.addToFocus(tinv);
+        this.addToFocus(cButton1);
         tpnlLineDetail.addToFocus(titem);
         tpnlLineDetail.addToFocus(tqty);
-        tpnlLineDetail.addToFocus(tprice); 
+        tpnlLineDetail.addToFocus(tprice);
+        this.addToFocus(tpnlLineDetail);
+        addToFocus(tpaid);
+
+        tpnlLineDetail.setContainer(this);
+//        addToFocus(tpnlLineDetail);
         
       
         ActionListener act=new ActionListener() {
@@ -181,24 +187,16 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         };
         tqty.setAction(act);
         tprice.setAction(act);       
-       
-        titem.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    tblInvoiceLine1.selectNextRow();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    tblInvoiceLine1.selectPreRow();
-                }
-            }
-        });
+        
+     
+        
+        setNavForTableEditor(tblInvoiceLine1, tpnlLineDetail);
         
         tpaid.setAction(act);
+        
+      
     }
-    
-    
-    
+        
     private void calcualteTotal(){
         //get the qty price item lineitem
         //get 
@@ -209,7 +207,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
          SalesInvoice si=getBusObject();
          si.setTotal();
          UIEty.objToUi(tbal, si.calculateBalance());
-         UIEty.objToUi(ttotal, si.getTotal());
+         UIEty.objToUi(tsubTotal, si.getTotal());
          //update the table row 
                   
     }
@@ -229,8 +227,8 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         tblInvoiceLine1.changeSelection(insertionPoint);
     }
     
-    private void addItemToTable(){    
-
+    private void addItemToTable(){ 
+        
         SalesInvoiceLineItem lineItem = new SalesInvoiceLineItem();
         lineItem.setItem(titem.getSelectedObject());
         lineItem.setQty(UIEty.tcToDouble(tqty));
@@ -294,8 +292,8 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         cButton1 = new org.components.controls.CButton();
         tinv = new org.components.controls.CTextField();
         cButton9 = new org.components.controls.CButton();
-        ttotal = new org.components.controls.CLabel();
-        tdiscount = new org.components.controls.CLabel();
+        tsubTotal = new org.components.controls.CLabel();
+        tlbldiscount = new org.components.controls.CLabel();
         cLabel1 = new org.components.controls.CLabel();
         cLabel2 = new org.components.controls.CLabel();
         cLabel3 = new org.components.controls.CLabel();
@@ -308,8 +306,10 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
         tpaid = new org.components.controls.CTextField();
         tbal = new org.components.controls.CLabel();
-
-        setLayout(null);
+        cLabel4 = new org.components.controls.CLabel();
+        tdiscount = new org.components.controls.CTextField();
+        tTax = new org.components.controls.CTextField();
+        cPanel1 = new org.components.containers.CPanel();
 
         tblInvoiceLine1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -323,7 +323,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         tblInvoiceLine1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(30, 100, 720, 210);
+        jScrollPane2.setBounds(30, 100, 720, 200);
 
         cButton1.setText("Find");
         cButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -345,25 +345,25 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         add(cButton9);
         cButton9.setBounds(760, 50, 54, 19);
 
-        ttotal.setText("Total");
-        add(ttotal);
-        ttotal.setBounds(530, 420, 60, 20);
+        tsubTotal.setText("SubTotal");
+        add(tsubTotal);
+        tsubTotal.setBounds(620, 320, 130, 20);
 
-        tdiscount.setText("Discount");
-        add(tdiscount);
-        tdiscount.setBounds(530, 360, 80, 41);
+        tlbldiscount.setText("Discount");
+        add(tlbldiscount);
+        tlbldiscount.setBounds(520, 350, 80, 20);
 
         cLabel1.setText("Paid");
         add(cLabel1);
-        cLabel1.setBounds(540, 460, 50, 20);
+        cLabel1.setBounds(530, 450, 50, 20);
 
         cLabel2.setText("Tax");
         add(cLabel2);
-        cLabel2.setBounds(530, 390, 104, 25);
+        cLabel2.setBounds(520, 380, 104, 25);
 
         cLabel3.setText("Sub Total");
         add(cLabel3);
-        cLabel3.setBounds(520, 340, 80, 20);
+        cLabel3.setBounds(520, 320, 80, 20);
 
         tpnlLineDetail.setLayout(null);
 
@@ -386,13 +386,31 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         add(tpnlLineDetail);
         tpnlLineDetail.setBounds(50, 50, 650, 50);
         add(controlPanel1);
-        controlPanel1.setBounds(30, 320, 410, 30);
+        controlPanel1.setBounds(20, 420, 470, 30);
         add(gridControllerPanel1);
-        gridControllerPanel1.setBounds(760, 100, 90, 230);
+        gridControllerPanel1.setBounds(750, 100, 90, 230);
         add(tpaid);
-        tpaid.setBounds(620, 450, 170, 25);
+        tpaid.setBounds(620, 440, 170, 25);
+
+        tbal.setText("Balance");
         add(tbal);
-        tbal.setBounds(620, 490, 170, 25);
+        tbal.setBounds(620, 480, 170, 25);
+
+        cLabel4.setText("Total");
+        add(cLabel4);
+        cLabel4.setBounds(520, 420, 104, 25);
+
+        tdiscount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tdiscountActionPerformed(evt);
+            }
+        });
+        add(tdiscount);
+        tdiscount.setBounds(620, 350, 170, 25);
+        add(tTax);
+        tTax.setBounds(620, 380, 170, 25);
+        add(cPanel1);
+        cPanel1.setBounds(40, 180, 340, 50);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
@@ -412,26 +430,34 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
     }//GEN-LAST:event_cButton9ActionPerformed
 
+    private void tdiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tdiscountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tdiscountActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
     private org.components.controls.CButton cButton9;
     private org.components.controls.CLabel cLabel1;
     private org.components.controls.CLabel cLabel2;
     private org.components.controls.CLabel cLabel3;
+    private org.components.controls.CLabel cLabel4;
+    private org.components.containers.CPanel cPanel1;
     private com.components.custom.ControlPanel controlPanel1;
     private com.components.custom.GridControllerPanel gridControllerPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private org.components.controls.CTextField tTax;
     private org.components.controls.CLabel tbal;
     private org.components.controls.ModelEditableTable tblInvoiceLine1;
-    private org.components.controls.CLabel tdiscount;
+    private org.components.controls.CTextField tdiscount;
     private org.components.controls.CTextField tinv;
     private com.components.custom.TextFieldWithPopUP<Item> titem;
+    private org.components.controls.CLabel tlbldiscount;
     private org.components.controls.CLabel tline;
     private org.components.controls.CTextField tpaid;
     private org.components.containers.CPanel tpnlLineDetail;
     private org.components.controls.CTextField tprice;
     private org.components.controls.CTextField tqty;
-    private org.components.controls.CLabel ttotal;
+    private org.components.controls.CLabel tsubTotal;
     // End of variables declaration//GEN-END:variables
 
     
