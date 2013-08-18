@@ -4,6 +4,7 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
+import java.util.Date;
 import java.util.List;
 import org.biz.app.ui.event.ButtonAction;
 import org.biz.dao.service.Service;
@@ -27,7 +28,7 @@ public class ItemList extends ListViewPanel {
         @Override
         public Object[] getTableData(Object row) {
             Item item= (Item)row;
-            return new Object[]{item,item.getId(),item.getCode(),item.getDescription()};
+            return new Object[]{item,item.getId(),item.getCode(),item.getDescription(),item.getSavedDate(),item.getEditedDate()};
         }
     
     };
@@ -62,12 +63,19 @@ public class ItemList extends ListViewPanel {
 //        initComponents;
        super();
        initComponents();
+         
     }
 
     @Override
     public void init() {
     super.init();    
     tbtn.addActionListener(actionX);
+    tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
+                new String[]{"id", "code", "description", "savedDate","editedDate"});
+    tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate","editedDate"});
+    tbl.setTableInteractionListner(tableInteractionListner);
+
+    
     }
     
 
@@ -77,10 +85,9 @@ public class ItemList extends ListViewPanel {
         itemService =(ItemService) service;
         init();
         init(tbl);
-        tbl.setModelClass(Item.class);        
-        tbl.setPropertiesEL(new String[]{"id","code"});
-        tbl.setColumnHeader(new String[]{"id","code"});
-        tbl.setTableInteractionListner(tableInteractionListner);
+//        tbl.setModelClass(Item.class);        
+//        tbl.setPropertiesEL(new String[]{"id","code"});
+//        tbl.setColumnHeader(new String[]{"id","code","Saved","Edited"});
         
     }
     
@@ -121,9 +128,9 @@ public class ItemList extends ListViewPanel {
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 283, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(tbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(243, 243, 243))
+                .addContainerGap(536, Short.MAX_VALUE))
         );
         searchPanelLayout.setVerticalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +159,7 @@ public class ItemList extends ListViewPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 365, Short.MAX_VALUE))
+                .addGap(0, 366, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(102, 102, 102)

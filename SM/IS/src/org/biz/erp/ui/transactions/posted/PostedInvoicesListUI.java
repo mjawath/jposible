@@ -10,6 +10,7 @@
  */
 package org.biz.erp.ui.transactions.posted;
 
+import java.util.Date;
 import java.util.List;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.TableUtil;
@@ -33,7 +34,7 @@ public class PostedInvoicesListUI extends ListViewPanel<SalesInvoice> {
         @Override
         public Object[] getTableData(Object row) {
             SalesInvoice item = (SalesInvoice) row;
-            return new Object[]{item, item.getId(), item.getInvNo(), item.getTotal()};
+            return new Object[]{item, item.getId(), item.getInvNo(), item.getTotal(),item.getSavedDate(),item.getEditedDate()};
         }
     };
     /** Creates new form PostedInvoicesListUI */
@@ -45,7 +46,7 @@ public class PostedInvoicesListUI extends ListViewPanel<SalesInvoice> {
     @Override
     public void init() {
         super.init();
-        
+        tblInvoice.init(SalesInvoice.class, new Class[]{String.class,String.class,Double.class,Date.class,Date.class}, new String[]{"id","inv no","Saved","Edited"});
         tblInvoice.setTableInteractionListner(tableInteractionListner);
         
     }

@@ -30,13 +30,14 @@ public class GridControllerPanel extends javax.swing.JPanel {
     public GridControllerPanel() {
         initComponents();
         //add - addaction
-       tadd.setAction(new AbstractAction() {
+       tadd.setAction(new AbstractAction("Add") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 addAction();
             }
         });
+       tadd.setText("Add");
        tremove.setAction(new AbstractAction() {
 
             @Override
@@ -44,22 +45,23 @@ public class GridControllerPanel extends javax.swing.JPanel {
                 removeAction();
             }
         });
-        tcopy.setAction(new AbstractAction() {
+        tcopy.setAction(new AbstractAction("Copy") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 copyAction();
             }
         });
+        tcopy.setText("Copy");
         
-         tclear.setAction(new AbstractAction() {
+         tclear.setAction(new AbstractAction("Clear") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 clearAction();
             }
         });
-         
+         tclear.setText("Clear");
          
        //set "add" - "myaddaction"
     }

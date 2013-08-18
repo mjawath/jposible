@@ -111,6 +111,13 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
    
     }
 
+    @Override
+    public void printPage() {
+        
+    }
+    
+    
+
    
     public void setobj(Object obj) {
     }

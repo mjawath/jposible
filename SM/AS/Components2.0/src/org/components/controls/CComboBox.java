@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import org.components.windows.DetailPanel;
 
 /**
  *
@@ -97,8 +98,20 @@ public class CComboBox<E> extends JComboBox implements IComponent{
                         }
                     }
                     // just change the focus
-                    if(getContainer()!=null)
-                    getContainer().gotoNextComponent(CComboBox.this);
+                    IContainer cont = getContainer();
+                    if (cont != null && cont instanceof DetailPanel) {
+                        DetailPanel dp=(DetailPanel)cont;
+                        dp.gotoNextComponent();
+                    }
+//                    getContainer().gotoNextComponent(CComboBox.this);
+                        
+                }
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    IContainer cont = getContainer();
+                    if (cont != null && cont instanceof DetailPanel) {
+                        DetailPanel dp = (DetailPanel) cont;
+                        dp.gotoPreviousComponent();
+                    }
                 }
             }
         });

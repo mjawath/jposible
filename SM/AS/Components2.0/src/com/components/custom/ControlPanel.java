@@ -82,6 +82,11 @@ public class ControlPanel extends javax.swing.JPanel {
         btclear1.setBounds(130, 0, 70, 30);
 
         cButton1.setText("Print");
+        cButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton1ActionPerformed(evt);
+            }
+        });
         add(cButton1);
         cButton1.setBounds(270, 0, 70, 30);
     }// </editor-fold>//GEN-END:initComponents
@@ -106,6 +111,10 @@ public class ControlPanel extends javax.swing.JPanel {
     private void btclear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclear1ActionPerformed
 
     }//GEN-LAST:event_btclear1ActionPerformed
+
+    private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
+            control.printPage();
+    }//GEN-LAST:event_cButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btclear;

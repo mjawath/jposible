@@ -13,13 +13,17 @@ package org.components.parent.controls;
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
 import java.awt.Component;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
@@ -80,6 +84,7 @@ public class PxTable<T> extends JTable implements IComponent {
         this.setDefaultRenderer(String.class, new CustomRenderer());
         this.setDefaultRenderer(Double.class, new CustomRenderer());
         this.setDefaultRenderer(Object.class, new CustomRenderer());
+        this.setDefaultRenderer(Date.class, new DateRendererX());
     }
 
     
@@ -87,11 +92,21 @@ public class PxTable<T> extends JTable implements IComponent {
         modelClass=tableType;
         setColumnTypes(classType, title);
         //Tables first column which holds the model object will be not visible
-        TableUtil.hideColumn(this, 0);
-      
+        TableUtil.hideColumn(this, 0);      
         
     }
     
+    static class DateRendererX extends DefaultTableCellRenderer.UIResource {
+        DateFormat formatter=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        public DateRendererX() { super(); }
+
+        public void setValue(Object value) {
+            if (formatter==null) {
+                formatter = DateFormat.getDateInstance();
+            }
+            setText((value == null) ? "" : formatter.format(value));
+        }
+    }
     
 
     @Override

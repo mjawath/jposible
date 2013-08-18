@@ -18,6 +18,8 @@ public interface CrudControl {
     
     void delete();
     
-    void gotoList();    
+    void gotoList();
+    
+    void printPage();
     
 }

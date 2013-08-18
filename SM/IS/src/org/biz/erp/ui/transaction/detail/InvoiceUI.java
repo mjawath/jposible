@@ -20,6 +20,7 @@ import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
+import org.com.print.PrintService;
 import org.components.parent.controls.editors.DoubleCellEditor;
 import org.components.parent.controls.editors.ObjectCellEditor;
 import org.components.parent.controls.editors.TableInteractionListner;
@@ -167,8 +168,8 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         gridControllerPanel1.setTable(tblInvoiceLine1);
         
         //Focus policy
-        this.addToFocus(tinv);
-        this.addToFocus(cButton1);
+        addToFocus(tinv);
+        addToFocus(cButton1);
         tpnlLineDetail.addToFocus(titem);
         tpnlLineDetail.addToFocus(tqty);
         tpnlLineDetail.addToFocus(tprice);
@@ -282,6 +283,12 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 //        commandGUI.invoke();
     }
 
+    @Override
+    public void printPage() {
+        PrintService.print();                
+    }
+
+       
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -291,7 +298,6 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         tblInvoiceLine1 = new org.components.controls.ModelEditableTable();
         cButton1 = new org.components.controls.CButton();
         tinv = new org.components.controls.CTextField();
-        cButton9 = new org.components.controls.CButton();
         tsubTotal = new org.components.controls.CLabel();
         tlbldiscount = new org.components.controls.CLabel();
         cLabel1 = new org.components.controls.CLabel();
@@ -332,18 +338,9 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
             }
         });
         add(cButton1);
-        cButton1.setBounds(110, 10, 25, 19);
+        cButton1.setBounds(110, 10, 25, 25);
         add(tinv);
         tinv.setBounds(10, 10, 93, 25);
-
-        cButton9.setText("Top");
-        cButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton9ActionPerformed(evt);
-            }
-        });
-        add(cButton9);
-        cButton9.setBounds(760, 50, 54, 19);
 
         tsubTotal.setText("SubTotal");
         add(tsubTotal);
@@ -355,7 +352,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
         cLabel1.setText("Paid");
         add(cLabel1);
-        cLabel1.setBounds(530, 450, 50, 20);
+        cLabel1.setBounds(520, 440, 50, 20);
 
         cLabel2.setText("Tax");
         add(cLabel2);
@@ -398,7 +395,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
         cLabel4.setText("Total");
         add(cLabel4);
-        cLabel4.setBounds(520, 420, 104, 25);
+        cLabel4.setBounds(520, 410, 104, 25);
 
         tdiscount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -420,23 +417,18 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
         // get business objects
         //pass uis
         //update uis
-        tblInvoiceLine1.changeSelection(3);
+//        tblInvoiceLine1.changeSelection(3);
 //        invoker(commandFind);
         System.out.println("finding sinister value...........");        
     }//GEN-LAST:event_cButton1ActionPerformed
 
     
-    private void cButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton9ActionPerformed
-
-    }//GEN-LAST:event_cButton9ActionPerformed
-
     private void tdiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tdiscountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tdiscountActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
-    private org.components.controls.CButton cButton9;
     private org.components.controls.CLabel cLabel1;
     private org.components.controls.CLabel cLabel2;
     private org.components.controls.CLabel cLabel3;

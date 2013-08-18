@@ -5,6 +5,7 @@
 package research.ui.demo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +91,8 @@ public class dbCreation {
             cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
             cus.setName(EntityService.getKeyStr());
+            cus.setSavedDate(new Date(System.currentTimeMillis()+i));
+            cus.setEditedDate(new Date(System.currentTimeMillis()+i));
             lst.add(cus);
         }
         new GenericDAO<Customer>().saveList(lst);
@@ -99,6 +102,8 @@ public class dbCreation {
             cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
             cus.setCustomerName(EntityService.getKeyStr());
+            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
+            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lstx.add(cus);
         }
         new GenericDAO<Customer>().saveList(lstx);
@@ -108,6 +113,8 @@ public class dbCreation {
             cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
             cus.setDescription(EntityService.getKeyStr());
+            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
+            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lst22.add(cus);
         }
         new GenericDAO<Item>().saveList(lst22);
@@ -117,6 +124,8 @@ public class dbCreation {
             cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
             cus.setName(EntityService.getKeyStr());
+            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
+            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lst2.add(cus);
         }
         new GenericDAO<Staff>().saveList(lst2);
@@ -126,7 +135,8 @@ public class dbCreation {
             Warehouse cus = new Warehouse();
             cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
-
+            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
+            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lstw.add(cus);
         }
         new GenericDAO<Warehouse>().saveList(lstw);
@@ -169,7 +179,8 @@ public class dbCreation {
             Category shx = new Category();
             shx.setId(EntityService.getKeyStr());
             shx.setCode(EntityService.getKeyStr());
-
+            shx.setSavedDate(new Date(System.currentTimeMillis() + i));
+            shx.setEditedDate(new Date(System.currentTimeMillis() + i));
             lsts.add(shx);
         }
         gd.saveList(lsts);

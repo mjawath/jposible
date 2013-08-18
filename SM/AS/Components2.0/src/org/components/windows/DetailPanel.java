@@ -50,8 +50,7 @@ public class DetailPanel<T> extends TabPanelUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Top Focus Execution Focus to Next");
-                focusManager.gotoNextComponent();
-                
+                gotoNextComponent();
             }
         };
         ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_DOWN);//first component specific key events are handled then event is passed to this
@@ -60,12 +59,22 @@ public class DetailPanel<T> extends TabPanelUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(" Detail Top Focus Execution Focus to Previous   ");
-                focusManager.gotoPreviousComponent();
+                gotoPreviousComponent();
             }
         };
         ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
 
     }
+    
+    public void gotoNextComponent() {
+        focusManager.gotoNextComponent();
+
+    }
+
+    public void gotoPreviousComponent() {
+        focusManager.gotoPreviousComponent();
+    }
+
     
     public void setNavForTableEditor(final PxTable tbl,CPanel pnl ){
     
@@ -105,6 +114,7 @@ public class DetailPanel<T> extends TabPanelUI {
    }
    public void addToFocus(IComponent cp) {
        focusManager.addToFocus(cp);      
+       cp.setContainer(this);
    }
     
     
