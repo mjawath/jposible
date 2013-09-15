@@ -12,8 +12,6 @@ import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoice;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoiceLineItem;
-import org.biz.invoicesystem.entity.transactions.SalesInvoice;
-import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 
 /**
  *

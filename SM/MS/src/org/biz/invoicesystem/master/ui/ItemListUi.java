@@ -452,7 +452,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
         if (true) {//pagination applicable
             int nextpage = currentPageNo + 1;
 
-            itemService.moveToNextPage(ItemService.qryName, currentPageNo);
+//            itemService.moveToNextPage(ItemService.qryName, currentPageNo);
 
             //rel;oad list 
             // reload pagenation cxomponent

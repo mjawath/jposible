@@ -7,28 +7,46 @@ package org.biz.app.ui.event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.biz.app.ui.util.Command;
-import org.biz.app.ui.util.ICommand;
+import org.components.controls.CButton;
 
 /**
  *
  * @author d
  */
-public class ButtonAction implements ActionListener ,ICommand{
+public class ButtonAction implements ActionListener {
 
-    Command command=new Command(this); 
     
-    @Override
+    private Command com;
+    protected CButton btn;
+
+    public ButtonAction() {
+    
+    }
+    
+        @Override
     public void actionPerformed(ActionEvent e) {
-        command.invoke();
+       final CButton btn = (CButton) e.getSource();
+        com = new Command() {
+            @Override
+            public Object executeTask() {
+                return ButtonAction.this.executeTask(btn);
+            }
+
+            @Override
+            public void resultTask(Object objs) {
+                ButtonAction.this.resultTask(objs);
+            }
+        };
+        com.invoke();
     }
 
-    @Override
-    public Object executeTask() {
+    public Object executeTask(Object ...objs) {
+     
         return null;
     }
 
-    @Override
     public void resultTask(Object objs) {
     }
+    
     
 }

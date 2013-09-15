@@ -202,9 +202,9 @@ public class PxTable<T> extends JTable implements IComponent {
             TableUtil.filldata(this, data);
           return;
         }
-        for (Object obj : modelCollection) {
-            addModelToTable(obj);//slow method , 
-        }
+//        for (Object obj : modelCollection) {
+//            addModelToTable(obj);//slow method , 
+//        }
     }
 
    

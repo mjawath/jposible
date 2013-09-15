@@ -11,13 +11,14 @@
 package org.biz.invoicesystem.ui.list.master;
 
 import javax.swing.JPanel;
-import org.components.windows.TabPanelUI;
+import org.biz.invoicesystem.entity.master.Supplier;
+import org.components.windows.ListViewPanel;
 
 /**
  *
  * @author Administrator
  */
-public class SupplierListUi extends TabPanelUI   {
+public class SupplierListUi extends ListViewPanel<Supplier>   {
 
     /** Creates new form CustomerListUi */
     public SupplierListUi() {
@@ -44,6 +45,7 @@ public class SupplierListUi extends TabPanelUI   {
         cButton6 = new org.components.controls.CButton();
         cButton7 = new org.components.controls.CButton();
         cCheckBox1 = new org.components.controls.CCheckBox();
+        cButton2 = new org.components.controls.CButton();
 
         setLayout(null);
 
@@ -140,6 +142,15 @@ public class SupplierListUi extends TabPanelUI   {
         cCheckBox1.setText("Remove Selection");
         add(cCheckBox1);
         cCheckBox1.setBounds(650, 330, 120, 23);
+
+        cButton2.setText("Find");
+        cButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton2ActionPerformed(evt);
+            }
+        });
+        add(cButton2);
+        cButton2.setBounds(570, 20, 25, 19);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
@@ -170,8 +181,13 @@ public class SupplierListUi extends TabPanelUI   {
         // TODO add your handling code here:
     }//GEN-LAST:event_cButton7ActionPerformed
 
+    private void cButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton2ActionPerformed
+
+    }//GEN-LAST:event_cButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
+    private org.components.controls.CButton cButton2;
     private org.components.controls.CButton cButton3;
     private org.components.controls.CButton cButton4;
     private org.components.controls.CButton cButton5;

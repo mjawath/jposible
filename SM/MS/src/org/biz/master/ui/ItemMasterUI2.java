@@ -43,6 +43,7 @@ import org.biz.invoicesystem.master.ui.*;
 import org.biz.invoicesystem.service.master.CategoryService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.ui.list.master.ItemListUi;
+import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.DetailPanel;
 
 public class ItemMasterUI2 extends DetailPanel<Item> {
@@ -56,7 +57,9 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private ItemListUi listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
     JFileChooser chooser;
-    List<File> images = new ArrayList<File>();    
+    List<File> images = new ArrayList<File>();  
+    TableInteractionListner tblInterUnit;
+    
 
     public ItemMasterUI2() {
         initComponents();//pp
@@ -169,7 +172,18 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cPanel6.addToFocus(tunitprice);
         cPanel6.addToFocus(tunittype);
         cPanel6.addToFocus(tContainsQty);
+        tblInterUnit=new TableInteractionListner(){
 
+            @Override
+            public Object[] getTableData(Object row) {
+                UOM sil=(UOM)row;
+                return new Object[]{sil,sil.getSimbol(),sil.getSalesPrice(),sil.getType(),sil.getMulti()
+                };
+            }
+        
+        };
+        tblunitprices.setTableInteractionListner(tblInterUnit);
+        
     }
 
     ////////////////////////////

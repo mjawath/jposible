@@ -189,11 +189,16 @@ public class GenericDAO<T> {
         return GenericDAOUtil.ExecuteNativeQuery(qryString);
     }
 
+    public T ExecuteQuerySR(Query qry) {
+        return GenericDAOUtil.ExecuteQuerySR(qry);
+    }
+
     public T ExecuteQuerySR(String qryString) {
         qryString = createSelect() + qryString;
         return GenericDAOUtil.ExecuteQuerySR(qryString, cls);
     }
 
+    
     public Object ExecuteQueryOb(String qryString) {
 
         return GenericDAOUtil.ExecuteQuerySR(qryString, cls);
@@ -229,7 +234,23 @@ public class GenericDAO<T> {
         qu.setMaxResults(noofrows); //max result = noofrows+ 0
         return ExecuteQuery(qu);
     }
+    
+    public List pagedData(String qry , int pageNo,Object ...param) {
+        String sq = createWhere(qry);
+        Query qu = GenericDAOUtil.getQuery(sq,param);
+        int fr = pageNo == 0 ? 0 : pageNo * noofrows;
+        qu.setFirstResult(fr);//firstresult
+        qu.setMaxResults(noofrows); //max result = noofrows+ 0
+        return ExecuteQuery(qu);
+    }
 
+    public Long getCount(String qry ,Object ...param) {
+        String sq = createCount(qry);
+        Query qu = GenericDAOUtil.getQuery(sq,param);
+        return (Long)ExecuteQuerySR(qu);
+    }
+    
+    
     public List getPagedData(String qryname, int pageNo) {
 
         String qry = getquery(qryname);
@@ -251,7 +272,8 @@ public class GenericDAO<T> {
         return pagedData(qry, 0);
     }
 
-    public void getNextPage(String qryname) {
+    
+    public List<T> getNextPage(String qryname) {
         String qry = getquery(qryname);
         int cpageno = getCupage(qryname);
         Long count = getcount(qry);
@@ -266,13 +288,15 @@ public class GenericDAO<T> {
         ch.setCurrentPage(cpageno);
         ch.list = pagedData(qry, cpageno);
         System.out.println("size " + cpageno);
+    return ch.list;
     }
 
-    public void getPreviousPage(String qryname) {
+    
+    public List<T> getPreviousPage(String qryname) {
         String qry = getquery(qryname);
         int cpageno = getCupage(qryname);
-        if (cpageno <= 0) {
-            return;
+        if (cpageno < 0) {
+            return null;
         }
         Long count = getcount(qry);
 
@@ -281,6 +305,7 @@ public class GenericDAO<T> {
         ch.setCurrentPage(cpageno - 1);
         ch.list = pagedData(qry, cpageno - 1);
         System.out.println("size " + cpageno);
+        return ch.list;
     }
 
     public void firstPage(String qryname) {
@@ -334,6 +359,10 @@ public class GenericDAO<T> {
     public String createCount() {
         return "select count(c.id) from  " + classname + " c ";
     }
+    
+    public String createCount(String whr,Object ...param) {
+        return createCount() + " where  "+ whr;
+    }
 
     public String createWhere(String whr) {
 
@@ -379,9 +408,20 @@ public class GenericDAO<T> {
     public static void createNewDatabase() {
         GenericDAOUtil.createEMFWithCustomProperties();
     }
+    
+    public int getNoOfRows(){
+        return noofrows; 
+    }
 }
 
 /*
  * scnario : multi database or multi connection environment
  * simply create the instens of this class by passing the desired connection parameteres 
+ */
+
+
+/*
+ How to get JPA Query string
+ * 
+ 
  */

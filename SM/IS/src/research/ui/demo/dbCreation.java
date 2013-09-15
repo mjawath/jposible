@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.util.EntityService;
+import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.*;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
@@ -50,10 +51,10 @@ public class dbCreation {
 //                System.out.println(x);
 //            }
 //        }
-        dbCreation db=new dbCreation();
-        db.
+//        dbCreation db=new dbCreation();
+//        db.
 //        createDataBase();
-       createmster();
+//       createmster();
 //           List lsts = new ArrayList();
 
 //            new dbCreation().createCategory();
@@ -62,6 +63,11 @@ public class dbCreation {
 //        SalesInvoice inv=new SalesInvoice();
 //        inv.setId("677fdfd7");
 //        new SalesInvoiceService().getDao().save(inv);
+        
+        ItemDAO idao =new ItemDAO();
+        idao.setCls(Item.class);
+        System.out.println("***********"+
+        idao.pagedData(" c.code like ?1  ", 0,new Object[]{"%k"}));
     }
 
     public  void createmster() {

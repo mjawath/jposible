@@ -43,7 +43,6 @@ public class CommandTask extends SwingWorker<Object, Object>{
             ex.printStackTrace();//if anything goes wrong an state should be set 
         }
         state=state==EXCEPTION?EXCEPTION:SUCCESS;
-        System.out.println("Getting result ");
         command.resultTask(obj);
     }
 

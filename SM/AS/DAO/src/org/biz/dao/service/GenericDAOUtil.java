@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Parameter;
 import javax.persistence.Query;
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
@@ -407,7 +408,7 @@ public class GenericDAOUtil<T> {
 
     public static Query getQuery(String qryString, Object[] ps) {
         Query q = createEmNew().createQuery(qryString);
-        int x = 0;
+        int x = 1;
 
         for (Object o : ps) {
             q.setParameter(x, o);
@@ -424,7 +425,6 @@ public class GenericDAOUtil<T> {
 
     public static <T> List<T> ExecuteQuery(String qryString, Class cls) {
         Query query = JPAUtil.getEntityManager().createQuery(qryString, cls);
-
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         List ts = query.getResultList();
         return ts;

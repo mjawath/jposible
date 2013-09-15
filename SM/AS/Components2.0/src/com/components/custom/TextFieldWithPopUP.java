@@ -60,9 +60,7 @@ public class TextFieldWithPopUP<T> extends CTextField {
         this.searchActionTask = searchActionTask;
     }
 
-     public String[] getPropertiesEL() {
-        return pagedPopUpPanel.getPropertiesEL();
-    }
+   
 
     public void setPropertiesEL(String[] propertiesEL) {
         pagedPopUpPanel.setPropertiesEL(propertiesEL);

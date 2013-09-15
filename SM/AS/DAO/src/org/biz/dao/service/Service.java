@@ -4,6 +4,7 @@
  */
 package org.biz.dao.service;
 
+import java.util.List;
 import org.biz.dao.util.EntityService;
 
 /**
@@ -44,9 +45,15 @@ public class Service {
         return getDao().getCache();
     }
 
-    public void moveToNextPage(String queryname, int currentpage) {
-        getDao().pagedData(queryname, currentpage);
+    
+    public List moveToPage(String qry,Object [] param, int pageNo) {
+        return getDao().pagedData(qry, pageNo,param);  
 
+    }
+    
+        
+    public Long getCount(String qry,Object [] param){
+        return getDao().getCount(qry ,param);
     }
 
     public void getNextPage(String qryname) {
@@ -71,20 +78,7 @@ public class Service {
         
          getDao().getNextPage(qryname);
     }
-
-    public void getPreviousePage(String qry, int page) {
-        //get last page
-         getDao().getPreviousPage(qry);
-    }
-
-    public void getLastPage(String qry) {
-         getDao().lastPage(qry);
-    }
-
-    public void getFirstPage(String qry) {
-       getDao().firstPage(qry);
-    }
-    
+        
     public String getUniqueKey(){
             return EntityService.getKey("Test");
     }
@@ -95,5 +89,9 @@ public class Service {
     public void PrintTracer(String msg){
 //        Tracer.printToOut("servies are set ");
         System.out.println("should move print traeer "+msg);
+    }
+    
+    public int getNoOfRows(){
+    return getDao().getNoOfRows();
     }
 }
