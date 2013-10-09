@@ -366,7 +366,7 @@ public class GenericDAO<T> {
 
     public String createWhere(String whr) {
 
-        return createSelect() + " where  " + whr;
+        return createSelect() + " where  " + whr +" "+ GenericDAOUtil.getOrderBy(orderby);
     }
     /*
      ///////////////

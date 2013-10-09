@@ -2,10 +2,12 @@
 package org.biz.invoicesystem.ui.list.master;
 
 import javax.swing.JPanel;
+import org.biz.invoicesystem.entity.master.Staff;
+import org.components.windows.ListViewPanel;
 import org.components.windows.TabPanelUI;
 
  
-public class StaffListUi extends TabPanelUI   {
+public class StaffListUi extends ListViewPanel<Staff>   {
 
      public StaffListUi() {
         initComponents();

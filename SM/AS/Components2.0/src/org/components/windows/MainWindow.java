@@ -111,7 +111,7 @@ public class MainWindow extends JFrame {
         getjTabbedPane1().removeAll();
 //        showlogin();
     }//GEN-LAST:event_cButton1ActionPerformed
-
+ 
     public void init() {
 //
 //        dbsu = new DBServerUtil();
@@ -186,7 +186,7 @@ public class MainWindow extends JFrame {
             } else {
                 int ix = getjTabbedPane1().indexOfTab(tabName);
                 getjTabbedPane1().setSelectedIndex(ix);
-                initCloseButtonForTab(getjTabbedPane1(), ix);
+//                initCloseButtonForTab(getjTabbedPane1(), ix);
 
             }
 
@@ -245,14 +245,14 @@ public class MainWindow extends JFrame {
                 getjTabbedPane1().add(title, tpui);
                 int sx = getjTabbedPane1().indexOfTab(title);
                 Sessions.addToSession(title, tpui);
-                initCloseButtonForTab(getjTabbedPane1(), sx);
+//                initCloseButtonForTab(getjTabbedPane1(), sx);
                 getjTabbedPane1().setSelectedIndex(sx);
                 tpui.tabName=title;
 
             } else {
                  int ix = getjTabbedPane1().indexOfTab(title);
                  getjTabbedPane1().setSelectedIndex(ix);
-               initCloseButtonForTab(getjTabbedPane1(), ix);
+//               initCloseButtonForTab(getjTabbedPane1(), ix);
            
                  tpui.setobj(obj);
             }
@@ -379,4 +379,6 @@ e.printStackTrace();
     public javax.swing.JTabbedPane getjTabbedPane1() {
         return jTabbedPane1;
     }
+    
+    
 }

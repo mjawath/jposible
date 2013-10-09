@@ -16,7 +16,6 @@ import org.components.controls.CButton;
 public class ButtonAction implements ActionListener {
 
     
-    private Command com;
     protected CButton btn;
 
     public ButtonAction() {
@@ -26,10 +25,11 @@ public class ButtonAction implements ActionListener {
         @Override
     public void actionPerformed(ActionEvent e) {
        final CButton btn = (CButton) e.getSource();
-        com = new Command() {
+       final Command com= new Command() {
             @Override
             public Object executeTask() {
-                return ButtonAction.this.executeTask(btn);
+                getParams().add(btn);
+                return ButtonAction.this.executeTask(getParams());
             }
 
             @Override
@@ -40,7 +40,7 @@ public class ButtonAction implements ActionListener {
         com.invoke();
     }
 
-    public Object executeTask(Object ...objs) {
+    public Object executeTask(Object objs) {
      
         return null;
     }

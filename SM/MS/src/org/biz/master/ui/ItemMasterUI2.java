@@ -56,15 +56,15 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private ItemMasterTab mastertab;
     private ItemListUi listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
-    JFileChooser chooser;
+    private JFileChooser chooser;
     List<File> images = new ArrayList<File>();  
     TableInteractionListner tblInterUnit;
     
 
     public ItemMasterUI2() {
-        initComponents();//pp
+//        initComponents();//pp
 //        keyListeners();
-        init();
+        super();
     }
 
     /////////////////////////////////////
@@ -92,8 +92,14 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         return new Object[]{catz, un1z, un2z, locz};
     }
 
+    
+    
     public void init() {
-
+     
+                initComponents();
+            super.init();
+               
+    
         try {
 //            itemService =(ItemService)service;
             selectedObject = new Item();
@@ -1072,14 +1078,14 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     }
 
     @Override
-    public void postCreate() {
+    public void postCreate(Object deleObj) {
 
 //        itemService.getDao().save(selectedObject);
-        saveImages(selectedObject.getCode(), images);
+        saveImages(busObject.getCode(), images);
     }
 
     @Override
-    public void postUpdate() {
+    public void postUpdate(Object deleObj) {
 
         //        selectedItem.setId(get.getId());
 //        Date mDate = GenericDAOUtil.currentTime();
@@ -1087,8 +1093,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 //        itemService.getDao().update(selectedObject);
 
         //put to thread 
-        deleteImages(selectedObject.getCode());
-        saveImages(selectedObject.getCode(), images);
+        deleteImages(busObject.getCode());
+        saveImages(busObject.getCode(), images);
 
     }
 

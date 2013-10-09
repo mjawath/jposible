@@ -20,7 +20,7 @@ import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
-import org.biz.app.ui.util.ReflectionUtility;
+import org.biz.util.ReflectionUtility;
 import org.components.parent.controls.PxTable;
 import org.components.parent.controls.editors.BaseCellEditor;
 

@@ -10,11 +10,14 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
+import java.util.Date;
 import java.util.List;
-import javax.swing.JPanel;
+import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.TableUtil;
+import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.service.master.CustomerService;
+import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
 
 public class CustomerListUi extends ListViewPanel<Customer> {
@@ -22,43 +25,51 @@ public class CustomerListUi extends ListViewPanel<Customer> {
     private CustomerService cService;
     // List<Customer> customers;
     private Customer selectedCus;
+    
+    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
+        @Override
+        public Object[] getTableData(Object row) {
+            Customer item = (Customer) row;
+            return new Object[]{item, item.getId(), item.getCode(), item.getCompanyName(), item.getSavedDate(), item.getEditedDate()};
+        }
+    };
+    
+    
 
     @Override
     public void init() {
 
-        try {
 
-            cService = new CustomerService();
-            //customers=new ArrayList<Customer>();
-            // customer=new Customer();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            tbl.init(Customer.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class}, new String[]{"id", "code", "companyName", "savedDate", "editedDate"});
+            tbl.setTableInteractionListner(tableInteractionListner);
+            cPaginatedPanel1.init(service, searchListener, tbl);
 
     }
-
+    
+    
     public CustomerListUi() {
         initComponents();
     }
 
     //////////////////////////////////////////////////
     public void fillItemTbl() {
-        TableUtil.cleardata(tblCustomerList);
+        TableUtil.cleardata(tbl);
 
         try {
             List<Customer> lsts = cService.getDao().getAll();
             for (Customer i : lsts) {
-                TableUtil.addrow(tblCustomerList, new Object[]{i.getCode(), i.getCustomerName(), i.getPhone(), 0.0, true});
+                TableUtil.addrow(tbl, new Object[]{i.getCode(), i.getCustomerName(), i.getPhone(), 0.0, true});
             }
 
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+
+    
 
     ///////////////////////////////////////////////////// 
     @SuppressWarnings("unchecked")
@@ -66,9 +77,9 @@ public class CustomerListUi extends ListViewPanel<Customer> {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        tCustomerSearch = new org.components.controls.CTextField();
+        tSearch = new org.components.controls.CTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCustomerList = new org.components.controls.CxTable();
+        tbl = new org.components.controls.CxTable();
         cNewCustomer = new org.components.controls.CButton();
         cCustomerHistory = new org.components.controls.CButton();
         cDeleteCustomer = new org.components.controls.CButton();
@@ -76,6 +87,7 @@ public class CustomerListUi extends ListViewPanel<Customer> {
         cClose = new org.components.controls.CButton();
         cBulkSms = new org.components.controls.CButton();
         cCheckBox1 = new org.components.controls.CCheckBox();
+        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
 
         setLayout(null);
 
@@ -83,15 +95,15 @@ public class CustomerListUi extends ListViewPanel<Customer> {
         add(jLabel1);
         jLabel1.setBounds(10, 10, 112, 20);
 
-        tCustomerSearch.addActionListener(new java.awt.event.ActionListener() {
+        tSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tCustomerSearchActionPerformed(evt);
+                tSearchActionPerformed(evt);
             }
         });
-        add(tCustomerSearch);
-        tCustomerSearch.setBounds(140, 10, 470, 25);
+        add(tSearch);
+        tSearch.setBounds(140, 10, 470, 25);
 
-        tblCustomerList.setModel(new javax.swing.table.DefaultTableModel(
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -107,13 +119,13 @@ public class CustomerListUi extends ListViewPanel<Customer> {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblCustomerList);
-        tblCustomerList.getColumnModel().getColumn(1).setMinWidth(150);
-        tblCustomerList.getColumnModel().getColumn(1).setPreferredWidth(150);
-        tblCustomerList.getColumnModel().getColumn(1).setMaxWidth(150);
+        jScrollPane1.setViewportView(tbl);
+        tbl.getColumnModel().getColumn(1).setMinWidth(150);
+        tbl.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tbl.getColumnModel().getColumn(1).setMaxWidth(150);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(10, 75, 760, 250);
+        jScrollPane1.setBounds(10, 75, 760, 330);
 
         cNewCustomer.setText("New ");
         cNewCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +134,7 @@ public class CustomerListUi extends ListViewPanel<Customer> {
             }
         });
         add(cNewCustomer);
-        cNewCustomer.setBounds(10, 350, 121, 49);
+        cNewCustomer.setBounds(10, 430, 121, 49);
 
         cCustomerHistory.setText("History");
         cCustomerHistory.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +143,7 @@ public class CustomerListUi extends ListViewPanel<Customer> {
             }
         });
         add(cCustomerHistory);
-        cCustomerHistory.setBounds(270, 350, 121, 49);
+        cCustomerHistory.setBounds(270, 430, 121, 49);
 
         cDeleteCustomer.setText("Delete");
         cDeleteCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +152,7 @@ public class CustomerListUi extends ListViewPanel<Customer> {
             }
         });
         add(cDeleteCustomer);
-        cDeleteCustomer.setBounds(140, 350, 121, 49);
+        cDeleteCustomer.setBounds(140, 430, 121, 49);
 
         cBulkMail.setText("Bulk Email");
         cBulkMail.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +161,7 @@ public class CustomerListUi extends ListViewPanel<Customer> {
             }
         });
         add(cBulkMail);
-        cBulkMail.setBounds(530, 350, 121, 49);
+        cBulkMail.setBounds(530, 430, 121, 49);
 
         cClose.setText("Close");
         cClose.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +170,7 @@ public class CustomerListUi extends ListViewPanel<Customer> {
             }
         });
         add(cClose);
-        cClose.setBounds(660, 350, 110, 49);
+        cClose.setBounds(660, 430, 110, 49);
 
         cBulkSms.setText("Bulk Sms");
         cBulkSms.addActionListener(new java.awt.event.ActionListener() {
@@ -167,11 +179,13 @@ public class CustomerListUi extends ListViewPanel<Customer> {
             }
         });
         add(cBulkSms);
-        cBulkSms.setBounds(400, 350, 121, 49);
+        cBulkSms.setBounds(400, 430, 121, 49);
 
         cCheckBox1.setText("Remove Selection");
         add(cCheckBox1);
-        cCheckBox1.setBounds(650, 330, 120, 23);
+        cCheckBox1.setBounds(650, 410, 120, 23);
+        add(cPaginatedPanel1);
+        cPaginatedPanel1.setBounds(100, 40, 440, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cNewCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNewCustomerActionPerformed
@@ -194,9 +208,9 @@ public class CustomerListUi extends ListViewPanel<Customer> {
         // TODO add your handling code here:
     }//GEN-LAST:event_cCloseActionPerformed
 
-    private void tCustomerSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCustomerSearchActionPerformed
+    private void tSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tCustomerSearchActionPerformed
+    }//GEN-LAST:event_tSearchActionPerformed
 
     private void cBulkSmsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBulkSmsActionPerformed
         // TODO add your handling code here:
@@ -209,20 +223,30 @@ public class CustomerListUi extends ListViewPanel<Customer> {
     private org.components.controls.CButton cCustomerHistory;
     private org.components.controls.CButton cDeleteCustomer;
     private org.components.controls.CButton cNewCustomer;
+    private org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private org.components.controls.CTextField tCustomerSearch;
-    private org.components.controls.CxTable tblCustomerList;
+    private org.components.controls.CTextField tSearch;
+    private org.components.controls.CxTable tbl;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public String getTabName() {
-        return "Customer List";
+    public void setService(Service service) {
+        super.setService(service);
+        cService = (CustomerService) service;
+        init();
+        init(tbl);
     }
+    private QueryManager searchListener = new QueryManager() {
+        @Override
+        public String getQuery() {
+            String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" @1 ";
+            return qry;
+        }
 
-    @Override
-    public JPanel getJPanel() {
-
-        return this;
-    }
+        @Override
+        public Object[] getParams() {
+            return new Object[]{tSearch.getText() + "%"};
+        }
+    };
 }

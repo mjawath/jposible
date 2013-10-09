@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.UIEty;
@@ -13,7 +12,6 @@ import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.service.master.CustomerService;
-import org.biz.invoicesystem.service.master.SupplierService;
 import org.components.windows.DetailPanel;
 
 public class CustomerDetailUI extends DetailPanel<Customer> {
@@ -22,11 +20,14 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     // List<Customer> customers;
     private Customer selectedCus;
 
+    public CustomerDetailUI(){
+    super();
+    }
+    
     @Override
     public void init() {
-        crudcontrolPanel.setCrudController(this);
- 
-
+    initComponents();
+    super.init();
     }
 
     /////////////////////////////////////
@@ -98,15 +99,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         }
     }
 
-    /**
-     * Creates new form cust
-     */
-    public CustomerDetailUI() {
-        initComponents();
-        init();
-    }
-
-    public Customer uiToEntity(Customer c) throws Exception {
+   public Customer uiToEntity(Customer c) throws Exception {
         try {
             c.setId(EntityService.getEntityService().getKey(""));
 
@@ -137,37 +130,77 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     }
 
     public void entity2Ui(Customer c) throws Exception {
+        
+    }
+
+    
+    public void setBusObject(Customer obj) {
+        this.selectedCus = obj;
         try {
-            UIEty.objToUi(tCusCode, c.getCustomerID());//    c.setCode(uiEty.tcToStr(tCusId));
-            UIEty.objToUi(tCusTitle, c.getTitle());//    c.setTitle(uiEty.cmbtostr(tCusTitle));
-            UIEty.objToUi(tCusName, c.getCustomerName());//    c.setCustomerName(uiEty.tcToStr(tCusName));
-            tCusDOB.setDate(c.getDob());
-            UIEty.objToUi(tCusCompany, c.getCompanyName());//    c.setCompanyName(uiEty.tcToStr(tCusCompany));
-            UIEty.objToUi(tCusReligion, c.getReligion());//    c.setReligion(uiEty.cmbtostr(tCusReligion));
-            UIEty.objToUi(tCusType, c.getType());//    c.setType(uiEty.cmbtostr(tCusType));
-            UIEty.objToUi(tCusDiscount, c.getDiscount());//    c.setDiscount(uiEty.tcToDble0(tCusDiscount));
-            UIEty.objToUi(tCusCreditLimit, c.getCreditLimit());//    c.setCreditLimit(uiEty.tcToDble0(tCusCreditLimit));
-            UIEty.objToUi(tCusSalesRep, c.getSalesRep());//    c.setSalesRep(uiEty.cmbtostr(tCusSalesRep));
-            UIEty.objToUi(tCusLoyalty, c.getLoyaltyCardNo());//    c.setLoyaltyCardNo(uiEty.tcToStr(tCusLoyalty));
-            UIEty.objToUi(tCusNIC, c.getNicno());//    c.setNicno(uiEty.tcToStr(tCusNIC));
-            UIEty.objToUi(tCusAdd1, c.getAddress());//    c.setAddress(uiEty.tcToStr(tCusAdd1));
-            UIEty.objToUi(tCusAdd2, c.getAddress2());//    c.setAddress2(uiEty.tcToStr(tCusAdd2));
-            UIEty.objToUi(tCusCity, c.getCity());//    c.setCity(uiEty.tcToStr(tCusCity));
-            UIEty.objToUi(tCusPhone, c.getPicLocation());//    c.setPhone(uiEty.tcToStr(tCusPhone));
-            UIEty.objToUi(tCusMobile, c.getMobile());//    c.setMobile(uiEty.tcToStr(tCusMobile));
-            UIEty.objToUi(tCusEmail, c.getEmail());//    c.setEmail(uiEty.tcToStr(tCusEmail));
+            UIEty.objToUi(tCusCode, obj.getCode());
+            UIEty.objToUi(tCusTitle, obj.getTitle());
+            UIEty.objToUi(tCusName, obj.getCustomerName());
+            tCusDOB.setDate(obj.getDob());
+            UIEty.objToUi(tCusCompany, obj.getCompanyName());
+            UIEty.objToUi(tCusReligion, obj.getReligion());
+            UIEty.objToUi(tCusType, obj.getType());
+            UIEty.objToUi(tCusDiscount, obj.getDiscount());
+            UIEty.objToUi(tCusCreditLimit, obj.getCreditLimit());
+            UIEty.objToUi(tCusSalesRep, obj.getSalesRep());
+            UIEty.objToUi(tCusLoyalty, obj.getLoyaltyCardNo());
+            UIEty.objToUi(tCusNIC, obj.getNicno());
+            UIEty.objToUi(tCusAdd1, obj.getAddress());
+            UIEty.objToUi(tCusAdd2, obj.getAddress2());
+            UIEty.objToUi(tCusCity, obj.getCity());
+            UIEty.objToUi(tCusPhone, obj.getPicLocation());
+            UIEty.objToUi(tCusMobile, obj.getMobile());
+            UIEty.objToUi(tCusEmail, obj.getEmail());
 
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw e;
         }
     }
 
+    public Customer getBusObject(){
+            Customer c=new Customer();
+            try {
+            c.setId(EntityService.getEntityService().getKey(""));
+
+            c.setCode(UIEty.tcToStr(tCusCode));
+            c.setTitle(UIEty.cmbtostr(tCusTitle));
+            c.setCustomerName(UIEty.tcToStr(tCusName));
+            c.setDob(tCusDOB.getDate());
+            c.setCompanyName(UIEty.tcToStr(tCusCompany));
+            c.setReligion(UIEty.cmbtostr(tCusReligion));
+            c.setType(UIEty.cmbtostr(tCusType));
+            c.setDiscount(UIEty.tcToDble0(tCusDiscount));
+            c.setCreditLimit(UIEty.tcToDble0(tCusCreditLimit));
+            c.setSalesRep(UIEty.cmbtostr(tCusSalesRep));
+            c.setLoyaltyCardNo(UIEty.tcToStr(tCusLoyalty));
+            c.setNicno(UIEty.tcToStr(tCusNIC));
+            c.setAddress(UIEty.tcToStr(tCusAdd1));
+            c.setAddress2(UIEty.tcToStr(tCusAdd2));
+            c.setCity(UIEty.tcToStr(tCusCity));
+            c.setPhone(UIEty.tcToStr(tCusPhone));
+            c.setMobile(UIEty.tcToStr(tCusMobile));
+            c.setEmail(UIEty.tcToStr(tCusEmail));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return c;
+   
+    }
+    
     public void clearForm() {
         try {
             entity2Ui(new Customer());
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -414,48 +447,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         // TODO add your handling code here:
 }//GEN-LAST:event_tCusDiscountActionPerformed
 
-    @Override
-    public void save() {
-        try {
-            if (UIEty.tcToStr(tCusCode) == null || UIEty.tcToStr(tCusCode).equals("")) {
-                MessageBoxes.wrnmsg(null, "Please Type Customer Code", "Empty Customer Code");
-                return;
-            }
-            //saving customer             
-            Customer c = uiToEntity(new Customer());//from ui....
-            Customer exist = cService.getDao().findCustomerByCode(c.getCode());
-            if (exist == null) {
-
-                cService.getDao().save(c);
-
-
-            } else {
-
-                String[] ObjButtons = {"Yes", "No"};
-                int PromptResult = JOptionPane.showOptionDialog(null, "Customer Exist Do You Want to Update it?", getTabName(), -1, 2, null, ObjButtons, ObjButtons[1]);
-
-                if (PromptResult == 0) {
-                    c.setId(exist.getId());
-                    cService.getDao().update(c);
-
-                } else {
-                    return;
-                }
-            }
-            //updating customers       
-            clearForm();
-
-            tCusCode.requestFocus();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            MessageBoxes.errormsg(null, e.getMessage(), "Error");
-        }
-
-
-        super.save();
-    }
-
+   
     @Override
     public void delete() {
             try {

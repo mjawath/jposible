@@ -23,7 +23,7 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
      */
     public ListViewPanel() {
         super();
-        initComponents();
+//        initComponents();
     }
     
     public void init(final PxTable tbl){    
@@ -32,17 +32,14 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     Object obj = tbl.getSelectedObject();
-                    //get the main window 
-                    //get the detail for this listview
-                    //set obj
                     if (obj == null) {
                         return;
                     }
-                    System.out.println("Detail panel");
-//                    StringUtility.getHead(tabName, "LIST");
-                    DetailPanel dp = (DetailPanel) SystemUtil.getObj(StringUtility.getHead(tabName, "LIST")+"DETAIL");
+                    String tit=StringUtility.getHead(tabName, "LIST")+"DETAIL";
+                    DetailPanel dp = (DetailPanel) SystemUtil.getObj(tit);
                     dp.setSelectedBusObj(obj);
                     dp.setBusObject(obj);
+                    SystemUtil.bringTabToFront(tit);
                                         
                 }
             }

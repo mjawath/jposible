@@ -11,8 +11,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
@@ -30,7 +28,7 @@ import org.components.windows.DetailPanel;
  *
  * @author d
  */
-public class InvoiceUI extends DetailPanel<SalesInvoice> {
+  public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
     
     List<Item> items;
@@ -46,8 +44,13 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
      */
     public InvoiceUI() {
         super();
+       
+    }
+    
+    public void init(){
+        
         initComponents();
-        init();
+        super.init();
 //        cButton1.addActionListener(commandFind);
         tinv.addKeyListener(new KeyAdapter() {
 
@@ -57,11 +60,6 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
             }
         
         });
-       
-    }
-    
-    public void init(){
-        
         
         tprice.addActionListener(new ActionListener() {
             @Override
@@ -266,7 +264,7 @@ public class InvoiceUI extends DetailPanel<SalesInvoice> {
     
     @Override
     public void preSave() {
-        toSave.add(getBusObject());        
+//        toSave.add(getBusObject()); dont need this line,handled in save method        
         super.preSave();
     }
 

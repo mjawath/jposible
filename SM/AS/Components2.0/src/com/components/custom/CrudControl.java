@@ -12,6 +12,8 @@ public interface CrudControl {
     
     void save();
     
+    Object saveX();
+    
     void update();
     
     void clear();
@@ -21,5 +23,13 @@ public interface CrudControl {
     void gotoList();
     
     void printPage();
+    
+    void postSave(Object objs);
+    
+    void postUpdate(Object deleObj);
+    
+    void postDelete(Object deleObj);
+    
+//    void postDelete();
     
 }

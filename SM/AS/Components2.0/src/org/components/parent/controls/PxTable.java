@@ -25,7 +25,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
-import org.biz.app.ui.util.ReflectionUtility;
+import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
 import org.components.parent.controls.editors.CustomRenderer;
 import org.components.parent.controls.editors.TableInteractionListner;
@@ -97,7 +97,7 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     static class DateRendererX extends DefaultTableCellRenderer.UIResource {
-        DateFormat formatter=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        DateFormat formatter=new SimpleDateFormat("HH:mm:ss dd-MM-yyyy ");
         public DateRendererX() { super(); }
 
         public void setValue(Object value) {

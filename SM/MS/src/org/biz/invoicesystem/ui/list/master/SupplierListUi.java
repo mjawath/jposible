@@ -22,8 +22,18 @@ public class SupplierListUi extends ListViewPanel<Supplier>   {
 
     /** Creates new form CustomerListUi */
     public SupplierListUi() {
-        initComponents();
+    super();
     }
+
+    @Override
+    public void init() {
+        super.init();
+        initComponents();
+
+    }
+    
+    
+    
 
     /** This method is called from within the constructor to
      * initialize the form.

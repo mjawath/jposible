@@ -38,18 +38,13 @@ public class ItemList extends ListViewPanel {
     public ItemList() {
 //        initComponents;
        super();
-       initComponents();
          
     }
 
     @Override
     public void init() {
+    initComponents();
     super.init();    
-    tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
-                new String[]{"id", "code", "description", "savedDate","editedDate"});
-    tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate","editedDate"});
-    tbl.setTableInteractionListner(tableInteractionListner);
-    cPaginatedPanel1.init(service,searchListener,tbl);    
     }
     
 
@@ -57,11 +52,15 @@ public class ItemList extends ListViewPanel {
     public void setService(Service service) {
         super.setService(service);
         itemService =(ItemService) service;
-        init();
         init(tbl);
 //        tbl.setModelClass(Item.class);        
 //        tbl.setPropertiesEL(new String[]{"id","code"});
 //        tbl.setColumnHeader(new String[]{"id","code","Saved","Edited"});
+    tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
+                new String[]{"id", "code", "description", "savedDate","editedDate"});
+    tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate","editedDate"});
+    tbl.setTableInteractionListner(tableInteractionListner);
+    cPaginatedPanel1.init(service,searchListener,tbl);    
         
     }
     
@@ -151,7 +150,7 @@ public class ItemList extends ListViewPanel {
     private QueryManager searchListener = new QueryManager() {
         @Override
         public String getQuery() {
-            String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" @1 ";
+            String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
             return qry;
         }
 

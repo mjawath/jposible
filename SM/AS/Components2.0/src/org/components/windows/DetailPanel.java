@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
-import org.biz.app.ui.util.ReflectionUtility;
+import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.util.EntityService;
@@ -29,22 +29,20 @@ import org.components.util.ComponentFactory;
  */
 public class DetailPanel<T> extends TabPanelUI {
 
-    final protected ArrayList toSave;
-    final protected ArrayList toDelete;
-    final protected ArrayList toUpdate;
     protected T busObject;
     protected T selectedObject;
-    protected FocusManager focusManager=new FocusManager();
+    protected FocusManager focusManager;
 
     /**
      * Creates new form DetailPanel
      */
     public DetailPanel() {
-//        initComponents();
-        toSave = new ArrayList();
-        toDelete = new ArrayList();
-        toUpdate = new ArrayList();
-        
+        super();
+          
+    }
+
+    @Override
+    public void config() {
         Action topKeyAction=new AbstractAction() {
 
             @Override
@@ -63,8 +61,13 @@ public class DetailPanel<T> extends TabPanelUI {
             }
         };
         ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
-
+        initComponents();
+        this.crudcontrolPanel.setCrudController(this);
+        focusManager=new FocusManager();
+        super.config();
     }
+    
+    
     
     public void gotoNextComponent() {
         focusManager.gotoNextComponent();
@@ -112,6 +115,7 @@ public class DetailPanel<T> extends TabPanelUI {
        addToFocus(coms);
        
    }
+   
    public void addToFocus(IComponent cp) {
        focusManager.addToFocus(cp);      
        cp.setContainer(this);
@@ -126,12 +130,16 @@ public class DetailPanel<T> extends TabPanelUI {
     }
 
     @Override
-    public void save() {
-        
+    public Object saveX() {
+    ArrayList result=new ArrayList();
+    ArrayList toSave=new ArrayList();
+    ArrayList toDelete=new ArrayList();
+    ArrayList toUpdate=new ArrayList();
+   
         busObject = getBusObject();
         if (service != null) {
             if (!isValideEntity()) {
-                return;
+                return null;
             }
             preSave();
             
@@ -143,7 +151,7 @@ public class DetailPanel<T> extends TabPanelUI {
 
             if (busObject == null) {
                 Tracer.printToOut("Object id is null");
-                return;
+                return null;
             }
             Object obj = service.getDao().find(key);
             Date cDate = GenericDAOUtil.currentTime();
@@ -152,9 +160,11 @@ public class DetailPanel<T> extends TabPanelUI {
                 ReflectionUtility.setProperty(busObject,"id",EntityService.getKey(""));
                 ReflectionUtility.setProperty(busObject, "savedDate", cDate);
                 toSave.add(busObject);    
+                
                 Tracer.printToOut(" Object  is not found  So creation will be called");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                postCreate();
+                
+                postCreate(result);
             }
             else {
                 ReflectionUtility.setProperty(busObject, "id", key);
@@ -164,18 +174,17 @@ public class DetailPanel<T> extends TabPanelUI {
                 toUpdate.add(busObject);
                 Tracer.printToOut("Updation is called  Object  is  found");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                postUpdate();
+                postUpdate(result);
             }
-            postSave();
-            toSave.clear();
-            toUpdate.clear();
-            toDelete.clear();
-            clear();
-            selectedObject=null;
-        }
-        super.save();
+             }
+        result.add(toSave);
+        result.add(toUpdate);
+        result.add(toDelete);
+        Tracer.printToOut("Detail panel Save is successfully performed , result is returned, method is called using BT");
+        return result;
     }
-
+    
+    
     @Override
     public void delete() {
         if (service != null) {
@@ -188,7 +197,7 @@ public class DetailPanel<T> extends TabPanelUI {
 
                 if (PromptResult == 0) {
                     service.getDao().delete(exist);
-                    postDelete();
+                    postDelete(exist);
                     clear();
                 }
             }
@@ -201,14 +210,14 @@ public class DetailPanel<T> extends TabPanelUI {
         }
     }
 
-    public void postDelete() {
+    public void postDelete(Object deleObj) {
     }
 
-    public void postCreate() {
+    public void postCreate(Object deleObj) {
         System.out.println("-------+++++++++");
     }
 
-    public void postUpdate() {
+    public void postUpdate(Object deleObj) {
         System.out.println("---%%%%%%%%%%%----+++++++++");
     }
 
@@ -219,7 +228,18 @@ public class DetailPanel<T> extends TabPanelUI {
         return true;
     }
 
-    public void postSave() {
+    public void postSave(Object objs) {
+        ArrayList result=(ArrayList)objs;
+        if(result==null)return;
+//        postSave();
+//        toSave.clear();
+//        toUpdate.clear();
+//        toDelete.clear();
+        result.clear();
+        clear();
+        selectedObject = null;
+        busObject=null;
+
     }
 
     public void preSave() {
@@ -240,17 +260,25 @@ public class DetailPanel<T> extends TabPanelUI {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        crudcontrolPanel = new com.components.custom.ControlPanel();
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 60, Short.MAX_VALUE)
+                .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(259, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.components.custom.ControlPanel crudcontrolPanel;
     // End of variables declaration//GEN-END:variables
 }

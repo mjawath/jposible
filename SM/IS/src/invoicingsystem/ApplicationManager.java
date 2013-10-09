@@ -6,11 +6,14 @@ package invoicingsystem;
 
 import app.AppMainWindow;
 import app.utils.SystemUtil;
-import org.biz.app.ui.util.ReflectionUtility;
+import org.biz.app.ui.util.CommandTask;
+import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.Service;
 import org.biz.erp.ui.transaction.detail.InvoiceUI;
 import org.biz.erp.ui.transactions.posted.PostedInvoicesListUI;
+import org.biz.invoicesystem.master.ui.SystemStatic;
+import org.biz.invoicesystem.service.master.CategoryService;
 import org.biz.invoicesystem.service.master.CustomerService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.StaffService;
@@ -20,6 +23,7 @@ import org.biz.invoicesystem.ui.list.master.CustomerListUi;
 import org.biz.invoicesystem.ui.list.master.ItemList;
 import org.biz.invoicesystem.ui.list.master.StaffListUi;
 import org.biz.invoicesystem.ui.list.master.SupplierListUi;
+import org.biz.master.ui.CategoryUI;
 import org.biz.master.ui.CustomerDetailUI;
 import org.biz.master.ui.ItemMasterUI2;
 import org.biz.master.ui.StaffDetailUI;
@@ -45,30 +49,37 @@ public class ApplicationManager {
 //              app.addToTabpanelToUI("Item",ItemMasterUI2.class);
                 app.setVisible(true);
                 System.out.println("=========00000000000000======================");
-                initUI(ItemService.class, "ITem", ItemMasterUI2.class, ItemList.class);
+                initUI(ItemService.class, "Item", ItemMasterUI2.class, ItemList.class);
 //                initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
                 initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
                 initUI(SupplierService.class, "Supplier", SupplerDetailUI.class, SupplierListUi.class);
                 initUI(CustomerService.class, "Customer", CustomerDetailUI.class, CustomerListUi.class);
                 initUI(StaffService.class, "Staff", StaffDetailUI.class, StaffListUi.class);
+                
+        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("item", ItemMasterUI2.class,ItemService.class);
+        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("itemList", ItemList.class,ItemService.class);
+        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("Category", CategoryUI.class,CategoryService.class);
+        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("CategoryList", CategoryUI.class,CategoryService.class);
             }
         });
 //            SalesInvoiceService sis=new SalesInvoiceService(); 
 //            sis.initUI();
 //            ItemService itemser=new ItemService();
 //            itemser.initUI();
-
-
-
+        
     }
+    
+    
 
     public static void initUI(final Class service, String title, Class dp, Class lv) {
         try {
             final DetailPanel obj2 = (DetailPanel) ReflectionUtility.getDynamicInstance(dp);
+            obj2.config();
             final ListViewPanel obj3 = (ListViewPanel) ReflectionUtility.getDynamicInstance(lv);
+            obj3.config();
             SystemUtil.addToMainWindow(obj2, title + "DETAIL");
             SystemUtil.addToMainWindow(obj3, title + "LIST");
-            Tracer.printToOut("servies are set ");
+            Tracer.printToOut("UI are set ");
 
             new Thread(new Runnable() {
                 @Override
@@ -76,7 +87,7 @@ public class ApplicationManager {
                     Service obj = (Service) ReflectionUtility.getDynamicInstance(service);
                     obj2.setService(obj);
                     obj3.setService(obj);
-                    Tracer.printToOut("servies are set ");
+                    Tracer.printToOut("servies are set in new thread ");
                 }
             }).start();
 
@@ -84,5 +95,6 @@ public class ApplicationManager {
         catch (Exception e) {
             Tracer.printToOut(e.getMessage());
         }
+        
     }
 }

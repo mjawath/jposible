@@ -20,12 +20,13 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
 
     public SupplerDetailUI() {
 
-        init();
+        super();
 
     }
 
     public void init() {
         try {
+            super.init();
             initComponents();
 
 

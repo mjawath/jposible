@@ -127,14 +127,21 @@ public class GenericDAOUtil<T> {
 //    }
     public static <T> List<T> getAll(String orderby, Class cls) {
 //        getEm().clear();
-        String order = "";
-        if (!orderby.isEmpty()) {
-            order = "order by  " + orderby ;//desc - decending 
-        }
-        Query query = createEmNew().createQuery("select c from " + cls.getSimpleName() + " c   " + order);
+        
+        
+        Query query = createEmNew().createQuery("select c from " + cls.getSimpleName() + " c   " +
+                getOrderBy(orderby));
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         return query.getResultList();
     }
+    
+    public static String getOrderBy(String orderby){
+    
+        if (!orderby.trim().isEmpty()) {
+            return "order by  " + orderby ;//desc - decending 
+        }
+        return "";
+    } 
 
     public static <T> void persistob(EntityManager em, Object ob) {
         em.persist(ob);

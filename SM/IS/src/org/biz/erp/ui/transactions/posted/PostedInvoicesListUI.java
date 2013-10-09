@@ -39,12 +39,12 @@ public class PostedInvoicesListUI extends ListViewPanel<SalesInvoice> {
     };
     /** Creates new form PostedInvoicesListUI */
     public PostedInvoicesListUI() {
-        initComponents();
-        init();    
+        super();    
     }
 
     @Override
     public void init() {
+         initComponents();
         super.init();
         tblInvoice.init(SalesInvoice.class, new Class[]{String.class,String.class,Double.class,Date.class,Date.class}, new String[]{"id","inv no","Saved","Edited"});
         tblInvoice.setTableInteractionListner(tableInteractionListner);

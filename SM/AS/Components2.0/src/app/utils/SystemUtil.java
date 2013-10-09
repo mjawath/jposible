@@ -111,4 +111,21 @@ public class SystemUtil {
         });
 
     }
+    
+    public static MainWindow getMainWindow() {
+        MainWindow jf = (MainWindow) Sessions.getObj("mainui");
+        return jf;
+    }
+
+    public static void bringTabToFront( final String tabname) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainWindow jf = (MainWindow) Sessions.getObj("mainui");
+                jf.addToTabpanelToUI( tabname,null);
+            }
+        });
+
+    }
+
 }

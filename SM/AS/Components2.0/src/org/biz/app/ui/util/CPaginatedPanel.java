@@ -10,7 +10,7 @@
  */
 package org.biz.app.ui.util; 
 
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import org.biz.app.ui.event.ButtonAction;
 import org.biz.dao.service.Service;
@@ -31,6 +31,8 @@ public class CPaginatedPanel extends javax.swing.JPanel {
         tnextpage.addActionListener(action);
         tPreviousPage.addActionListener(action);  
         tFind.addActionListener(action);
+        tlast.addActionListener(action);
+        tfirst.addActionListener(action);
     }
     
     private String qryName = "";
@@ -60,8 +62,9 @@ public class CPaginatedPanel extends javax.swing.JPanel {
     
     private ButtonAction  action = new ButtonAction() {
             
-            public Object executeTask(Object ...objs) {
-                CButton btn=(CButton)(objs[0]); 
+            public Object executeTask(Object objs) {
+                ArrayList al=(ArrayList)(objs); 
+                CButton btn=(CButton)(al.get(0)); 
                 
                 if(service==null)return null;
                 
@@ -91,6 +94,18 @@ public class CPaginatedPanel extends javax.swing.JPanel {
                 ctable.setModelCollection(((QueryManager)objs).getList() );                
             }
         };
+    
+    private void setKeySearchEvent(){
+        //key down
+        //key up
+        //page up
+        //page down
+        //home
+        //end
+        
+        
+    }
+
 /*        private CKeyAdapter keyAdapter = new CKeyAdapter(KeyEvent.KEY_PRESSED) {
         @Override
         public Object executeTask() {

@@ -6,15 +6,16 @@ package org.biz.app.ui.util;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import org.biz.app.ui.event.ButtonAction;
 
 /**
  *
  * @author d
  */
-public class CKeyAdapter extends KeyAdapter implements ICommand {
+public class CKeyAdapter extends KeyAdapter  {
 
     
-    Command com = new Command(this);
 
     int type;//key event type which triggered the event Pressed ,Typed ,Released
     
@@ -28,27 +29,32 @@ public class CKeyAdapter extends KeyAdapter implements ICommand {
 
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(final KeyEvent e) {
         if (type == KeyEvent.KEY_PRESSED) {
-            com.invoke();
+                final Command com= new Command() {
+            @Override
+            public Object executeTask() {
+                getParams().add(e);
+                return CKeyAdapter.this.executeTask(getParams());
+            }
+
+            @Override
+            public void resultTask(Object objs) {
+                CKeyAdapter.this.resultTask(objs);
+            }
+        };
+        com.invoke();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (type==KeyEvent.KEY_RELEASED) {
-            com.invoke();
-        }
     }
 
-    public void invoke(){
-    com.invoke();
-    }
     
-    @Override
-    public Object executeTask() {
+    public Object executeTask(Object obj) {
 
-        System.out.println("start executing-------" + com.objs);
+//        System.out.println("start executing-------" + com.objs);
         try {
             Thread.sleep(1000);
         }
@@ -58,9 +64,9 @@ public class CKeyAdapter extends KeyAdapter implements ICommand {
         return "key event";
     }
 
-    @Override
     public void resultTask(Object objs) {
         System.out.println("-------result ##########----" + objs);
 
     }
-}  
+
+    }  

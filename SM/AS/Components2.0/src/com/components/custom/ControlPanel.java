@@ -5,6 +5,8 @@
  */
 package com.components.custom;
 
+import org.biz.app.ui.event.ButtonAction;
+
 /**
  *
  * @author Jawath
@@ -14,9 +16,39 @@ public class ControlPanel extends javax.swing.JPanel {
     /** Creates new form ControlPanel */
     public ControlPanel() {
         initComponents();
+        btsave.addActionListener(comSave);
+        tdelete.addActionListener(comDelete);
     }
     
-    CrudControl control;
+    private CrudControl control;
+    private ButtonAction comSave=new ButtonAction(){
+
+        @Override
+        public Object executeTask(Object objs  ) {
+            return control.saveX();
+        }
+
+        @Override
+        public void resultTask(Object objs) {
+            control.postSave(objs);
+        }  
+    };
+    
+    private ButtonAction comDelete=new ButtonAction(){
+
+        @Override
+        public Object executeTask(Object objs) {
+             control.delete();
+            return super.executeTask(objs);
+        }
+
+        @Override
+        public void resultTask(Object objs) {
+            control.postDelete(objs);
+        }  
+    };
+    
+    
 
     public void setCrudController(CrudControl control) {
         this.control = control;
@@ -26,32 +58,23 @@ public class ControlPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btsave = new javax.swing.JButton();
-        btdelete = new javax.swing.JButton();
-        btclear = new javax.swing.JButton();
-        btgrid = new javax.swing.JButton();
-        btclear1 = new javax.swing.JButton();
-        cButton1 = new org.components.controls.CButton();
+        btsave = new org.components.controls.CButton();
+        tclear = new org.components.controls.CButton();
+        btclear = new org.components.controls.CButton();
+        tprint = new org.components.controls.CButton();
+        btgotoGrid = new org.components.controls.CButton();
+        tdelete = new org.components.controls.CButton();
 
         setLayout(null);
 
         btsave.setText("Save");
-        btsave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btsaveActionPerformed(evt);
-            }
-        });
+        btsave.setPreferredSize(new java.awt.Dimension(30, 20));
         add(btsave);
-        btsave.setBounds(0, 0, 57, 30);
+        btsave.setBounds(0, 0, 50, 30);
 
-        btdelete.setText("Delete");
-        btdelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btdeleteActionPerformed(evt);
-            }
-        });
-        add(btdelete);
-        btdelete.setBounds(60, 0, 63, 30);
+        tclear.setText("Clear");
+        add(tclear);
+        tclear.setBounds(100, 0, 50, 30);
 
         btclear.setText("Copy");
         btclear.addActionListener(new java.awt.event.ActionListener() {
@@ -60,68 +83,31 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(btclear);
-        btclear.setBounds(200, 0, 70, 30);
+        btclear.setBounds(150, 0, 50, 30);
 
-        btgrid.setText("Goto Grid View >>");
-        btgrid.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        btgrid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btgridActionPerformed(evt);
-            }
-        });
-        add(btgrid);
-        btgrid.setBounds(340, 0, 100, 30);
+        tprint.setText("Print");
+        add(tprint);
+        tprint.setBounds(200, 0, 50, 30);
 
-        btclear1.setText("Clear");
-        btclear1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btclear1ActionPerformed(evt);
-            }
-        });
-        add(btclear1);
-        btclear1.setBounds(130, 0, 70, 30);
+        btgotoGrid.setText("Goto Grid >");
+        add(btgotoGrid);
+        btgotoGrid.setBounds(250, 0, 80, 30);
 
-        cButton1.setText("Print");
-        cButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton1ActionPerformed(evt);
-            }
-        });
-        add(cButton1);
-        cButton1.setBounds(270, 0, 70, 30);
+        tdelete.setText("Delete");
+        add(tdelete);
+        tdelete.setBounds(50, 0, 50, 30);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsaveActionPerformed
-    //run through Back Task not in EDT
-        control.save();
-    }//GEN-LAST:event_btsaveActionPerformed
-
-    private void btdeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdeleteActionPerformed
-        control.delete();        // TODO add your handling code here:
-    }//GEN-LAST:event_btdeleteActionPerformed
-
     private void btclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearActionPerformed
-        control.clear();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btclearActionPerformed
 
-    private void btgridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btgridActionPerformed
-        control.gotoList();        // TODO add your handling code here:
-    }//GEN-LAST:event_btgridActionPerformed
-
-    private void btclear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclear1ActionPerformed
-
-    }//GEN-LAST:event_btclear1ActionPerformed
-
-    private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
-            control.printPage();
-    }//GEN-LAST:event_cButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btclear;
-    private javax.swing.JButton btclear1;
-    private javax.swing.JButton btdelete;
-    private javax.swing.JButton btgrid;
-    private javax.swing.JButton btsave;
-    private org.components.controls.CButton cButton1;
+    private org.components.controls.CButton btclear;
+    private org.components.controls.CButton btgotoGrid;
+    private org.components.controls.CButton btsave;
+    private org.components.controls.CButton tclear;
+    private org.components.controls.CButton tdelete;
+    private org.components.controls.CButton tprint;
     // End of variables declaration//GEN-END:variables
 }

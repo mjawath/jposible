@@ -33,20 +33,23 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
     /** Creates new form TabPanelUI */
     public TabPanelUI() {
         initComponents();
-
+//        config();
     }
+    
+    public void config() {
 
-    public void init() {
-
-             Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
-
+        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
             public void eventDispatched(AWTEvent event) {
                 if (((KeyEvent) event).getKeyCode() == KeyEvent.VK_ESCAPE && TabPanelUI.this.isShowing()) {
                     System.out.println("closing");
                 };
             }
         }, AWTEvent.KEY_EVENT_MASK);
+        init();
         events();
+    }
+
+    public void init() {
     }
 
     public void events() {
@@ -81,6 +84,13 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
     
     public void save() {
         
+        
+    }
+    
+    
+    public Object saveX() {
+        
+        return null;
     }
     
     //save should be encapsulated by a method
@@ -116,7 +126,16 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
         
     }
     
+    public void postSave(Object objs){
     
+    }
+
+    public void postUpdate(Object objs){
+    }
+
+    public void postDelete(Object objs){
+    }
+
 
    
     public void setobj(Object obj) {

@@ -33,14 +33,6 @@ public class CommandTask extends SwingWorker<Object, Object>{
        return command.executeTask();
     }
     
-    public Object executeTask(){
-    return null;
-    }
-    
-    public void resultTask(Object obj){
-    
-    }
-    
     @Override
     protected void done() {
         Object obj=null;

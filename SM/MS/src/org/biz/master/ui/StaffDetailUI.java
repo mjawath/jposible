@@ -12,21 +12,24 @@ import org.biz.app.ui.util.UIEty;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.service.master.StaffService;
+import org.components.windows.DetailPanel;
 import org.components.windows.TabPanelUI;
 
  
-public class StaffDetailUI extends TabPanelUI  {
+public class StaffDetailUI extends DetailPanel<Staff>  {
 
     
   private StaffService sService;
   Staff selectedStaff;
  // List<Customer> customers;
   
+  
      @Override
     public void init() {
   
         try {
-           
+    super.init();
+    initComponents();
     sService=new StaffService();
     selectedStaff=new Staff();
     
@@ -78,8 +81,9 @@ public class StaffDetailUI extends TabPanelUI  {
   
   ///////////////////////////////////////////////
     public StaffDetailUI() {
-        initComponents();
+        super();
     }
+    
 ////////////////////////////////
    public Staff uiToEntity(Staff s){
    

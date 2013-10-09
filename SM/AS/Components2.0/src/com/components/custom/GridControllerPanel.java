@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import org.biz.app.ui.util.ReflectionUtility;
+import org.biz.util.ReflectionUtility;
 import org.components.parent.controls.PxTable;
 
 /**

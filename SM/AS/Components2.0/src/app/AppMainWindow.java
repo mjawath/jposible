@@ -1,8 +1,15 @@
 package app;
 
-import app.utils.SystemUtil;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingWorker;
+import org.biz.dao.service.Service;
+import org.biz.util.ReflectionUtility;
 import org.components.util.Sessions;
+import org.components.windows.DetailPanel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -97,6 +104,56 @@ public class AppMainWindow extends org.components.windows.MainWindow {
     public void setjTabbedPane1(JTabbedPane jTabbedPane1) {
         this.jTabbedPane1 = jTabbedPane1;
     }
+    
+    public void addMenu(final String title,final Class panle,final Class serpanle){
+      JMenuItem mi=  new JMenuItem(title);
+      mi.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+           addX(panle,serpanle, title);
+            }
+        });
+      jMenu1.add(mi); 
+    }
+    
+    public void addX(final Class classs, final Class serclasss,final String tt) {
+        SwingWorker nt= new SwingWorker() {
+            
+            @Override
+            protected Object doInBackground() throws Exception {
+         DetailPanel obj2 = (DetailPanel) ReflectionUtility.getDynamicInstance(classs);
+         Service service=(Service) ReflectionUtility.getDynamicInstance(serclasss);
+                obj2.setService(service);
+         return obj2;
+            
+            }
+
+            @Override
+            protected void done() {
+                 DetailPanel obj2=null;
+                try {
+                    obj2 = (DetailPanel)get();
+                    obj2 = (DetailPanel)get();
+                    //add to main frame
+                    JFrame frame=new JFrame(tt);
+                    frame.getContentPane().add(obj2);
+                    frame.setSize(900, 700);
+                    frame.setVisible(true);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            
+            }
+            
+            
+            
+        };
+        nt.execute();
+
+    }
+    
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;

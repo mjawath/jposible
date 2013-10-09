@@ -30,7 +30,7 @@ import javax.swing.event.DocumentListener;
 import org.biz.app.ui.util.BizException;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.ComponentFactory;
-import org.biz.app.ui.util.ReflectionUtility;
+import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
@@ -221,8 +221,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
             }
 
         } catch (Exception e) {
-
-            System.out.println(" --------------   " + e.getMessage());
+            Tracer.printToOut(" --------------   " + e.getMessage());
         }
 
 
@@ -233,7 +232,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         textField.addaction(0, new ActionTask() {
             @Override
             public boolean action() {
-                System.out.println("====----***action task one **----====");
                 popupDisabled= true;
                 getSeletedValue();
                 popupDisabled = false;
@@ -312,7 +310,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
                     }
                 }
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    System.out.println("popup panels related text field selected");
                     if (jpm.isVisible()) {
                         jpm.setVisible(false);
                         e.consume();
@@ -507,14 +504,12 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     
     public void setSelectedText() {
         if (textField instanceof JTextField) {
-            System.out.println("popup desabled");
             //get selected object
             if(selectedObject==null ||getSelectedProperty()==null ){
                 UIEty.objToUi(textField,"");
                 return;
             }
             UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
-            System.out.println("popup desabled");
         }
     }
 
@@ -526,7 +521,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
     public void action() {
 
-        System.out.println("action implemented ......");
     }
 
     public void addaction(ActionTask action) {
