@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractAction;
 import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
@@ -22,6 +23,7 @@ import org.com.print.PrintService;
 import org.components.parent.controls.editors.DoubleCellEditor;
 import org.components.parent.controls.editors.ObjectCellEditor;
 import org.components.parent.controls.editors.TableInteractionListner;
+import org.components.util.ComponentFactory;
 import org.components.windows.DetailPanel;
 
 /**
@@ -31,9 +33,10 @@ import org.components.windows.DetailPanel;
   public class InvoiceUI extends DetailPanel<SalesInvoice> {
 
     
-    List<Item> items;
-    SalesInvoiceService salesService;
+    private List<Item> items;
+     private SalesInvoiceService salesService;
     //finalised swing worker task executer
+//    private int rowCount;
     
     /**
 
@@ -47,20 +50,15 @@ import org.components.windows.DetailPanel;
        
     }
     
+    /*
+     * first overrit the init 
+     * to add init logics
+     */
     public void init(){
         
         initComponents();
         super.init();
-//        cButton1.addActionListener(commandFind);
-        tinv.addKeyListener(new KeyAdapter() {
 
-            @Override
-            public void keyReleased(KeyEvent e) {
-//               commandFind.execute();
-            }
-        
-        });
-        
         tprice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,7 +67,6 @@ import org.components.windows.DetailPanel;
                 focusManager.setTemCom(titem);
             }
         });
-//        items=new ItemService().getDao().getAll();        
         tblInvoiceLine1.init(SalesInvoiceLineItem.class, new Class[]{Item.class,String.class,String.class,String.class},
                 new String[]{"Item","QTY","Amount","Line Totel"});
         tblInvoiceLine1.setPropertiesEL(new String[]{"item","qty","price","lineAmount"});
@@ -114,7 +111,6 @@ import org.components.windows.DetailPanel;
         tblInvoiceLine1.modelToTable(new ArrayList());
         
        
-        controlPanel1.setCrudController(this);
         tblInvoiceLine1.setTableInteractionListner(new TableInteractionListner() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -162,16 +158,13 @@ import org.components.windows.DetailPanel;
             }
             
         });
-        addNewToTable();
+        tblInvoiceLine1.addNewToLast();
         gridControllerPanel1.setTable(tblInvoiceLine1);
         
-        //Focus policy
-        addToFocus(tinv);
-        addToFocus(cButton1);
         tpnlLineDetail.addToFocus(titem);
         tpnlLineDetail.addToFocus(tqty);
         tpnlLineDetail.addToFocus(tprice);
-        this.addToFocus(tpnlLineDetail);
+        addToFocus(tpnlLineDetail);
         addToFocus(tpaid);
 
         tpnlLineDetail.setContainer(this);
@@ -184,15 +177,24 @@ import org.components.windows.DetailPanel;
                 calcualteTotal();
             }
         };
-        tqty.setAction(act);
-        tprice.setAction(act);       
+        tqty.setDocAction(act);
+        tprice.setDocAction(act);       
         
      
         
         setNavForTableEditor(tblInvoiceLine1, tpnlLineDetail);
         
-        tpaid.setAction(act);
+        tpaid.setDocAction(act);
         
+        
+        ComponentFactory.setKeyAction(this, new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Pressed Ctrl , P");
+                //open payment window
+            }
+        }, KeyEvent.VK_P,KeyEvent.CTRL_DOWN_MASK);
       
     }
         
@@ -213,17 +215,12 @@ import org.components.windows.DetailPanel;
     
     public SalesInvoiceLineItem getSalesLine() {
         SalesInvoiceLineItem lineItem=(SalesInvoiceLineItem)tblInvoiceLine1.getSelectedObject();
+        if(lineItem==null)return null;
         lineItem.setItem(titem.getSelectedObject());
         lineItem.setQty(UIEty.tcToDouble(tqty));
         lineItem.setPrice(UIEty.tcToDouble(tprice));
         lineItem.calculateLineItem();
         return lineItem;
-    }
- 
-    private void addNewToTable(){
-        int insertionPoint=tblInvoiceLine1.getRowCount();
-        tblInvoiceLine1.addModelToTable(new SalesInvoiceLineItem());
-        tblInvoiceLine1.changeSelection(insertionPoint);
     }
     
     private void addItemToTable(){ 
@@ -231,24 +228,20 @@ import org.components.windows.DetailPanel;
         SalesInvoiceLineItem lineItem = new SalesInvoiceLineItem();
         lineItem.setItem(titem.getSelectedObject());
         lineItem.setQty(UIEty.tcToDouble(tqty));
-        lineItem.setPrice(UIEty.tcToDouble(tprice));
+        lineItem.setPrice(tprice.getDoubleValue());
         lineItem.calculateLineItem();
         tblInvoiceLine1.addModelToTable(lineItem);
-        addNewToTable();
+//        addNew();
     }
     
-    private void updateRow(SalesInvoiceLineItem lineItem ){        
+    private void updateRow(SalesInvoiceLineItem lineItem ){
+        if(lineItem==null)return;
         lineItem.setItem(titem.getSelectedObject());
         lineItem.setQty(UIEty.tcToDouble(tqty));
         lineItem.setPrice(UIEty.tcToDouble(tprice));
         lineItem.calculateLineItem();
-        tblInvoiceLine1.replaceModel(lineItem);    
-        //get row number 
-        //if its the last row then add new row
-        //
-        int row=tblInvoiceLine1.getSelectedRow();
-        if(row==tblInvoiceLine1.getRowCount()-1)
-        addNewToTable();    
+        tblInvoiceLine1.replaceModelSele(lineItem);    
+     
     }
     
     public void setLineItemDetail(SalesInvoiceLineItem obj){
@@ -270,9 +263,17 @@ import org.components.windows.DetailPanel;
 
     @Override
     public void clear() {
-        tblInvoiceLine1.clear();      
+        tblInvoiceLine1.clear(); 
+        setLineItemDetail(new SalesInvoiceLineItem());
+        tdiscount.clear();
+        tTax.clear();
+        tpaid.clear();
+        tsubTotal.clear();        
+        tbal.clear();
+        tblInvoiceLine1.addNewToLast();        
         super.clear();
     }
+    
     
        @Override
     public void setService(Service service) {
@@ -283,8 +284,13 @@ import org.components.windows.DetailPanel;
 
     @Override
     public void printPage() {
-        PrintService.print();                
+        PrintService.print();
+        //get the printer 
+        // set the print template 
+        // set the settings 
+        //print 
     }
+
 
        
     
@@ -306,7 +312,6 @@ import org.components.windows.DetailPanel;
         tprice = new org.components.controls.CTextField();
         titem = new com.components.custom.TextFieldWithPopUP<Item>();
         tline = new org.components.controls.CLabel();
-        controlPanel1 = new com.components.custom.ControlPanel();
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
         tpaid = new org.components.controls.CTextField();
         tbal = new org.components.controls.CLabel();
@@ -360,6 +365,7 @@ import org.components.windows.DetailPanel;
         add(cLabel3);
         cLabel3.setBounds(520, 320, 80, 20);
 
+        tpnlLineDetail.setBackground(new java.awt.Color(153, 255, 0));
         tpnlLineDetail.setLayout(null);
 
         tqty.setText("Qty");
@@ -380,8 +386,6 @@ import org.components.windows.DetailPanel;
 
         add(tpnlLineDetail);
         tpnlLineDetail.setBounds(50, 50, 650, 50);
-        add(controlPanel1);
-        controlPanel1.setBounds(20, 420, 470, 30);
         add(gridControllerPanel1);
         gridControllerPanel1.setBounds(750, 100, 90, 230);
         add(tpaid);
@@ -432,7 +436,6 @@ import org.components.windows.DetailPanel;
     private org.components.controls.CLabel cLabel3;
     private org.components.controls.CLabel cLabel4;
     private org.components.containers.CPanel cPanel1;
-    private com.components.custom.ControlPanel controlPanel1;
     private com.components.custom.GridControllerPanel gridControllerPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.components.controls.CTextField tTax;
@@ -462,7 +465,7 @@ import org.components.windows.DetailPanel;
         //set id for bus obj
         String uk= service.getUniqueKey();
         si.setId(uk);
-        int x=1000;
+        int x=1000;// resonable number to iterate 
         for (SalesInvoiceLineItem sl : salesInvoiceLineItems) {
             sl.setId(uk+ x++);
         }

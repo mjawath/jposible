@@ -43,28 +43,28 @@ public class ItemList extends ListViewPanel {
 
     @Override
     public void init() {
-    initComponents();
-    super.init();    
+        initComponents();
+        super.init();
     }
     
 
     @Override
     public void setService(Service service) {
         super.setService(service);
-        itemService =(ItemService) service;
+        itemService = (ItemService) service;
         init(tbl);
 //        tbl.setModelClass(Item.class);        
 //        tbl.setPropertiesEL(new String[]{"id","code"});
 //        tbl.setColumnHeader(new String[]{"id","code","Saved","Edited"});
-    tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
-                new String[]{"id", "code", "description", "savedDate","editedDate"});
-    tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate","editedDate"});
-    tbl.setTableInteractionListner(tableInteractionListner);
-    cPaginatedPanel1.init(service,searchListener,tbl);    
-        
+        tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
+                 new String[]{"id", "code", "description", "savedDate", "editedDate"});
+        tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate", "editedDate"});
+        tbl.setTableInteractionListner(tableInteractionListner);
+        cPaginatedPanel1.init(service, searchListener, tbl);
+
     }
-    
-    
+
+
 
     @Override
     public void updateEntityUI() {
@@ -78,11 +78,6 @@ public class ItemList extends ListViewPanel {
         searchPanel = new javax.swing.JPanel();
         tbtn = new org.components.controls.CButton();
         tsearch = new org.components.controls.CTextField();
-        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbl = new org.components.controls.CxTable();
-
-        setLayout(null);
 
         searchPanel.setLayout(null);
 
@@ -102,16 +97,9 @@ public class ItemList extends ListViewPanel {
         });
         searchPanel.add(tsearch);
         tsearch.setBounds(64, 11, 317, 25);
-        searchPanel.add(cPaginatedPanel1);
-        cPaginatedPanel1.setBounds(100, 50, 440, 40);
 
         add(searchPanel);
-        searchPanel.setBounds(0, 0, 808, 90);
-
-        jScrollPane2.setViewportView(tbl);
-
-        add(jScrollPane2);
-        jScrollPane2.setBounds(12, 102, 783, 340);
+        searchPanel.setBounds(0, 0, 808, 50);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnActionPerformed
@@ -129,19 +117,16 @@ public class ItemList extends ListViewPanel {
 //      cPaginatedPanel1.search(qry,"db");  
         
     }//GEN-LAST:event_tbtnActionPerformed
- 
 
     private void tsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tsearchActionPerformed
-            
-       List list= itemService.getDao().getAll();        
-       tbl.setModelCollection(list); 
+
+        List list= itemService.getDao().getAll();
+        tbl.setModelCollection(list);
     }//GEN-LAST:event_tsearchActionPerformed
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel searchPanel;
-    protected org.components.controls.CxTable tbl;
     private org.components.controls.CButton tbtn;
     private org.components.controls.CTextField tsearch;
     // End of variables declaration//GEN-END:variables

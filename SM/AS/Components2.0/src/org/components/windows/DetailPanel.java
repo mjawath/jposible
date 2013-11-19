@@ -52,19 +52,34 @@ public class DetailPanel<T> extends TabPanelUI {
             }
         };
         ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_DOWN);//first component specific key events are handled then event is passed to this
+        ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_ENTER);
+
         //action map ..if component specific events does not call e.consume() on thier level
-        Action downKeyAction = new AbstractAction() {
+        Action upKeyAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(" Detail Top Focus Execution Focus to Previous   ");
                 gotoPreviousComponent();
             }
         };
-        ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
+        ComponentFactory.setKeyAction(this, upKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
         initComponents();
         this.crudcontrolPanel.setCrudController(this);
         focusManager=new FocusManager();
         super.config();
+        
+        
+//        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control I"),"createNewFood");
+//        panel.getActionMap().put("createNewFood", new
+//       NewFoodAction());
+        ComponentFactory.setKeyAction(this, new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("----event estcape");
+            }
+        }, KeyEvent.VK_ESCAPE);
+        
     }
     
     
@@ -150,7 +165,7 @@ public class DetailPanel<T> extends TabPanelUI {
             Object key = ReflectionUtility.getProperty(selectedObject, "id");//0 is the index of the main object , id is id property
 
             if (busObject == null) {
-                Tracer.printToOut("Object id is null");
+                Tracer.printToOut("Detail panel -> SaveX -> Bus Object is null ,Not saved");
                 return null;
             }
             Object obj = service.getDao().find(key);
@@ -256,6 +271,14 @@ public class DetailPanel<T> extends TabPanelUI {
         this.selectedObject = obj;
     }
 
+    @Override
+    public void updateEntityUI() {
+        super.updateEntityUI();
+        focusManager.resetFocus();
+    }
+
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

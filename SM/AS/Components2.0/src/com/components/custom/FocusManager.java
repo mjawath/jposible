@@ -91,4 +91,10 @@ public class FocusManager {
     return curcom;
     }
     
+    public void resetFocus(){
+        if(focus.isEmpty())return;
+       IComponent com= focus.get(0);
+       if(com instanceof Component)((Component)com).requestFocusInWindow();
+    }
+    
 }

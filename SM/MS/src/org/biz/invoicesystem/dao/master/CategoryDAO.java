@@ -15,10 +15,11 @@ import org.biz.invoicesystem.entity.master.Category;
  */
 public class CategoryDAO extends GenericDAO<Category>{
 
-    
     public CategoryDAO() {
-    setCls(Category.class);
+        setCls(Category.class);
+        orderby = "c.editedDate  desc , c.savedDate  desc ";
     }
+
     public void createTestData() {
         
         for(int x=0;x<50;x++){

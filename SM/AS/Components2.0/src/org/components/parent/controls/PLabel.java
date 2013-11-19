@@ -45,7 +45,10 @@ public class PLabel extends JLabel {
         setText(valueOfText);
     }
 
-
+    public void clear(){
+    setText("");
+    setToolTipText(null);
+    } 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

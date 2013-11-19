@@ -103,10 +103,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         try {
 //            itemService =(ItemService)service;
             selectedObject = new Item();
-//            categoryService =new CategoryService();
-//            getClass().getFields()[0].equals(ui);
-//            items = itemService.getDao().getAll();
-//            categorys = categoryService.getDao().getAll();
 
             crudcontrolPanel.setCrudController(this);
             ///init filechooser and set filter
@@ -1073,24 +1069,16 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
     //***************persistence logic*************************//
     public void preSave() {
-//        busObject = getBusObject();
-//        toSave.add(busObject);
     }
 
     @Override
     public void postCreate(Object deleObj) {
 
-//        itemService.getDao().save(selectedObject);
         saveImages(busObject.getCode(), images);
     }
 
     @Override
     public void postUpdate(Object deleObj) {
-
-        //        selectedItem.setId(get.getId());
-//        Date mDate = GenericDAOUtil.currentTime();
-//        selectedObject.setEditedDate(mDate);
-//        itemService.getDao().update(selectedObject);
 
         //put to thread 
         deleteImages(busObject.getCode());
@@ -1163,7 +1151,9 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         item.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, item.getId()));
         item.setModel(UIEty.tcToStr(tmodel));
         item.setType(UIEty.tcToStr(ttype));
-
+        
+        item.setUoms(tblunitprices.getModelCollection());
+//        item.setBarcodes(tblBarcode.getmode);
         return item;
     }
 

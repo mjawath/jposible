@@ -165,7 +165,6 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
 
     public void setService(Service service){
         this.service=service;
-//        init(); 
     }
     
     

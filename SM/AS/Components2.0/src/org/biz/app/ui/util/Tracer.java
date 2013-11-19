@@ -13,6 +13,9 @@ public class Tracer {
     //responsible for printing logs , file , system out
     
     public static void printToOut(String msg){
+        
+        /*TODO should be switchable */
+        /*TODO should be Groupable */
             System.out.println(msg);
     }
 }

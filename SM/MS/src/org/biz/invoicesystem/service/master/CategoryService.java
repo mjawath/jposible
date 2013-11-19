@@ -5,7 +5,7 @@ import org.biz.invoicesystem.dao.master.CategoryDAO;
 
 public class CategoryService extends Service {
 
-    CategoryDAO dao;
+    private CategoryDAO dao;
 
     public CategoryService() {
         dao = new CategoryDAO();

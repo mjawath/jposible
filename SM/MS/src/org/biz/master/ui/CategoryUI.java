@@ -16,8 +16,8 @@ import org.components.windows.DetailPanel;
  */
 public class CategoryUI extends DetailPanel<Category> {
 
-    CategoryService categoryService;
-    Category selected;
+    private CategoryService categoryService;
+    private Category selected;
     /**
      * Creates new form CategoryUI
      */
@@ -27,8 +27,13 @@ public class CategoryUI extends DetailPanel<Category> {
 
     public void init() {
         super.init();
-        initComponents();
-               
+        initComponents();        
+        clear();
+    }
+    
+    public void clear(){
+    tcode.clear();
+    tdesc.clear();
     }
 
     public void setService(Service service) {
@@ -58,12 +63,8 @@ public class CategoryUI extends DetailPanel<Category> {
 
         add(cLabel1);
         cLabel1.setBounds(21, 39, 104, 25);
-
-        tcode.setText("cTextField1");
         add(tcode);
         tcode.setBounds(130, 40, 190, 25);
-
-        tdesc.setText("cTextField1");
         add(tdesc);
         tdesc.setBounds(130, 90, 190, 25);
     }// </editor-fold>//GEN-END:initComponents

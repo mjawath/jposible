@@ -154,4 +154,8 @@ public class InventoryJournalLine  extends BusObj implements Serializable {
     public String toString() {
         return "org.biz.invoicesystem.entity.master.InventoryJournal[id=" + id + "]";
     }
+
+    public void calculateLineItem() {
+//        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

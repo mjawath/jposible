@@ -16,6 +16,7 @@ import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Customer;
+import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.CustomerService;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
@@ -38,13 +39,13 @@ public class CustomerListUi extends ListViewPanel<Customer> {
 
     @Override
     public void init() {
-
-
-            tbl.init(Customer.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class}, new String[]{"id", "code", "companyName", "savedDate", "editedDate"});
-            tbl.setTableInteractionListner(tableInteractionListner);
-            cPaginatedPanel1.init(service, searchListener, tbl);
-
+        super.init();                
+        tbl.init(Customer.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class}, new String[]{"id", "code", "companyName", "savedDate", "editedDate"});
+        tbl.setTableInteractionListner(tableInteractionListner);
+        cPaginatedPanel1.init(service, searchListener, tbl);
     }
+    
+    
     
     
     public CustomerListUi() {
@@ -78,8 +79,6 @@ public class CustomerListUi extends ListViewPanel<Customer> {
 
         jLabel1 = new javax.swing.JLabel();
         tSearch = new org.components.controls.CTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl = new org.components.controls.CxTable();
         cNewCustomer = new org.components.controls.CButton();
         cCustomerHistory = new org.components.controls.CButton();
         cDeleteCustomer = new org.components.controls.CButton();
@@ -87,9 +86,6 @@ public class CustomerListUi extends ListViewPanel<Customer> {
         cClose = new org.components.controls.CButton();
         cBulkSms = new org.components.controls.CButton();
         cCheckBox1 = new org.components.controls.CCheckBox();
-        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
-
-        setLayout(null);
 
         jLabel1.setText("Customer Name Search");
         add(jLabel1);
@@ -102,30 +98,6 @@ public class CustomerListUi extends ListViewPanel<Customer> {
         });
         add(tSearch);
         tSearch.setBounds(140, 10, 470, 25);
-
-        tbl.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Code", "Name", "Telephone", "Mobile", "Due (Rs)", "Selection"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tbl);
-        tbl.getColumnModel().getColumn(1).setMinWidth(150);
-        tbl.getColumnModel().getColumn(1).setPreferredWidth(150);
-        tbl.getColumnModel().getColumn(1).setMaxWidth(150);
-
-        add(jScrollPane1);
-        jScrollPane1.setBounds(10, 75, 760, 330);
 
         cNewCustomer.setText("New ");
         cNewCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -184,8 +156,6 @@ public class CustomerListUi extends ListViewPanel<Customer> {
         cCheckBox1.setText("Remove Selection");
         add(cCheckBox1);
         cCheckBox1.setBounds(650, 410, 120, 23);
-        add(cPaginatedPanel1);
-        cPaginatedPanel1.setBounds(100, 40, 440, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cNewCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNewCustomerActionPerformed
@@ -223,20 +193,22 @@ public class CustomerListUi extends ListViewPanel<Customer> {
     private org.components.controls.CButton cCustomerHistory;
     private org.components.controls.CButton cDeleteCustomer;
     private org.components.controls.CButton cNewCustomer;
-    private org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private org.components.controls.CTextField tSearch;
-    private org.components.controls.CxTable tbl;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void setService(Service service) {
         super.setService(service);
         cService = (CustomerService) service;
-        init();
-        init(tbl);
+        tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
+                 new String[]{"id", "code", "description", "savedDate", "editedDate"});
+        tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate", "editedDate"});
+        tbl.setTableInteractionListner(tableInteractionListner);
+        cPaginatedPanel1.init(service, searchListener, tbl);
+
     }
+    
     private QueryManager searchListener = new QueryManager() {
         @Override
         public String getQuery() {

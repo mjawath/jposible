@@ -79,7 +79,10 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         initComponents();
         id=SystemUtil.getKeyStr();
         addDocumentListener(docx);
+        
     }
+    
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -137,10 +140,21 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     };
     private ActionListener docAction;
     
-    public void setAction(ActionListener action){
+    public void setDocAction(ActionListener action){
         
         docAction =action;
     }
+     
+    public void setEnterAction(){
+    }
+    
+    ActionListener keyAct=new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+       
+        }
+    };
 
     boolean disableDoc=false;
     @Override
@@ -150,5 +164,12 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         disableDoc=false;
     }
     
-    
+    public String getValue(){
+     String x = getText();
+        if (x.isEmpty()) {
+            return null;
+        } else {
+            return x;
+        }
+    }
 }

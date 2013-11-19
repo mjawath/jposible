@@ -10,7 +10,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.biz.app.ui.util.StringUtility;
-import org.components.parent.controls.PxTable;
+import org.biz.dao.service.Service;
+import org.components.controls.CxTable;
 
 /**
  *
@@ -25,8 +26,24 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
         super();
 //        initComponents();
     }
+
+    @Override
+    public void init() {
+        initComponents();
+        super.init();
+        
+    }
+
+    @Override
+    public void setService(Service service) {
+        super.setService(service);
+        init(tbl);
+    }
     
-    public void init(final PxTable tbl){    
+    public void init(final CxTable tbl) {
+        if (tbl == null) {
+            return;
+        }
         tbl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -35,12 +52,15 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
                     if (obj == null) {
                         return;
                     }
-                    String tit=StringUtility.getHead(tabName, "LIST")+"DETAIL";
+                    String tit = StringUtility.getHead(tabName, "LIST") + "DETAIL";
                     DetailPanel dp = (DetailPanel) SystemUtil.getObj(tit);
+                    if (dp == null) {
+                        return;
+                    }
                     dp.setSelectedBusObj(obj);
                     dp.setBusObject(obj);
                     SystemUtil.bringTabToFront(tit);
-                                        
+
                 }
             }
         });
@@ -55,18 +75,31 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
-        );
+        searchPanel = new javax.swing.JPanel();
+        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl = new org.components.controls.CxTable();
+
+        setLayout(null);
+
+        searchPanel.setLayout(null);
+        searchPanel.add(cPaginatedPanel1);
+        cPaginatedPanel1.setBounds(40, 0, 440, 40);
+
+        add(searchPanel);
+        searchPanel.setBounds(10, 70, 440, 30);
+
+        jScrollPane2.setViewportView(tbl);
+
+        add(jScrollPane2);
+        jScrollPane2.setBounds(12, 102, 783, 340);
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    protected org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    protected javax.swing.JPanel searchPanel;
+    protected org.components.controls.CxTable tbl;
     // End of variables declaration//GEN-END:variables
 
     @Override

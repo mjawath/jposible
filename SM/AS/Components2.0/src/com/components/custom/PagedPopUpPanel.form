@@ -20,7 +20,6 @@
               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="510" max="-2" attributes="0"/>
-                  <Component id="cLabel1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="cButton6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="6" pref="6" max="6" attributes="0"/>
@@ -44,8 +43,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="cLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="6" pref="6" max="6" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="cTextField1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
@@ -68,11 +66,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="org.components.controls.CLabel" name="cLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Popo fff"/>
-      </Properties>
-    </Component>
     <Component class="org.components.controls.CTextField" name="cTextField1">
     </Component>
     <Component class="org.components.controls.CButton" name="cButton1">

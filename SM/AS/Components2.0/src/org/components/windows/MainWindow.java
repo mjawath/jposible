@@ -117,9 +117,7 @@ public class MainWindow extends JFrame {
 //        dbsu = new DBServerUtil();
 //        dbsu.init();
 //        dbsu.startServer();
-
-
-        
+        events();
 
 
     }

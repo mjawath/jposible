@@ -10,6 +10,7 @@ import org.biz.dao.service.Service;
 import org.biz.util.ReflectionUtility;
 import org.components.util.Sessions;
 import org.components.windows.DetailPanel;
+import org.components.windows.TabPanelUI;
 
 /*
  * To change this template, choose Tools | Templates
@@ -29,7 +30,7 @@ import org.components.windows.DetailPanel;
 public class AppMainWindow extends org.components.windows.MainWindow {
 
     public AppMainWindow() {
-//        super();
+        super();
         initComponents();
         init();
         System.out.println("--------------------------------");
@@ -74,15 +75,13 @@ public class AppMainWindow extends org.components.windows.MainWindow {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cstattus, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,26 +116,26 @@ public class AppMainWindow extends org.components.windows.MainWindow {
       jMenu1.add(mi); 
     }
     
-    public void addX(final Class classs, final Class serclasss,final String tt) {
-        SwingWorker nt= new SwingWorker() {
-            
+    public void addX(final Class classs, final Class serclasss, final String tt) {
+        final TabPanelUI obj2 = (TabPanelUI) ReflectionUtility.getDynamicInstance(classs);
+        obj2.config();
+        SwingWorker nt = new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
-         DetailPanel obj2 = (DetailPanel) ReflectionUtility.getDynamicInstance(classs);
-         Service service=(Service) ReflectionUtility.getDynamicInstance(serclasss);
-                obj2.setService(service);
-         return obj2;
-            
+                Service service = (Service) ReflectionUtility.getDynamicInstance(serclasss);
+                return service;
             }
 
             @Override
             protected void done() {
-                 DetailPanel obj2=null;
+                Service ser = null;
                 try {
-                    obj2 = (DetailPanel)get();
-                    obj2 = (DetailPanel)get();
+                    ser = (Service) get();
+//                    obj2.config();
+                     obj2.setService(ser);
+
                     //add to main frame
-                    JFrame frame=new JFrame(tt);
+                    JFrame frame = new JFrame(tt);
                     frame.getContentPane().add(obj2);
                     frame.setSize(900, 700);
                     frame.setVisible(true);
@@ -144,16 +143,12 @@ public class AppMainWindow extends org.components.windows.MainWindow {
                 catch (Exception ex) {
                     ex.printStackTrace();
                 }
-            
+
             }
-            
-            
-            
         };
         nt.execute();
 
     }
-    
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;

@@ -4,9 +4,15 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
+import java.util.Date;
+import java.util.List;
+import org.biz.app.ui.util.QueryManager;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Category;
+import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.CategoryService;
+import org.components.controls.CxTable;
+import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
 
 /**
@@ -16,21 +22,65 @@ import org.components.windows.ListViewPanel;
 public class CategoryListUI extends ListViewPanel<Category> {
 
     private CategoryService categoryService;
+    
+    private List<Category> items;
+    private TableInteractionListner tableInteractionListner = new TableInteractionListner(){
+
+        @Override
+        public Object[] getTableData(Object row) {
+            Category item= (Category)row;
+            return new Object[]{item,item.getId(),item.getCode(),item.getDescription(),item.getSavedDate(),item.getEditedDate()};
+        }
+    
+    };
+
     /**
      * Creates new form CategoryListUI
      */
     public CategoryListUI() {
-        initComponents();
+        super();
     }
 
     
     
     @Override
     public void setService(Service service) {
+        
         super.setService(service);
         categoryService=(CategoryService)service;
     }
+
+    @Override
+    public void init() {
+        super.init();
+        initComponents();       
+    }
     
+    @Override
+    public void init(CxTable tbl) {
+        super.init(tbl);
+        tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
+                 new String[]{"id", "code", "description", "savedDate", "editedDate"});
+        tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate", "editedDate"});
+        tbl.setTableInteractionListner(tableInteractionListner);
+         cPaginatedPanel1.init(service, searchListener, tbl);
+
+
+    }
+
+    private QueryManager searchListener = new QueryManager() {
+        @Override
+        public String getQuery() {
+            String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
+            return qry;
+        }
+
+        @Override
+        public Object[] getParams() {
+            return new Object[]{""+ "%"};
+        }
+    };
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import org.biz.app.ui.util.UIEty;
 import org.components.parent.controls.PTextField;
 
 /**
@@ -175,7 +176,19 @@ import org.components.parent.controls.PTextField;
     
     public void clear(){
     this.setText("");
-    this.setToolTipText("");
+    this.setToolTipText(null);
+    }
+    
+    public Number getNumberValue(){
+    return  UIEty.tcToDouble(this);
+    }
+    
+    public void setValue(Object val){
+        setText(val==null?"":val.toString());
+    }
+    
+    public void setValue(String val){
+        setValue(val==null?"":val.toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

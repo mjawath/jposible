@@ -88,7 +88,7 @@ public class PxTable<T> extends JTable implements IComponent {
     }
 
     
-    public void init(Class tableType, Class [] classType, String[] title){
+   public void init(Class tableType, Class [] classType, String[] title){
         modelClass=tableType;
         setColumnTypes(classType, title);
         //Tables first column which holds the model object will be not visible
@@ -264,6 +264,23 @@ public class PxTable<T> extends JTable implements IComponent {
         TableUtil.replaceSelectedModel(this, obj);
     }
 
+    public void replaceModelSele(Object obj) {
+       replaceModel(obj);
+        int row=getSelectedRow();
+        int rowCount = getRowCount()-1;
+        if(row==rowCount)
+        addNewToLast();
+        else selectLast();//move to last row
+       
+    }
+    
+    public void addNewToLast(){
+        int insertionPoint=getRowCount();
+        addModelToTable(ReflectionUtility.getDynamicInstance(modelClass));
+        changeSelection(insertionPoint);
+    }
+
+    
     public void removeSelectedRow() {
         if(modelCollection==null)return;
         int sr = getSelectedRow();
