@@ -1,4 +1,4 @@
-package org.biz.invoicesystem.master.ui;
+package app.utils;
 
 import org.components.util.Sessions;
 import org.components.windows.MainWindow;

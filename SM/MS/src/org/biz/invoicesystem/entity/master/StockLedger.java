@@ -19,7 +19,7 @@ public class StockLedger implements Serializable {
     private String id;
     
     @OneToOne
-    @JoinColumn(referencedColumnName="itemid")        
+    @JoinColumn(referencedColumnName="Item_id")        
     Item item;
    
     String shopName;

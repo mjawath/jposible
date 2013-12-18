@@ -17,13 +17,14 @@ import javax.persistence.Temporal;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.util.ReflectionUtility;
 
 /**
  *
  * @author Admin
  */
 @Entity
-public class InventoryJournal  extends BusObj implements Serializable {
+public class InventoryJournal  extends BusObj  {
 
     public  static final long serialVersionUID = 1L;
     public  static final Byte pos_Invoice =0;
@@ -69,7 +70,11 @@ public class InventoryJournal  extends BusObj implements Serializable {
     if(lines==null){
     createInvJouLines();
     }
+    
     lines.add(ij);
+    }
+    public boolean validateLineItem(){
+    return true;
     }
     
     public Byte getDocumentType() {
@@ -212,6 +217,15 @@ public class InventoryJournal  extends BusObj implements Serializable {
         lines.clear();
         
     }
+
+    @Override
+    public void setDepententEntitiesIDs() {
+        setLineID(lines);
+    }
+    
+    
+    
+    
 }
 /*
 

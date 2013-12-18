@@ -108,9 +108,30 @@ public class GenericDAOUtil<T> {
         return EntityService.getEntityService();
     }
 
-    public void findRefresh(Object c, Object key) {
-        getEm().find(c.getClass(), key);
-        getEm().refresh(c);
+    public static <T> T findRefresh(Class classs, Object key) {
+
+        EntityManager em = null;
+        try {
+            em = createEmNew();
+            return (T)em.find(classs, key);
+//            em.refresh(classs);
+           
+        }
+        catch (Exception e) {
+            em.close();
+        }
+        finally {
+            if (em != null && em.isOpen()) {
+                try {
+                    em.clear();
+                    em.close();
+                }
+                catch (Exception e) {
+                }
+
+            }
+        }
+        return null;
     }
 
     public static <T> T deatach(Object c, Object key) {
@@ -304,6 +325,10 @@ public class GenericDAOUtil<T> {
 
     }
 
+    public static <T> void find(){
+    
+    }
+    
     
     public static <T> void update(T ob) {
         EntityManager em = null;

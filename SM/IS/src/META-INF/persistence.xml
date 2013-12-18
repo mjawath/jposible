@@ -24,7 +24,6 @@
     <class>org.biz.invoicesystem.entity.master.Roles</class>
     <class>org.biz.invoicesystem.entity.master.Shop</class>
     <class>org.biz.invoicesystem.entity.master.Staff</class>
-    <class>org.biz.invoicesystem.entity.master.StockLedger</class>
     <class>org.biz.invoicesystem.entity.master.Supplier</class>
     <class>org.biz.invoicesystem.entity.master.UOM</class>
     <class>org.biz.invoicesystem.entity.master.Variation</class>

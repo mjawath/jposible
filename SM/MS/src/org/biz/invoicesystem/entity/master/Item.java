@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -32,8 +33,23 @@ public class Item extends BusObj{
     @OneToOne
     private Category category;
 
+    
+    
     private String model;
 
+    public Item() {
+        super();
+        setDefaultValues();
+        
+    }
+    
+    public void setDefaultValues(){
+    UOM uom= getDefaultUOM();
+    addUOM(uom);
+    }
+
+    
+    
     public String getManufacturer() {
         return manufacturer;
     }
@@ -166,7 +182,7 @@ public class Item extends BusObj{
 
     public void setDescription(String description) {
         this.description = description;
-    }
+    } 
 
 //   
 //    public Boolean getActive() {
@@ -461,6 +477,26 @@ public class Item extends BusObj{
     public void setDifferent(Integer different) {
         this.different = different;
     }
+    
+    public UOM getPrimaryUOM() {
+        for (UOM uom : getUoms()) {
+            if (uom.getIsPrimary()) {
+                return uom;
+            }
+        }
+        return null;
+    }
+    
+    public static UOM getDefaultUOM(){
+    UOM def=new UOM();
+    def.setId("1");
+    def.setCode("pcs");
+//    def.setSimbol("pcs");
+    def.setMulti(1d);
+    def.setType((byte)(UOM.UOMType.Primary.ordinal()));
+    def.setIsPrimary(true);
+    return def;
+    } 
 
     public void addUOM(UOM uom) {
 
@@ -511,10 +547,10 @@ public class Item extends BusObj{
         for (UOM uom : uoms) {
            //selected uoms x s id should not be equal to 
             //
-            if(uom.getSimbol().equals(x.getSimbol()) && !uom.getId().equals(x.getId())){
+            if(uom.getCode().equals(x.getCode()) && !uom.getId().equals(x.getId())){
             return true;
             }
-            if(x.getId()==null && uom.getSimbol().equals(x.getSimbol())){
+            if(x.getId()==null && uom.getCode().equals(x.getCode())){
             return true;
             }
         }
@@ -525,7 +561,7 @@ public class Item extends BusObj{
         ArrayList<String> al = new ArrayList<String>();
         if (uoms != null) {
             for (UOM uom : uoms) {
-                al.add(uom.getSimbol());
+                al.add(uom.getCode());
             }
         }
         String[] s = new String[al.size()];
@@ -553,5 +589,10 @@ public class Item extends BusObj{
                 return;
             }
         }
+    }
+    
+    public void setDepententEntitiesIDs() {    
+        setLineID(getUoms());
+        //sets the ids to the onetomany, manyto many
     }
 }

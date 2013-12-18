@@ -46,7 +46,7 @@ this.param=obj;
     }
     
     public void actionCall(){
-
+        actionCall(null);
     }
     
     public void actionPerformed(ActionEvent e) {

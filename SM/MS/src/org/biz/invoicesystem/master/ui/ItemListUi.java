@@ -1,5 +1,6 @@
 package org.biz.invoicesystem.master.ui;
 
+import app.utils.SystemStatic;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;

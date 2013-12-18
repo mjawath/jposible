@@ -16,6 +16,8 @@ import com.components.custom.IContainer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import org.components.parent.Documents.DocumentListenerx;
@@ -79,10 +81,19 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         initComponents();
         id=SystemUtil.getKeyStr();
         addDocumentListener(docx);
+        addKeyListener(keyadapter);
         
     }
     
+    KeyAdapter keyadapter=new KeyAdapter() {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+//            if(e.getKeyCode()==KeyEvent.VK_CONTROL)
+//                System.out.println("controll pressed");
+        }
     
+    };
 
     /** This method is called from within the constructor to
      * initialize the form.

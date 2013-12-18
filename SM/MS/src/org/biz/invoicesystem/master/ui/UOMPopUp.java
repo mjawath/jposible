@@ -127,7 +127,7 @@ public class UOMPopUp extends Popdialog {
         TableUtil.cleardata(getTable());
         for (Object ob : items) {
             UOM item=(UOM)ob;
-                    Object[] row = {item.getId(),item.getSimbol()};
+                    Object[] row = {item.getId(),item.getCode()};
             TableUtil.addrow(getTable(), row);
         }
 

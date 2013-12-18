@@ -26,11 +26,31 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
         List<InventoryJournal> list=ExecuteQuery(qry);
         return list;
     }
+    
     public List getForLastMonthsummery(Date date) {
-        String qry="select i ,sum(l.qty)  from InventoryJournal c join c.lines l join l.item i   group by i ";
+        String qry="select i ,sum(l.qty)  "
+        + " from InventoryJournal c join c.lines l join l.item i  "
+                + " group by i ";
+        /*
+         select all line items within the month
+         * create mothly summery object
+         summery of shops ware houses qty
+         * set the warehouse ,item , shop , qty ...etc....
+         * 
+         * 
+         * 
+         * 
+         
+         */
+        String qryx = "select i ,sum(l.qty)  "
+                + " from InventoryJournalLine ijl ,InventoryJournal  c join   join c.lines l join l.item i  "
+                + " group by i ";
+
         List list=ExecuteQuery(qry);
+        
         return list;
     }
+    
     public InventoryJournal refDoc(String refcode,String documentType) {
         String qry="select i   from InventoryJournal c  where c.refCode="+refcode+" and c.documentType="+documentType+" ";
         InventoryJournal ij=ExecuteQuerySR(qry);

@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.biz.dao.service.GenericDAO;
 import org.biz.invoicesystem.entity.master.Item;
-import org.biz.invoicesystem.master.ui.SystemStatic;
+import app.utils.SystemStatic;
 import org.dao.util.JPAUtil;
 
 /**

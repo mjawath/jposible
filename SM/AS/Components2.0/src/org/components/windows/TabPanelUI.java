@@ -126,14 +126,14 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
         
     }
     
-    public void postSave(Object objs){
+    public void onSaveComplete(Object objs){
     
     }
 
     public void postUpdate(Object objs){
     }
 
-    public void postDelete(Object objs){
+    public void onDeleteComplete(Object objs){
     }
 
 

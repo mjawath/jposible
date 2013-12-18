@@ -14,6 +14,7 @@ import org.biz.entity.BusObj;
 @Entity
 public class Warehouse extends BusObj {
     String code;
+    
 //may have many shops relative to this
     public String getCode() {
         return code;

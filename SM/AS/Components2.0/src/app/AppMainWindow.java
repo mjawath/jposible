@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -96,7 +97,7 @@ public class AppMainWindow extends org.components.windows.MainWindow {
 //        showlogin();
     }//GEN-LAST:event_cButton1ActionPerformed
 
-    
+     
     public javax.swing.JTabbedPane getjTabbedPane1() {
         return jTabbedPane1;
     }
@@ -104,20 +105,21 @@ public class AppMainWindow extends org.components.windows.MainWindow {
         this.jTabbedPane1 = jTabbedPane1;
     }
     
-    public void addMenu(final String title,final Class panle,final Class serpanle){
+    public  void addMenu(final String title,final Class panel,final Class serviceClass){
       JMenuItem mi=  new JMenuItem(title);
       mi.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-           addX(panle,serpanle, title);
+           addX(panel,serviceClass, title);
             }
         });
+      mi.setName(title);
       jMenu1.add(mi); 
     }
     
-    public void addX(final Class classs, final Class serclasss, final String tt) {
-        final TabPanelUI obj2 = (TabPanelUI) ReflectionUtility.getDynamicInstance(classs);
+    public static void addX(final Class panel, final Class serclasss, final String tt) {
+        final TabPanelUI obj2 = (TabPanelUI) ReflectionUtility.getDynamicInstance(panel);
         obj2.config();
         SwingWorker nt = new SwingWorker() {
             @Override
@@ -136,6 +138,7 @@ public class AppMainWindow extends org.components.windows.MainWindow {
 
                     //add to main frame
                     JFrame frame = new JFrame(tt);
+                    obj2.setTabName(tt);
                     frame.getContentPane().add(obj2);
                     frame.setSize(900, 700);
                     frame.setVisible(true);
@@ -147,6 +150,20 @@ public class AppMainWindow extends org.components.windows.MainWindow {
             }
         };
         nt.execute();
+        Sessions.addToSession(tt, obj2);
+
+    }
+    
+    public void callMenu(String title) {
+        for (Component com : jMenu1.getMenuComponents()) {
+            if (com instanceof JMenuItem) {
+                JMenuItem mi = (JMenuItem) com;
+                if (title.equals(mi.getName())) {
+                    mi.doClick();
+                    return;
+                }
+            }
+        }
 
     }
  

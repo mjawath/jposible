@@ -13,7 +13,7 @@ public class ItemService extends Service{
     private ItemMasterUI2 itemMasterUI2;
     private ItemList itemList;
     private ItemDAO dao;
-
+ 
     public ItemService() {
         dao=new ItemDAO();
         
@@ -21,7 +21,7 @@ public class ItemService extends Service{
 
     public ItemDAO getDao() {
         return dao;
-    }
+    } 
 
     @Override
     public void initUI() {

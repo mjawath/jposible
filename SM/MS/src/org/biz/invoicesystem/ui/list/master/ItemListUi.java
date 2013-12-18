@@ -10,7 +10,7 @@ import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.Item;
-import org.biz.invoicesystem.master.ui.SystemStatic;
+import app.utils.SystemStatic;
 import org.biz.invoicesystem.master.ui.ItemMasterTab;
 import org.biz.invoicesystem.master.ui.ItemMasterUI2;
 import org.biz.invoicesystem.service.master.ItemService;

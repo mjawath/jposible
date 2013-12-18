@@ -24,12 +24,12 @@ public interface CrudControl {
     
     void printPage();
     
-    void postSave(Object objs);
+    void onSaveComplete(Object objs);
     
     void postUpdate(Object deleObj);
     
-    void postDelete(Object deleObj);
+    void onDeleteComplete(Object deleObj);
     
-//    void postDelete();
+//    void onDeleteComplete();
     
 }

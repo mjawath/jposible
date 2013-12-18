@@ -31,9 +31,7 @@ public class InventoryJournalLine  extends BusObj implements Serializable {
     private Shop shop;
     @OneToOne
     private Warehouse warehouse;
-    private String itemMark;
-
-    
+    private String itemMark;    
     @OneToOne
     private UOM uom;
     private Double price;
@@ -149,6 +147,16 @@ public class InventoryJournalLine  extends BusObj implements Serializable {
         }
         return true;
     }
+    
+       
+    public boolean isValidLine() {
+        
+        if (getItem() == null || getUom() == null || getQty() == null || getQty()==0) {
+            return false;
+        }
+        return true;
+    }
+
 
     @Override
     public String toString() {

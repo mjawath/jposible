@@ -1,5 +1,6 @@
 package org.biz.invoicesystem.master.ui;
 
+import app.utils.SystemStatic;
 import java.awt.AWTKeyStroke;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -44,7 +45,7 @@ import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.TabPanelUI;
 import org.biz.invoicesystem.ui.list.master.ItemListUi;
 
-public class ItemMasterUI2 extends TabPanelUI {
+public class ItemMasterUI2 extends TabPanelUI { 
 
     List<Item> items;
     List<Category> categorys;
@@ -217,7 +218,7 @@ public class ItemMasterUI2 extends TabPanelUI {
                             UOM uom = new UOM();
                             Object id = TableUtil.getSelectedValue(tblunitprices, 0);
                             uom.setId(id != null ? id.toString() : null);
-                            uom.setSimbol(tunitsymbot.getText());
+                            uom.setCode(tunitsymbot.getText());
 
                             //check this with id and symbol if same skip
                             //if diff do not accept
@@ -307,7 +308,7 @@ public class ItemMasterUI2 extends TabPanelUI {
                             //set uom to UI
                             UIEty.objToUi(tunitprice, uom.getSalesPrice());
                             UIEty.objToUi(tContainsQty, uom.getMulti());
-                            UIEty.objToUi(tunitsymbot, uom.getSimbol());
+                            UIEty.objToUi(tunitsymbot, uom.getCode());
                             return;
 
                         }
@@ -383,8 +384,8 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         TableUtil.cleardata(tblunitprices);
         for (UOM um : selectedItem.getUoms()) {
-            String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
-            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
+            String u = um.getGuom() != null ? um.getGuom().getCode() : null;
+            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getCode(), um.getSalesPrice(),
                         um.getMulti(), u});
         }
         TableUtil.addnewrow(tblunitprices);

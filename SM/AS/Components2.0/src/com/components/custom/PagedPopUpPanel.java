@@ -211,7 +211,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
                 throw new BizException("not specified column ");
             }
 
-            if (!jpm.isVisible()) {
+            if (!jpm.isVisible() && textField.hasFocus()) {
                 jpm.setFocusable(false);
                 this.setSize(600, 300);
                 jpm.setSize(200, 200);
@@ -220,9 +220,9 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
                 jpm.show(textField, 30, 30);
                 jpm.setFocusable(true);
             }
-
+ 
         } catch (Exception e) {
-            Tracer.printToOut(" --------------   " + e.getMessage());
+             Tracer.printToOut(" --------------   " + e.getMessage());
         }
 
 
@@ -232,11 +232,8 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         actionTasks = new ArrayList<ActionTask>();
         textField.addaction(0, new ActionTask() {
             @Override
-            public boolean action() {
-                popupDisabled= true;
-                getSeletedValue();
-                popupDisabled = false;
-                return super.action();
+            public void actionCall(Object obj) {
+                selectItem();
             }
         });
         jpm = new CPopupMenu();
@@ -260,8 +257,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                getSeletedValue();
-
+                selectItem();
 //                 editor.getComponent().postActionEvent();
             }
         });
@@ -363,10 +359,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     public void search(String qry) {
     }
 
-    public void getSeletedValue() {
-        selectItem();
-    }
-
+    
     public void setModel() {
 
         TableUtil.createTableModel(cxTable1, new String[]{"111", "22", "33,44", "55", "666", "777"}, new Class[]{
@@ -475,17 +468,20 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void selectItem() {
+        popupDisabled = true;
+
         Object ob = TableUtil.getSelectedModelsValueAt(cxTable1, getSelectedColumn());
         if (ob != null) {
             //find object from list and select
             if (textField instanceof JTextField) {
                 selectedObject = (T) ob;
-                //get selected object
-                UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
+                setSelectedText();
                 action();
             }
         }
         closePopup();
+        popupDisabled = false;
+
     }
     
     public void setSelectedText() {
@@ -500,9 +496,10 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     }
 
     public void closePopup() {
-        if (jpm.isVisible()) {
-            jpm.setVisible(false);
-        }
+//        if (jpm.isVisible()) {
+        setSelectedText();
+        jpm.setVisible(false);
+//        }
     }
 
     public void action() {

@@ -18,6 +18,7 @@ public class ControlPanel extends javax.swing.JPanel {
         initComponents();
         btsave.addActionListener(comSave);
         tdelete.addActionListener(comDelete);
+        tprint.addActionListener(comPrint);
     }
     
     private CrudControl control;
@@ -30,7 +31,7 @@ public class ControlPanel extends javax.swing.JPanel {
 
         @Override
         public void resultTask(Object objs) {
-            control.postSave(objs);
+            control.onSaveComplete(objs);
         }  
     };
     
@@ -44,10 +45,20 @@ public class ControlPanel extends javax.swing.JPanel {
 
         @Override
         public void resultTask(Object objs) {
-            control.postDelete(objs);
+            control.onDeleteComplete(objs);
         }  
     };
     
+    
+    private ButtonAction comPrint=new ButtonAction(){
+
+        @Override
+        public Object executeTask(Object objs) {
+             control.printPage();
+            return super.executeTask(objs);
+        }
+
+    };
     
 
     public void setCrudController(CrudControl control) {
@@ -73,6 +84,11 @@ public class ControlPanel extends javax.swing.JPanel {
         btsave.setBounds(0, 0, 50, 30);
 
         tclear.setText("Clear");
+        tclear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tclearActionPerformed(evt);
+            }
+        });
         add(tclear);
         tclear.setBounds(100, 0, 50, 30);
 
@@ -86,6 +102,11 @@ public class ControlPanel extends javax.swing.JPanel {
         btclear.setBounds(150, 0, 50, 30);
 
         tprint.setText("Print");
+        tprint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tprintActionPerformed(evt);
+            }
+        });
         add(tprint);
         tprint.setBounds(200, 0, 50, 30);
 
@@ -99,8 +120,16 @@ public class ControlPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btclearActionPerformed
+
+    private void tclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tclearActionPerformed
+        control.clear();// TODO add your handling code here:
+    }//GEN-LAST:event_tclearActionPerformed
+
+    private void tprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tprintActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tprintActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton btclear;

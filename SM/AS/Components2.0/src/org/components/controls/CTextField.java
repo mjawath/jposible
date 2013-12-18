@@ -17,6 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import org.biz.app.ui.util.UIEty;
@@ -26,8 +27,7 @@ import org.components.parent.controls.PTextField;
  *
  * @author nano
  */
-  public class CTextField extends PTextField {
-
+public class CTextField extends PTextField {
 
     JComponent nextFocusableComponent;
     JComponent previouseFocusedComponent;
@@ -44,7 +44,6 @@ import org.components.parent.controls.PTextField;
         switch (id) {
             case FocusEvent.FOCUS_GAINED:
                 SwingUtilities.invokeLater(new Runnable() {
-
                     @Override
                     public void run() {
                         selectAll();
@@ -55,7 +54,6 @@ import org.components.parent.controls.PTextField;
                 final CTextField org = (CTextField) e.getComponent();
 
                 SwingUtilities.invokeLater(new Runnable() {
-
                     @Override
                     public void run() {
                         org.setCaretPosition(org.getText().length());
@@ -69,7 +67,9 @@ import org.components.parent.controls.PTextField;
 
     }
 
-    /** Creates new form BeanForm */
+    /**
+     * Creates new form BeanForm
+     */
     public CTextField() {
         initComponents();
         init();
@@ -82,7 +82,6 @@ import org.components.parent.controls.PTextField;
         actionTasks = new ArrayList<ActionTask>();
 
         addKeyListener(new KeyAdapter() {
-
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     //in the level of listner we add only one global 
@@ -98,23 +97,32 @@ import org.components.parent.controls.PTextField;
                     if (actionTasks != null || !actionTasks.isEmpty()) {
 
                         for (ActionTask actionTask : actionTasks) {
-                            actionTask.action();
+                            actionTask.actionCall(e);
                         }
                     }
-                    if(getContainer()!=null)
-                    getContainer().gotoNextComponent(CTextField.this);
+                    if (getContainer() != null) {
+                        getContainer().gotoNextComponent(CTextField.this);
+                    }
                 }
             }
         });
 
+        setInputVerifier(new InputVerifier() {
+
+            @Override
+            public boolean verify(JComponent input) {
+                return true;
+            }
+        });
 
     }
 
     public void addaction(int idx, ActionTask action) {
-        int c= actionTasks.size();
-        
-        if(c-1 < idx){
-        actionTasks.add(action);return;
+        int c = actionTasks.size();
+
+        if (c - 1 < idx) {
+            actionTasks.add(action);
+            return;
         }
         actionTasks.add(idx, action);
     }
@@ -126,71 +134,70 @@ import org.components.parent.controls.PTextField;
         setPreferredSize(new java.awt.Dimension(6, 25));
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setActionTask(ActionTask actionTask) {
-        addActionListener(actionTask);
-    }
+      public void setActionTask(ActionTask actionTask) {
+          addActionListener(actionTask);
+      }
 
-    @Override
-    protected void processKeyEvent(KeyEvent e) {
+      @Override
+      protected void processKeyEvent(KeyEvent e) {
 //        if(e.getKeyCode()==KeyEvent.VK_ENTER){
 //            postActionEvent();
 //            return;
 //        }
-        super.processKeyEvent(e);
-    }
+          super.processKeyEvent(e);
+      }
 
-    public void setInputVerifier(CInputVerifier inputVerifier) {
+      public void setInputVerifier(CInputVerifier inputVerifier) {
 //        addActionListener(inputVerifier);
-        super.setInputVerifier(inputVerifier);
-    }
-    
-    public  double getDoubleValue0() {
+          super.setInputVerifier(inputVerifier);
+      }
 
-        try {
-            String s = null;
-            if (this.getText() != null) {
-                s = this.getText().trim();
+      public double getDoubleValue0() {
 
-            }
-            return Double.parseDouble(s);
-        } catch (Exception e) {
-            return 0.0;
-        }
+          try {
+              String s = null;
+              if (this.getText() != null) {
+                  s = this.getText().trim();
 
-    }
-    
-    public  Double getDoubleValue() {
+              }
+              return Double.parseDouble(s);
+          } catch (Exception e) {
+              return 0.0;
+          }
 
-        try {
-            String s = null;
-            if (this.getText() != null) {
-                s = this.getText().trim();
+      }
 
-            }
-            return Double.parseDouble(s);
-        } catch (Exception e) {
-            return null;
-        }
+      public Double getDoubleValue() {
 
-    }
-    
-    public void clear(){
-    this.setText("");
-    this.setToolTipText(null);
-    }
-    
-    public Number getNumberValue(){
-    return  UIEty.tcToDouble(this);
-    }
-    
-    public void setValue(Object val){
-        setText(val==null?"":val.toString());
-    }
-    
-    public void setValue(String val){
-        setValue(val==null?"":val.toString());
-    }
+          try {
+              String s = null;
+              if (this.getText() != null) {
+                  s = this.getText().trim();
 
+              }
+              return Double.parseDouble(s);
+          } catch (Exception e) {
+              return null;
+          }
+
+      }
+
+      public void clear() {
+          this.setText("");
+          this.setToolTipText(null);
+      }
+
+      public Number getNumberValue() {
+          return UIEty.tcToDouble(this);
+      }
+
+      public void setValue(Object val) {
+          setText(val == null ? "" : val.toString());
+      }
+
+      public void setValue(String val) {
+          setText(val == null ? "" : val.toString());
+      }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

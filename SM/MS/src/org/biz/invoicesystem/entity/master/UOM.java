@@ -21,10 +21,11 @@ import org.biz.entity.BusObj;
 public class UOM extends BusObj {
 
     private static final long serialVersionUID = 1L;
+    private String code;
     private String simbol;
 //    @Enumerated(EnumType.ORDINAL)
     private Byte type;// this can be primary ,carton, wholsale ..others
-    private Boolean isPrimary;
+    private boolean isPrimary;
 
     public enum UOMType {
 
@@ -61,7 +62,7 @@ public class UOM extends BusObj {
         }
     }
 
-    public Boolean getIsPrimary() {
+    public boolean getIsPrimary() {
         return isPrimary;
     }
 
@@ -88,6 +89,14 @@ public class UOM extends BusObj {
 
     public void setSalesPrice(Double salesPrice) {
         this.salesPrice = salesPrice;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public static UOM find(String code, List<UOM> lst) {
@@ -145,14 +154,7 @@ public class UOM extends BusObj {
         this.multi = multi;
     }
 
-    public String getSimbol() {
-        return simbol;
-    }
-
-    public void setSimbol(String simbol) {
-        this.simbol = simbol;
-    }
-
+    
     public static void setUOMType(JComboBox cmb) {
         DefaultComboBoxModel cmbmo = new DefaultComboBoxModel();
 
@@ -212,5 +214,11 @@ public class UOM extends BusObj {
     @Override
     public String toString() {
         return "org.biz.invoicesystem.entity.master.UOM[id=" + id + "]";
+
     }
+public void setDefaultUnit(){
+    setCode("pcs");
+    isPrimary=true;
+    multi=1d;
+}
 }

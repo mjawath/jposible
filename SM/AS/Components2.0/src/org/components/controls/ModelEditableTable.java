@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.EventObject;
 import javax.swing.AbstractAction;
 import javax.swing.Action;

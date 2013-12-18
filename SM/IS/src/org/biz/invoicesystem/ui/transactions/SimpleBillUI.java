@@ -32,7 +32,7 @@ public class SimpleBillUI extends DetailPanel<SalesInvoice> {
          if(column==1 ||column==2   ){
              SalesInvoice si = getBusObject();
              ((SalesInvoiceLineItem) cellObj).calculateLineItem();
-             tblInviceLine.replaceModel(cellObj);
+             tblInviceLine.replaceSelectedModel(cellObj);
              //update invoice ui
              si.setTotal();
          }   

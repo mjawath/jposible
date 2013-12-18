@@ -144,7 +144,7 @@ import org.components.windows.DetailPanel;
                  */
                 SalesInvoice si = getBusObject();
                 ((SalesInvoiceLineItem) cel).calculateLineItem();
-                tblInvoiceLine1.replaceModel(cel);
+                tblInvoiceLine1.replaceSelectedModel(cel);
                 //set total to ui
                 si.setTotal();
                 UIEty.objToUi(tsubTotal, si.getTotal());
@@ -204,7 +204,7 @@ import org.components.windows.DetailPanel;
          SalesInvoiceLineItem sil = getSalesLine();
          sil.calculateLineItem();
          UIEty.objToUi(tline, sil.getLineAmount());
-         tblInvoiceLine1.replaceModel(sil);
+         tblInvoiceLine1.replaceSelectedModel(sil);
          SalesInvoice si=getBusObject();
          si.setTotal();
          UIEty.objToUi(tbal, si.calculateBalance());
@@ -240,7 +240,7 @@ import org.components.windows.DetailPanel;
         lineItem.setQty(UIEty.tcToDouble(tqty));
         lineItem.setPrice(UIEty.tcToDouble(tprice));
         lineItem.calculateLineItem();
-        tblInvoiceLine1.replaceModelSele(lineItem);    
+        tblInvoiceLine1.replaceModelAndSelectLastRow(lineItem);    
      
     }
     

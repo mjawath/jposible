@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.biz.app.ui.util.StringUtility;
 import org.dao.util.JPAUtil;
 import org.eclipse.persistence.queries.ScrollableCursor;
 //http://code.google.com/p/krank/wiki/UsingDAO
@@ -21,7 +22,8 @@ public class GenericDAO<T> {
     private EntityManager em;
     String classname;
     Class<T> cls;
-    protected String orderby = "";
+    protected String orderby  ="c.editedDate  desc , c.savedDate  desc ";
+   ;
     protected Cache cache;
     int noofrows = 100;
 
@@ -69,9 +71,7 @@ public class GenericDAO<T> {
     }
 
     public T find(Object key) {
-        if(key==null)return null;
-        return (T) getEm().find(getCls(), key);
-
+        return GenericDAOUtil.findRefresh(cls, key);
     }
 
     public T getWhere(String property, Object key) {
@@ -227,8 +227,6 @@ public class GenericDAO<T> {
 //            return lst;
 //        }
         Query qu = GenericDAOUtil.getQuery(sq);
-
-
         int fr = pageNo == 0 ? 0 : pageNo * noofrows;
         qu.setFirstResult(fr);//firstresult
         qu.setMaxResults(noofrows); //max result = noofrows+ 0
@@ -236,7 +234,7 @@ public class GenericDAO<T> {
     }
     
     public List pagedData(String qry , int pageNo,Object ...param) {
-        String sq = createWhere(qry);
+        String sq = createWhere(qry);//TODO -take out the create where statement
         Query qu = GenericDAOUtil.getQuery(sq,param);
         int fr = pageNo == 0 ? 0 : pageNo * noofrows;
         qu.setFirstResult(fr);//firstresult
@@ -361,12 +359,13 @@ public class GenericDAO<T> {
     }
     
     public String createCount(String whr,Object ...param) {
-        return createCount() + " where  "+ whr;
+        return createCount() + (StringUtility.isEmptyString(whr)?" ":" where  " + whr +" ");
     }
 
     public String createWhere(String whr) {
+        
 
-        return createSelect() + " where  " + whr +" "+ GenericDAOUtil.getOrderBy(orderby);
+        return createSelect() + (StringUtility.isEmptyString(whr)?" ":" where  " + whr +" ")+ GenericDAOUtil.getOrderBy(orderby);
     }
     /*
      ///////////////

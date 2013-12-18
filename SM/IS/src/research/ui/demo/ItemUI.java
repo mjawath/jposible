@@ -30,12 +30,8 @@ public class ItemUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dropDownWithButton1 = new com.components.custom.DropDownWithButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-        getContentPane().add(dropDownWithButton1);
-        dropDownWithButton1.setBounds(330, 180, 0, 0);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -74,6 +70,5 @@ public class ItemUI extends javax.swing.JFrame {
             System.out.println("--------------------"+al.size());            
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.components.custom.DropDownWithButton dropDownWithButton1;
     // End of variables declaration//GEN-END:variables
 }

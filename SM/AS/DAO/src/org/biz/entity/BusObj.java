@@ -3,6 +3,7 @@ package org.biz.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,5 +58,18 @@ public class BusObj implements Serializable {
 
     public void setSavedDate(Date saveddate) {
         this.savedDate = saveddate;
+    }
+    
+    public void setDepententEntitiesIDs(){
+    //sets the ids to the onetomany, manyto many
+        
+        
+    }
+    
+    public void  setLineID(List< ? extends BusObj> obj){
+        int x=100;
+        for (BusObj busObj : obj) {
+            busObj.setId(getId()+ x++);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package org.biz.master.ui;
 
+import app.utils.SystemStatic;
 import com.components.custom.PopupListner;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -12,7 +13,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +28,7 @@ import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
-import org.biz.dao.service.GenericDAOUtil;
+import org.biz.app.ui.util.Validator;
 import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.SupplierDAO;
@@ -57,9 +57,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private ItemListUi listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
     private JFileChooser chooser;
-    List<File> images = new ArrayList<File>();  
+    List<File> images = new ArrayList<File>();
     TableInteractionListner tblInterUnit;
-    
 
     public ItemMasterUI2() {
 //        initComponents();//pp
@@ -72,10 +71,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         //c.category , c.unitOne , c.unitTwo c.location      
         List<Object[]> lst = itemService.getDao().loadComboItems();
 
-        Set<String> catz = new TreeSet<String>();
-        Set<String> un1z = new TreeSet<String>();
-        Set<String> un2z = new TreeSet<String>();
-        Set<String> locz = new TreeSet<String>();
+        Set<String> catz = new TreeSet();
+        Set<String> un1z = new TreeSet();
+        Set<String> un2z = new TreeSet();
+        Set<String> locz = new TreeSet();
 
         for (Object[] ss : lst) {
             String category = (String) ss[0];
@@ -92,14 +91,12 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         return new Object[]{catz, un1z, un2z, locz};
     }
 
-    
-    
     public void init() {
-     
-                initComponents();
-            super.init();
-               
-    
+
+        initComponents();
+        super.init();
+
+
         try {
 //            itemService =(ItemService)service;
             selectedObject = new Item();
@@ -139,32 +136,30 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 //            tunittype.setModel(new DefaultComboBoxModel(new String[]{"3","4"}));
             events();
             ////////////////////////////////////////
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 //        crudcontrolPanel.set
-        tblunitprices.setPropertiesEL(new String[]{"simbol", "salesPrice","type", "multi"});
-        tblunitprices.setColumnHeader(new String[]{"Simbol", "SalesPrice","Type" ,"Multi"});
+        tblunitprices.setPropertiesEL(new String[]{"simbol", "salesPrice", "type", "multi"});
+        tblunitprices.setColumnHeader(new String[]{"Simbol", "SalesPrice", "Type", "Multi"});
 
 
-        tItemCategory.setObjectToTable(categorys);        
+        tItemCategory.setObjectToTable(categorys);
         tItemCategory.setPropertiesEL(new String[]{"id", "code", "description"});
         tItemCategory.setTitle(new String[]{"id", "Code", "Descrption"});
         tItemCategory.setSelectedProperty("code");
 //        tItemCategory.getPagedPopUpPanel().setCommand(command);
         tItemCategory.getPagedPopUpPanel().setPoplistener(new PopupListner() {
-            
             @Override
             public List searchItem(Object searchQry) {
-                
+
                 return itemService.categoryServise().getDao().getAll();
             }
 
             @Override
             public Object[] getTableData(Object obj) {
-                Category cat=(Category)obj;
-                return new Object[]{cat,cat.getId(),cat.getCode()};
+                Category cat = (Category) obj;
+                return new Object[]{cat, cat.getId(), cat.getCode()};
             }
         });
 
@@ -174,18 +169,16 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cPanel6.addToFocus(tunitprice);
         cPanel6.addToFocus(tunittype);
         cPanel6.addToFocus(tContainsQty);
-        tblInterUnit=new TableInteractionListner(){
-
+        tblInterUnit = new TableInteractionListner() {
             @Override
             public Object[] getTableData(Object row) {
-                UOM sil=(UOM)row;
-                return new Object[]{sil,sil.getSimbol(),sil.getSalesPrice(),sil.getType(),sil.getMulti()
-                };
+                UOM sil = (UOM) row;
+                return new Object[]{sil, sil.getCode(), sil.getSalesPrice(), sil.getType(), sil.getMulti()
+                        };
             }
-        
         };
         tblunitprices.setTableInteractionListner(tblInterUnit);
-        
+
     }
 
     ////////////////////////////
@@ -209,8 +202,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                             }
                             tItemDescription.requestFocus();
 
-                        }
-                        catch (Exception exx) {
+                        } catch (Exception exx) {
                             exx.printStackTrace();
                             tItemcode.requestFocus();
                         }
@@ -235,56 +227,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                 public void keyTyped(KeyEvent e) {
                     try {
                         if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-                            /**
-                             *
-                             * get the line validate object add to table adjust
-                             * selection
-                             */
-                            //get selected row id
-                            //find selected row in the uoms
-                            // add new or replace current one
-                            //update table
-                            UOM uom = new UOM();
-                            UOM object = (UOM) TableUtil.getSelectedTableObject(tblunitprices);
-                            if (object != null) {
-                                uom = object;
-                            }
-                            uom.setSimbol(tunitsymbot.getText());
 
-                            //check this with id and symbol if same skip
-                            //if diff do not accept
-
-                            int ty = tunittype.getSelectedIndex();
-                            uom.setType((byte) ty);
-
-                            uom.setSalesPrice(tunitprice.getDoubleValue());
-                            uom.setMulti(tContainsQty.getDoubleValue0());
-                            Item item = getBusObject();
-                            //prime  unit
-                            //logic changes type is defined 
-                            if (item.checkUOMExist(uom)) {
-                                MessageBoxes.wrnmsg(ItemMasterUI2.this, "unit already exists ", "duplicate uom");
-                                return;
-                            }
-                            
-                            
-                            item.addUOMorUpdate(uom);//should change to keep list of uoms
-                            //we can skip current primary uom setting becas we r using only one primary key
-                            // we cannnot give only primary key
-                            // 
-                            //set it when we save data ..
-                            if (object == null) {
-                                tblunitprices.addModelToTable(uom);
-                            }
-                            else {
-                                tblunitprices.replaceModel(uom);
-                            }
-                            cleatUOM();
-                            tunitsymbot.requestFocus();
-
+                            addUOM();
                         }
-                    }
-                    catch (Exception exx) {
+                    } catch (Exception exx) {
                         exx.printStackTrace();
                     }
                 }
@@ -305,8 +251,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
                             addToBarcode();
                         }
-                    }
-                    catch (Exception eee) {
+                    } catch (Exception eee) {
                         eee.printStackTrace();
                     }
 
@@ -340,21 +285,23 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                     }
                     //get selected uom from list
                     UOM uom = TableUtil.getSelectedTableObject(tblunitprices);
-                    if(uom==null)return;//set uom to UI
+                    if (uom == null) {
+                        return;//set uom to UI
+                    }
                     UIEty.objToUi(tunitprice, uom.getSalesPrice());
                     UIEty.objToUi(tContainsQty, uom.getMulti());
-                    UIEty.objToUi(tunitsymbot, uom.getSimbol());
-                    
+                    UIEty.objToUi(tunitsymbot, uom.getCode());
+
                 }
             });
 
             tadd.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) {   
+                public void actionPerformed(ActionEvent e) {
                     addUnitToTable();
                 }
             });
-            
+
             addToFocus(tItemcode);
             addToFocus(tItemDescription);
             addToFocus(tSupplierItem);
@@ -363,54 +310,12 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             addToFocus(tItemCategory);
             addToFocus(tItemCostPrice);
             addToFocus(tItemCostPrice);
-            
 
-        }
-        catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-
-    private void deleteUnitRow() {
-        //should check for primary keys deletion !!!!!
-
-//        Object ob = TableUtil.getSelectedValue(tblunitprices, 0);
-//        if (ob != null) {
-//            for (Iterator<UOM> it = selectedObject.getUoms().iterator(); it.hasNext();) {
-//                if (ob.equals(it.next().getId())) {
-//                    it.remove();
-//                    addUnitToTable(selectedObject);
-//                    break;
-//                }
-//            }
-//            //update uom table
-//        }
-        //
-        tblunitprices.removeSelectedRow();
-        cleatUOM();
-    }
-
-    
-    private void addUnitToTable(){
-        //get selected uom from list
-        UOM uom = TableUtil.getSelectedTableObject(tblunitprices);
-        if (uom == null) {
-            return;
-        }
-        //set uom to UI
-        UIEty.objToUi(tunitprice, uom.getSalesPrice());
-        UIEty.objToUi(tContainsQty, uom.getMulti());
-        UIEty.objToUi(tunitsymbot, uom.getSimbol());
-        //set combo 
-
-    }
-    
-    private void addUnitToTable(Item item) {
-//            String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
-//            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
-//                        um.getMulti(), u});
-        tblunitprices.modelToTable(item.getUoms());
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,9 +326,9 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         TableUtil.cleardata(tblunitprices);
         for (UOM um : selectedObject.getUoms()) {
-            String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
-            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
-                                                         um.getMulti(), u});
+            String u = um.getGuom() != null ? um.getGuom().getCode() : null;
+            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getCode(), um.getSalesPrice(),
+                        um.getMulti(), u});
         }
         TableUtil.addnewrow(tblunitprices);
 
@@ -616,9 +521,9 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cPanel6.add(cButton2);
         cButton2.setBounds(440, 50, 70, 19);
 
-        cLabel2.setText("Symbol");
+        cLabel2.setText("Code/Symbol");
         cPanel6.add(cLabel2);
-        cLabel2.setBounds(30, 0, 60, 20);
+        cLabel2.setBounds(20, 0, 100, 20);
 
         tunittype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -644,15 +549,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         jScrollPane2.setBounds(0, 50, 440, 120);
 
         tadd.setText("Add");
-        tadd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                taddActionPerformed(evt);
-            }
-        });
         cPanel6.add(tadd);
         tadd.setBounds(440, 20, 70, 19);
 
-        cLabel10.setText("Multiply * primUnit");
+        cLabel10.setText("Multiply X primUnit");
         cPanel6.add(cLabel10);
         cLabel10.setBounds(320, 0, 130, 20);
 
@@ -879,13 +779,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void cleatUOM() {
-        tunitprice.clear();
-        tunitsymbot.clear();
-        tContainsQty.clear();
-        tblunitprices.clearSelection();
-    }
-
     public Item uiToEty(Item i) throws Exception {
         try {
             i.setId(EntityService.getEntityService().getKey(""));
@@ -915,8 +808,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             i.setType(UIEty.tcToStr(ttype));
 
             i.setCategory(null);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
@@ -927,8 +819,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void callListTab() {
         try {
             getMastertab().getItemTabPane().setSelectedIndex(getMastertab().getItemTabPane().indexOfTab(ItemMasterTab.ListUiTabName));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -949,8 +840,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -971,8 +861,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -994,18 +883,11 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return lstFBarcodes;
-    }
-
-    public List<UOM> tableToUoms(JTable tbl) {
-        List<UOM> uoms = new ArrayList<UOM>();
-        return uoms;
-
     }
 
     public void itemVariation2Ui(List<ItemVariation> lstOfVariation) {
@@ -1020,8 +902,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1040,8 +921,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -1060,8 +940,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -1072,7 +951,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     }
 
     @Override
-    public void postCreate(Object deleObj) {
+    public void postCreate(ArrayList tosave, ArrayList toupdate, ArrayList todelete) {
 
         saveImages(busObject.getCode(), images);
     }
@@ -1093,7 +972,135 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             tItemcode.requestFocus();
             return false;
         }
+        cleanUOMs();
+
         return super.isValideEntity();
+    }
+
+    private void deleteUnitRow() {
+        //should check for primary keys deletion !!!!!
+
+//        Object ob = TableUtil.getSelectedValue(tblunitprices, 0);
+//        if (ob != null) {
+//            for (Iterator<UOM> it = selectedObject.getUoms().iterator(); it.hasNext();) {
+//                if (ob.equals(it.next().getId())) {
+//                    it.remove();
+//                    addUnitToTable(selectedObject);
+//                    break;
+//                }
+//            }
+//            //update uom table
+//        }
+        //
+        tblunitprices.removeSelectedRow();
+        clearUOM();
+    }
+
+    private void addUnitToTable() {
+        //get selected uom from list
+        UOM uom = TableUtil.getSelectedTableObject(tblunitprices);
+        if (uom == null) {
+            return;
+        }
+        //set uom to UI
+        UIEty.objToUi(tunitprice, uom.getSalesPrice());
+        UIEty.objToUi(tContainsQty, uom.getMulti());
+        UIEty.objToUi(tunitsymbot, uom.getCode());
+        //set combo 
+
+    }
+
+    private UOM createUOM() {
+        UOM uom = new UOM();
+        UOM object = (UOM) TableUtil.getSelectedTableObject(tblunitprices);
+        if (object != null) {
+            uom = object;
+        }
+        uom.setCode(tunitsymbot.getText());
+        int ty = tunittype.getSelectedIndex();
+        uom.setType((byte) ty);
+        uom.setSalesPrice(tunitprice.getDoubleValue());
+        uom.setMulti(tContainsQty.getDoubleValue());
+        return uom;
+    }
+
+    private void addUnitToTable(Item item) {
+//            String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
+//            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
+//                        um.getMulti(), u});
+        tblunitprices.modelToTable(item.getUoms());
+    }
+
+    private void addDefaultUOM() {
+        UOM uom = new UOM();
+        uom.setDefaultUnit();
+        tblunitprices.addModelToTable(uom);
+    }
+
+    public List<UOM> tableToUoms(JTable tbl) {
+        List<UOM> uoms = new ArrayList<UOM>();
+        return uoms;
+
+    }
+
+    private void clearUOM() {
+        tunitprice.clear();
+        tunitsymbot.clear();
+        tContainsQty.clear();
+        tblunitprices.clearSelection();
+    }
+
+    private void cleanUOMs() {
+        //for each table uoms
+        //check code ,duplicate , primary duplicate , multi 
+
+        List<UOM> uoms = tblunitprices.getModelCollection();
+        for (Iterator<UOM> it = uoms.iterator(); it.hasNext();) {
+            UOM uom = it.next();
+            if (!isValidUOM(uom)) {
+                it.remove();
+            }
+        }
+
+    }
+
+    private boolean isValidUOM(UOM uom) {
+
+        return (Validator.isEmptyOrNull(uom.getCode())
+                || !Validator.isNumberGreaterOrEqual(uom.getMulti(), 0));
+    }
+
+    private void addUOM() {
+        /**
+         *
+         * get the line validate object add to table adjust selection
+         */
+        //get selected row id
+        //find selected row in the uoms
+        // add new or replace current one
+        //update table
+        UOM uom = createUOM();
+        Item item = getBusObject();
+        //prime  unit
+        //logic changes type is defined 
+        if (item.checkUOMExist(uom)) {
+            MessageBoxes.wrnmsg(ItemMasterUI2.this, "unit already exists ", "duplicate uom");
+            return;
+        }
+
+
+        item.addUOMorUpdate(uom);//should change to keep list of uoms
+        //we can skip current primary uom setting becas we r using only one primary key
+        // we cannnot give only primary key
+        // 
+        //set it when we save data ..
+        if (tblunitprices.getSelectedObject() == null) {
+            tblunitprices.addModelToTable(uom);
+        } else {
+            tblunitprices.replaceSelectedModel(uom);
+        }
+        clearUOM();
+        tunitsymbot.requestFocus();
     }
 
     public void delete() {
@@ -1125,7 +1132,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
     @Override
     public Item getBusObject() {
-        Item item = new Item();
+        if (selectedObject == null) {
+            selectedObject = new Item();
+        }
+        Item item = selectedObject;
 //        item.setId(EntityService.getEntityService().getKey(""));
         item.setCode(UIEty.tcToStr(tItemcode));
         item.setDescription(UIEty.tcToStr(tItemDescription));
@@ -1151,7 +1161,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         item.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, item.getId()));
         item.setModel(UIEty.tcToStr(tmodel));
         item.setType(UIEty.tcToStr(ttype));
-        
+
         item.setUoms(tblunitprices.getModelCollection());
 //        item.setBarcodes(tblBarcode.getmode);
         return item;
@@ -1190,7 +1200,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void setService(Service service) {
         super.setService(service);
         itemService = (ItemService) service;
-        
+
 //        commandGUI.invoke();
     }
 
@@ -1200,7 +1210,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         //start gui data loader task
         //load gui data on edt       
     }
-    
     Command commandGUI = new Command() {
         @Override
         public Object executeTask() {
@@ -1231,8 +1240,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
             }
             // this.images.clear();            
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -1254,8 +1262,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                 }
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1303,8 +1310,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                 }
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1316,8 +1322,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             i.setId(itemid);
             itemService.getDao().update(i);
             b = true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
 
             b = false;
@@ -1409,8 +1414,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 //   p.show(this,10, 100);
 //   p.setVisible(true);
 //          
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
 
@@ -1429,10 +1433,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private void tunittypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tunittypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tunittypeActionPerformed
-
-    private void taddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_taddActionPerformed
 
     public JPopupMenu viewLargeImg(JLabel lbl, File image) {
         //  System.out.println("viewlargeImg Methd image name is "+image.getAbsolutePath());
@@ -1455,8 +1455,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             p.setVisible(true);
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return p;
@@ -1465,12 +1464,11 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     static Image iconToImage(Icon icon) {
         if (icon instanceof ImageIcon) {
             return ((ImageIcon) icon).getImage();
-        }
-        else {
+        } else {
             int w = icon.getIconWidth();
             int h = icon.getIconHeight();
             GraphicsEnvironment ge =
-                                GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice gd = ge.getDefaultScreenDevice();
             GraphicsConfiguration gc = gd.getDefaultConfiguration();
             //      BufferedImage image = gc.createCompatibleImage(w, h);
@@ -1583,8 +1581,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -1688,7 +1685,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
  *
  * //enhancements
  *
- * using the number for the data ca n simplyfy the dataentry
+ * using the number for the data entry will simplyfy the dataentry
  * 
  *
  *

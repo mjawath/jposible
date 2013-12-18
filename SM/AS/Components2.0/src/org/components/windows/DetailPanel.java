@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import org.biz.app.ui.util.MessageBoxes;
 import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
@@ -38,13 +39,12 @@ public class DetailPanel<T> extends TabPanelUI {
      */
     public DetailPanel() {
         super();
-          
+
     }
 
     @Override
     public void config() {
-        Action topKeyAction=new AbstractAction() {
-
+        Action topKeyAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Top Focus Execution Focus to Next");
@@ -65,25 +65,22 @@ public class DetailPanel<T> extends TabPanelUI {
         ComponentFactory.setKeyAction(this, upKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
         initComponents();
         this.crudcontrolPanel.setCrudController(this);
-        focusManager=new FocusManager();
+        focusManager = new FocusManager();
         super.config();
-        
-        
+
+
 //        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control I"),"createNewFood");
 //        panel.getActionMap().put("createNewFood", new
 //       NewFoodAction());
         ComponentFactory.setKeyAction(this, new AbstractAction() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("----event estcape");
             }
         }, KeyEvent.VK_ESCAPE);
-        
+
     }
-    
-    
-    
+
     public void gotoNextComponent() {
         focusManager.gotoNextComponent();
 
@@ -93,50 +90,50 @@ public class DetailPanel<T> extends TabPanelUI {
         focusManager.gotoPreviousComponent();
     }
 
-    
-    public void setNavForTableEditor(final PxTable tbl,CPanel pnl ){
-    
-       Action downKeyAction = new AbstractAction() {
+    public void setNavForTableEditor(final PxTable tbl, CPanel pnl) {
+
+        Action downKeyAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    tbl.selectNextRow();
-                
+                tbl.selectNextRow();
+
             }
         };
         ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_PAGE_DOWN);//first component specific key events are handled then event is passed to this
-        
+
         Action upKeyAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    tbl.selectPreRow();
-                
+                tbl.selectPreRow();
+
             }
         };
         ComponentFactory.setKeyAction(this, upKeyAction, KeyEvent.VK_PAGE_UP);//first component specific key events are handled then event is passed to this
 
     }
 
-    public void addToFocus(List<IComponent> coms){
+    public void addToFocus(List<IComponent> coms) {
         for (IComponent e : coms) {
             addToFocus(e);
 //            focusManager.addToFocus(e);
         }
     }
-    
-   public void addToFocus(CPanel cp) {
-       List<IComponent> coms= cp.getFocus();
-       if(coms.size()==0)return;
-        
-       addToFocus(coms);
-       
-   }
-   
-   public void addToFocus(IComponent cp) {
-       focusManager.addToFocus(cp);      
-       cp.setContainer(this);
-   }
-    
-    
+
+    public void addToFocus(CPanel cp) {
+        List<IComponent> coms = cp.getFocus();
+        if (coms.size() == 0) {
+            return;
+        }
+
+        addToFocus(coms);
+
+    }
+
+    public void addToFocus(IComponent cp) {
+        focusManager.addToFocus(cp);
+        cp.setContainer(this);
+    }
+
     public void etyToUI(T obj) {
     }
 
@@ -146,18 +143,18 @@ public class DetailPanel<T> extends TabPanelUI {
 
     @Override
     public Object saveX() {
-    ArrayList result=new ArrayList();
-    ArrayList toSave=new ArrayList();
-    ArrayList toDelete=new ArrayList();
-    ArrayList toUpdate=new ArrayList();
-   
+        ArrayList result = new ArrayList();
+        ArrayList toSave = new ArrayList();
+        ArrayList toDelete = new ArrayList();
+        ArrayList toUpdate = new ArrayList();
+
         busObject = getBusObject();
         if (service != null) {
             if (!isValideEntity()) {
                 return null;
             }
             preSave();
-            
+
 //            if (toSave.isEmpty()) {
 //                Tracer.printToOut("no object found to Save");
 //                return;
@@ -169,71 +166,108 @@ public class DetailPanel<T> extends TabPanelUI {
                 return null;
             }
             Object obj = service.getDao().find(key);
-            Date cDate = GenericDAOUtil.currentTime();
-            Date mDate = GenericDAOUtil.currentTime();
-            if (obj == null ) {                
-                ReflectionUtility.setProperty(busObject,"id",EntityService.getKey(""));
-                ReflectionUtility.setProperty(busObject, "savedDate", cDate);
-                toSave.add(busObject);    
+
+            if (obj == null) {
+                //should retrieve new id and set to new objects
                 
+                toSave.add(busObject);
+                preCreate(toSave, toUpdate, toDelete);
+                auditPersistenceData(toSave);
+                auditUpdatedData(toUpdate, key,GenericDAOUtil.currentTime());
                 Tracer.printToOut(" Object  is not found  So creation will be called");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                
-                postCreate(result);
+
+                postCreate(toSave, toUpdate, toDelete);
             }
             else {
-                ReflectionUtility.setProperty(busObject, "id", key);
-                ReflectionUtility.setProperty(busObject,"editedDate",mDate);
-                ReflectionUtility.setProperty(busObject, "savedDate", ((BusObj)obj).getSavedDate());
-
+                ((BusObj) busObject).setId(key.toString());
                 toUpdate.add(busObject);
+                preUpdate(toSave, toUpdate, toDelete);
+                auditPersistenceData(toSave);
+                auditUpdatedData(toUpdate, key,((BusObj)obj).getSavedDate());
+
                 Tracer.printToOut("Updation is called  Object  is  found");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                postUpdate(result);
+                postUpdate(toSave, toUpdate, toDelete);
             }
-             }
+        }
         result.add(toSave);
         result.add(toUpdate);
         result.add(toDelete);
         Tracer.printToOut("Detail panel Save is successfully performed , result is returned, method is called using BT");
         return result;
     }
-    
-    
-    @Override
-    public void delete() {
-        if (service != null) {
 
-            T exist = (T) service.getDao().find(((BusObj) selectedObject).getId());
-            if (exist != null) {
+    private void auditPersistenceData(ArrayList<BusObj> objs) {
 
-                String[] ObjButtons = {"Yes", "No"};
-                int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?", "Item Form", -1, 2, null, ObjButtons, ObjButtons[1]);
-
-                if (PromptResult == 0) {
-                    service.getDao().delete(exist);
-                    postDelete(exist);
-                    clear();
-                }
-            }
-            else {
-//                MessageBoxes.errormsg(null, "No Item Found.", getTabName());
-                return;
-
-            }
-
+        Date cDate = GenericDAOUtil.currentTime();
+        
+        for (BusObj bus : objs) {            
+            bus.setId( EntityService.getKey(""));
+            bus.setSavedDate(cDate);
+            bus.setDepententEntitiesIDs();
+                
         }
     }
 
-    public void postDelete(Object deleObj) {
+    private void auditUpdatedData(ArrayList<BusObj> objs, Object key,Date startDate) {
+
+
+        Date mDate = GenericDAOUtil.currentTime();
+        for (BusObj bus : objs) {
+            bus.setSavedDate(startDate);
+            bus.setEditedDate(mDate);
+            bus.setDepententEntitiesIDs();
+        }
     }
 
-    public void postCreate(Object deleObj) {
+    public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {
+    }
+
+    @Override
+    public void delete() {
+        if (service == null) {
+            return;
+        }
+        ArrayList result = new ArrayList();
+        ArrayList toSave = new ArrayList();
+        ArrayList toDelete = new ArrayList();
+        ArrayList toUpdate = new ArrayList();
+        if (selectedObject == null) {
+            MessageBoxes.infomsg(this, "Please select an item to delete ", "Nothing  to delete ");
+            return;
+        }
+        T exist = (T) service.getDao().find(((BusObj) selectedObject).getId());
+        if (exist == null) {
+            return;
+        }
+        String[] ObjButtons = {"Yes", "No"};
+        int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?",
+                "Delete Record", -1, 2, null, ObjButtons, ObjButtons[1]);
+
+        if (PromptResult == 0) {
+            preDelete(toSave, toUpdate, toDelete);
+            service.getDao().delete(exist);
+            postDelete(toSave, toUpdate, toDelete);
+            clear();
+        }
+
+    }
+
+    public void preDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+    }
+
+    public void postDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+    }
+
+    public void postCreate(ArrayList tosave, ArrayList toupdate, ArrayList todelete) {
         System.out.println("-------+++++++++");
     }
 
-    public void postUpdate(Object deleObj) {
-        System.out.println("---%%%%%%%%%%%----+++++++++");
+    private void preUpdate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+    }
+
+    public void postUpdate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
     }
 
     public boolean isValideEntity() {
@@ -243,24 +277,26 @@ public class DetailPanel<T> extends TabPanelUI {
         return true;
     }
 
-    public void postSave(Object objs) {
-        ArrayList result=(ArrayList)objs;
-        if(result==null)return;
-//        postSave();
+    public void onSaveComplete(Object objs) {
+        ArrayList result = (ArrayList) objs;
+        if (result == null) {
+            return;
+        }
+//        onSaveComplete();
 //        toSave.clear();
 //        toUpdate.clear();
 //        toDelete.clear();
         result.clear();
         clear();
         selectedObject = null;
-        busObject=null;
+        busObject = null;
 
     }
 
     public void preSave() {
     }
-    
-    public T getBusObject(){
+
+    public T getBusObject() {
         return null;
     }
 
@@ -271,14 +307,17 @@ public class DetailPanel<T> extends TabPanelUI {
         this.selectedObject = obj;
     }
 
+    public void clear() {
+        selectedObject = null;
+        super.clear();
+    }
+
     @Override
     public void updateEntityUI() {
         super.updateEntityUI();
         focusManager.resetFocus();
     }
 
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

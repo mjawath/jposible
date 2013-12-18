@@ -16,6 +16,7 @@ import java.awt.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -25,8 +26,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
+import org.biz.app.ui.util.MessageBoxes;
 import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
+import org.biz.entity.BusObj;
 import org.components.parent.controls.editors.CustomRenderer;
 import org.components.parent.controls.editors.TableInteractionListner;
 
@@ -77,8 +80,8 @@ public class PxTable<T> extends JTable implements IComponent {
                 }
                 int row = getSelectedRow();
                 Object obj = getSelectedObject();
-                if(tableInteractionListner==null)return;
-                tableInteractionListner.selectionChanged(obj);
+//                if(tableInteractionListner==null)return;
+//                tableInteractionListner.selectionChanged(obj);
             }
         });
         this.setDefaultRenderer(String.class, new CustomRenderer());
@@ -180,14 +183,13 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     public List<T> getModelCollection() {
-        //should get the collection from the tables 
-        
-        return modelCollection;
+        //should get the collection from the tables         
+        return new ArrayList(modelCollection);
     }
 
     public void setModelCollection(List<T> modelCollection) {        
         clear();
-        this.modelCollection=new ArrayList();
+        this.modelCollection=modelCollection;
         //for each item set values to table model
         if (modelCollection == null) {
             return;
@@ -260,12 +262,15 @@ public class PxTable<T> extends JTable implements IComponent {
 
     }
 
-    public void replaceModel(Object obj) {
+    public void replaceSelectedModel(Object obj) {
         TableUtil.replaceSelectedModel(this, obj);
     }
 
-    public void replaceModelSele(Object obj) {
-       replaceModel(obj);
+    public void replaceModelAndSelectLastRow(Object obj) {
+       replaceSelectedModel(obj);
+       
+        int x = modelCollection.indexOf(getSelectedObject());
+        modelCollection.set(x, obj);
         int row=getSelectedRow();
         int rowCount = getRowCount()-1;
         if(row==rowCount)
@@ -274,23 +279,61 @@ public class PxTable<T> extends JTable implements IComponent {
        
     }
     
+    /**
+     * if row is not selected adds new model otherwise update the selected row
+     * object
+     */
+    public void addNewOrModifySelectedRow(Object obj) {
+        Object lit = getSelectedObject();
+        if (lit == null) {
+            addModelToTable(obj);
+            addNewToLast();
+        } else {
+            //pid of seleced 
+            Object key=ReflectionUtility.getProperty(lit, "id");
+            if(key==null){
+                MessageBoxes.errormsg(this, "No key set for Selected Row of table in "
+                    + "PXTABLE > addNewOrModifySelectedRow", "Error"); 
+            return;
+            }
+            ReflectionUtility.setProperty(obj, "id", key);
+            replaceModelAndSelectLastRow(obj);            
+        }
+    }
+    
+    public void x(Object objx) {
+//        int x=0;
+//        for (Object obj : modelCollection) {
+//            if (objx.equals(((BusObj) obj).getId())) {
+//            
+//                break;
+//            }
+//            x++;
+//        }
+        int x=modelCollection.indexOf(getSelectedObject());
+        modelCollection.set(x, objx);
+    }
+    
+    
     public void addNewToLast(){
         int insertionPoint=getRowCount();
         addModelToTable(ReflectionUtility.getDynamicInstance(modelClass));
         changeSelection(insertionPoint);
     }
 
-    
-    public void removeSelectedRow() {
-        if(modelCollection==null)return;
+        public void removeSelectedRow() {
+        if (modelCollection == null) {
+            return;
+        }
         int sr = getSelectedRow();
         if (sr < 0) {
             return;
         }
         Object sele = this.getSelectedObject();
         Iterator it = modelCollection.iterator();
+
+        Object obj1 = ReflectionUtility.getValue(sele, "id");
         for (; it.hasNext();) {
-            Object obj1 = ReflectionUtility.getValue(sele, "id");
             Object obj2 = ReflectionUtility.getValue(it.next(), "id");
             if (obj1 != null && obj1.equals(obj2)) {
                 it.remove();
@@ -298,7 +341,7 @@ public class PxTable<T> extends JTable implements IComponent {
                 return;
             }
         }/*row remove logic*/
-        TableUtil.removerow(this, sr);
+//        TableUtil.removerow(this, sr);
 
     }
     
@@ -347,10 +390,21 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     public void changeSelection(int rowIndex) {
-        if(rowIndex>=getRowCount())return;
         changeSelection(rowIndex,0,true , false);        
         changeSelection(rowIndex,getColumnCount()-1,false,true);
+    }
+
+    @Override
+    public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
+//        if (tableInteractionListner == null) return;
+        
+        if (tableInteractionListner != null && !tableInteractionListner.onBeforeRowSelectionChange()) {
+        return;
+        }
+        super.changeSelection(rowIndex, columnIndex, toggle, extend);
+//                if(rowIndex>=getRowCount())return;
         if(tableInteractionListner!=null)tableInteractionListner.selectionChanged(getSelectedObject());
+
     }
     
     public void selectNextRow() {

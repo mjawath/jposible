@@ -17,7 +17,7 @@ import org.biz.invoicesystem.entity.inventory.StockModel;
  *
  * @author mjawath
  */
-public class InventoryJournalService extends Service {
+ public class InventoryJournalService extends Service {
     InventoryJournalDAO dao;
     List<InventoryJournal>  ijs;
 
@@ -43,6 +43,10 @@ public class InventoryJournalService extends Service {
         }
     
         return null;
+    }
+    public List getInventorySummeryForMonth(){
+    
+        return dao.getForLastMonthsummery(null);        
     }
     
 

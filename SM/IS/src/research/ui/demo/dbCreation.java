@@ -13,10 +13,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.util.EntityService;
-import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.*;
-import org.biz.invoicesystem.entity.transactions.SalesInvoice;
-import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
+import org.dao.util.JPAUtil;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 /**
@@ -51,10 +49,9 @@ public class dbCreation {
 //                System.out.println(x);
 //            }
 //        }
-//        dbCreation db=new dbCreation();
-//        db.
-//        createDataBase();
-//       createmster();
+        dbCreation db = new dbCreation();
+        db.createDataBase();
+        db.createmster();
 //           List lsts = new ArrayList();
 
 //            new dbCreation().createCategory();
@@ -63,45 +60,116 @@ public class dbCreation {
 //        SalesInvoice inv=new SalesInvoice();
 //        inv.setId("677fdfd7");
 //        new SalesInvoiceService().getDao().save(inv);
-        
-        ItemDAO idao =new ItemDAO();
-        idao.setCls(Item.class);
-        System.out.println("***********"+
-        idao.pagedData(" c.code like ?1  ", 0,new Object[]{"%k"}));
+
+//        ItemDAO idao =new ItemDAO();
+//        idao.setCls(Item.class);
+//        System.out.println("***********"+
+//        idao.pagedData(" c.code like ?1  ", 0,new Object[]{"%k"}));
     }
 
-    public  void createmster() {
+    public void createDataBase() {
+        //before call this method should not initialis the emf any where perticularly in static initialisers!!!
+//        JPAUtil.createEMFWithCustomProperties();
 
+        Map props = new HashMap();
+//         props.put("eclipselink.jdbc.user","");
+//         props.put("eclipselink.jdbc.password", "");\
+        props.put(PersistenceUnitProperties.APP_LOCATION, "c:\\ddl\\");
+//        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
+        props.put("eclipselink.ddl-generation", "drop-and-create-tables");
+        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
+        props.put("eclipselink.logging.level", "FINE");
+//        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
+//        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
+        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
+//        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
+        props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("InvoicingSystemPU", props);
+
+        List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
+        System.out.println(s);
+        
+    }
+
+    
+    public void createmster() {
+        System.out.println("Creating master data");
+
+        createShops();
+        createWarehouses();
+        createCategory();
+        createItem();
+        createStaff();
+        createSuppliers();
+    }
+
+
+    public void createShops() {
         List lsts = new ArrayList();
-
-
+        Date date = new Date();
         Shop shz = new Shop();
         shz.setId("123");
         shz.setCode("12n3");
         lsts.add(shz);
+        System.out.println("Created shop ");
 
-        for (int i = 0; i < 1500; i++) {
+
+
+        for (int i = 0; i < 10; i++) {
 
             Shop shx = new Shop();
             shx.setId(EntityService.getKeyStr());
             shx.setCode(EntityService.getKeyStr());
-
+            shx.setSavedDate(date);
+            shx.setEditedDate(date);
             lsts.add(shx);
         }
-        new GenericDAO<Customer>().saveList(lsts);
+        System.out.println("Created shop List");
 
 
-        List lst = new ArrayList();
+        new GenericDAO<Shop>().saveList(lsts);
+
+    }
+
+    public void createItem() {
+
+
+        List lst22 = new ArrayList();
         for (int i = 0; i < 1500; i++) {
-            Supplier cus = new Supplier();
+            Item cus = new Item();
             cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
-            cus.setName(EntityService.getKeyStr());
-            cus.setSavedDate(new Date(System.currentTimeMillis()+i));
-            cus.setEditedDate(new Date(System.currentTimeMillis()+i));
-            lst.add(cus);
+
+            cus.setDescription(EntityService.getKeyStr());
+            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
+            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
+            lst22.add(cus);
+            UOM uom = cus.getPrimaryUOM();
+            uom.setId(cus.getId() + "prim");
+            cus.addUOM(uom);
         }
-        new GenericDAO<Customer>().saveList(lst);
+        new GenericDAO<Item>().saveList(lst22);
+        System.out.println("Created Item List");
+
+    }
+
+    public void createWarehouses() {
+        List lstw = new ArrayList();
+        for (int i = 0; i < 40; i++) {
+            Warehouse cus = new Warehouse();
+            cus.setId(EntityService.getKeyStr());
+            cus.setCode(EntityService.getKeyStr());
+            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
+            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
+            lstw.add(cus);
+        }
+        new GenericDAO<Warehouse>().saveList(lstw);
+
+
+    }
+
+    public void createCustomers() {
         List lstx = new ArrayList();
         for (int i = 0; i < 1500; i++) {
             Customer cus = new Customer();
@@ -113,17 +181,12 @@ public class dbCreation {
             lstx.add(cus);
         }
         new GenericDAO<Customer>().saveList(lstx);
-        List lst22 = new ArrayList();
-        for (int i = 0; i < 1500; i++) {
-            Item cus = new Item();
-            cus.setId(EntityService.getKeyStr());
-            cus.setCode(EntityService.getKeyStr());
-            cus.setDescription(EntityService.getKeyStr());
-            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
-            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
-            lst22.add(cus);
-        }
-        new GenericDAO<Item>().saveList(lst22);
+        System.out.println("Created Customer List");
+
+    }
+
+    public void createStaff() {
+
         List lst2 = new ArrayList();
         for (int i = 0; i < 1500; i++) {
             Staff cus = new Staff();
@@ -135,49 +198,31 @@ public class dbCreation {
             lst2.add(cus);
         }
         new GenericDAO<Staff>().saveList(lst2);
-        
-       List lstw = new ArrayList();
+
+    }
+
+    public void createSuppliers() {
+        List lst = new ArrayList();
         for (int i = 0; i < 1500; i++) {
-            Warehouse cus = new Warehouse();
+            Supplier cus = new Supplier();
             cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
+            cus.setName(EntityService.getKeyStr());
             cus.setSavedDate(new Date(System.currentTimeMillis() + i));
             cus.setEditedDate(new Date(System.currentTimeMillis() + i));
-            lstw.add(cus);
+            lst.add(cus);
         }
-        new GenericDAO<Warehouse>().saveList(lstw);
+        new GenericDAO<Supplier>().saveList(lst);
+
+        System.out.println("Created supplier List");
 
     }
 
-    public  void createDataBase() {
-        //before call this method should not initialis the emf any where perticularly in static initialisers!!!
-//        JPAUtil.createEMFWithCustomProperties();
 
-        Map props = new HashMap();
-//         props.put("eclipselink.jdbc.user","");
-//         props.put("eclipselink.jdbc.password", "");\
-        props.put(PersistenceUnitProperties.APP_LOCATION, "c:\\ddl\\");
-//        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
-        props.put("eclipselink.ddl-generation", "drop-and-create-tables");
-        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
-//        props.put("eclipselink.logging.level", "FINE");
-//        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
-//        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
-        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
-//        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
-        props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("InvoicingSystemPU", props);
-
-       
-     List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
-
-    }
-    
-    public void createCategory(){
-        GenericDAO gd=new GenericDAO<Category>();
+    public void createCategory() {
+        GenericDAO gd = new GenericDAO<Category>();
 //        gd.deleteAll(Category.class);
-        System.out.println("ready for category");  
+        System.out.println("ready for category");
         List lsts = new ArrayList();
 
         for (int i = 0; i < 1500; i++) {

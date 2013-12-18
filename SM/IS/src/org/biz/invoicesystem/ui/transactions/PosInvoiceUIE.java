@@ -137,7 +137,7 @@ public class PosInvoiceUIE extends TabPanelUI {
 
     private void etyToRow(SalesInvoiceLineItem line) {
 
-        tblInvoice.replaceModel(line);
+        tblInvoice.replaceSelectedModel(line);
     }
 
     public SalesInvoiceLineItem getSelectedLine() {
