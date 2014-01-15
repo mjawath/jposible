@@ -10,6 +10,7 @@ import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlContext;
 import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.jexl2.MapContext;
+import org.biz.erp.inventory.dao.InventoryJournalDAO;
 import org.biz.erp.inventory.ui.BarCodeCreatorUI;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Item;
@@ -22,6 +23,16 @@ import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 public class TestMain {
 
     public static void main(String[] args) {
+    getsum();
+    }
+    public static void getsum(){
+        InventoryJournalDAO dao=new InventoryJournalDAO();
+        
+        System.out.println("test dao "+dao.getSummery("123", "123"));
+    
+    }
+
+    public static void mxin(String[] args) {
 
         JexlEngine jexl = new JexlEngine();
 

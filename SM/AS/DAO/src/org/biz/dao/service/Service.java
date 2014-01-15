@@ -78,7 +78,15 @@ public class Service {
         
          getDao().getNextPage(qryname);
     }
-        
+    
+    public Object findByID(String id ){
+        return dao.find(id);
+    }
+    
+    public Object findByCode(String code ){
+        return dao.getByCode(code);
+    }
+    
     public String getUniqueKey(){
             return EntityService.getKey("Test");
     }
@@ -94,4 +102,15 @@ public class Service {
     public int getNoOfRows(){
     return getDao().getNoOfRows();
     }
+    
+    public Object getByCode(String qry){
+        return getDao().getByCodex(qry);
+    }
+    
+    
+    public List getByCodeLike(String qry){
+        return getDao().getByCodeLike(qry);
+    }
+    
+    
 }

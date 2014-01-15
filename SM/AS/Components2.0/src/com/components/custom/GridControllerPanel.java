@@ -38,13 +38,14 @@ public class GridControllerPanel extends javax.swing.JPanel {
             }
         });
        tadd.setText("Add");
-       tremove.setAction(new AbstractAction() {
+       tremove.setAction(new AbstractAction("Remove") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeAction();
             }
         });
+       tremove.setText("Remove");
         tcopy.setAction(new AbstractAction("Copy") {
 
             @Override

@@ -4,7 +4,6 @@
  */
 package org.biz.invoicesystem.entity.inventory;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +16,6 @@ import javax.persistence.Temporal;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.entity.master.Shop;
-import org.biz.util.ReflectionUtility;
 
 /**
  *
@@ -29,8 +27,8 @@ public class InventoryJournal  extends BusObj  {
     public  static final long serialVersionUID = 1L;
     public  static final Byte pos_Invoice =0;
     public  static final Byte sales_Invoice = 1;
-    public  static final Byte Item_In = 1;
-    public  static final Byte Item_Out = 0;
+    public  static final Byte Item_In = 0;
+    public  static final Byte Item_Out = 1;
 
     private String code;
     private Byte documentType;//invoice //transferorder//begbalance//adjestments
@@ -181,7 +179,25 @@ public class InventoryJournal  extends BusObj  {
     public void setRefCode(String refCode) {
         this.refCode = refCode;
     }
+    
+    public void setTransactionOutType(){
+        for (InventoryJournalLine in : lines) {
+            if(in!=null && in.getQty()!=null){
+                in.setQty(in.getQty()<=0?in.getQty():-in.getQty());
+            }
+        }
+        inOrOut=Item_Out;
+    }
 
+    public void setTransactionLinePlus(){
+        for (InventoryJournalLine in : lines) {
+            if (in != null && in.getQty()!=null && in.getQty() <= 0) {
+                in.setQty(-in.getQty());
+            }
+        }
+
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

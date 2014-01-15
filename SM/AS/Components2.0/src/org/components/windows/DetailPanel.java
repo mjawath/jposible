@@ -14,10 +14,12 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
+import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
 import org.components.containers.CPanel;
@@ -316,6 +318,39 @@ public class DetailPanel<T> extends TabPanelUI {
     public void updateEntityUI() {
         super.updateEntityUI();
         focusManager.resetFocus();
+//        clear();
+    }
+
+    @Override
+    public void setService(Service service) {
+        super.setService(service);
+        commandGUI.invoke();
+        
+    }
+    
+    Command commandGUI = new Command() {
+        @Override
+        public Object executeTask() {
+            return loadAfterService();
+        }
+
+        @Override
+        public void resultTask(Object objs) {
+            Object[] obs = (Object[]) objs;
+            //set values to UI
+            loadUIAfterService(obs);
+        }
+    };
+    
+    
+    
+    
+    public Object[] loadAfterService(){
+        return null;
+    }
+    
+    public void loadUIAfterService(Object [] objs){
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -341,6 +376,6 @@ public class DetailPanel<T> extends TabPanelUI {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.components.custom.ControlPanel crudcontrolPanel;
+    protected com.components.custom.ControlPanel crudcontrolPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -230,7 +230,7 @@ public class ItemMasterUI2 extends TabPanelUI {
                             uom.setMulti(tContainsQty.getDoubleValue0());
                             //prime  unit
                             //logic changes type is defined 
-                            if (selectedItem.checkUOMExist(uom)) {
+                            if (selectedItem.isUOMValid(uom)) {
                                 MessageBoxes.wrnmsg(ItemMasterUI2.this, "unit already exists ", "duplicate uom");
                                 return;
                             }
@@ -371,7 +371,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 //            String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
 //            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
 //                        um.getMulti(), u});
-        tblunitprices.modelToTable(item.getUoms());
+        tblunitprices.setModelCollectionToTable(item.getUoms());
         tblunitprices.addModelToTable(new UOM());
 //        TableUtil.addnewrow(tblunitprices);
     }

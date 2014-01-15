@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
-import org.components.controls.ModelEditableTable;
 import org.components.parent.controls.PxTable;
 import org.components.parent.controls.editors.BaseCellEditor;
 import org.components.parent.controls.editors.TableInteractionListner;

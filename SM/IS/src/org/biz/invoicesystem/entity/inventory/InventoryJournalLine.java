@@ -97,6 +97,9 @@ public class InventoryJournalLine  extends BusObj implements Serializable {
     public UOM getUom() {
         return uom;
     }
+    public String getUOMCode(){
+    return uom==null?"":uom.getCode();
+    }
 
     public void setUom(UOM uom) {
         this.uom = uom;

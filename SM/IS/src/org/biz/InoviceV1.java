@@ -44,7 +44,7 @@ public class InoviceV1 extends javax.swing.JPanel {
         tblInvoiceLine1.setPropertiesEL(new String[]{"qty","item"});       
         tblInvoiceLine1.setColumnHeader(new String[]{"QTY","Item"});        
         tblInvoiceLine1.setCellEditor(1,new DoubleCellEditor(tblInvoiceLine1));
-        tblInvoiceLine1.modelToTable(lineItems);
+        tblInvoiceLine1.setModelCollectionToTable(lineItems);
         ObjectCellEditor<Item> itce=new ObjectCellEditor(tblInvoiceLine1);
         itce.initPopup(new String[]{"id","code"}, new String[]{"ID","Code"},"id");
         tblInvoiceLine1.setCellEditor(2,itce);       

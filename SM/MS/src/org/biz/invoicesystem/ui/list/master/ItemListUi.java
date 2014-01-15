@@ -270,7 +270,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
         String qry = cItmDescription.getText();
 
         try {
-            items = itemService.getDao().byCode(qry);
+            items = itemService.getDao().getByCodeLike(qry);
             loadTable();
         } catch (Exception e) {
             e.printStackTrace();

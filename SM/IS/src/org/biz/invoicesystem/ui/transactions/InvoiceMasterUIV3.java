@@ -127,7 +127,7 @@ public class InvoiceMasterUIV3 extends TabPanelUI {
 
                 try {
                     //how about searching the pos invnetory for the items
-                return    listItem=itemService.getDao().byCode(qry);
+                return    listItem=itemService.getDao().getByCodeLike(qry);
                 } catch (Exception e) {
 
                     e.printStackTrace();

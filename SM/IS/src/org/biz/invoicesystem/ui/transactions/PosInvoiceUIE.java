@@ -239,7 +239,7 @@ public class PosInvoiceUIE extends TabPanelUI {
 
     public void addToTable(List<SalesInvoiceLineItem> items) {
 
-        tblInvoice.modelToTable(items);
+        tblInvoice.setModelCollectionToTable(items);
         tblInvoice.addrow(new Object[]{});
     }
 

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import org.biz.app.ui.util.ComponentFactory;
 import org.components.windows.DetailPanel;
 
 /**
@@ -133,6 +134,9 @@ public class CComboBox<E> extends JComboBox implements IComponent{
                 }
             }
         });
+        
+        ComponentFactory.removeAction(this, KeyEvent.VK_ENTER);
+
     }
 
     protected void processFocusEvent(FocusEvent e) {

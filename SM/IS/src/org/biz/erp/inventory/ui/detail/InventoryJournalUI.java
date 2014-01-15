@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
+import org.biz.app.ui.util.MessageBoxes;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
@@ -36,7 +37,6 @@ import org.components.windows.DetailPanel;
  */
 public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
 
-    private InventoryJournalService iservice;
     private ItemService itemser;
     private WareHouseService wser;
     private ShopService shopservice;
@@ -55,7 +55,8 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         super.init();
         initLineItemTablePanel();
 
-        twarehouse.initPopup(Warehouse.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code", new PopupListner() {
+        twarehouse.initPopup(Warehouse.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code",
+                new PopupListner() {
             @Override
             public List searchItem(Object searchQry) {
                 List items = wser.getDao().getAll();
@@ -100,7 +101,7 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
                 InventoryJournalLine sil = (InventoryJournalLine) row;
                 Item itm = sil.getItem();
                 UOM uom = sil.getUom();
-                return new Object[]{sil, itm, itm != null ? itm.getDescription() : null,
+                return new Object[]{sil, itm, itm != null ? itm.getCode() : null,
                             uom != null ? uom.getCode() : "", sil.getQty()};
             }
 
@@ -120,7 +121,7 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         titem.initPopup(Item.class, new Class[]{String.class, String.class, String.class}, new String[]{"code", "id", "desc"}, "code", new PopupListner() {
             @Override
             public List searchItem(Object searchQry) {
-                return itemser.getDao().getAll();
+                return itemser.getItemForPopup(titem.getText());
 
             }
 
@@ -167,6 +168,8 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
 
 
     }
+    
+    
 
     private void setTabOrder() {
         addToFocus(titem);
@@ -175,6 +178,7 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         addToFocus(tcode);
         addToFocus(tdocref);
         addToFocus(twarehouse);
+        addToFocus(tshop);
     }
 
     @Override
@@ -243,7 +247,8 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         }
         titem.setSelectedObject(obj.getItem());
         tqty.setValue(obj.getQty());
-        tuom.setValue(obj.getUom());
+        tuom.setSelectedObject(obj.getUom() );
+        tuom.setValue(obj.getUOMCode() );
         titem.requestFocus();
 
     }
@@ -273,15 +278,7 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
             //        // get top bus object / create top bus object
             // validate on         // validate line item on  / top bus obj
             InventoryJournal ij=getBusObject();
-            ij.addIJLine(li);
-            //if new add crate  new line add to table
-            //otherwise update row
-            ///add or update 
-        //        updateRow(lit);
-
-            //create line item 
-            // get selected item
-            // is valid row
+            ij.addIJLine(li);            
             tblLine.addNewOrModifySelectedRow(li);
   
 //        }
@@ -298,33 +295,6 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         lineItem.setUom(tuom.getSelectedObject());
         lineItem.calculateLineItem();
 
-
-        return lineItem;
-    }
-
-    private void updateRow(InventoryJournalLine lineItem) {
-        if (lineItem == null) {
-            lineItem = new InventoryJournalLine();
-        }
-        lineItem.setItem(titem.getSelectedObject());
-        lineItem.setQty(tqty.getDoubleValue());
-        lineItem.setUom(tuom.getSelectedObject());
-        lineItem.calculateLineItem();
-        if (isValidLine(lineItem)) {
-            return;
-        }
-        tblLine.replaceModelAndSelectLastRow(lineItem);
-    }
-
-    private InventoryJournalLine setTableLineBusObject() {
-        InventoryJournalLine lineItem = (InventoryJournalLine) tblLine.getSelectedObject();
-        if (lineItem == null) {
-            lineItem = new InventoryJournalLine();
-        }
-        lineItem.setItem(titem.getSelectedObject());
-        lineItem.setQty(tqty.getDoubleValue());
-        lineItem.setUom(tuom.getSelectedObject());
-        lineItem.calculateLineItem();
 
         return lineItem;
     }
@@ -346,22 +316,24 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         ij.setCode(tcode.getValue());
         ij.setDocRefNo(tdocref.getValue());
         ij.setWarehouse(twarehouse.getSelectedObject());
-        List list = tblLine.getModelCollection();        
+        List list = tblLine.getModelCollection();
         ij.setLines(list);
+        //set line values according to in/out
+        if (ttransactionType.getSelectedIndex() == 0) {
+            ij.setTransactionOutType();            
+        }
         return ij;
     }
 
-    @Override
-    public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {
-    }
-
-    @Override
+     @Override
     public void setBusObject(InventoryJournal obj) {
         tcode.setValue(obj.getCode());
         tdocref.setValue(obj.getDocRefNo());
         twarehouse.setSelectedObject(obj.getWarehouse());
+        obj.setTransactionLinePlus();
         tblLine.setModelCollection(obj.getLines());
         tblLine.addNewToLast();
+        selectedObject=obj;
     }
 
     public void clear() {
@@ -371,29 +343,50 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         tqty.clear();
         titem.clear();
         tuom.clear();
-        tblLine.addNewToLast();
+        
+        if (tshop.getSelectedObject() == null) {
+            Shop shop = shopservice.getDao().find("123");
+            tshop.setSelectedObject(shop);
+        }
+        if (twarehouse.getSelectedObject() == null) {
+            Warehouse wh = wser.getDao().find("123");
+            twarehouse.setSelectedObject(wh);
+        }
 
+        tblLine.addNewToLast();
+        selectedObject=null;
     }
 
     @Override
     public void setService(Service service) {
-        super.setService(service);
-        iservice = (InventoryJournalService) service;
         itemser = new ItemService();
         wser = new WareHouseService();
         shopservice=new ShopService();
+        //set ui data       
+        super.setService(service);        
     }
 
-    private boolean isValidLine(InventoryJournalLine i ) {
-        if (i == null) {
-            return true;
-        }
-        if (i.getItem() == null || i.getUom() == null || i.getQty() == null) {
-            return false;
-        }
-        return true;
+    @Override
+    public Object[] loadAfterService() {
+        //get shop from properties /db
+        //get warehouse from properties /db
+        Shop shop = shopservice.getDao().find("123");
+        Warehouse wh = wser.getDao().find("123");        
+        
+        return new Object[]{shop, wh};
     }
 
+    @Override
+    public void loadUIAfterService(Object[] objs) {
+      tshop.setSelectedObject((Shop)objs[0]);  
+      twarehouse.setSelectedObject((Warehouse)objs[1]);  
+    }
+    
+    public void clearAndInit(){
+    tcode.setValue("");//get new code for   
+    
+    }
+    
     @Override
     public boolean isValideEntity() {
 
@@ -401,11 +394,15 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
             return false;
         }
         if (busObject.getLines() == null || busObject.getLines().isEmpty()) {
-            
+            titem.requestFocus();
             return false;
         }
         
-        if(busObject.getWarehouse()==null)
+        if (busObject.getWarehouse() == null) {
+            MessageBoxes.errormsg(this, "Please provide a valid store room", "Invalid data");
+            twarehouse.requestFocus();
+            return false;
+        }
             
         for (Iterator<InventoryJournalLine> it = busObject.getLines().iterator(); it.hasNext();) {
             InventoryJournalLine inventoryJournalLine = it.next();
@@ -415,11 +412,6 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         return true;
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -428,6 +420,9 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         tqty = new org.components.controls.CTextField();
         titem = new com.components.custom.TextFieldWithPopUP<Item>();
         tuom = new com.components.custom.TextFieldWithPopUP<UOM>();
+        cLabel5 = new org.components.controls.CLabel();
+        cLabel6 = new org.components.controls.CLabel();
+        cLabel7 = new org.components.controls.CLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblLine = new org.components.controls.ModelEditableTable();
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
@@ -435,24 +430,39 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         tdocref = new org.components.controls.CTextField();
         twarehouse = new com.components.custom.TextFieldWithPopUP<Warehouse>();
         tshop = new com.components.custom.TextFieldWithPopUP<Shop>();
+        ttransactionType = new org.components.controls.CComboBox();
+        cLabel1 = new org.components.controls.CLabel();
+        cLabel2 = new org.components.controls.CLabel();
+        cLabel3 = new org.components.controls.CLabel();
+        cLabel4 = new org.components.controls.CLabel();
 
         lineDetailPanel.setBackground(new java.awt.Color(153, 255, 0));
         lineDetailPanel.setLayout(null);
-
-        tqty.setText("Qty");
         lineDetailPanel.add(tqty);
-        tqty.setBounds(340, 10, 130, 30);
+        tqty.setBounds(330, 20, 130, 30);
 
-        titem.setText("Item");
+        titem.setText("");
         lineDetailPanel.add(titem);
-        titem.setBounds(40, 10, 150, 30);
+        titem.setBounds(30, 20, 150, 30);
 
-        tuom.setText("Unit");
+        tuom.setText("");
         lineDetailPanel.add(tuom);
-        tuom.setBounds(200, 10, 130, 30);
+        tuom.setBounds(190, 20, 130, 30);
+
+        cLabel5.setText("Item");
+        lineDetailPanel.add(cLabel5);
+        cLabel5.setBounds(0, 0, 70, 25);
+
+        cLabel6.setText("UOM");
+        lineDetailPanel.add(cLabel6);
+        cLabel6.setBounds(160, 0, 104, 25);
+
+        cLabel7.setText("Qty");
+        lineDetailPanel.add(cLabel7);
+        cLabel7.setBounds(320, 0, 104, 25);
 
         add(lineDetailPanel);
-        lineDetailPanel.setBounds(10, 50, 650, 50);
+        lineDetailPanel.setBounds(10, 40, 650, 60);
 
         tblLine.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -468,24 +478,48 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         jScrollPane2.setBounds(10, 110, 720, 230);
         add(gridControllerPanel1);
         gridControllerPanel1.setBounds(740, 110, 90, 230);
-
-        tcode.setText("Code");
         add(tcode);
         tcode.setBounds(30, 380, 150, 25);
-
-        tdocref.setText("Doc Ref");
         add(tdocref);
-        tdocref.setBounds(190, 380, 130, 25);
+        tdocref.setBounds(190, 380, 150, 25);
 
-        twarehouse.setText("WareHouse");
+        twarehouse.setText("");
         add(twarehouse);
-        twarehouse.setBounds(190, 440, 150, 40);
+        twarehouse.setBounds(30, 420, 150, 40);
 
-        tshop.setText("Shop");
+        tshop.setText("");
         add(tshop);
-        tshop.setBounds(30, 440, 150, 40);
+        tshop.setBounds(190, 420, 150, 40);
+
+        ttransactionType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "OUT", "IN" }));
+        ttransactionType.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        add(ttransactionType);
+        ttransactionType.setBounds(560, 410, 230, 60);
+
+        cLabel1.setText("Shop");
+        add(cLabel1);
+        cLabel1.setBounds(180, 400, 104, 25);
+
+        cLabel2.setText("Warehouse");
+        add(cLabel2);
+        cLabel2.setBounds(0, 400, 104, 25);
+
+        cLabel3.setText("Ref");
+        add(cLabel3);
+        cLabel3.setBounds(190, 350, 104, 25);
+
+        cLabel4.setText("Doc");
+        add(cLabel4);
+        cLabel4.setBounds(10, 350, 104, 25);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.components.controls.CLabel cLabel1;
+    private org.components.controls.CLabel cLabel2;
+    private org.components.controls.CLabel cLabel3;
+    private org.components.controls.CLabel cLabel4;
+    private org.components.controls.CLabel cLabel5;
+    private org.components.controls.CLabel cLabel6;
+    private org.components.controls.CLabel cLabel7;
     private com.components.custom.GridControllerPanel gridControllerPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.components.containers.CPanel lineDetailPanel;
@@ -495,6 +529,7 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
     private com.components.custom.TextFieldWithPopUP<Item> titem;
     private org.components.controls.CTextField tqty;
     private com.components.custom.TextFieldWithPopUP<Shop> tshop;
+    private org.components.controls.CComboBox ttransactionType;
     private com.components.custom.TextFieldWithPopUP<UOM> tuom;
     private com.components.custom.TextFieldWithPopUP<Warehouse> twarehouse;
     // End of variables declaration//GEN-END:variables

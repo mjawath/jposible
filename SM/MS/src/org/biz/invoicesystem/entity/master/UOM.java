@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -24,22 +26,21 @@ public class UOM extends BusObj {
     private String code;
     private String simbol;
 //    @Enumerated(EnumType.ORDINAL)
-    private Byte type;// this can be primary ,carton, wholsale ..others
+    private byte type = UOMType.Other.getValue();// this can be primary ,carton, wholsale ..others
     private boolean isPrimary;
 
     public enum UOMType {
 
-        Primary, Carton, WholeSale, Other;
+        Primary((byte) 0), Carton((byte) 1), WholeSale((byte) 2), Other((byte) 3);
         byte value;
 
         UOMType() {
         }
-//http://stackoverflow.com/questions/2751733/map-enum-in-jpa-with-fixed-values
 
-
-         UOMType(byte vl) {
-            value = vl;
+        UOMType(byte bty) {
+            value = bty;
         }
+//http://stackoverflow.com/questions/2751733/map-enum-in-jpa-with-fixed-values
 
         public byte getValue() {
             return value;
@@ -60,21 +61,52 @@ public class UOM extends BusObj {
 
             return super.toString();
         }
+
+        public static UOMType getUOMTypeForByte(byte b){
+        switch(b){
+        
+            case 0:return Primary;
+            case 1:return Carton;
+            case 2:return WholeSale;
+            case 3:return Other;
+            default:return Primary;   
+        }        
+        }
+        
+        public static String valueForByte(byte v) {
+            switch (v) {
+                case 0:
+                    return "Primary";
+                case 1:
+                    return "Carton";
+                case 2:
+                    return "WholeSale";
+                case 3:
+                    return "Other";
+            }
+            return "";
+
+        }
     }
 
-    public boolean getIsPrimary() {
-        return isPrimary;
+    public boolean isPrimary() {
+        return type == UOMType.Primary.value;
     }
 
     public void setIsPrimary(Boolean isPrimary) {
         this.isPrimary = isPrimary;
     }
 
-    public Byte getType() {
+    public byte getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public String getUOMType() {
+
+        return UOMType.valueForByte(type);
+    }
+
+    public void setType(byte type) {
         this.type = type;
     }
     private String descriptiom;
@@ -103,7 +135,6 @@ public class UOM extends BusObj {
 
 
         Comparator<UOM> com = new Comparator<UOM>() {
-
             public int compare(UOM o1, UOM o2) {
                 return o1.getId().compareTo(o2.getId());
             }
@@ -154,7 +185,6 @@ public class UOM extends BusObj {
         this.multi = multi;
     }
 
-    
     public static void setUOMType(JComboBox cmb) {
         DefaultComboBoxModel cmbmo = new DefaultComboBoxModel();
 
@@ -216,9 +246,10 @@ public class UOM extends BusObj {
         return "org.biz.invoicesystem.entity.master.UOM[id=" + id + "]";
 
     }
-public void setDefaultUnit(){
-    setCode("pcs");
-    isPrimary=true;
-    multi=1d;
-}
+
+    public void setDefaultUnit() {
+        setCode("pcs");
+        isPrimary = true;
+        multi = 1d;
+    }
 }

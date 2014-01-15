@@ -1,6 +1,8 @@
 package org.biz.invoicesystem.service.master;
 
 import app.utils.SystemUtil;
+import java.util.ArrayList;
+import java.util.List;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.ui.list.master.ItemList;
@@ -42,6 +44,17 @@ public class ItemService extends Service{
     
     public Service categoryServise(){
             return new CategoryService();//get the service from cache
+    }
+    
+    
+    public List getItemForPopup(String qry){
+        ArrayList lst=new ArrayList();
+        Object ob= getByCode(qry);
+        if(ob!=null){
+           lst.add(ob);
+          return lst; 
+        }
+        return getByCodeLike(qry);
     }
     
 }

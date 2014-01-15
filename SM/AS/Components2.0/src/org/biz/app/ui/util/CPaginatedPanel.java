@@ -39,23 +39,23 @@ public class CPaginatedPanel extends javax.swing.JPanel {
     private Service service;
     private PagedListUI listUI;
     
-    private QueryManager sl;
+    private QueryManager qryManager;
     int currentPage=0;
     private CxTable ctable;
 
     public void setSearchListener(QueryManager searchListener){
-    sl=searchListener;
+    qryManager=searchListener;
     }
     
     public void setService(Service service){
     this.service =service;
-    sl.setService(service);
+    qryManager.setService(service);
     }
     
     public void init(Service service,QueryManager qm,CxTable table){
         this.service=service;
-        this.sl=qm;
-        sl.setService(service);
+        this.qryManager=qm;
+        qryManager.setService(service);
         this.ctable=table;
     }
     
@@ -71,21 +71,21 @@ public class CPaginatedPanel extends javax.swing.JPanel {
                 //create pages 
                 //should check query is exisiting or modified
                 if (tFind==btn) {
-                    sl.getFirstPage();
+                    qryManager.getFirstPage();
                 }else
                 if (tnextpage==btn) {//get excuting source
-                    sl.getNextPage();
+                    qryManager.getNextPage();
                    
                 }else if (tPreviousPage==btn) {
-                    sl.getPrePage();
+                    qryManager.getPrePage();
                 }
                 else if (tlast==btn) {
-                    sl.getLastPage();
+                    qryManager.getLastPage();
                 }
                 else if (tfirst==btn) {
-                    sl.getFirstPage();
+                    qryManager.getFirstPage();
                 }
-                return sl;
+                return qryManager;
             }
 
             public void resultTask(Object objs) {
@@ -160,13 +160,13 @@ public class CPaginatedPanel extends javax.swing.JPanel {
     }
 
     public void noOfPages() {
-        long pages = sl.getNoOfPages();
-        sl.getCurrentPage();
+        long pages = qryManager.getNoOfPages();
+        qryManager.getCurrentPage();
 //        if (pages < sl.getCurrentPage()) {//if any error occued we should catch exception
 //            tinfo.setText("");
 //            return;
 //        }
-        tinfo.setText(" " + (sl.getCurrentPage() + 1) + " OF " + pages + " Pages " + sl.count() + " Count");
+        tinfo.setText(" " + (qryManager.getCurrentPage() + 1) + " OF " + pages + " Pages " + qryManager.count() + " Count");
     }
 
     public Service gerService() {
@@ -239,7 +239,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             }
         });
         add(tPreviousPage);
-        tPreviousPage.setBounds(40, 10, 13, 19);
+        tPreviousPage.setBounds(40, 10, 30, 19);
 
         tfirst.setText("<<");
         tfirst.addActionListener(new java.awt.event.ActionListener() {
@@ -248,7 +248,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             }
         });
         add(tfirst);
-        tfirst.setBounds(10, 10, 21, 19);
+        tfirst.setBounds(10, 10, 30, 19);
 
         tlast.setText(">>");
         tlast.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +257,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             }
         });
         add(tlast);
-        tlast.setBounds(220, 10, 21, 19);
+        tlast.setBounds(170, 10, 30, 19);
 
         tnextpage.setText(">");
         tnextpage.addActionListener(new java.awt.event.ActionListener() {
@@ -266,9 +266,9 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             }
         });
         add(tnextpage);
-        tnextpage.setBounds(190, 10, 30, 19);
+        tnextpage.setBounds(140, 10, 30, 19);
         add(cPageCount);
-        cPageCount.setBounds(70, 10, 90, 20);
+        cPageCount.setBounds(70, 10, 30, 20);
 
         tFind.setText("Find");
         tFind.addActionListener(new java.awt.event.ActionListener() {
@@ -277,11 +277,11 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             }
         });
         add(tFind);
-        tFind.setBounds(160, 10, 25, 19);
+        tFind.setBounds(110, 10, 30, 19);
 
         tinfo.setText("");
         add(tinfo);
-        tinfo.setBounds(250, 10, 180, 25);
+        tinfo.setBounds(250, 10, 250, 25);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfirstActionPerformed

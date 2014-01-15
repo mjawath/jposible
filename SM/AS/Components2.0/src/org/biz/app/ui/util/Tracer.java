@@ -18,4 +18,21 @@ public class Tracer {
         /*TODO should be Groupable */
             System.out.println(msg);
     }
+    
+    public static void exceptionOutPrint(String msg){
+        
+        /*TODO should be switchable */
+        /*TODO should be Groupable */
+            System.out.println("***********************EXception*****************************");
+            System.out.println(msg);
+    }
+    
+    public static void exceptionOutPrint(String msg,Exception e) {
+
+        /*TODO should be switchable */
+        /*TODO should be Groupable */
+        System.out.println("***********************EXception*****************************");
+        System.out.println(msg);
+        e.printStackTrace();
+    }
 }

@@ -78,6 +78,7 @@ public class ItemList extends ListViewPanel {
         searchPanel = new javax.swing.JPanel();
         tbtn = new org.components.controls.CButton();
         tsearch = new org.components.controls.CTextField();
+        cComboBox1 = new org.components.controls.CComboBox();
 
         searchPanel.setLayout(null);
 
@@ -97,35 +98,38 @@ public class ItemList extends ListViewPanel {
         });
         searchPanel.add(tsearch);
         tsearch.setBounds(64, 11, 317, 25);
+        searchPanel.add(cComboBox1);
+        cComboBox1.setBounds(450, 10, 100, 23);
 
         add(searchPanel);
         searchPanel.setBounds(0, 0, 808, 50);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tsearchActionPerformed
+//
+//        List list= itemService.getDao().getAll();
+//        tbl.setModelCollection(list);
+    }//GEN-LAST:event_tsearchActionPerformed
+
     private void tbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnActionPerformed
 
-//        if(cButton1==nextButton){
-//            pm.setNext();
-//        }
-//        pagination.setQuery(qry)
-//        
-//        
-//        
-//        
-//        
-       
-//      cPaginatedPanel1.search(qry,"db");  
-        
+        //        if(cButton1==nextButton){
+            //            pm.setNext();
+            //        }
+        //        pagination.setQuery(qry)
+        //
+        //
+        //
+        //
+        //
+
+        //      cPaginatedPanel1.search(qry,"db");
+
     }//GEN-LAST:event_tbtnActionPerformed
-
-    private void tsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tsearchActionPerformed
-
-        List list= itemService.getDao().getAll();
-        tbl.setModelCollection(list);
-    }//GEN-LAST:event_tsearchActionPerformed
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.components.controls.CComboBox cComboBox1;
     private javax.swing.JPanel searchPanel;
     private org.components.controls.CButton tbtn;
     private org.components.controls.CTextField tsearch;
@@ -134,7 +138,7 @@ public class ItemList extends ListViewPanel {
     
     private QueryManager searchListener = new QueryManager() {
         @Override
-        public String getQuery() {
+        public String getQuery() {            
             String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
             return qry;
         }

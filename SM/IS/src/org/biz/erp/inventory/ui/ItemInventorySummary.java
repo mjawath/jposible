@@ -10,26 +10,25 @@
  */
 package org.biz.erp.inventory.ui;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import org.biz.app.ui.event.ButtonAction;
+import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
-import org.biz.invoicesystem.entity.inventory.InventoryMonthlySummery;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.biz.invoicesystem.entity.transactions.PurchaseInvoice;
-import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.inventory.InventoryMonthlySummeryService;
-import org.biz.invoicesystem.service.transactions.PurchaseInvoiceService;
-import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
+import org.biz.utility.date.DateAndTimeUtility;
+import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -44,6 +43,7 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
         super();
         
     }
+    
 
 
     @Override
@@ -52,7 +52,38 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
         initComponents();
 //        selectitem();
         tbtnFind.addActionListener(findAction);
+        tbl.init(InventoryJournal.class, new Class[]{Item.class, String.class,  String.class, String.class},
+                 new String[]{"Item", "code","uom","qty"});
+        tbl.setTableInteractionListner(tableInteractionListner);
+        cPaginatedPanel1.init(service, searchListener, tbl);
+
     }
+    
+    private QueryManager searchListener = new QueryManager() {
+        @Override
+        public String getQuery() {
+            String qry ="";// "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
+            return qry;
+        }
+
+        @Override
+        public Object[] getParams() {
+            return new Object[]{ };
+        }
+    };
+    
+    private TableInteractionListner tableInteractionListner = new TableInteractionListner(){
+
+        @Override
+        public Object[] getTableData(Object row) {
+            Object [] item= (Object[])row;
+            Item it=(Item)item[0];
+            UOM uom=(UOM)item[1];
+            Double qty=(Double) item[2];
+            return new Object[]{it,it.getCode(),uom.getCode(),qty};
+        }
+    
+    };
     
     private ButtonAction  findAction=new ButtonAction(){
     
@@ -68,36 +99,21 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
     };
    
     
-    private List findItemForQuery(){
-    //find the item for 
+    private List findItemForQuery() {
+        //find the item for 
         // provided warehoue
         //provoided shop 
         //provided time period  ???!!??
         //normally current date is used
-        service.getDao().getForLastMonthsummery(new Date());
-    return null;
+        Shop seleShop=tshop.getSelectedObject();
+        Warehouse warehouse=twarehouse.getSelectedObject();
+        List lst = service.getDao().getSummery(
+                seleShop==null?null: seleShop.getId(),warehouse==null?null:warehouse.getId());
+        tbl.setModelCollection(lst);
+
+        return null;
     }
             
-    public void selectitem() {
-
-        //select this month purchases
-        SalesInvoiceService salesinvService = new SalesInvoiceService();
-        List<PurchaseInvoice> purchaseInvoices = new ArrayList<PurchaseInvoice>();
-        PurchaseInvoiceService purinvService = new PurchaseInvoiceService();
-        purchaseInvoices = purinvService.getDao().getAll();
-        //select this month sales
-        List<SalesInvoice> salesInvoices = new ArrayList<SalesInvoice>();
-        salesInvoices = salesinvService.getDao().getAll();
-
-        HashMap<String, Item> hashMap = new HashMap<String, Item>();
-        //get all item from transaction to  hash map from db and get the summery.....
-
-        //get last month inventorymonthly summery  journal adjestment / balance
-        summeryService = new InventoryMonthlySummeryService();
-        List<InventoryMonthlySummery> monthlySummerys = summeryService.getDao().getAll();//get last monthly
-        //
-
-    }
     
     
     InventoryMonthlySummeryService summeryService;
@@ -106,37 +122,10 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        cxTable1 = new org.components.controls.CxTable();
         cDatePicker1 = new org.components.controls.CDatePicker();
         tbtnFind = new org.components.controls.CButton();
         twarehouse = new com.components.custom.TextFieldWithPopUP<Warehouse>();
         tshop = new com.components.custom.TextFieldWithPopUP<Shop>();
-
-        cxTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "id", "Item Code", "Item Name", "In hand", "On Sales Order", "On Sales Invoice", "On Purchase Order", "On Purchase Invoice"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(cxTable1);
 
         tbtnFind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,26 +133,24 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
             }
         });
 
+        twarehouse.setText("Warehouse");
+
+        tshop.setText("Shop");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 959, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(260, 260, 260)
-                        .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(tbtnFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(260, 260, 260)
+                .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(tbtnFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(176, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,25 +161,12 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
                     .addComponent(tbtnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(404, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbtnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnFindActionPerformed
 
-        //get last month
-        //int lastmonth =summeryService.getDao().getLastMonth();
-//        List<InventoryMonthlySummery > monthlySummerys= summeryService.getDao().getForLastMonth(new Date());//get last monthly
-        List is = new InventoryJournalService().getDao().getForLastMonthsummery(new Date());
-
-        TableUtil.cleardata(cxTable1);
-        for (Object obj : is) {
-            Object[] objx = (Object[]) obj;
-            Item item = (Item) objx[0];
-            TableUtil.addrow(cxTable1, new Object[]{item.getCode(), objx[1]});
-        }
     }//GEN-LAST:event_tbtnFindActionPerformed
 
     @Override
@@ -215,14 +189,8 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
 
     }
 
-    public void addToTable(InventoryJournalLine item) {
-        TableUtil.addrow(cxTable1, new Object[]{item.getItem().getCode(), item.getQty()});
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CDatePicker cDatePicker1;
-    private org.components.controls.CxTable cxTable1;
-    private javax.swing.JScrollPane jScrollPane1;
     private org.components.controls.CButton tbtnFind;
     private com.components.custom.TextFieldWithPopUP<Shop> tshop;
     private com.components.custom.TextFieldWithPopUP<Warehouse> twarehouse;

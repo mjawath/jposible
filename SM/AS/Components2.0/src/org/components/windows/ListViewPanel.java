@@ -87,10 +87,10 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
 
         searchPanel.setLayout(null);
         searchPanel.add(cPaginatedPanel1);
-        cPaginatedPanel1.setBounds(40, 0, 440, 40);
+        cPaginatedPanel1.setBounds(10, 10, 520, 40);
 
         add(searchPanel);
-        searchPanel.setBounds(10, 70, 440, 30);
+        searchPanel.setBounds(20, 30, 570, 60);
 
         jScrollPane2.setViewportView(tbl);
 
@@ -101,7 +101,7 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    protected javax.swing.JPanel searchPanel;
+    private javax.swing.JPanel searchPanel;
     protected org.components.controls.CxTable tbl;
     // End of variables declaration//GEN-END:variables
 

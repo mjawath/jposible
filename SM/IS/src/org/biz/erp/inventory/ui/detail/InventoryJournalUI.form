@@ -26,7 +26,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="50" width="650" height="50"/>
+          <AbsoluteConstraints x="10" y="40" width="650" height="60"/>
         </Constraint>
       </Constraints>
 
@@ -35,38 +35,65 @@
       </Layout>
       <SubComponents>
         <Component class="org.components.controls.CTextField" name="tqty">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Qty"/>
-          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="340" y="10" width="130" height="30"/>
+              <AbsoluteConstraints x="330" y="20" width="130" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="com.components.custom.TextFieldWithPopUP" name="titem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Item"/>
+            <Property name="text" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Item&gt;"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="40" y="10" width="150" height="30"/>
+              <AbsoluteConstraints x="30" y="20" width="150" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="com.components.custom.TextFieldWithPopUP" name="tuom">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Unit"/>
+            <Property name="text" type="java.lang.String" value=""/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;UOM&gt;"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="200" y="10" width="130" height="30"/>
+              <AbsoluteConstraints x="190" y="20" width="130" height="30"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="org.components.controls.CLabel" name="cLabel5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Item"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="0" y="0" width="70" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="org.components.controls.CLabel" name="cLabel6">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="UOM"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="160" y="0" width="-1" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="org.components.controls.CLabel" name="cLabel7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Qty"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="320" y="0" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -104,9 +131,6 @@
       </Constraints>
     </Component>
     <Component class="org.components.controls.CTextField" name="tcode">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Code"/>
-      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="30" y="380" width="150" height="-1"/>
@@ -114,38 +138,93 @@
       </Constraints>
     </Component>
     <Component class="org.components.controls.CTextField" name="tdocref">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Doc Ref"/>
-      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="190" y="380" width="130" height="-1"/>
+          <AbsoluteConstraints x="190" y="380" width="150" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="com.components.custom.TextFieldWithPopUP" name="twarehouse">
       <Properties>
-        <Property name="text" type="java.lang.String" value="WareHouse"/>
+        <Property name="text" type="java.lang.String" value=""/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Warehouse&gt;"/>
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="190" y="440" width="150" height="40"/>
+          <AbsoluteConstraints x="30" y="420" width="150" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="com.components.custom.TextFieldWithPopUP" name="tshop">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Shop"/>
+        <Property name="text" type="java.lang.String" value=""/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Shop&gt;"/>
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="30" y="440" width="150" height="40"/>
+          <AbsoluteConstraints x="190" y="420" width="150" height="40"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CComboBox" name="ttransactionType">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="OUT"/>
+            <StringItem index="1" value="IN"/>
+          </StringArray>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="36" style="1"/>
+        </Property>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="560" y="410" width="230" height="60"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Shop"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="180" y="400" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Warehouse"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="0" y="400" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ref"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="190" y="350" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="cLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Doc"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="350" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

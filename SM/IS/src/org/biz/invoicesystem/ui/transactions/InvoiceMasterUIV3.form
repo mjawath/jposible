@@ -603,9 +603,6 @@
       </SubComponents>
     </Container>
     <Component class="com.components.custom.TextFieldWithPopUP" name="tsalesman">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tsalesmanActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Staff&gt;"/>
       </AuxValues>

@@ -21,10 +21,10 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import org.biz.MSResources;
 import org.biz.app.ui.util.Command;
+import org.biz.app.ui.util.ComponentFactory;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
@@ -48,17 +48,28 @@ import org.components.windows.DetailPanel;
 
 public class ItemMasterUI2 extends DetailPanel<Item> {
 
-    List<Item> items;
-    List<Category> categorys;
-    ItemService itemService;
-    CategoryService categoryService;//f
-    ItemPopUp ipu;
+    private List<Item> items;
+    private List<Category> categorys;
+    private ItemService itemService;
+    private CategoryService categoryService;//f
+    private ItemPopUp ipu;
     private ItemMasterTab mastertab;
     private ItemListUi listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
     private JFileChooser chooser;
-    List<File> images = new ArrayList<File>();
-    TableInteractionListner tblInterUnit;
+    private List<File> images = new ArrayList<File>();
+    private TableInteractionListner tblInterUnit;
+    private Command commandCode = new Command() {
+        @Override
+        public Object executeTask() {
+            return super.executeTask();
+        }
+
+        @Override
+        public void resultTask(Object objs) {
+            super.resultTask(objs);
+        }
+    };
 
     public ItemMasterUI2() {
 //        initComponents();//pp
@@ -96,88 +107,80 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         initComponents();
         super.init();
 
+        crudcontrolPanel.setCrudController(this);
 
-        try {
-//            itemService =(ItemService)service;
-            selectedObject = new Item();
 
-            crudcontrolPanel.setCrudController(this);
-            ///init filechooser and set filter
-            ///////////////////////
-            chooser = new JFileChooser(new File("."));
-            chooser.setMultiSelectionEnabled(true);
-            chooser.setFileFilter(new FileFilter() {
-                @Override
-                public boolean accept(File f) {
 
-                    if (f.isDirectory()) {
-                        return true;
-                    }
-                    String s = f.getName();
-                    int i = s.lastIndexOf('.');
-
-                    if (i > 0 && i < s.length() - 1) {
-                        if (s.substring(i + 1).toLowerCase().equals("jpg") || s.substring(i + 1).toLowerCase().equals("png") || s.substring(i + 1).toLowerCase().equals("gif") || s.substring(i + 1).toLowerCase().equals("png")) {
-                            return true;
-                        }
-                    }
-
-                    return false;
-                }
-
-                @Override
-                public String getDescription() {
-                    return "Images Only";
-                }
-            });
-            chooser.setCurrentDirectory(null);
-            UOM.setUOMType(tunittype);
-
-//            tunittype.setModel(new DefaultComboBoxModel(new String[]{"3","4"}));
-            events();
-            ////////////////////////////////////////
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        crudcontrolPanel.set
+        //        crudcontrolPanel.set
         tblunitprices.setPropertiesEL(new String[]{"simbol", "salesPrice", "type", "multi"});
         tblunitprices.setColumnHeader(new String[]{"Simbol", "SalesPrice", "Type", "Multi"});
 
 
-        tItemCategory.setObjectToTable(categorys);
-        tItemCategory.setPropertiesEL(new String[]{"id", "code", "description"});
-        tItemCategory.setTitle(new String[]{"id", "Code", "Descrption"});
-        tItemCategory.setSelectedProperty("code");
-//        tItemCategory.getPagedPopUpPanel().setCommand(command);
-        tItemCategory.getPagedPopUpPanel().setPoplistener(new PopupListner() {
+        tItemCategory.initPopup(Category.class, new Class[]{String.class, String.class, String.class},
+                new String[]{"id", "Code", "Descrption"}, "code", new PopupListner() {
             @Override
             public List searchItem(Object searchQry) {
 
-                return itemService.categoryServise().getDao().getAll();
+                return categoryService.getByCodeLike(tItemCategory.getText());
             }
 
             @Override
             public Object[] getTableData(Object obj) {
                 Category cat = (Category) obj;
-                return new Object[]{cat, cat.getId(), cat.getCode()};
+                return new Object[]{cat, cat.getId(), cat.getCode(), cat.getDescription()};
             }
         });
 
 
 
-        cPanel6.addToFocus(tunitsymbot);
-        cPanel6.addToFocus(tunitprice);
-        cPanel6.addToFocus(tunittype);
-        cPanel6.addToFocus(tContainsQty);
+//        cPanel6.addToFocus(tunitsymbot);
+//        cPanel6.addToFocus(tunitprice);
+//        cPanel6.addToFocus(tunittype);
+//        cPanel6.addToFocus(tContainsQty);
+
+
+        initUnitTable();
+        initFileChooser();
+
+    }
+
+    private void initUnitTable() {
+        UOM.setUOMType(tunittype);
         tblInterUnit = new TableInteractionListner() {
             @Override
             public Object[] getTableData(Object row) {
                 UOM sil = (UOM) row;
-                return new Object[]{sil, sil.getCode(), sil.getSalesPrice(), sil.getType(), sil.getMulti()
+                return new Object[]{sil, sil.getCode(), sil.getSalesPrice(), sil.getUOMType(), sil.getMulti()
                         };
             }
+
+            @Override
+            public void selectionChanged(Object newRowObject) {
+
+
+                UOM uom = (UOM) newRowObject;
+                if (uom == null) {
+                    return;
+                }
+                tunitprice.setValue(uom.getSalesPrice());
+                tContainsQty.setValue(uom.getMulti());
+                tunitsymbot.setValue(uom.getCode());
+                tunittype.setSelectedItem(UOM.UOMType.getUOMTypeForByte(uom.getType()));
+
+
+            }
         };
+        tblunitprices.init(UOM.class, new Class[]{String.class, Double.class, Byte.class, Double.class},
+                new String[]{"symbol", "price", "type", "multi"});
         tblunitprices.setTableInteractionListner(tblInterUnit);
+//        addDefaultUOM();
+
+        tadd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addUnitToTable();
+            }
+        });
 
     }
 
@@ -210,10 +213,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                     }
 
                 }
-
-                @Override
-                public void keyPressed(KeyEvent e) {
-                }
             });//finished item code listener
 
 
@@ -224,7 +223,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
 
             tContainsQty.addKeyListener(new KeyAdapter() {
-                public void keyTyped(KeyEvent e) {
+                public void keyPressed(KeyEvent e) {
                     try {
                         if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 
@@ -259,57 +258,37 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                 }
             });
 
+            
 
-            tunittype.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("---   ---");
-                    //apply primary type when select only one item
+//            tunittype.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    System.out.println("---   ---");
+//                    //apply primary type when select only one item
+//
+//                    // allow only one carton , and whole sale
+//                    //other entries are other type and are allowed multiple time
+//                    // when deleting a entry chek this contitions
+//                    //when primary is deleted user should be notified
+//                    // symbol | price | type | mutiply* primary unit |
+//
+//
+//                }
+//            });
 
-                    // allow only one carton , and whole sale
-                    //other entries are other type and are allowed multiple time
-                    // when deleting a entry chek this contitions
-                    //when primary is deleted user should be notified
-                    // symbol | price | type | mutiply* primary unit |
 
-
-                }
-            });
-
-
-            tblunitprices.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    if (equals(e.getValueIsAdjusting())) {
-                        return;
-                    }
-                    //get selected uom from list
-                    UOM uom = TableUtil.getSelectedTableObject(tblunitprices);
-                    if (uom == null) {
-                        return;//set uom to UI
-                    }
-                    UIEty.objToUi(tunitprice, uom.getSalesPrice());
-                    UIEty.objToUi(tContainsQty, uom.getMulti());
-                    UIEty.objToUi(tunitsymbot, uom.getCode());
-
-                }
-            });
-
-            tadd.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    addUnitToTable();
-                }
-            });
 
             addToFocus(tItemcode);
             addToFocus(tItemDescription);
-            addToFocus(tSupplierItem);
-            addToFocus(ttype);
-            addToFocus(tmodel);
-            addToFocus(tItemCategory);
-            addToFocus(tItemCostPrice);
-            addToFocus(tItemCostPrice);
+//            addToFocus(tSupplierItem);
+            addToFocus(tunitsymbot);
+            addToFocus(tunitprice);
+            addToFocus(tunittype);
+            addToFocus(tContainsQty);
+//            addToFocus(tmodel);
+//            addToFocus(tItemCategory);
+//            addToFocus(tItemCostPrice);
+//            addToFocus(tItemCostPrice);
 
 
         } catch (Exception e) {
@@ -350,18 +329,13 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         jLabel10 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        cButton1 = new org.components.controls.CButton();
         tItemdiscount = new org.components.controls.CTextField();
         jLabel2 = new javax.swing.JLabel();
         tItemLandingCost = new org.components.controls.CTextField();
-        cScrollPane1 = new org.components.controls.CScrollPane();
-        cPanel4 = new org.components.containers.CPanel();
-        cLabel7 = new org.components.controls.CLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        cScrollPane2 = new org.components.controls.CScrollPane();
-        cPanel6 = new org.components.containers.CPanel();
+        tpaneUom = new javax.swing.JTabbedPane();
+        pnlUom = new org.components.containers.CPanel();
         tunitprice = new org.components.controls.CTextField();
         tunitsymbot = new org.components.controls.CTextField();
         tContainsQty = new org.components.controls.CTextField();
@@ -413,12 +387,16 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tItemcode = new org.components.controls.CTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        crudcontrolPanel = new com.components.custom.ControlPanel();
         cLabel8 = new org.components.controls.CLabel();
         ttype = new org.components.controls.CTextField();
         cLabel9 = new org.components.controls.CLabel();
         ttype1 = new org.components.controls.CTextField();
         tItemCategory = new com.components.custom.TextFieldWithPopUP<Category>();
+        cPanel1 = new org.components.containers.CPanel();
+        cButton1 = new org.components.controls.CButton();
+        cScrollPane1 = new org.components.controls.CScrollPane();
+        cPanel4 = new org.components.containers.CPanel();
+        cLabel7 = new org.components.controls.CLabel();
 
         tItemTrakSerial.setText("Track Serial Number");
         tItemTrakSerial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -460,15 +438,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         jLabel16.setText("Commission");
         add(jLabel16);
         jLabel16.setBounds(20, 390, 60, 20);
-
-        cButton1.setText("Browse");
-        cButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton1ActionPerformed(evt);
-            }
-        });
-        add(cButton1);
-        cButton1.setBounds(300, 390, 80, 20);
         add(tItemdiscount);
         tItemdiscount.setBounds(80, 360, 90, 25);
 
@@ -478,16 +447,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         add(tItemLandingCost);
         tItemLandingCost.setBounds(200, 300, 90, 25);
 
-        cScrollPane1.setAutoscrolls(true);
-        cScrollPane1.setViewportView(cPanel4);
-
-        add(cScrollPane1);
-        cScrollPane1.setBounds(300, 300, 550, 90);
-
-        cLabel7.setText("You Can Select More than one Product Image");
-        add(cLabel7);
-        cLabel7.setBounds(390, 390, 370, 25);
-
         jLabel15.setText("Location");
         add(jLabel15);
         jLabel15.setBounds(20, 420, 60, 20);
@@ -496,20 +455,14 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         add(jLabel21);
         jLabel21.setBounds(20, 120, 50, 20);
 
-        cPanel6.setMinimumSize(new java.awt.Dimension(150, 150));
-        cPanel6.setPreferredSize(new java.awt.Dimension(600, 400));
-        cPanel6.setLayout(null);
-
-        tunitprice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tunitpriceActionPerformed(evt);
-            }
-        });
-        cPanel6.add(tunitprice);
+        pnlUom.setMinimumSize(new java.awt.Dimension(150, 150));
+        pnlUom.setPreferredSize(new java.awt.Dimension(600, 400));
+        pnlUom.setLayout(null);
+        pnlUom.add(tunitprice);
         tunitprice.setBounds(130, 20, 90, 25);
-        cPanel6.add(tunitsymbot);
+        pnlUom.add(tunitsymbot);
         tunitsymbot.setBounds(20, 20, 100, 25);
-        cPanel6.add(tContainsQty);
+        pnlUom.add(tContainsQty);
         tContainsQty.setBounds(340, 20, 100, 25);
 
         cButton2.setText("remove");
@@ -518,19 +471,13 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                 cButton2ActionPerformed(evt);
             }
         });
-        cPanel6.add(cButton2);
+        pnlUom.add(cButton2);
         cButton2.setBounds(440, 50, 70, 19);
 
         cLabel2.setText("Code/Symbol");
-        cPanel6.add(cLabel2);
+        pnlUom.add(cLabel2);
         cLabel2.setBounds(20, 0, 100, 20);
-
-        tunittype.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tunittypeActionPerformed(evt);
-            }
-        });
-        cPanel6.add(tunittype);
+        pnlUom.add(tunittype);
         tunittype.setBounds(230, 20, 80, 23);
 
         tblunitprices.setModel(new javax.swing.table.DefaultTableModel(
@@ -545,28 +492,26 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         jScrollPane2.setViewportView(tblunitprices);
         tblunitprices.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        cPanel6.add(jScrollPane2);
+        pnlUom.add(jScrollPane2);
         jScrollPane2.setBounds(0, 50, 440, 120);
 
         tadd.setText("Add");
-        cPanel6.add(tadd);
+        pnlUom.add(tadd);
         tadd.setBounds(440, 20, 70, 19);
 
         cLabel10.setText("Multiply X primUnit");
-        cPanel6.add(cLabel10);
+        pnlUom.add(cLabel10);
         cLabel10.setBounds(320, 0, 130, 20);
 
         cLabel11.setText("Type");
-        cPanel6.add(cLabel11);
+        pnlUom.add(cLabel11);
         cLabel11.setBounds(230, 0, 70, 20);
 
         cLabel12.setText("Price");
-        cPanel6.add(cLabel12);
+        pnlUom.add(cLabel12);
         cLabel12.setBounds(130, 0, 60, 20);
 
-        cScrollPane2.setViewportView(cPanel6);
-
-        jTabbedPane1.addTab("Unit", cScrollPane2);
+        tpaneUom.addTab("Unit & messurements", pnlUom);
 
         jPanel4.setLayout(null);
 
@@ -614,7 +559,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         jPanel4.add(tItemBarcode);
         tItemBarcode.setBounds(230, 30, 160, 25);
 
-        jTabbedPane1.addTab("Barcode", jPanel4);
+        tpaneUom.addTab("Barcode", jPanel4);
 
         jPanel1.setLayout(null);
 
@@ -670,7 +615,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         jPanel1.add(tmodel);
         tmodel.setBounds(110, 10, 140, 25);
 
-        jTabbedPane1.addTab("Price Range", jPanel1);
+        tpaneUom.addTab("Price Range", jPanel1);
 
         cPanel3.setLayout(null);
 
@@ -685,10 +630,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cPanel3.add(cLabel3);
         cLabel3.setBounds(10, 50, 300, 25);
 
-        jTabbedPane1.addTab("Meta Details ", cPanel3);
+        tpaneUom.addTab("Meta Details ", cPanel3);
 
-        add(jTabbedPane1);
-        jTabbedPane1.setBounds(310, 20, 540, 220);
+        add(tpaneUom);
+        tpaneUom.setBounds(300, 50, 540, 220);
 
         jLabel13.setText("$");
         add(jLabel13);
@@ -741,7 +686,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tItemTrakManfctringItem.setBounds(300, 0, 120, 40);
 
         add(cPanel2);
-        cPanel2.setBounds(310, 240, 450, 40);
+        cPanel2.setBounds(330, 290, 450, 40);
 
         jLabel19.setText("Re Order");
         add(jLabel19);
@@ -760,8 +705,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         jLabel1.setText("Item Code");
         add(jLabel1);
         jLabel1.setBounds(20, 20, 50, 20);
-        add(crudcontrolPanel);
-        crudcontrolPanel.setBounds(420, 440, 340, 30);
 
         cLabel8.setText("Type");
         add(cLabel8);
@@ -774,8 +717,34 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cLabel9.setBounds(10, 190, 50, 20);
         add(ttype1);
         ttype1.setBounds(80, 190, 210, 30);
+
+        tItemCategory.setText("");
         add(tItemCategory);
-        tItemCategory.setBounds(80, 230, 210, 25);
+        tItemCategory.setBounds(80, 230, 210, 40);
+
+        cPanel1.setLayout(null);
+
+        cButton1.setText("Browse");
+        cButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton1ActionPerformed(evt);
+            }
+        });
+        cPanel1.add(cButton1);
+        cButton1.setBounds(10, 120, 80, 20);
+
+        cScrollPane1.setAutoscrolls(true);
+        cScrollPane1.setViewportView(cPanel4);
+
+        cPanel1.add(cScrollPane1);
+        cScrollPane1.setBounds(40, 10, 550, 90);
+
+        cLabel7.setText("You Can Select More than one Product Image");
+        cPanel1.add(cLabel7);
+        cLabel7.setBounds(130, 110, 370, 25);
+
+        add(cPanel1);
+        cPanel1.setBounds(310, 340, 600, 170);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -813,137 +782,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             throw e;
         }
         return i;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void callListTab() {
-        try {
-            getMastertab().getItemTabPane().setSelectedIndex(getMastertab().getItemTabPane().indexOfTab(ItemMasterTab.ListUiTabName));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<ItemVariation> ui2ItemVariation(JTable tbl, String itemid) {
-        List<ItemVariation> lstOfVariation = new ArrayList<ItemVariation>();
-        try {
-            Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
-            for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
-
-                Vector row = it.next();
-                ItemVariation var = new ItemVariation();
-                var.setId(EntityService.getEntityService().getKey(""));
-                var.setDescription(row.get(0) == null ? "" : row.get(0).toString());
-                var.setsPrice1(row.get(1) == null ? 0.0 : Double.parseDouble(row.get(1).toString()));
-                var.setsPrice2(row.get(2) == null ? 0.0 : Double.parseDouble(row.get(2).toString()));
-                lstOfVariation.add(var);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return lstOfVariation;
-    }
-
-    public List<ExtraSalesPrice> ui2ExtraSalesPrice(JTable tbl, String itemid) {
-        List<ExtraSalesPrice> lstOfExSalePrice = new ArrayList<ExtraSalesPrice>();
-        try {
-            Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
-            for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
-                Vector row = it.next();
-                ExtraSalesPrice extraSprice = new ExtraSalesPrice();
-                extraSprice.setId(EntityService.getEntityService().getKey(""));
-                extraSprice.setDescription(row.get(0) == null ? "" : row.get(0).toString());
-                extraSprice.setPrice(row.get(1) == null ? 0.0 : Double.parseDouble(row.get(1).toString()));
-                lstOfExSalePrice.add(extraSprice);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return lstOfExSalePrice;
-    }
-
-    ////////////////////////////
-    public List<ItemBarcode> ui2Barcodes(JTable tbl, String itemid) {
-        List<ItemBarcode> lstFBarcodes = new ArrayList<ItemBarcode>();
-        try {
-            Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
-            for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
-                Vector row = it.next();
-                ItemBarcode bCode = new ItemBarcode();
-                bCode.setId(EntityService.getEntityService().getKey(""));
-                bCode.setType(row.get(0) == null ? "" : row.get(0).toString());
-                bCode.setBarcode(row.get(1) == null ? "" : row.get(1).toString());
-                lstFBarcodes.add(bCode);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return lstFBarcodes;
-    }
-
-    public void itemVariation2Ui(List<ItemVariation> lstOfVariation) {
-
-        try {
-
-            if (lstOfVariation == null) {
-                return;
-            }
-            for (Iterator<ItemVariation> it = lstOfVariation.iterator(); it.hasNext();) {
-                ItemVariation i = it.next();
-
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    public void extraSalesPrice2Ui(List<ExtraSalesPrice> lstOfExtraPrice) {
-
-
-        try {
-
-            if (lstOfExtraPrice == null) {
-                return;
-            }
-            for (Iterator<ExtraSalesPrice> it = lstOfExtraPrice.iterator(); it.hasNext();) {
-                ExtraSalesPrice i = it.next();
-
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void barcode2Ui(List<ItemBarcode> lstOfBarcode) {
-
-
-        try {
-            if (lstOfBarcode == null) {
-                return;
-            }
-
-            for (Iterator<ItemBarcode> it = lstOfBarcode.iterator(); it.hasNext();) {
-                ItemBarcode i = it.next();
-
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     //***************persistence logic*************************//
@@ -990,7 +828,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 //                }
 //            }
 //            //update uom table
-//        }
+//        } 
         //
         tblunitprices.removeSelectedRow();
         clearUOM();
@@ -1028,19 +866,13 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 //            String u = um.getGuom() != null ? um.getGuom().getSimbol() : null;
 //            TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getSimbol(), um.getSalesPrice(),
 //                        um.getMulti(), u});
-        tblunitprices.modelToTable(item.getUoms());
+        tblunitprices.setModelCollectionToTableNew(item.getUoms());
     }
 
     private void addDefaultUOM() {
         UOM uom = new UOM();
         uom.setDefaultUnit();
-        tblunitprices.addModelToTable(uom);
-    }
-
-    public List<UOM> tableToUoms(JTable tbl) {
-        List<UOM> uoms = new ArrayList<UOM>();
-        return uoms;
-
+        tblunitprices.addNewOrModifySelectedRow(uom);
     }
 
     private void clearUOM() {
@@ -1081,26 +913,19 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         //update table
         UOM uom = createUOM();
         Item item = getBusObject();
+        item.addUOMorUpdate(uom);
+
         //prime  unit
         //logic changes type is defined 
-        if (item.checkUOMExist(uom)) {
-            MessageBoxes.wrnmsg(ItemMasterUI2.this, "unit already exists ", "duplicate uom");
+        if (!item.isUOMValid(uom)) {
+            MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
+            focusManager.setTemCom(tunitsymbot);
             return;
         }
 
+        tblunitprices.addNewOrModifySelectedRow(uom);
+        focusManager.setTemCom(tunitsymbot);
 
-        item.addUOMorUpdate(uom);//should change to keep list of uoms
-        //we can skip current primary uom setting becas we r using only one primary key
-        // we cannnot give only primary key
-        // 
-        //set it when we save data ..
-        if (tblunitprices.getSelectedObject() == null) {
-            tblunitprices.addModelToTable(uom);
-        } else {
-            tblunitprices.replaceSelectedModel(uom);
-        }
-        clearUOM();
-        tunitsymbot.requestFocus();
     }
 
     public void delete() {
@@ -1118,6 +943,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         TableUtil.cleardata(tblPriceRanges);
         TableUtil.cleardata(tblBarcode);
         tblunitprices.clear();
+        
+        clearUOM();
 
         titemmark.setText("");
         tItemBarcode.setText("");
@@ -1128,14 +955,13 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         images.clear();
         tItemcode.requestFocus();
+        selectedObject = null;
     }
 
     @Override
     public Item getBusObject() {
-        if (selectedObject == null) {
-            selectedObject = new Item();
-        }
-        Item item = selectedObject;
+        
+        Item item = new Item();//selectedObject;
 //        item.setId(EntityService.getEntityService().getKey(""));
         item.setCode(UIEty.tcToStr(tItemcode));
         item.setDescription(UIEty.tcToStr(tItemDescription));
@@ -1200,6 +1026,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void setService(Service service) {
         super.setService(service);
         itemService = (ItemService) service;
+        categoryService = new CategoryService();
 
 //        commandGUI.invoke();
     }
@@ -1222,98 +1049,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             //set values to combos
         }
     };
-
-    public void saveImages(String itemid, List<File> images) {
-        try {
-            int x = 1;
-            for (File img : images) {
-                System.out.println("img is " + img.getAbsolutePath());
-                new File(SystemStatic.ITEM_IMAGE_PATH).mkdirs();
-
-                String newImagePath = SystemStatic.ITEM_IMAGE_PATH + x + "-" + itemid + "-" + img.getName().substring(img.getName().lastIndexOf("."), img.getName().length());
-                x++;
-
-                File imgout1 = new File(newImagePath);
-
-                imgout1.mkdirs();
-                boolean d = ImageIO.write(ImageIO.read(img), getExtension(img), imgout1);
-
-            }
-            // this.images.clear();            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    //////////////////////////////////////
-
-    public void deleteImages(String itemid) {
-        try {
-            File f = new File(SystemStatic.ITEM_IMAGE_PATH);
-            File[] ff = f.listFiles();
-
-            if (ff != null) {
-                for (File file : ff) {
-                    boolean b = Pattern.compile(Pattern.quote("-" + itemid + "-"), Pattern.CASE_INSENSITIVE).matcher(file.getName()).find();
-                    if (b) {
-                        file.delete();
-
-                    }
-                }
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    ///////////////////////////////////
-
-    //////////////////////////////////////
-    public void loadImagesToPanel(String itemid) {
-
-        try {
-            File f = new File(SystemStatic.ITEM_IMAGE_PATH);
-            File[] ff = f.listFiles();
-            List<File> itemImages = new ArrayList<File>();
-
-            if (ff != null) {
-                for (final File image : ff) {
-                    boolean b = Pattern.compile(Pattern.quote("-" + itemid + "-"), Pattern.CASE_INSENSITIVE).matcher(image.getName()).find();
-                    if (b) {
-                        //load images to the panel 
-                        final JLabel jl = new JLabel();
-
-                        jl.addMouseListener(new MouseAdapter() {
-                            JPopupMenu p = null;
-
-                            @Override
-                            public void mouseEntered(MouseEvent e) {
-                                p = viewLargeImg(jl, image);
-                            }
-
-                            @Override
-                            public void mouseExited(MouseEvent e) {
-                                if (p != null) {
-                                    p.setVisible(false);
-                                }
-                            }
-                        });
-
-                        cPanel4.add(imagesloadresize(image.getAbsolutePath(), jl));
-
-                        cPanel4.add(imagesloadresize(image.getAbsolutePath(), jl));
-                        cPanel4.revalidate();
-
-
-                    }
-
-                }
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 ///////////////////////////////////////////////////////////////////////
     public boolean pasteItem(Item i, String itemid) throws Exception {
@@ -1426,68 +1161,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         deleteUnitRow();
     }//GEN-LAST:event_cButton2ActionPerformed
 
-    private void tunitpriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tunitpriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tunitpriceActionPerformed
-
-    private void tunittypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tunittypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tunittypeActionPerformed
-
-    public JPopupMenu viewLargeImg(JLabel lbl, File image) {
-        //  System.out.println("viewlargeImg Methd image name is "+image.getAbsolutePath());
-        JPopupMenu p = new JPopupMenu("imagepanel");
-        try {
-            JPanel panel = new JPanel(new FlowLayout());
-            //      panel.add(new JLabel(new ImageIcon("C:/Documents and Settings/Administrator/Desktop/mazari.jpg")));           
-            Icon i = lbl.getIcon();
-            //    ImagePanel ii = new ImagePanel(iconToImage(i), 50);
-            //    ImagePanel ii = new ImagePanel(image, 1);
-            //   panel.add(imagesloadresize( , lbl));
-            JLabel jj = new JLabel();
-            jj.setIcon(new ImageIcon(iconToImage(i).getScaledInstance(250, 250, 0)));
-            panel.add(jj);
-            panel.setVisible(true);
-            panel.revalidate();
-            p.add(panel);
-
-            p.show(this, Toolkit.getDefaultToolkit().getScreenSize().width / 2, 0);
-            p.setVisible(true);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return p;
-    }
-
-    static Image iconToImage(Icon icon) {
-        if (icon instanceof ImageIcon) {
-            return ((ImageIcon) icon).getImage();
-        } else {
-            int w = icon.getIconWidth();
-            int h = icon.getIconHeight();
-            GraphicsEnvironment ge =
-                    GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice gd = ge.getDefaultScreenDevice();
-            GraphicsConfiguration gc = gd.getDefaultConfiguration();
-            //      BufferedImage image = gc.createCompatibleImage(w, h);
-            BufferedImage image = gc.createCompatibleImage(500, 500);
-            Graphics2D g = image.createGraphics();
-            icon.paintIcon(null, g, 0, 0);
-            g.dispose();
-            return image;
-        }
-    }
-
-    private JLabel imagesloadresize(String ss, JLabel jl) {
-        ImageIcon i = new ImageIcon(ss);
-        Image i1 = i.getImage().getScaledInstance(100, 100, 4);
-
-        Icon i12 = new ImageIcon(i1);
-        jl.setIcon(i12);
-        return jl;
-    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
     private org.components.controls.CButton cButton2;
@@ -1503,13 +1177,11 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private org.components.controls.CLabel cLabel7;
     private org.components.controls.CLabel cLabel8;
     private org.components.controls.CLabel cLabel9;
+    private org.components.containers.CPanel cPanel1;
     private org.components.containers.CPanel cPanel2;
     private org.components.containers.CPanel cPanel3;
     private org.components.containers.CPanel cPanel4;
-    private org.components.containers.CPanel cPanel6;
     private org.components.controls.CScrollPane cScrollPane1;
-    private org.components.controls.CScrollPane cScrollPane2;
-    private com.components.custom.ControlPanel crudcontrolPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -1533,7 +1205,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private org.components.containers.CPanel pnlUom;
     private org.components.controls.CTextField tContainsQty;
     private org.components.controls.CTextField tItemBarcode;
     private com.components.custom.TextFieldWithPopUP<Category> tItemCategory;
@@ -1565,6 +1237,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private org.components.controls.ModelEditableTable tblunitprices;
     private org.components.controls.CTextField titemmark;
     private org.components.controls.CTextField tmodel;
+    private javax.swing.JTabbedPane tpaneUom;
     private org.components.controls.CTextField ttype;
     private org.components.controls.CTextField ttype1;
     private org.components.controls.CTextField tunitprice;
@@ -1668,6 +1341,326 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             uom.setGuom(pu);
 
         }
+    }
+
+    public void initFileChooser() {
+        try {
+//            itemService =(ItemService)service;
+            ///init filechooser and set filter
+            ///////////////////////
+            chooser = new JFileChooser(new File("."));
+            chooser.setMultiSelectionEnabled(true);
+            chooser.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+
+                    if (f.isDirectory()) {
+                        return true;
+                    }
+                    String s = f.getName();
+                    int i = s.lastIndexOf('.');
+
+                    if (i > 0 && i < s.length() - 1) {
+                        if (s.substring(i + 1).toLowerCase().equals("jpg") || s.substring(i + 1).toLowerCase().equals("png") || s.substring(i + 1).toLowerCase().equals("gif") || s.substring(i + 1).toLowerCase().equals("png")) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                @Override
+                public String getDescription() {
+                    return "Images Only";
+                }
+            });
+            chooser.setCurrentDirectory(null);
+
+//            tunittype.setModel(new DefaultComboBoxModel(new String[]{"3","4"}));
+//            events();
+            ////////////////////////////////////////
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void saveImages(String itemid, List<File> images) {
+        try {
+            int x = 1;
+            for (File img : images) {
+                System.out.println("img is " + img.getAbsolutePath());
+                new File(SystemStatic.ITEM_IMAGE_PATH).mkdirs();
+
+                String newImagePath = SystemStatic.ITEM_IMAGE_PATH + x + "-" + itemid + "-" + img.getName().substring(img.getName().lastIndexOf("."), img.getName().length());
+                x++;
+
+                File imgout1 = new File(newImagePath);
+
+                imgout1.mkdirs();
+                boolean d = ImageIO.write(ImageIO.read(img), getExtension(img), imgout1);
+
+            }
+            // this.images.clear();            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    //////////////////////////////////////
+
+    public void deleteImages(String itemid) {
+        try {
+            File f = new File(SystemStatic.ITEM_IMAGE_PATH);
+            File[] ff = f.listFiles();
+
+            if (ff != null) {
+                for (File file : ff) {
+                    boolean b = Pattern.compile(Pattern.quote("-" + itemid + "-"), Pattern.CASE_INSENSITIVE).matcher(file.getName()).find();
+                    if (b) {
+                        file.delete();
+
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    ///////////////////////////////////
+
+    //////////////////////////////////////
+    public void loadImagesToPanel(String itemid) {
+
+        try {
+            File f = new File(SystemStatic.ITEM_IMAGE_PATH);
+            File[] ff = f.listFiles();
+            List<File> itemImages = new ArrayList<File>();
+
+            if (ff != null) {
+                for (final File image : ff) {
+                    boolean b = Pattern.compile(Pattern.quote("-" + itemid + "-"), Pattern.CASE_INSENSITIVE).matcher(image.getName()).find();
+                    if (b) {
+                        //load images to the panel 
+                        final JLabel jl = new JLabel();
+
+                        jl.addMouseListener(new MouseAdapter() {
+                            JPopupMenu p = null;
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+                                p = viewLargeImg(jl, image);
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+                                if (p != null) {
+                                    p.setVisible(false);
+                                }
+                            }
+                        });
+
+                        cPanel4.add(imagesloadresize(image.getAbsolutePath(), jl));
+
+                        cPanel4.add(imagesloadresize(image.getAbsolutePath(), jl));
+                        cPanel4.revalidate();
+
+
+                    }
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JPopupMenu viewLargeImg(JLabel lbl, File image) {
+        //  System.out.println("viewlargeImg Methd image name is "+image.getAbsolutePath());
+        JPopupMenu p = new JPopupMenu("imagepanel");
+        try {
+            JPanel panel = new JPanel(new FlowLayout());
+            //      panel.add(new JLabel(new ImageIcon("C:/Documents and Settings/Administrator/Desktop/mazari.jpg")));           
+            Icon i = lbl.getIcon();
+            //    ImagePanel ii = new ImagePanel(iconToImage(i), 50);
+            //    ImagePanel ii = new ImagePanel(image, 1);
+            //   panel.add(imagesloadresize( , lbl));
+            JLabel jj = new JLabel();
+            jj.setIcon(new ImageIcon(iconToImage(i).getScaledInstance(250, 250, 0)));
+            panel.add(jj);
+            panel.setVisible(true);
+            panel.revalidate();
+            p.add(panel);
+
+            p.show(this, Toolkit.getDefaultToolkit().getScreenSize().width / 2, 0);
+            p.setVisible(true);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
+
+    static Image iconToImage(Icon icon) {
+        if (icon instanceof ImageIcon) {
+            return ((ImageIcon) icon).getImage();
+        } else {
+            int w = icon.getIconWidth();
+            int h = icon.getIconHeight();
+            GraphicsEnvironment ge =
+                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice gd = ge.getDefaultScreenDevice();
+            GraphicsConfiguration gc = gd.getDefaultConfiguration();
+            //      BufferedImage image = gc.createCompatibleImage(w, h);
+            BufferedImage image = gc.createCompatibleImage(500, 500);
+            Graphics2D g = image.createGraphics();
+            icon.paintIcon(null, g, 0, 0);
+            g.dispose();
+            return image;
+        }
+    }
+
+    private JLabel imagesloadresize(String ss, JLabel jl) {
+        ImageIcon i = new ImageIcon(ss);
+        Image i1 = i.getImage().getScaledInstance(100, 100, 4);
+
+        Icon i12 = new ImageIcon(i1);
+        jl.setIcon(i12);
+        return jl;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void callListTab() {
+        try {
+            getMastertab().getItemTabPane().setSelectedIndex(getMastertab().getItemTabPane().indexOfTab(ItemMasterTab.ListUiTabName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<ItemVariation> ui2ItemVariation(JTable tbl, String itemid) {
+        List<ItemVariation> lstOfVariation = new ArrayList<ItemVariation>();
+        try {
+            Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
+            for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
+
+                Vector row = it.next();
+                ItemVariation var = new ItemVariation();
+                var.setId(EntityService.getEntityService().getKey(""));
+                var.setDescription(row.get(0) == null ? "" : row.get(0).toString());
+                var.setsPrice1(row.get(1) == null ? 0.0 : Double.parseDouble(row.get(1).toString()));
+                var.setsPrice2(row.get(2) == null ? 0.0 : Double.parseDouble(row.get(2).toString()));
+                lstOfVariation.add(var);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lstOfVariation;
+    }
+
+    public List<ExtraSalesPrice> ui2ExtraSalesPrice(JTable tbl, String itemid) {
+        List<ExtraSalesPrice> lstOfExSalePrice = new ArrayList<ExtraSalesPrice>();
+        try {
+            Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
+            for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
+                Vector row = it.next();
+                ExtraSalesPrice extraSprice = new ExtraSalesPrice();
+                extraSprice.setId(EntityService.getEntityService().getKey(""));
+                extraSprice.setDescription(row.get(0) == null ? "" : row.get(0).toString());
+                extraSprice.setPrice(row.get(1) == null ? 0.0 : Double.parseDouble(row.get(1).toString()));
+                lstOfExSalePrice.add(extraSprice);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lstOfExSalePrice;
+    }
+
+    ////////////////////////////
+    public List<ItemBarcode> ui2Barcodes(JTable tbl, String itemid) {
+        List<ItemBarcode> lstFBarcodes = new ArrayList<>();
+        try {
+            Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
+            for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
+                Vector row = it.next();
+                ItemBarcode bCode = new ItemBarcode();
+                bCode.setId(EntityService.getEntityService().getKey(""));
+                bCode.setType(row.get(0) == null ? "" : row.get(0).toString());
+                bCode.setBarcode(row.get(1) == null ? "" : row.get(1).toString());
+                lstFBarcodes.add(bCode);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lstFBarcodes;
+    }
+
+    public void itemVariation2Ui(List<ItemVariation> lstOfVariation) {
+
+        try {
+
+            if (lstOfVariation == null) {
+                return;
+            }
+            for (Iterator<ItemVariation> it = lstOfVariation.iterator(); it.hasNext();) {
+                ItemVariation i = it.next();
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    public void extraSalesPrice2Ui(List<ExtraSalesPrice> lstOfExtraPrice) {
+
+
+        try {
+
+            if (lstOfExtraPrice == null) {
+                return;
+            }
+            for (Iterator<ExtraSalesPrice> it = lstOfExtraPrice.iterator(); it.hasNext();) {
+                ExtraSalesPrice i = it.next();
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void barcode2Ui(List<ItemBarcode> lstOfBarcode) {
+
+
+        try {
+            if (lstOfBarcode == null) {
+                return;
+            }
+
+            for (Iterator<ItemBarcode> it = lstOfBarcode.iterator(); it.hasNext();) {
+                ItemBarcode i = it.next();
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
 /*

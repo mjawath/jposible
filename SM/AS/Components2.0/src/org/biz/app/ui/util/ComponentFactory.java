@@ -30,5 +30,6 @@ public class ComponentFactory extends org.components.util.ComponentFactory{
 
         component.getActionMap().put(xx, escpli);
     }
+        
 
 }

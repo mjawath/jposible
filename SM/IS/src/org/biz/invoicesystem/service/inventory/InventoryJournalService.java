@@ -6,6 +6,7 @@
 package org.biz.invoicesystem.service.inventory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.biz.dao.service.Service;
 import org.biz.erp.inventory.dao.InventoryJournalDAO;
@@ -46,7 +47,7 @@ import org.biz.invoicesystem.entity.inventory.StockModel;
     }
     public List getInventorySummeryForMonth(){
     
-        return dao.getForLastMonthsummery(null);        
+        return dao.getForLastMonthsummery(new Date(),"","");        
     }
     
 

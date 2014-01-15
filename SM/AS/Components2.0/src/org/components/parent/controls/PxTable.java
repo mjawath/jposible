@@ -183,17 +183,24 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     public List<T> getModelCollection() {
-        //should get the collection from the tables         
-        return new ArrayList(modelCollection);
+        //should get the collection from the tables
+        //last row is dummy so remove it
+        int si=modelCollection.size();
+        ArrayList ar=new ArrayList(modelCollection);
+        if(si>0)ar.remove(si-1);
+        return ar;
     }
 
     public void setModelCollection(List<T> modelCollection) {        
         clear();
-        this.modelCollection=modelCollection;
+//        this.modelCollection=modelCollection;
         //for each item set values to table model
         if (modelCollection == null) {
             return;
         }
+//        Collections.copy(this.modelCollection, modelCollection);
+        this.modelCollection.addAll(modelCollection);
+        
         if(tableInteractionListner!=null){
           
             Object [][] data=new Object[modelCollection.size()][];
@@ -214,6 +221,8 @@ public class PxTable<T> extends JTable implements IComponent {
         if (modelCollection != null) {
             TableUtil.cleardata(this);
             modelCollection.clear();
+        }else{
+        modelCollection=new ArrayList();
         }
 
     }
@@ -231,9 +240,12 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     
+    public void setModelCollectionToTableNew(List list) {
+        setModelCollectionToTable(list);
+        addNewToLast();
+    }
     
-    
-    public void modelToTable(List list) {
+    public void setModelCollectionToTable(List list) {
         clear();
         modelCollection = new ArrayList();
         if (list == null || list.isEmpty()) {

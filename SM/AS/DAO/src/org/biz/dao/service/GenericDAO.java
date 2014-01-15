@@ -22,8 +22,7 @@ public class GenericDAO<T> {
     private EntityManager em;
     String classname;
     Class<T> cls;
-    protected String orderby  ="c.editedDate  desc , c.savedDate  desc ";
-   ;
+    protected String orderby  =" c.savedDate  desc  , c.editedDate  desc ";   
     protected Cache cache;
     int noofrows = 100;
 
@@ -241,6 +240,14 @@ public class GenericDAO<T> {
         qu.setMaxResults(noofrows); //max result = noofrows+ 0
         return ExecuteQuery(qu);
     }
+    
+    public List executeQuery(String qry,Object ...param){
+    
+        List<T> ts = GenericDAOUtil.ExecuteQuery(qry, param);
+        return ts;
+    }
+
+    
 
     public Long getCount(String qry ,Object ...param) {
         String sq = createCount(qry);
@@ -264,12 +271,7 @@ public class GenericDAO<T> {
 
     }
 
-    public List<T> getByCode(String code) {
-
-        String qry = " c.code like '" + code + "%'";
-        return pagedData(qry, 0);
-    }
-
+    
     
     public List<T> getNextPage(String qryname) {
         String qry = getquery(qryname);
@@ -410,6 +412,35 @@ public class GenericDAO<T> {
     
     public int getNoOfRows(){
         return noofrows; 
+    }
+    public T getByCodex(String code) {
+
+        String qry = " c.code = '" + code + "'";
+        return (T)getByPropertySR("code",code);
+    }
+    
+    public List<T> getByCode(String code) {
+
+//        String qry = " c.code = '" + code + "'";
+        return getByProperty("code",code);
+    }
+
+        public List<T> getByCodeLike(String qry) {
+        String cus = "  c.code like '" + qry + "%' ";
+        
+        List<T> lst = ExecuteQuery(createWhere(cus));
+        return lst;
+
+    }
+
+    public List<T> byCodeLikeOrBarcode(String qry) {
+        List<T> lst = getByCodeLike(qry);
+        if (lst == null || lst.isEmpty()) {
+            return lst;//should search by barcode//if lst size 0 then search barcode
+        }
+
+        return new ArrayList();
+
     }
 }
 

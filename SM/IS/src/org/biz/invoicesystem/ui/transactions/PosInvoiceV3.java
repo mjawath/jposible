@@ -61,7 +61,7 @@ public class PosInvoiceV3 extends TabPanelUI {
                 try {
                     //how about searching the pos invnetory for the items
                     //pos warehouse only
-                    return itemService.getDao().byCode(qry);
+                    return itemService.getDao().getByCodeLike(qry);
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -201,7 +201,7 @@ public class PosInvoiceV3 extends TabPanelUI {
     }
 
     public void addToTable(List<SalesInvoiceLineItem> items) {
-        tblInvoice.modelToTable(items);
+        tblInvoice.setModelCollectionToTable(items);
     }
 
     public void save() {

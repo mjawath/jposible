@@ -110,7 +110,7 @@ public class ApplicationManager {
 
         }
         catch (Exception e) {
-            Tracer.printToOut(e.getMessage());
+            Tracer.exceptionOutPrint(e.getMessage());
         }
         
     }

@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import org.biz.app.ui.util.StringUtility;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.system.SystemUtil;
 
@@ -480,7 +481,7 @@ public class Item extends BusObj{
     
     public UOM getPrimaryUOM() {
         for (UOM uom : getUoms()) {
-            if (uom.getIsPrimary()) {
+            if (uom.isPrimary()) {
                 return uom;
             }
         }
@@ -493,7 +494,7 @@ public class Item extends BusObj{
     def.setCode("pcs");
 //    def.setSimbol("pcs");
     def.setMulti(1d);
-    def.setType((byte)(UOM.UOMType.Primary.ordinal()));
+    def.setType((byte)(UOM.UOMType.Primary.getValue()));
     def.setIsPrimary(true);
     return def;
     } 
@@ -542,20 +543,49 @@ public class Item extends BusObj{
 
     }
 
-    public boolean checkUOMExist(UOM x){
-        if(uoms==null)return false;
+    public boolean isUOMValid(UOM x) {
+        if (StringUtility.isEmptyString(x.getCode())) {
+            return false;
+        }
+
+        if (uoms == null) {
+            return false;
+        }
+
+
         for (UOM uom : uoms) {
-           //selected uoms x s id should not be equal to 
-            //
-            if(uom.getCode().equals(x.getCode()) && !uom.getId().equals(x.getId())){
-            return true;
+
+            if (!StringUtility.isSameString(x.getId(), uom.getId()) && ((uom.isPrimary() && x.isPrimary())
+                    | StringUtility.isSameString(uom.getCode(), x.getCode()))) {
+                return false;
             }
-            if(x.getId()==null && uom.getCode().equals(x.getCode())){
-            return true;
+
+        }
+
+        return true;
+    }
+
+    public boolean checkPrimayUOMExist(UOM x) {
+        if (uoms == null) {
+            return false;
+        }
+        for (UOM uom : uoms) {
+            //selected uoms x s id should not be equal to 
+            //
+            if (uom.getId().equals(x.getId())) {
+                continue;
+            }
+            if (x.isPrimary()) {
+                return true;
             }
         }
         return false;
     }
+    
+    
+    
+    
+    
 
     public String[] getUomSimbolList() {
         ArrayList<String> al = new ArrayList<String>();

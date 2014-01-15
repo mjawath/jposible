@@ -108,7 +108,7 @@ import org.components.windows.DetailPanel;
         
         tblInvoiceLine1.setCellEditors(itce,dce,dceA);    
         
-        tblInvoiceLine1.modelToTable(new ArrayList());
+        tblInvoiceLine1.setModelCollectionToTable(new ArrayList());
         
        
         tblInvoiceLine1.setTableInteractionListner(new TableInteractionListner() {

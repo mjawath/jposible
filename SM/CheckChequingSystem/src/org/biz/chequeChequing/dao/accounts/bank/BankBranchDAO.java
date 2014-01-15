@@ -18,7 +18,8 @@ public class BankBranchDAO extends GenericDAO<BankBranch> {
         setCls(BankBranch.class);
     }
 
-    public List<BankBranch> getByCode(String code) {
+//    @Override
+    public List<BankBranch> getByCodeLike(String code) {
         
         String qry=" c.code like '%"+code+"'";
         return pagedData(code, 0);

@@ -202,7 +202,7 @@ public class TransferOrderUI extends TabPanelUI {
     }
 
     public void addToTable(List<TransferOrderLineItem> items) {
-        tblTransfer.modelToTable(items);
+        tblTransfer.setModelCollectionToTable(items);
         tblTransfer.addrow(new Object[]{});
     }
 

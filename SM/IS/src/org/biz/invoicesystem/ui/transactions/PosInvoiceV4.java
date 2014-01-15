@@ -61,7 +61,7 @@ public class PosInvoiceV4 extends TabPanelUI {
             @Override
             public List itemSearch(String qry) {
                 try {
-                    return itemService.getDao().byCode(qry);                    //how about searching the pos invnetory for the items
+                    return itemService.getDao().getByCodeLike(qry);                    //how about searching the pos invnetory for the items
                                         //pos warehouse only
                 } catch (Exception e) {
 
@@ -194,7 +194,7 @@ public class PosInvoiceV4 extends TabPanelUI {
     }
 
     public void addToTable(List<SalesInvoiceLineItem> items) {
-        tblInvoice.modelToTable(items);
+        tblInvoice.setModelCollectionToTable(items);
     }
 
     public void save() {

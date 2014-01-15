@@ -146,14 +146,8 @@ public class ItemDAO extends GenericDAO<Item> {
 
         return lst;
     }
-
-    public List<Item> byCode(String qry) {
-        String cus = "  c.code like '" + qry + "%' ";
-        List<Item> lst = pagedData(cus, 0);//if lst size 0 then search barcode
-        return lst;
-
-    }
-    //////////////////////////////////////////////////////
+    
+     //////////////////////////////////////////////////////
 
     public void createTestData() {
         System.out.println("persist working.....");

@@ -173,7 +173,7 @@ public class InvoiceMasterUi extends TabPanelUI {
             public void search(String qry) {
                 try {
 
-                    popUpComponent.setList(itemService.getDao().byCode(qry));
+                    popUpComponent.setList(itemService.getDao().getByCodeLike(qry));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

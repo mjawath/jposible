@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 import javax.swing.Action;
+import javax.swing.InputMap;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
@@ -193,5 +194,13 @@ public class ComponentFactory {
 
         component.getActionMap().put(xx, escpli);
     }
+    
+        public static void removeAction(JComponent component,  int keycode) {
+        InputMap im= component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        Object obj=im.get(KeyStroke.getKeyStroke( keycode,0));
+        component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(keycode, 0),
+                "none");
+    }
+
 
 }
