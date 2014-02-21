@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -45,8 +46,8 @@ public class Item extends BusObj{
     }
     
     public void setDefaultValues(){
-    UOM uom= getDefaultUOM();
-    addUOM(uom);
+    List<UOM> uoms= getDefaultUOM();
+    setUoms(uoms);
     }
 
     
@@ -113,8 +114,9 @@ public class Item extends BusObj{
     @JoinColumn(name = "Item_id")
     @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
     private List<ExtraSalesPrice> extrasalespriceCollection;
-    @JoinColumn(name = "Item_id")
-    @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany
+    @JoinTable(name = "ItemItemVariation",joinColumns = @JoinColumn(name = "Item_ID"), inverseJoinColumns = @JoinColumn(name = "ItemVariation_ID"))
+    @ManyToMany(fetch = FetchType.LAZY )
     private List<ItemVariation> variations;
     @JoinColumn(name = "Item_id")
     @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
@@ -488,15 +490,26 @@ public class Item extends BusObj{
         return null;
     }
     
-    public static UOM getDefaultUOM(){
+    public UOM getCartonUOM() {
+        for (UOM uom : getUoms()) {
+            if (uom.isCarton()) {
+                return uom;
+            }
+        }
+        return null;
+    }
+    public static List<UOM> getDefaultUOM(){
     UOM def=new UOM();
     def.setId("1");
-    def.setCode("pcs");
+    def.setCode("CTN");
 //    def.setSimbol("pcs");
     def.setMulti(1d);
-    def.setType((byte)(UOM.UOMType.Primary.getValue()));
-    def.setIsPrimary(true);
-    return def;
+    def.setType((byte)(UOM.UOMType.Carton.getValue()));
+    
+    ArrayList lst=new ArrayList();
+    lst.add(def);
+    lst.add(new UOM("2", "pcs", 1, (byte)(UOM.UOMType.Primary.getValue())));
+    return lst;
     } 
 
     public void addUOM(UOM uom) {
@@ -621,8 +634,19 @@ public class Item extends BusObj{
         }
     }
     
+    public void addVarient(ItemVariation var){
+    if(variations==null){
+     variations=new ArrayList();   
+    }
+    variations.add(var);
+    }
+    
+    
     public void setDepententEntitiesIDs() {    
         setLineID(getUoms());
         //sets the ids to the onetomany, manyto many
     }
+    
+    
+    
 }

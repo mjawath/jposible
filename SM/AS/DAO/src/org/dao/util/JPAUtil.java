@@ -1,36 +1,34 @@
 package org.dao.util;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import org.apache.derby.impl.jdbc.EmbedCallableStatement;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 public class JPAUtil {
 
+    public static boolean customPropery=false;
     static int etyvertion = 0;
     static int etyOldvertion = 0;
     private static EntityManagerFactory entityManagerFactory;
     private static EntityManager entityManager;
     private static final String PU="InvoicingSystemPU";
 
-    static {
-        try {
-
-           entityManagerFactory = Persistence.createEntityManagerFactory(PU);
-            entityManager = entityManagerFactory.createEntityManager();
-
-        } catch (Throwable e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+//    static {
+//        try {
+//
+//           entityManagerFactory = createEMFWithCustomProperties(true);//
+//            entityManager = entityManagerFactory.createEntityManager();
+//
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//            throw new ExceptionInInitializerError(e);
+//        }
+//    }
 
     /*
      * create entitimanager factory if there is not any 
@@ -95,19 +93,20 @@ public class JPAUtil {
     public static void clearCache() {
         entityManagerFactory.getCache().evictAll();
     }
-
+    
     /**
      * reference http://wiki.eclipse.org/Using_EclipseLink_JPA_Extensions_%28ELUG%29#Using_EclipseLink_JPA_Extensions_for_Schema_Generation
      * key  persistence jpa ddl   Schema Generation
      *title  Using EclipseLink JPA Extensions for Schema Generation
      */
-    public static void createEMFWithCustomProperties() {
+    public static EntityManagerFactory createEMFWithCustomProperties(boolean isProp) {
 
         Map props = new HashMap();
 //         props.put("eclipselink.jdbc.user","");
 //         props.put("eclipselink.jdbc.password", "");\
+        
         props.put(PersistenceUnitProperties.APP_LOCATION, "c:\\ddl\\");
-//        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
+        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
         props.put("eclipselink.ddl-generation", "drop-and-create-tables");
         props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
         props.put("eclipselink.logging.level", "FINE");
@@ -117,14 +116,19 @@ public class JPAUtil {
 //        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
         props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU, props);
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU, props);
+//        entityManagerFactory = emf;
+        if(isProp){
+        entityManagerFactory=Persistence.createEntityManagerFactory(PU,props);//set map to this
+        }else{
+        entityManagerFactory=Persistence.createEntityManagerFactory(PU);//set map to this
 
-        entityManagerFactory = emf;
-        for (String string : emf.getProperties().keySet()) {
-            System.out.println(emf.getProperties().get(string));
-        }
-        entityManager=entityManagerFactory.createEntityManager();
-     List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
-        System.out.println(s);
+        }//        for (String string : emf.getProperties().keySet()) {
+//            System.out.println(emf.getProperties().get(string));
+//        }
+//        entityManager=entityManagerFactory.createEntityManager();
+//     List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
+//        System.out.println(s);
+        return entityManagerFactory;
     }
 }

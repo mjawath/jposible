@@ -200,8 +200,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                         try {
                             Item item = itemService.getDao().findItemByCode(UIEty.tcToStr(tItemcode));
                             if (item != null) {
-                                etyToUI(item);
-
+                                setBusObject(item);
                             }
                             tItemDescription.requestFocus();
 
@@ -397,6 +396,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cScrollPane1 = new org.components.controls.CScrollPane();
         cPanel4 = new org.components.containers.CPanel();
         cLabel7 = new org.components.controls.CLabel();
+        cLabel13 = new org.components.controls.CLabel();
 
         tItemTrakSerial.setText("Track Serial Number");
         tItemTrakSerial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -404,56 +404,57 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tItemTrakSerial.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         tItemTrakSerial.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        setLayout(null);
         add(tItemCostPrice);
-        tItemCostPrice.setBounds(80, 300, 90, 25);
+        tItemCostPrice.setBounds(80, 330, 90, 25);
         add(tItemMinimumStock);
-        tItemMinimumStock.setBounds(80, 450, 210, 25);
+        tItemMinimumStock.setBounds(80, 480, 210, 25);
 
         jLabel9.setText("Min.Price");
         add(jLabel9);
-        jLabel9.setBounds(20, 330, 60, 20);
+        jLabel9.setBounds(20, 360, 60, 20);
 
         jLabel22.setText("Cost Price");
         add(jLabel22);
-        jLabel22.setBounds(20, 300, 60, 20);
+        jLabel22.setBounds(20, 330, 60, 20);
         add(tItemCommissionValue);
-        tItemCommissionValue.setBounds(200, 390, 90, 25);
+        tItemCommissionValue.setBounds(200, 420, 90, 25);
         add(tSupplierItem);
-        tSupplierItem.setBounds(80, 110, 210, 30);
+        tSupplierItem.setBounds(80, 140, 210, 30);
         add(tItemDescription);
-        tItemDescription.setBounds(80, 50, 210, 25);
+        tItemDescription.setBounds(80, 80, 210, 25);
 
         jLabel17.setText("Min.Stock");
         add(jLabel17);
-        jLabel17.setBounds(20, 450, 60, 20);
+        jLabel17.setBounds(20, 480, 60, 20);
 
         jLabel10.setText("%");
         add(jLabel10);
-        jLabel10.setBounds(60, 360, 20, 20);
+        jLabel10.setBounds(60, 390, 20, 20);
 
         jLabel23.setText("Val");
         add(jLabel23);
-        jLabel23.setBounds(180, 380, 20, 40);
+        jLabel23.setBounds(180, 410, 20, 40);
 
         jLabel16.setText("Commission");
         add(jLabel16);
-        jLabel16.setBounds(20, 390, 60, 20);
+        jLabel16.setBounds(20, 420, 60, 20);
         add(tItemdiscount);
-        tItemdiscount.setBounds(80, 360, 90, 25);
+        tItemdiscount.setBounds(80, 390, 90, 25);
 
         jLabel2.setText("Description ");
         add(jLabel2);
-        jLabel2.setBounds(20, 50, 60, 20);
+        jLabel2.setBounds(20, 80, 60, 20);
         add(tItemLandingCost);
-        tItemLandingCost.setBounds(200, 300, 90, 25);
+        tItemLandingCost.setBounds(200, 330, 90, 25);
 
         jLabel15.setText("Location");
         add(jLabel15);
-        jLabel15.setBounds(20, 420, 60, 20);
+        jLabel15.setBounds(20, 450, 60, 20);
 
         jLabel21.setText("Supplier");
         add(jLabel21);
-        jLabel21.setBounds(20, 120, 50, 20);
+        jLabel21.setBounds(20, 150, 50, 20);
 
         pnlUom.setMinimumSize(new java.awt.Dimension(150, 150));
         pnlUom.setPreferredSize(new java.awt.Dimension(600, 400));
@@ -633,31 +634,31 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tpaneUom.addTab("Meta Details ", cPanel3);
 
         add(tpaneUom);
-        tpaneUom.setBounds(300, 50, 540, 220);
+        tpaneUom.setBounds(310, 50, 540, 220);
 
         jLabel13.setText("$");
         add(jLabel13);
-        jLabel13.setBounds(190, 300, 10, 20);
+        jLabel13.setBounds(190, 330, 10, 20);
         add(tItemMinimumPrice);
-        tItemMinimumPrice.setBounds(80, 330, 90, 25);
+        tItemMinimumPrice.setBounds(80, 360, 90, 25);
 
         tItemLocation.setEditable(true);
         add(tItemLocation);
-        tItemLocation.setBounds(80, 420, 210, 23);
+        tItemLocation.setBounds(80, 450, 210, 23);
         add(tItemdiscValue);
-        tItemdiscValue.setBounds(200, 360, 90, 25);
+        tItemdiscValue.setBounds(200, 390, 90, 25);
         add(tItemCommission);
-        tItemCommission.setBounds(80, 390, 90, 20);
+        tItemCommission.setBounds(80, 420, 90, 20);
 
         jLabel4.setText("Category");
         add(jLabel4);
-        jLabel4.setBounds(10, 240, 60, 14);
+        jLabel4.setBounds(10, 270, 60, 14);
         add(tItemReOrder);
-        tItemReOrder.setBounds(80, 480, 210, 25);
+        tItemReOrder.setBounds(80, 510, 210, 25);
 
         jLabel14.setText("Val");
         add(jLabel14);
-        jLabel14.setBounds(180, 360, 20, 30);
+        jLabel14.setBounds(180, 390, 20, 30);
 
         cPanel2.setLayout(null);
 
@@ -686,41 +687,41 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tItemTrakManfctringItem.setBounds(300, 0, 120, 40);
 
         add(cPanel2);
-        cPanel2.setBounds(330, 290, 450, 40);
+        cPanel2.setBounds(380, 280, 450, 40);
 
         jLabel19.setText("Re Order");
         add(jLabel19);
-        jLabel19.setBounds(20, 480, 60, 20);
+        jLabel19.setBounds(20, 510, 60, 20);
 
         jLabel12.setText("Discount ");
         add(jLabel12);
-        jLabel12.setBounds(20, 360, 60, 20);
+        jLabel12.setBounds(20, 390, 60, 20);
         add(tItemcode);
-        tItemcode.setBounds(80, 20, 210, 25);
+        tItemcode.setBounds(80, 50, 210, 25);
 
         jLabel6.setText("Landing Cost");
         add(jLabel6);
-        jLabel6.setBounds(200, 280, 80, 20);
+        jLabel6.setBounds(200, 310, 80, 20);
 
         jLabel1.setText("Item Code");
         add(jLabel1);
-        jLabel1.setBounds(20, 20, 50, 20);
+        jLabel1.setBounds(20, 50, 50, 20);
 
         cLabel8.setText("Type");
         add(cLabel8);
-        cLabel8.setBounds(20, 150, 40, 20);
+        cLabel8.setBounds(20, 180, 40, 20);
         add(ttype);
-        ttype.setBounds(80, 150, 210, 30);
+        ttype.setBounds(80, 180, 210, 30);
 
         cLabel9.setText("Model");
         add(cLabel9);
-        cLabel9.setBounds(10, 190, 50, 20);
+        cLabel9.setBounds(10, 220, 50, 20);
         add(ttype1);
-        ttype1.setBounds(80, 190, 210, 30);
+        ttype1.setBounds(80, 220, 210, 30);
 
         tItemCategory.setText("");
         add(tItemCategory);
-        tItemCategory.setBounds(80, 230, 210, 40);
+        tItemCategory.setBounds(80, 260, 210, 30);
 
         cPanel1.setLayout(null);
 
@@ -731,7 +732,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             }
         });
         cPanel1.add(cButton1);
-        cButton1.setBounds(10, 120, 80, 20);
+        cButton1.setBounds(40, 110, 80, 20);
 
         cScrollPane1.setAutoscrolls(true);
         cScrollPane1.setViewportView(cPanel4);
@@ -741,10 +742,14 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         cLabel7.setText("You Can Select More than one Product Image");
         cPanel1.add(cLabel7);
-        cLabel7.setBounds(130, 110, 370, 25);
+        cLabel7.setBounds(190, 110, 370, 25);
 
         add(cPanel1);
-        cPanel1.setBounds(310, 340, 600, 170);
+        cPanel1.setBounds(310, 330, 600, 150);
+
+        cLabel13.setText("Item Master");
+        add(cLabel13);
+        cLabel13.setBounds(20, 10, 260, 25);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -811,7 +816,12 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             return false;
         }
         cleanUOMs();
-
+        
+        Item item=service.getByCode(tItemcode.getText());
+        if(selectedObject==null && item!=null){
+        MessageBoxes.infomsg(null, "Item already exist by this code", "Item already exist!");
+            return false;
+        }
         return super.isValideEntity();
     }
 
@@ -869,11 +879,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tblunitprices.setModelCollectionToTableNew(item.getUoms());
     }
 
-    private void addDefaultUOM() {
-        UOM uom = new UOM();
-        uom.setDefaultUnit();
-        tblunitprices.addNewOrModifySelectedRow(uom);
-    }
+    
 
     private void clearUOM() {
         tunitprice.clear();
@@ -1020,6 +1026,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tItemCategory.setSelectedObject(obj.getCategory());
         addUnitToTable(obj);
         loadImagesToPanel(obj.getCode());
+        selectedObject = obj;
+
     }
 
     @Override
@@ -1169,6 +1177,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private org.components.controls.CLabel cLabel10;
     private org.components.controls.CLabel cLabel11;
     private org.components.controls.CLabel cLabel12;
+    private org.components.controls.CLabel cLabel13;
     private org.components.controls.CLabel cLabel2;
     private org.components.controls.CLabel cLabel3;
     private org.components.controls.CLabel cLabel4;

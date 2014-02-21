@@ -46,14 +46,15 @@ public class Service {
     }
 
     
-    public List moveToPage(String qry,Object [] param, int pageNo) {
-        return getDao().pagedData(qry, pageNo,param);  
+    public List moveToPage(CQuery qry, int pageNo) {
+        return getDao().pagedData(qry.getQuery(), pageNo);  
 
     }
     
         
-    public Long getCount(String qry,Object [] param){
-        return getDao().getCount(qry ,param);
+    public Long getCount(CQuery qry){
+        if(qry==null)return 0l;
+        return getDao().getCount(qry.getQuery());
     }
 
     public void getNextPage(String qryname) {
@@ -103,13 +104,16 @@ public class Service {
     return getDao().getNoOfRows();
     }
     
-    public Object getByCode(String qry){
-        return getDao().getByCodex(qry);
+    public <T> T getByCode(String qry){
+        return (T) getDao().getByCodex(qry);
     }
     
     
     public List getByCodeLike(String qry){
         return getDao().getByCodeLike(qry);
+    }
+    public CQuery getQueryByCodeLike(String qry){
+        return getDao().getQueryByCodeLike(qry);
     }
     
     

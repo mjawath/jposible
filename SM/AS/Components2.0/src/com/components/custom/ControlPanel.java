@@ -5,6 +5,7 @@
  */
 package com.components.custom;
 
+import java.awt.event.ActionListener;
 import org.biz.app.ui.event.ButtonAction;
 
 /**
@@ -65,6 +66,11 @@ public class ControlPanel extends javax.swing.JPanel {
         this.control = control;
     }
 
+    
+    public void addOnlyActionListener(ActionListener l) {
+        listenerList.add(ActionListener.class, l);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

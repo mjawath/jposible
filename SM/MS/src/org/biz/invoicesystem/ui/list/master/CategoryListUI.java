@@ -7,6 +7,7 @@ package org.biz.invoicesystem.ui.list.master;
 import java.util.Date;
 import java.util.List;
 import org.biz.app.ui.util.QueryManager;
+import org.biz.dao.service.CQuery;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Category;
 import org.biz.invoicesystem.entity.master.Item;
@@ -63,21 +64,16 @@ public class CategoryListUI extends ListViewPanel<Category> {
                  new String[]{"id", "code", "description", "savedDate", "editedDate"});
         tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate", "editedDate"});
         tbl.setTableInteractionListner(tableInteractionListner);
-        cPaginatedPanel1.init(service, searchListener, tbl);
+        listUI.getPagePanel().init(service, searchListener, tbl);
 
 
     }
 
     private QueryManager searchListener = new QueryManager() {
-        @Override
-        public String getQuery() {
-            String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
-            return qry;
-        }
-
-        @Override
-        public Object[] getParams() {
-            return new Object[]{""+ "%"};
+        public CQuery getCQuery() {
+            //" where c."+myfield+" "+ myoperator +" ?1 ";
+            
+            return service.getQueryByCodeLike("");
         }
     };
 

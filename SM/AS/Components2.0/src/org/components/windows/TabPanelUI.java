@@ -32,7 +32,7 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
         
     /** Creates new form TabPanelUI */
     public TabPanelUI() {
-        initComponents();
+//        initComponents();
 //        config();
     }
     
@@ -64,7 +64,7 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
     }// </editor-fold>//GEN-END:initComponents
 
     public  String getTabName(){
-    return this.toString();
+    return this.tabName;
     }
     
     public void setTabName(String tabname){

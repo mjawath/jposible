@@ -45,10 +45,10 @@ public class SupplierListUi extends ListViewPanel<Supplier> {
     public void setService(Service service) {
         super.setService(service);
         supser = (SupplierService) service;
-        init(tbl);
-        tbl.init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
+        init(listUI.getTable());
+        listUI.getTable().init(Item.class, new Class[]{String.class, String.class, String.class, Date.class, Date.class},
                  new String[]{"id", "code", "description", "savedDate", "editedDate"});
-        tbl.setPropertiesEL(new String[]{"id", "code", "description", "savedDate", "editedDate"});
+        listUI.getTable().setPropertiesEL(new String[]{"id", "code", "description", "savedDate", "editedDate"});
 
     }
 

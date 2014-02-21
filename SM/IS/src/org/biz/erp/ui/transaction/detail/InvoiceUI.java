@@ -161,15 +161,15 @@ import org.components.windows.DetailPanel;
         tblInvoiceLine1.addNewToLast();
         gridControllerPanel1.setTable(tblInvoiceLine1);
         
-        tpnlLineDetail.addToFocus(titem);
-        tpnlLineDetail.addToFocus(tqty);
-        tpnlLineDetail.addToFocus(tprice);
-        addToFocus(tpnlLineDetail);
-        addToFocus(tpaid);
-
-        tpnlLineDetail.setContainer(this);
+//        tpnlLineDetail.addToFocus(titem);
+//        tpnlLineDetail.addToFocus(tqty);
+//        tpnlLineDetail.addToFocus(tprice);
 //        addToFocus(tpnlLineDetail);
-        
+//        addToFocus(tpaid);
+
+//        tpnlLineDetail.setContainer(this);
+//        addToFocus(tpnlLineDetail);
+        setTabOrder();
       
         ActionListener act=new ActionListener() {
             @Override
@@ -222,18 +222,7 @@ import org.components.windows.DetailPanel;
         lineItem.calculateLineItem();
         return lineItem;
     }
-    
-    private void addItemToTable(){ 
         
-        SalesInvoiceLineItem lineItem = new SalesInvoiceLineItem();
-        lineItem.setItem(titem.getSelectedObject());
-        lineItem.setQty(UIEty.tcToDouble(tqty));
-        lineItem.setPrice(tprice.getDoubleValue());
-        lineItem.calculateLineItem();
-        tblInvoiceLine1.addModelToTable(lineItem);
-//        addNew();
-    }
-    
     private void updateRow(SalesInvoiceLineItem lineItem ){
         if(lineItem==null)return;
         lineItem.setItem(titem.getSelectedObject());
@@ -255,12 +244,7 @@ import org.components.windows.DetailPanel;
         
     }
     
-    @Override
-    public void preSave() {
-//        toSave.add(getBusObject()); dont need this line,handled in save method        
-        super.preSave();
-    }
-
+    
     @Override
     public void clear() {
         tblInvoiceLine1.clear(); 
@@ -291,7 +275,14 @@ import org.components.windows.DetailPanel;
         //print 
     }
 
-
+      private void setTabOrder() {
+          addToFocus(titem);
+          
+          addToFocus(tqty);
+          addToFocus(tprice);          
+          addToFocus(tpaid);
+          
+      }
        
     
     @SuppressWarnings("unchecked")

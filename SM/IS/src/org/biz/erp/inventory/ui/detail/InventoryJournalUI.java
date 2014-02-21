@@ -23,7 +23,6 @@ import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.ShopService;
 import org.biz.invoicesystem.service.master.WareHouseService;
@@ -35,7 +34,7 @@ import org.components.windows.DetailPanel;
  *
  * @author d
  */
-public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
+ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
 
     private ItemService itemser;
     private WareHouseService wser;
@@ -135,8 +134,6 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         tuom.initPopup(UOM.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code", new PopupListner() {
             @Override
             public List searchItem(Object searchQry) {
-
-
                 return null;
 
             }
@@ -199,7 +196,7 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
                 final Item so = titem.getSelectedObject();
                 List uoms = so != null ? so.getUoms() : new ArrayList();
                 tuom.getPagedPopUpPanel().setList(uoms);
-                tuom.setSelectedObject(so.getPrimaryUOM());
+                tuom.setSelectedObject(so.getCartonUOM());
             }
         });
         setLineAction(null);
@@ -294,8 +291,6 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
         lineItem.setQty(tqty.getDoubleValue());
         lineItem.setUom(tuom.getSelectedObject());
         lineItem.calculateLineItem();
-
-
         return lineItem;
     }
 
@@ -459,7 +454,7 @@ public class InventoryJournalUI extends DetailPanel<InventoryJournal> {
 
         cLabel7.setText("Qty");
         lineDetailPanel.add(cLabel7);
-        cLabel7.setBounds(320, 0, 104, 25);
+        cLabel7.setBounds(330, 0, 80, 20);
 
         add(lineDetailPanel);
         lineDetailPanel.setBounds(10, 40, 650, 60);

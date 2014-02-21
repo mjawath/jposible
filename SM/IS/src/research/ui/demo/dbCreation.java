@@ -6,16 +6,11 @@ package research.ui.demo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.*;
 import org.dao.util.JPAUtil;
-import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 /**
  *
@@ -50,8 +45,8 @@ public class dbCreation {
 //            }
 //        }
         dbCreation db = new dbCreation();
-        db.createDataBase();
-        db.createmster();
+//        db.createDataBase();
+//        db.createmster();
 //           List lsts = new ArrayList();
 
 //            new dbCreation().createCategory();
@@ -69,27 +64,8 @@ public class dbCreation {
 
     public void createDataBase() {
         //before call this method should not initialis the emf any where perticularly in static initialisers!!!
-//        JPAUtil.createEMFWithCustomProperties();
+        JPAUtil.createEMFWithCustomProperties(true);
 
-        Map props = new HashMap();
-//         props.put("eclipselink.jdbc.user","");
-//         props.put("eclipselink.jdbc.password", "");\
-        props.put(PersistenceUnitProperties.APP_LOCATION, "c:\\ddl\\");
-//        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
-        props.put("eclipselink.ddl-generation", "drop-and-create-tables");
-        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
-        props.put("eclipselink.logging.level", "FINE");
-//        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
-//        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
-        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
-//        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
-        props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("InvoicingSystemPU", props);
-
-        List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
-        System.out.println(s);
-        
     }
 
     
@@ -110,7 +86,7 @@ public class dbCreation {
         Date date = new Date();
         Shop shz = new Shop();
         shz.setId("123");
-        shz.setCode("12n3");
+        shz.setCode("123s");
         lsts.add(shz);
         System.out.println("Created shop ");
 
@@ -132,7 +108,7 @@ public class dbCreation {
 
     }
 
-    public void createItem() {
+     public void createItem() {
 
 
         List lst22 = new ArrayList();
@@ -145,9 +121,11 @@ public class dbCreation {
             cus.setSavedDate(new Date(System.currentTimeMillis() + i));
             cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lst22.add(cus);
-            UOM uom = cus.getPrimaryUOM();
-            uom.setId(cus.getId() + "prim");
-            cus.addUOM(uom);
+//            UOM uom = cus.getPrimaryUOM();
+//            uom.setId(cus.getId() + "cat");
+//            cus.addUOM(uom);
+           
+            cus.setDepententEntitiesIDs();
         }
         new GenericDAO<Item>().saveList(lst22);
         System.out.println("Created Item List");

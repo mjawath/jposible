@@ -29,9 +29,24 @@ public class UOM extends BusObj {
     private byte type = UOMType.Other.getValue();// this can be primary ,carton, wholsale ..others
     private boolean isPrimary;
 
+    public UOM() {
+    
+    super();
+            }
+
+    
+    public UOM(String ID ,String code,double mult,byte type){
+    super();
+    setId(id);
+    setCode(code);
+    
+    setMulti(mult);
+    setType(type);
+            
+    }
     public enum UOMType {
 
-        Primary((byte) 0), Carton((byte) 1), WholeSale((byte) 2), Other((byte) 3);
+        Primary((byte)1), Carton((byte) 0), WholeSale((byte) 2), Other((byte) 3);
         byte value;
 
         UOMType() {
@@ -49,10 +64,11 @@ public class UOM extends BusObj {
         @Override
         public String toString() {
             switch (this) {
-                case Primary:
-                    return "Primary";
                 case Carton:
                     return "Carton";
+                case Primary:
+                    return "Primary";
+                
                 case Other:
                     return "Other";
                 case WholeSale:
@@ -65,8 +81,8 @@ public class UOM extends BusObj {
         public static UOMType getUOMTypeForByte(byte b){
         switch(b){
         
-            case 0:return Primary;
-            case 1:return Carton;
+            case 1:return Primary;
+            case 0:return Carton;
             case 2:return WholeSale;
             case 3:return Other;
             default:return Primary;   
@@ -75,9 +91,9 @@ public class UOM extends BusObj {
         
         public static String valueForByte(byte v) {
             switch (v) {
-                case 0:
-                    return "Primary";
                 case 1:
+                    return "Primary";
+                case 0:
                     return "Carton";
                 case 2:
                     return "WholeSale";
@@ -91,6 +107,10 @@ public class UOM extends BusObj {
 
     public boolean isPrimary() {
         return type == UOMType.Primary.value;
+    }
+    
+    public boolean isCarton() {
+        return type == UOMType.Carton.value;
     }
 
     public void setIsPrimary(Boolean isPrimary) {
@@ -208,10 +228,10 @@ public class UOM extends BusObj {
     public static UOMType getUOMType(int index) {
         //
         switch (index) {
-            case 0:
-                return UOMType.Primary;
             case 1:
-                return UOMType.Carton;
+                return UOMType.Primary;
+            case 0:
+                return UOMType.Carton;//carton
             case 2:
                 return UOMType.WholeSale;
             case 3:
@@ -247,9 +267,5 @@ public class UOM extends BusObj {
 
     }
 
-    public void setDefaultUnit() {
-        setCode("pcs");
-        isPrimary = true;
-        multi = 1d;
-    }
+   
 }

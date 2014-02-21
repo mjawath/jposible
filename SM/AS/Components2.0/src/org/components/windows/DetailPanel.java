@@ -4,6 +4,8 @@
  */
 package org.components.windows;
 
+import app.AppMainWindow;
+import app.utils.SystemUtil;
 import com.components.custom.FocusManager;
 import com.components.custom.IComponent;
 import java.awt.event.ActionEvent;
@@ -14,6 +16,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.util.ReflectionUtility;
@@ -80,8 +83,17 @@ public class DetailPanel<T> extends TabPanelUI {
                 System.out.println("----event estcape");
             }
         }, KeyEvent.VK_ESCAPE);
+      
 
+        
     }
+    
+    
+    public void addToToolbar(){
+    
+        
+    }
+    
 
     public void gotoNextComponent() {
         focusManager.gotoNextComponent();
@@ -136,12 +148,6 @@ public class DetailPanel<T> extends TabPanelUI {
         cp.setContainer(this);
     }
 
-    public void etyToUI(T obj) {
-    }
-
-    public T UIToEty() {
-        return null;
-    }
 
     @Override
     public Object saveX() {
@@ -263,7 +269,7 @@ public class DetailPanel<T> extends TabPanelUI {
     }
 
     public void postCreate(ArrayList tosave, ArrayList toupdate, ArrayList todelete) {
-        System.out.println("-------+++++++++");
+//        System.out.println("-------+++++++++");
     }
 
     private void preUpdate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
@@ -309,6 +315,13 @@ public class DetailPanel<T> extends TabPanelUI {
         this.selectedObject = obj;
     }
 
+    public void etyToUI(T obj) {
+    }
+
+    public T UIToEty() {
+        return null;
+    }
+    
     public void clear() {
         selectedObject = null;
         super.clear();
@@ -319,6 +332,8 @@ public class DetailPanel<T> extends TabPanelUI {
         super.updateEntityUI();
         focusManager.resetFocus();
 //        clear();
+        SystemUtil.setTools(crudcontrolPanel);
+
     }
 
     @Override

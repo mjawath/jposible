@@ -72,6 +72,10 @@ public class GenericDAO<T> {
     public T find(Object key) {
         return GenericDAOUtil.findRefresh(cls, key);
     }
+    
+    public static <T> T findGeneric(Object key,Class cls) {
+        return GenericDAOUtil.findRefresh(cls, key);
+    }
 
     public T getWhere(String property, Object key) {
 
@@ -241,6 +245,14 @@ public class GenericDAO<T> {
         return ExecuteQuery(qu);
     }
     
+    public List pagedData(Query  qu , int pageNo) {
+//        String sq = createWhere(qry);//TODO -take out the create where statement
+//        Query qu = GenericDAOUtil.getQuery(sq,param);
+        int fr = pageNo == 0 ? 0 : pageNo * noofrows;
+        qu.setFirstResult(fr);//firstresult
+        qu.setMaxResults(noofrows); //max result = noofrows+ 0
+        return ExecuteQuery(qu);
+    }
     public List executeQuery(String qry,Object ...param){
     
         List<T> ts = GenericDAOUtil.ExecuteQuery(qry, param);
@@ -365,9 +377,10 @@ public class GenericDAO<T> {
     }
 
     public String createWhere(String whr) {
-        
+        String select= StringUtility.containsStringIgnoreCase(whr, "select")?"":createSelect();
+        String where= StringUtility.containsStringIgnoreCase(whr, "where")?select: select + " where  " + whr +" ";
 
-        return createSelect() + (StringUtility.isEmptyString(whr)?" ":" where  " + whr +" ")+ GenericDAOUtil.getOrderBy(orderby);
+        return where+ GenericDAOUtil.getOrderBy(orderby);
     }
     /*
      ///////////////
@@ -384,10 +397,23 @@ public class GenericDAO<T> {
         return qu;
     }
 
+    public CQuery getQuery(String qry,Object ...param){
+        Query qu = GenericDAOUtil.getQuery(qry,param);
+        
+        return new CQuery(qu);
+    }
+    
+
     public long getcount(String qry) {
 
         qry = createCount() + qry;
         return (Long) ExecuteQueryOb(qry);
+    }
+    
+    public long getCount(Query qry) {
+
+//        qry = createCount() + qry;
+        return (Long) ExecuteQuerySR(qry);
     }
 
     String getquery(String qryname) {
@@ -406,9 +432,6 @@ public class GenericDAO<T> {
 //       System.out.println("exe cuting twoooo22..."+sqlString); 
     }
 
-    public static void createNewDatabase() {
-        GenericDAOUtil.createEMFWithCustomProperties();
-    }
     
     public int getNoOfRows(){
         return noofrows; 
@@ -425,14 +448,20 @@ public class GenericDAO<T> {
         return getByProperty("code",code);
     }
 
-        public List<T> getByCodeLike(String qry) {
-        String cus = "  c.code like '" + qry + "%' ";
+        public List<T> getByCodeLike(String code) {
+        String cus = "  c.code like '" + code + "%' ";
         
         List<T> lst = ExecuteQuery(createWhere(cus));
         return lst;
 
     }
 
+    public CQuery getQueryByCodeLike(String code) {
+        String cus = "  c.code like '" + code + "%' ";
+        return getQuery(createWhere(cus));
+//        return lst;
+
+    }
     public List<T> byCodeLikeOrBarcode(String qry) {
         List<T> lst = getByCodeLike(qry);
         if (lst == null || lst.isEmpty()) {

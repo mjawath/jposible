@@ -5,6 +5,7 @@
 package org.biz.app.ui.util;
 
 import java.util.List;
+import org.biz.dao.service.CQuery;
 import org.biz.dao.service.Service;
 
 /**
@@ -20,9 +21,9 @@ public abstract class QueryManager {
     private     int noOfPages;
     private List lastListPage;
     
-    public abstract String getQuery();
+    public abstract CQuery getCQuery();
 
-    public abstract Object[] getParams();
+//    public abstract Object[] getParams();
 
     public int getCurrentPage() {
         return currentPage;
@@ -35,18 +36,18 @@ public abstract class QueryManager {
     public void getNextPage(){
         int next=currentPage+1;
         if(next>count)return ;
-        lastListPage=service.moveToPage(getQuery(),getParams(), next);
+        lastListPage=service.moveToPage(getCQuery(), next);
         currentPage++; 
     }
     
     public Long count(){
-        return count=service.getCount(getQuery(), getParams());
+        return count=service.getCount(getCQuery());
     }
     
     public void getPrePage(){
         int page=currentPage-1;
         if(page<0)return ;
-        lastListPage=service.moveToPage(getQuery(),getParams(),page);
+        lastListPage=service.moveToPage(getCQuery(),page);
         currentPage=page;
     }   
     
@@ -62,13 +63,13 @@ public abstract class QueryManager {
         int next=0;
         getCount();
 //        if(next>count)return null;
-        lastListPage=service.moveToPage(getQuery(),getParams(), next);
+        lastListPage=service.moveToPage(getCQuery(),next);
         currentPage=0; 
     }
    
     public void getLastPage() {
         int next=noOfPages-1;
-        lastListPage=service.moveToPage(getQuery(),getParams(), next);
+        lastListPage=service.moveToPage(getCQuery(),next);
         currentPage=noOfPages; 
     }
 
@@ -78,7 +79,7 @@ public abstract class QueryManager {
     }
     
     public void getCount(){
-     count=service.getCount(getQuery(), getParams());
+     count=service.getCount(getCQuery());
     }
     
     public void createPages(){

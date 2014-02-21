@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -245,7 +246,7 @@ public class MainWindow extends JFrame {
                 Sessions.addToSession(title, tpui);
 //                initCloseButtonForTab(getjTabbedPane1(), sx);
                 getjTabbedPane1().setSelectedIndex(sx);
-                tpui.tabName=title;
+                tpui.setTabName(title);
 
             } else {
                  int ix = getjTabbedPane1().indexOfTab(title);
@@ -275,7 +276,6 @@ public class MainWindow extends JFrame {
         p.add(b2,1);
      
       pane.setTabComponentAt(index,p);
-       
         
         } catch (Exception e) {
        e.printStackTrace();
@@ -294,6 +294,39 @@ e.printStackTrace();
     public void addToTabpanelToUI(TabPanelUI tab, String title) {
 
         addToTabpanelToUI(tab, title, null);
+    }
+
+    public void addToTabPanel(TabPanelUI tab, String tabid, String tablbl) {
+        try {
+
+            TabPanelUI tpui = (TabPanelUI) Sessions.getObj(tabid);
+
+            if (tpui == null) {
+                tpui = tab;
+                getjTabbedPane1().add(tabid, tpui);
+                int sx = getjTabbedPane1().indexOfTab(tabid);
+                Sessions.addToSession(tabid, tpui);
+//                initCloseButtonForTab(getjTabbedPane1(), sx);
+                getjTabbedPane1().setSelectedIndex(sx);
+                tpui.tabName = tabid;
+                getjTabbedPane1().getTabComponentAt(sx);
+                JLabel lbl = new JLabel(tablbl);
+                getjTabbedPane1().setTabComponentAt(sx, lbl);
+            } else {
+                int ix = getjTabbedPane1().indexOfTab(tabid);
+                getjTabbedPane1().setSelectedIndex(ix);
+//               initCloseButtonForTab(getjTabbedPane1(), ix);
+
+
+//                 tpui.setobj(obj);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void selectTab(String title) {

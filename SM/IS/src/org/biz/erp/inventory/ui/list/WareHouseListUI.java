@@ -4,11 +4,8 @@
  */
 package org.biz.erp.inventory.ui.list;
 
-import java.util.Date;
-import org.biz.app.ui.util.QueryManager;
+import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.components.controls.CxTable;
-import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
 
 /**
@@ -21,44 +18,32 @@ public class WareHouseListUI extends ListViewPanel<Warehouse> {
      * Creates new form WareHouseListUI
      */
     public WareHouseListUI() {
-        initComponents();
+//        initComponents();
+        super();
     }
 
     @Override
     public void init() {
-        initComponents();
-        super.init();
+        initComponents();      
+        super.init();         
+        listUI = wareHoueLV1;
+        searchQueryUI = wareHouseSearchQueryUIPanel1;
+        listUI.setSearchQueryUI(searchQueryUI);
+        init(listUI.getTable());
+        //set query manager for pagination
     }
+    
+
 
     @Override
-    public void init(CxTable tbl) {
-        super.init(tbl);
-        tbl.init(Warehouse.class, new Class[]{String.class, String.class, Date.class, Date.class},
-                 new String[]{"id", "code", "savedDate", "editedDate"});
-        tbl.setTableInteractionListner(tableInteractionListner);
-        cPaginatedPanel1.init(service, searchListener, tbl);
+    public void setService(Service service) {
+        super.setService(service);
+        searchQueryUI.setServiceForQuery(service);
     }
 
-    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
-        @Override
-        public Object[] getTableData(Object row) {
-            Warehouse item = (Warehouse) row;
-            return new Object[]{item, item.getId(), item.getCode(), item.getSavedDate(), item.getEditedDate()};
-        }
-    };
-    private QueryManager searchListener = new QueryManager() {
-        @Override
-        public String getQuery() {
-            String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
-            return qry;
-        }
 
-        @Override
-        public Object[] getParams() {
-            return new Object[]{"%"};
-        }
-    };
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,17 +53,34 @@ public class WareHouseListUI extends ListViewPanel<Warehouse> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        wareHoueLV1 = new org.biz.erp.inventory.ui.list.WareHoueLV();
+        wareHouseSearchQueryUIPanel1 = new org.biz.erp.inventory.ui.list.WareHouseSearchQueryUIPanel();
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(wareHoueLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 1254, Short.MAX_VALUE)
+                    .addComponent(wareHouseSearchQueryUIPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(wareHouseSearchQueryUIPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(wareHoueLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+ 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.biz.erp.inventory.ui.list.WareHoueLV wareHoueLV1;
+    private org.biz.erp.inventory.ui.list.WareHouseSearchQueryUIPanel wareHouseSearchQueryUIPanel1;
     // End of variables declaration//GEN-END:variables
 }

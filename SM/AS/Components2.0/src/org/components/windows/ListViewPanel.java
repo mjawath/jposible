@@ -7,9 +7,9 @@ package org.components.windows;
 import app.utils.SystemUtil;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import org.biz.app.ui.util.StringUtility;
 import org.biz.dao.service.Service;
 import org.components.controls.CxTable;
 
@@ -19,6 +19,9 @@ import org.components.controls.CxTable;
  */
 public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListener{
 
+    protected ListViewUI listUI;
+    protected SearchQueryUIPanel searchQueryUI;
+    
     /**
      * Creates new form ListViewPanel
      */
@@ -29,16 +32,26 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
 
     @Override
     public void init() {
-        initComponents();
+//        initComponents();
         super.init();
-        
+
     }
 
     @Override
     public void setService(Service service) {
         super.setService(service);
-        init(tbl);
+//        init(listUI.tbl);
     }
+    private DetailPanel dp;
+    
+    public void setDetailPanel(DetailPanel de){        
+    this.dp=de;
+    }
+    
+    public DetailPanel getDetailPanel(){
+    return dp;
+    }
+            
     
     public void init(final CxTable tbl) {
         if (tbl == null) {
@@ -52,23 +65,26 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
                     if (obj == null) {
                         return;
                     }
-                    String tit = StringUtility.getHead(tabName, "LIST") + "DETAIL";
-                    DetailPanel dp = (DetailPanel) SystemUtil.getObj(tit);
-                    if (dp == null) {
-//                        ((AppMainWindow)SystemStatic.getMainWindow()).callMenu(tit);
-                        
-//                       DetailPanel dpx= Sessions.getObj(tit);
-                        return;
-                    }
+                   if(dp!=null){
                     dp.setSelectedBusObj(obj);
                     dp.setBusObject(obj);
-                    SystemUtil.bringTabToFront(tit);
-
+                    SystemUtil.bringTabToFront(dp);
+                }
                 }
             }
         });
+        
     }
 
+    @Override
+    public void updateEntityUI() {
+    
+        SystemUtil.setTools(null);
+        
+    }
+  
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,31 +94,46 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        searchPanel = new javax.swing.JPanel();
-        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbl = new org.components.controls.CxTable();
+        searchQueryUIPanel1 = new org.components.windows.SearchQueryUIPanel();
+        listViewUI1 = new org.components.windows.ListViewUI();
 
-        setLayout(null);
+        javax.swing.GroupLayout searchQueryUIPanel1Layout = new javax.swing.GroupLayout(searchQueryUIPanel1);
+        searchQueryUIPanel1.setLayout(searchQueryUIPanel1Layout);
+        searchQueryUIPanel1Layout.setHorizontalGroup(
+            searchQueryUIPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        searchQueryUIPanel1Layout.setVerticalGroup(
+            searchQueryUIPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 94, Short.MAX_VALUE)
+        );
 
-        searchPanel.setLayout(null);
-        searchPanel.add(cPaginatedPanel1);
-        cPaginatedPanel1.setBounds(10, 10, 520, 40);
-
-        add(searchPanel);
-        searchPanel.setBounds(20, 30, 570, 60);
-
-        jScrollPane2.setViewportView(tbl);
-
-        add(jScrollPane2);
-        jScrollPane2.setBounds(12, 102, 783, 340);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchQueryUIPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(listViewUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchQueryUIPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listViewUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JPanel searchPanel;
-    protected org.components.controls.CxTable tbl;
+    private org.components.windows.ListViewUI listViewUI1;
+    private org.components.windows.SearchQueryUIPanel searchQueryUIPanel1;
     // End of variables declaration//GEN-END:variables
 
     @Override

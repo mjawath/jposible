@@ -10,12 +10,9 @@
  */
 package org.biz.erp.inventory.ui;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.biz.app.ui.event.ButtonAction;
 import org.biz.app.ui.util.QueryManager;
-import org.biz.app.ui.util.TableUtil;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
@@ -25,10 +22,8 @@ import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.inventory.InventoryMonthlySummeryService;
-import org.biz.utility.date.DateAndTimeUtility;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
-import org.joda.time.DateTime;
 
 /**
  *
@@ -51,6 +46,7 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
         super.init();        
         initComponents();
 //        selectitem();
+        
         tbtnFind.addActionListener(findAction);
         tbl.init(InventoryJournal.class, new Class[]{Item.class, String.class,  String.class, String.class},
                  new String[]{"Item", "code","uom","qty"});
@@ -60,13 +56,22 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
     }
     
     private QueryManager searchListener = new QueryManager() {
-        @Override
+//        @Override
         public String getQuery() {
+
+                    Shop seleShop=tshop.getSelectedObject();
+        Warehouse warehouse=twarehouse.getSelectedObject();
+        List lst = service.getDao().getSummery(
+                seleShop==null?null: seleShop.getId(),warehouse==null?null:warehouse.getId());
+//        tbl.setModelCollection(lst);
+
+
+
             String qry ="";// "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
             return qry;
         }
 
-        @Override
+//        @Override
         public Object[] getParams() {
             return new Object[]{ };
         }
@@ -109,7 +114,7 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
         Warehouse warehouse=twarehouse.getSelectedObject();
         List lst = service.getDao().getSummery(
                 seleShop==null?null: seleShop.getId(),warehouse==null?null:warehouse.getId());
-        tbl.setModelCollection(lst);
+//        tbl.setModelCollection(lst);
 
         return null;
     }
@@ -124,8 +129,14 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
 
         cDatePicker1 = new org.components.controls.CDatePicker();
         tbtnFind = new org.components.controls.CButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl = new org.components.controls.CxTable();
+        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
+        jLabel1 = new javax.swing.JLabel();
         twarehouse = new com.components.custom.TextFieldWithPopUP<Warehouse>();
         tshop = new com.components.custom.TextFieldWithPopUP<Shop>();
+        jLabel2 = new javax.swing.JLabel();
 
         tbtnFind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,35 +144,81 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
             }
         });
 
-        twarehouse.setText("Warehouse");
+        jScrollPane2.setViewportView(tbl);
 
-        tshop.setText("Shop");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(cPaginatedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cPaginatedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLabel1.setText("Warehouse");
+
+        twarehouse.setText("");
+
+        tshop.setText("");
+
+        jLabel2.setText("Shop");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(260, 260, 260)
+                .addGap(72, 72, 72)
                 .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tbtnFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(198, 198, 198))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tbtnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(404, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tbtnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -175,22 +232,16 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
     }
 
     
-    
-    public void addToTable(List<InventoryJournal> ijs) {
-
-
-        for (InventoryJournal inventoryJournal : ijs) {
-            List<InventoryJournalLine> ijls = inventoryJournal.getLines();
-            if (ijls != null) {
-                for (InventoryJournalLine inventoryJournalLine : ijls) {
-                }
-            }
-        }
-
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CDatePicker cDatePicker1;
+    private org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    protected org.components.controls.CxTable tbl;
     private org.components.controls.CButton tbtnFind;
     private com.components.custom.TextFieldWithPopUP<Shop> tshop;
     private com.components.custom.TextFieldWithPopUP<Warehouse> twarehouse;

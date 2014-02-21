@@ -6,11 +6,10 @@
 package org.biz.erp.inventory.dao;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.biz.app.ui.util.StringUtility;
 import org.biz.dao.service.GenericDAO;
+import org.biz.dao.service.CQuery;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 
@@ -80,25 +79,51 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
 
         if (!StringUtility.isEmptyString(wid) && !StringUtility.isEmptyString(sid)) {
 
-            sel = sel
-                    + " where c.shop.id =?1 and  c.warehouse.id =?2  "
+            sel +=   " where c.shop.id =?1 and  c.warehouse.id =?2  "
                     + qr;
             return executeQuery(sel, new Object[]{sid, wid});
 
         } else if (!StringUtility.isEmptyString(wid) && StringUtility.isEmptyString(sid)) {
-            sel = sel
-                    + " where   c.warehouse.id =?1  "
+            sel +=   " where   c.warehouse.id =?1  "
                     + qr;
             return executeQuery(sel, new Object[]{wid});
 
         } else if (StringUtility.isEmptyString(wid) && !StringUtility.isEmptyString(sid)) {
-            sel = sel
-                    + " where   c.shop.id =?1  "
+            sel +=   " where   c.shop.id =?1  "
                     + qr;
             return executeQuery(sel, new Object[]{sid});
         }
-        sel = sel+ qr;
+        sel +=  qr;
         return ExecuteQuery(sel);
+        
+    }
+    //responsible for reutrning a string qury for pagiantion usage
+    public CQuery getSummerySql(String sid, String wid) {
+
+        String sel = " select   i, ijls.uom, sum(ijls.qty)    "
+                     + " from InventoryJournal  c left join c.lines ijls left join  ijls.item i   ";
+        String qr = " group by  i ,ijls.uom ";
+
+        if (!StringUtility.isEmptyString(wid) && !StringUtility.isEmptyString(sid)) {
+
+            sel +=   " where c.shop.id =?1 and  c.warehouse.id =?2  "
+                    + qr;
+            
+            return    getQuery(sel,wid,sid);
+
+        } else if (!StringUtility.isEmptyString(wid) && StringUtility.isEmptyString(sid)) {
+            sel +=   " where   c.warehouse.id =?1  "
+                    + qr;
+            return getQuery(sel,wid);
+
+        } else if (StringUtility.isEmptyString(wid) && !StringUtility.isEmptyString(sid)) {
+            sel +=   " where   c.shop.id =?1  "
+                    + qr;
+            return getQuery(sel, sid);
+        }
+         
+        return getQuery(sel, "");
+        
         
     }
 

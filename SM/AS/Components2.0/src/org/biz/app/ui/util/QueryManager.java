@@ -5,6 +5,7 @@
 package org.biz.app.ui.util;
 
 import java.util.List;
+import org.biz.dao.service.CQuery;
 import org.biz.dao.service.Service;
 
 /**
@@ -20,10 +21,15 @@ public abstract class QueryManager {
     private     int noOfPages;
     private List lastListPage;
     
-    public abstract String getQuery();
+    public  CQuery getCQuery(){
+    return null;
+    }
 
-    public abstract Object[] getParams();
-
+    public  CQuery getCountQuery(){
+    
+        return null;
+    }
+    
     public int getCurrentPage() {
         return currentPage;
     }
@@ -34,19 +40,19 @@ public abstract class QueryManager {
     
     public void getNextPage(){
         int next=currentPage+1;
-        if(next>count)return ;
-        lastListPage=service.moveToPage(getQuery(),getParams(), next);
+        if(next>count)return;
+        lastListPage=service.moveToPage(getCQuery(), next);
         currentPage++; 
     }
     
     public Long count(){
-        return count=service.getCount(getQuery(), getParams());
+        return count;//=service.getCount(getCQuery());
     }
     
     public void getPrePage(){
         int page=currentPage-1;
         if(page<0)return ;
-        lastListPage=service.moveToPage(getQuery(),getParams(),page);
+        lastListPage=service.moveToPage(getCQuery(),page);
         currentPage=page;
     }   
     
@@ -61,14 +67,15 @@ public abstract class QueryManager {
     public void getFirstPage(){
         int next=0;
         getCount();
-//        if(next>count)return null;
-        lastListPage=service.moveToPage(getQuery(),getParams(), next);
+//        if(next>count)return null
+        if(service==null)return;
+        lastListPage=service.moveToPage(getCQuery(), next);
         currentPage=0; 
     }
    
     public void getLastPage() {
         int next=noOfPages-1;
-        lastListPage=service.moveToPage(getQuery(),getParams(), next);
+        lastListPage=service.moveToPage(getCQuery(), next);
         currentPage=noOfPages; 
     }
 
@@ -77,8 +84,12 @@ public abstract class QueryManager {
         return service; 
     }
     
-    public void getCount(){
-     count=service.getCount(getQuery(), getParams());
+    public void getCount() {
+        if (service == null) {
+            count = 0;
+            return;
+        }
+         count = service.getCount(getCountQuery());
     }
     
     public void createPages(){

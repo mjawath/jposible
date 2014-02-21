@@ -568,10 +568,5 @@ public class GenericDAOUtil<T> {
 //    }
     
    
-    public static void  createEMFWithCustomProperties(){
-    
-        JPAUtil.createEMFWithCustomProperties();
-    }
-    
     
 }

@@ -12,8 +12,10 @@ import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.jexl2.MapContext;
 import org.biz.erp.inventory.dao.InventoryJournalDAO;
 import org.biz.erp.inventory.ui.BarCodeCreatorUI;
+import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Item;
+import org.biz.invoicesystem.entity.master.ItemVariation;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 
 /**
@@ -23,13 +25,43 @@ import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 public class TestMain {
 
     public static void main(String[] args) {
-    getsum();
+        createManyToMany();
     }
-    public static void getsum(){
-        InventoryJournalDAO dao=new InventoryJournalDAO();
-        
-        System.out.println("test dao "+dao.getSummery("123", "123"));
-    
+
+    private static void createManyToMany() {
+        ItemDAO dao = new ItemDAO();
+
+        Item item = new Item();
+        item.setId("123idxx");
+        for (int i = 0; i < 10; i++) {
+
+//            ItemVariation va = (ItemVariation)dao.findGeneric("1234sx" + i,ItemVariation.class);//new ItemVariation();
+            ItemVariation va = new ItemVariation();//)dao.findGeneric("1234sx" + i,ItemVariation.class);//new ItemVariation();
+            va.setId("1234xx" + i);
+            item.addVarient(va);
+
+        }
+        item.setUoms(null);
+
+        dao.save(item.getVariations());
+        for (int i = 0; i < 5; i++) {
+
+            ItemVariation va = (ItemVariation) dao.findGeneric("1234xx" + i, ItemVariation.class);//new ItemVariation();
+//            ItemVariation va =new  ItemVariation();//)dao.findGeneric("1234sx" + i,ItemVariation.class);//new ItemVariation();
+            va.setId("1234xx" + i);
+            va.setDescription("1234xxdes" + i);
+            item.addVarient(va);
+
+        }
+
+        dao.update(item);
+    }
+
+    public static void getsum() {
+        InventoryJournalDAO dao = new InventoryJournalDAO();
+
+        System.out.println("test dao " + dao.getSummery("123", "123"));
+
     }
 
     public static void mxin(String[] args) {
@@ -55,12 +87,12 @@ public class TestMain {
 // cus.setCode("asshole");
 
         /*java beans expresions
-        Expression e =new Expression(cus,"getCode",new Object[]{});
-        try {
-        System.out.println("value "+e.getValue());
-        } catch (Exception ex) {
-        Logger.getLogger(TestMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         Expression e =new Expression(cus,"getCode",new Object[]{});
+         try {
+         System.out.println("value "+e.getValue());
+         } catch (Exception ex) {
+         Logger.getLogger(TestMain.class.getName()).log(Level.SEVERE, null, ex);
+         }
          */
 
     }
@@ -75,29 +107,30 @@ public class TestMain {
 
 
     }
-    
     List xx;
-    void setList( List xx){
-    this.xx=xx;
+
+    void setList(List xx) {
+        this.xx = xx;
     }
-    public void createList(){
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
-    xx.add(new Item());
+
+    public void createList() {
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
+        xx.add(new Item());
     }
 }

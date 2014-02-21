@@ -4,8 +4,10 @@
  */
 package app.utils;
 
+import app.AppMainWindow;
 import java.util.Random;
 import javax.swing.JComponent;
+import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import org.components.util.Sessions;
 import org.components.windows.MainWindow;
@@ -105,26 +107,60 @@ public class SystemUtil {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainWindow jf = (MainWindow) Sessions.getObj("mainui");
+                MainWindow jf = SystemStatic.getMainWindow();//MainWindow) Sessions.getObj("mainui");
                 jf.addToTabpanelToUI(tab, tabname);
             }
         });
 
     }
-    
+
+    public static void addToMainWindow(final TabPanelUI tab, final String tabname,final String tablbl) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainWindow jf = SystemStatic.getMainWindow();
+                jf.addToTabPanel(tab, tabname,tablbl);
+            }
+        });
+
+    }
+
     public static MainWindow getMainWindow() {
         MainWindow jf = (MainWindow) Sessions.getObj("mainui");
         return jf;
+    }
+    
+    public static JToolBar getToolbar(){
+    
+        AppMainWindow mw=(AppMainWindow) getMainWindow();        
+        return mw.getToolbar();        
+    }
+    
+    public static void setTools(JComponent com){
+        getToolbar().removeAll();
+        if(com!=null){
+        getToolbar().add(com);
+        }        
+        getToolbar().revalidate();
+        getToolbar().repaint();
+        
     }
 
     public static void bringTabToFront( final String tabname) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainWindow jf = (MainWindow) Sessions.getObj("mainui");
+                MainWindow jf = SystemStatic.getMainWindow();// Sessions.getObj("mainui");
                 jf.addToTabpanelToUI( tabname,null);
             }
         });
+
+    }
+
+    public static void bringTabToFront(TabPanelUI tab) {
+
+        MainWindow jf =  getMainWindow();
+        jf.selectTab(tab.getTabName());
 
     }
 

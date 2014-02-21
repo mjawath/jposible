@@ -66,7 +66,7 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
     @Override
     public boolean isValideEntity() {
         if (Validator.isEmptyOrNull(tcode.getValue())) {
-            MessageBoxes.errormsg(tcode, "Item code Not valid", "Item code Not valid");
+            MessageBoxes.errormsg(this, "Item code Not valid", "Item code Not valid");
             return false;
         }
         return true;
@@ -81,19 +81,23 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
     private void initComponents() {
 
         tcode = new org.components.controls.CTextField();
+        cLabel1 = new org.components.controls.CLabel();
+
+        setLayout(null);
 
         tcode.setText("Code");
         add(tcode);
-        tcode.setBounds(40, 30, 131, 25);
+        tcode.setBounds(130, 50, 260, 25);
+
+        cLabel1.setText("Store Name");
+        add(cLabel1);
+        cLabel1.setBounds(20, 50, 104, 25);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.components.controls.CLabel cLabel1;
     private org.components.controls.CTextField tcode;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public String getTabName() {
-        return "Where house ";
-    }
 
     @Override
     public JPanel getJPanel() {
