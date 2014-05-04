@@ -291,6 +291,14 @@ public class PxTable<T> extends JTable implements IComponent {
        
     }
     
+    public String getSelectedModelID() {
+        Object ob = getSelectedObject();
+        if (ob != null && ob instanceof BusObj) {
+            return ((BusObj) ob).getId();
+        }
+        return null;
+    }
+
     /**
      * if row is not selected adds new model otherwise update the selected row
      * object

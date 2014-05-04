@@ -25,16 +25,19 @@ public class ListViewUI extends javax.swing.JPanel {
         pagePanel=cPaginatedPanel1;
     }
     
-        
-    public void initTable(){
-
-    }
     public void initPaging(QueryManager qman){
 //        cPaginatedPanel1.init(service, searchListener, tbl);
         queryManager=qman;
         if(pagePanel==null)return;
         pagePanel.init(qman, tbl);
     }
+
+    
+    public void setPaging(CPaginatedPanel pp,CxTable  table){
+        pagePanel=pp;
+        tbl=table;
+    }
+    
     
     public CxTable getTable(){
     return tbl;
@@ -44,11 +47,17 @@ public class ListViewUI extends javax.swing.JPanel {
     return cPaginatedPanel1;
     }
     
+    
     public void setSearchQueryUI(SearchQueryUIPanel queryPanel){
         if(queryPanel==null)return;
            QueryManager qm= queryPanel.getQueryManager();
        initPaging(qm);
     }
+    
+    public void findCommand(){
+        cPaginatedPanel1.findCommand();
+    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

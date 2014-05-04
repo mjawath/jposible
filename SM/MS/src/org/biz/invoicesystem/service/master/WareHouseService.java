@@ -4,8 +4,11 @@
  */
 package org.biz.invoicesystem.service.master;
 
+import app.utils.SystemStatic;
 import org.biz.dao.service.Service;
+import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.WareHouseDao;
+import org.components.util.Sessions;
 
 /**
  *
@@ -16,6 +19,7 @@ public class WareHouseService extends Service{
     WareHouseDao dao;
     public WareHouseService() {
     dao=new WareHouseDao();
+    Sessions.addToSession(WareHouseDao.class.getSimpleName(), dao);
     }
 
     @Override
@@ -23,5 +27,11 @@ public class WareHouseService extends Service{
         return dao;
     }
     
+    
+    public static WareHouseDao getDAO() {
+        
+        return (WareHouseDao)Sessions.getObj(WareHouseDao.class.getSimpleName());
+        
+    }
     
 }

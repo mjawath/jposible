@@ -5,8 +5,12 @@
  */
 package com.components.custom;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
 import org.biz.app.ui.event.ButtonAction;
+import org.components.util.ComponentFactory;
 
 /**
  *
@@ -14,12 +18,24 @@ import org.biz.app.ui.event.ButtonAction;
  */
 public class ControlPanel extends javax.swing.JPanel {
 
+    int x=0;
+    static int xx=0;
     /** Creates new form ControlPanel */
     public ControlPanel() {
         initComponents();
         btsave.addActionListener(comSave);
         tdelete.addActionListener(comDelete);
         tprint.addActionListener(comPrint);
+        
+          AbstractAction actxx=new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("F%%%%%%%%%%%%%%%%%%%%%%%%5555555555"+x);
+            }
+        };
+        x=xx++;        
+        ComponentFactory.setKeyAction(btsave, comSave, KeyEvent.VK_F5);
     }
     
     private CrudControl control;

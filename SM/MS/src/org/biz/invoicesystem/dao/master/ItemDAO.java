@@ -176,6 +176,12 @@ public class ItemDAO extends GenericDAO<Item> {
 //      
     }
     
+    public  List getByCodeOrDescriptionLike(String code){
+    
+        String qry ="select DISTINCT c from Item  c where   c.code like '" + code + "%'  or  c.description  like '%" + code + "%' or c.description  like '%"+code+"%'";
+        return ExecuteQuery(qry);
+    }
+    
     public static void main(String[] args) {
 
         ItemDAO i = new ItemDAO();

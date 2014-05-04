@@ -152,16 +152,12 @@ public class InventoryJournal  extends BusObj  {
         return entryDate;
     }
 
+    /**
+     * date of the document ,should be named as documentDate
+     * @param entryDate 
+     */
     public void setEntryDate(Date entryDate) {
         this.entryDate = entryDate;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Date getModifiedDate() {

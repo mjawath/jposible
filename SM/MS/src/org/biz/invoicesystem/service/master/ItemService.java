@@ -1,8 +1,8 @@
 package org.biz.invoicesystem.service.master;
 
-import app.utils.SystemUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.ui.list.master.ItemList;
@@ -14,7 +14,7 @@ public class ItemService extends Service{
     public  final static String qryName="item list search ";
     private ItemMasterUI2 itemMasterUI2;
     private ItemList itemList;
-    private ItemDAO dao;
+    private static ItemDAO dao=new ItemDAO();
  
     public ItemService() {
         dao=new ItemDAO();
@@ -25,36 +25,24 @@ public class ItemService extends Service{
         return dao;
     } 
 
-    @Override
-    public void initUI() {
-        itemMasterUI2 = new ItemMasterUI2();
-        itemList = new ItemList();
-        SystemUtil.addToMainWindow(itemMasterUI2, "ITEMDETAIL");
-        SystemUtil.addToMainWindow(itemList, "ITEMLIST");
-        new Thread() {
-            @Override
-            public void run() {
-                dao = new ItemDAO();
-                itemList.setService(ItemService.this);
-                itemMasterUI2.setService(ItemService.this);
-
-            }
-        }.start();
-    }
-    
-    public Service categoryServise(){
-            return new CategoryService();//get the service from cache
+ 
+    public Service categoryServise() {
+        return new CategoryService();//get the service from cache
     }
     
     
-    public List getItemForPopup(String qry){
-        ArrayList lst=new ArrayList();
-        Object ob= getByCode(qry);
-        if(ob!=null){
+    public static List getItemForPopup(String qry){
+        List lst=new ArrayList();
+        Object ob=dao.getByCode(qry);
+        if(ob!=null && !((Vector)ob).isEmpty()){
            lst.add(ob);
           return lst; 
         }
-        return getByCodeLike(qry);
+//        lst.addAll(dao.getByCodeLike(qry));
+        lst.addAll( dao.getByCodeOrDescriptionLike(qry));        
+        return lst;
+        
+        
     }
-    
-}
+ 
+    }

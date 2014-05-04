@@ -84,8 +84,8 @@ public class DetailPanel<T> extends TabPanelUI {
             }
         }, KeyEvent.VK_ESCAPE);
       
-
-        
+      
+ 
     }
     
     
@@ -161,7 +161,7 @@ public class DetailPanel<T> extends TabPanelUI {
             if (!isValideEntity()) {
                 return null;
             }
-            preSave();
+            preSave(toSave,toUpdate,toDelete);
 
 //            if (toSave.isEmpty()) {
 //                Tracer.printToOut("no object found to Save");
@@ -188,6 +188,11 @@ public class DetailPanel<T> extends TabPanelUI {
                 postCreate(toSave, toUpdate, toDelete);
             }
             else {
+                if(MessageBoxes.yesNo(this, "Current record already exist in the DATABASE Are you sure\n"
+                        + "You want to update the record", "Update Confirmation")==MessageBoxes.NO_OPTION){
+                    return null;
+                }
+                
                 ((BusObj) busObject).setId(key.toString());
                 toUpdate.add(busObject);
                 preUpdate(toSave, toUpdate, toDelete);
@@ -278,6 +283,10 @@ public class DetailPanel<T> extends TabPanelUI {
     public void postUpdate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
     }
 
+    public void postSave(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+    }
+    
+    
     public boolean isValideEntity() {
 //         busObject=UIToEty();       
 //        if(busObject==null)
@@ -301,7 +310,7 @@ public class DetailPanel<T> extends TabPanelUI {
 
     }
 
-    public void preSave() {
+    public void preSave(ArrayList toSave,ArrayList toUpdate,ArrayList toDelete) {
     }
 
     public T getBusObject() {

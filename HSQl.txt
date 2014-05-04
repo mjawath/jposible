@@ -1,0 +1,14 @@
+username SA
+password -------niothing 
+jdbc:hsqldb:file:F:\jposible\jposible\hsql\mydb
+
+
+this will create the mydb database if not exist on specified location btw to create the db on current location dont specify any path just enter dbname
+
+
+cons :-
+
+currently facing problems with CurrentTimestamp retreval
+
+could not set up server mode
+keeping data as protected , cached state database without shwing sql

@@ -19,7 +19,7 @@ public class SearchQueryUIPanel extends javax.swing.JPanel {
      * Creates new form SearchQueryUIPanel
      */
     public SearchQueryUIPanel() {
-        initComponents();
+//        initComponents();
         init();
     }
     
@@ -52,6 +52,15 @@ public class SearchQueryUIPanel extends javax.swing.JPanel {
         };
     
 
+     
+     public void findAction(){
+         //get list view
+         // listview get the pageer
+         //pager e=> execute the find action
+         if(listView==null)return;
+         listView.findCommand();
+     }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +87,12 @@ public class SearchQueryUIPanel extends javax.swing.JPanel {
 
     public void setQueryManager(QueryManager qm) {
         this.qm = qm;
+    }
+    
+    private ListViewUI listView;
+    
+    public void setListView(ListViewUI listView){
+        this.listView = listView; 
     }
     
 }

@@ -24,7 +24,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.biz.MSResources;
 import org.biz.app.ui.util.Command;
-import org.biz.app.ui.util.ComponentFactory;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
@@ -141,6 +140,8 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         initUnitTable();
         initFileChooser();
+        clear();
+
 
     }
 
@@ -188,8 +189,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public void events() {
 
 
-
-
+            
         try {
             //item code listener
             tItemcode.addKeyListener(new KeyAdapter() {
@@ -277,25 +277,30 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
 
 
-            addToFocus(tItemcode);
-            addToFocus(tItemDescription);
-//            addToFocus(tSupplierItem);
-            addToFocus(tunitsymbot);
-            addToFocus(tunitprice);
-            addToFocus(tunittype);
-            addToFocus(tContainsQty);
-//            addToFocus(tmodel);
-//            addToFocus(tItemCategory);
-//            addToFocus(tItemCostPrice);
-//            addToFocus(tItemCostPrice);
-
+        setTabOrder();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+    
+    public void setTabOrder(){
+        addToFocus(tItemcode);
+        addToFocus(tItemDescription);
+        addToFocus(tItemCategory);
+        addToFocus(tunitsymbot);
+        addToFocus(tunitprice);
+        addToFocus(tunittype);
+        addToFocus(tContainsQty);
+//            addToFocus(tmodel);
+//            addToFocus(tItemCategory);
+//            addToFocus(tItemCostPrice);
+//            addToFocus(tItemCostPrice);
 
+    }
+
+    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // - barcode -
@@ -397,6 +402,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cPanel4 = new org.components.containers.CPanel();
         cLabel7 = new org.components.controls.CLabel();
         cLabel13 = new org.components.controls.CLabel();
+        cc = new org.components.controls.CButton();
 
         tItemTrakSerial.setText("Track Serial Number");
         tItemTrakSerial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -420,7 +426,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         add(tItemCommissionValue);
         tItemCommissionValue.setBounds(200, 420, 90, 25);
         add(tSupplierItem);
-        tSupplierItem.setBounds(80, 140, 210, 30);
+        tSupplierItem.setBounds(80, 170, 210, 30);
         add(tItemDescription);
         tItemDescription.setBounds(80, 80, 210, 25);
 
@@ -454,7 +460,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         jLabel21.setText("Supplier");
         add(jLabel21);
-        jLabel21.setBounds(20, 150, 50, 20);
+        jLabel21.setBounds(20, 180, 50, 20);
 
         pnlUom.setMinimumSize(new java.awt.Dimension(150, 150));
         pnlUom.setPreferredSize(new java.awt.Dimension(600, 400));
@@ -652,7 +658,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         jLabel4.setText("Category");
         add(jLabel4);
-        jLabel4.setBounds(10, 270, 60, 14);
+        jLabel4.setBounds(10, 130, 60, 14);
         add(tItemReOrder);
         tItemReOrder.setBounds(80, 510, 210, 25);
 
@@ -709,19 +715,19 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         cLabel8.setText("Type");
         add(cLabel8);
-        cLabel8.setBounds(20, 180, 40, 20);
+        cLabel8.setBounds(20, 210, 40, 20);
         add(ttype);
-        ttype.setBounds(80, 180, 210, 30);
+        ttype.setBounds(80, 210, 210, 30);
 
         cLabel9.setText("Model");
         add(cLabel9);
-        cLabel9.setBounds(10, 220, 50, 20);
+        cLabel9.setBounds(10, 250, 50, 20);
         add(ttype1);
-        ttype1.setBounds(80, 220, 210, 30);
+        ttype1.setBounds(80, 250, 210, 30);
 
         tItemCategory.setText("");
         add(tItemCategory);
-        tItemCategory.setBounds(80, 260, 210, 30);
+        tItemCategory.setBounds(80, 120, 210, 30);
 
         cPanel1.setLayout(null);
 
@@ -750,47 +756,15 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cLabel13.setText("Item Master");
         add(cLabel13);
         cLabel13.setBounds(20, 10, 260, 25);
+        add(cc);
+        cc.setBounds(980, 120, 37, 19);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public Item uiToEty(Item i) throws Exception {
-        try {
-            i.setId(EntityService.getEntityService().getKey(""));
-            i.setCode(UIEty.tcToStr(tItemcode));
-            i.setDescription(UIEty.tcToStr(tItemDescription));
-//            i.setCategory(UIEty.cmbtostr(tItemCategory)); //    combo
-            i.setSupplierId(UIEty.cmbtostr(tSupplierItem)); //    combo
-            i.setCost(UIEty.tcToDble0(tItemCostPrice));//tItemCostPrice
-            i.setLandCost(UIEty.tcToDble0(tItemLandingCost)); //tItemLandingCost
-            i.setMinSalesPrice(UIEty.tcToDble0(tItemMinimumPrice)); //tItemMinimumPrice
-            i.setDiscount(UIEty.tcToDble0(tItemdiscount));//tItemdiscount
-            i.setDiscountValue(UIEty.tcToDble0(tItemdiscValue));
-            i.setCommission(UIEty.tcToDble0(tItemCommission));//tItemCommission
-            i.setCommissionValue(UIEty.tcToDble0(tItemCommissionValue));//tItemCommission
-            i.setLocation(UIEty.cmbtostr(tItemLocation));//tItemLocation   combo
-            i.setMinStock(UIEty.tcToDble0(tItemMinimumStock));//tItemMinimumStock
-            i.setReOrder(UIEty.tcToDble0(tItemReOrder)); //tItemReOrder
-            i.setTrackSerial(tItemTrakSerial.isSelected());  //tItemTrakSerial chk
-            i.setTrackExpiry(tItemTrakExpiry.isSelected());  //tItemTrakExpiry chk
-            i.setNonStockItems(tItemTrakNonStockItem.isSelected());//tItemTrakNonStockItem chk
-            i.setManufactItem(tItemTrakManfctringItem.isSelected());//tItemTrakManfctringItem chk      
-            i.setInactive(tItemTrakInactive.isSelected());//tItemTrakInactive chk      
-            i.setWholesalePrice(UIEty.tcToDble0(tWholesalePrice));//tWholesalePrice
-            i.setMetaInfo(tMetaInfo.getText());  //tMetaInfo
-            i.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, i.getId()));
-            i.setModel(UIEty.tcToStr(tmodel));
-            i.setType(UIEty.tcToStr(ttype));
-
-            i.setCategory(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-        return i;
-    }
-
+  
     //***************persistence logic*************************//
-    public void preSave() {
+    @Override
+    public void preSave(ArrayList toSave,ArrayList toUpdate,ArrayList toDelete) {
     }
 
     @Override
@@ -860,10 +834,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
     private UOM createUOM() {
         UOM uom = new UOM();
-        UOM object = (UOM) TableUtil.getSelectedTableObject(tblunitprices);
-        if (object != null) {
-            uom = object;
-        }
+        uom.setId(tblunitprices.getSelectedModelID());
         uom.setCode(tunitsymbot.getText());
         int ty = tunittype.getSelectedIndex();
         uom.setType((byte) ty);
@@ -893,12 +864,33 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         //check code ,duplicate , primary duplicate , multi 
 
         List<UOM> uoms = tblunitprices.getModelCollection();
+        if (uoms != null && uoms.size() <= 2) {
+            MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
+            focusManager.setTemCom(tunitsymbot);
+            return;
+        }
+        boolean isPrim=false;
+        boolean isCar=false;
         for (Iterator<UOM> it = uoms.iterator(); it.hasNext();) {
             UOM uom = it.next();
             if (!isValidUOM(uom)) {
                 it.remove();
             }
+            if(uom.isPrimary()){
+            isPrim=true;
+            }
+            if(uom.isCarton()){
+            isCar=true;
+            }
+                       
         }
+        
+        if(!(isPrim && isCar)){
+            MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
+            focusManager.setTemCom(tunitsymbot);
+            return;
+        }
+        
 
     }
 
@@ -971,25 +963,25 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 //        item.setId(EntityService.getEntityService().getKey(""));
         item.setCode(UIEty.tcToStr(tItemcode));
         item.setDescription(UIEty.tcToStr(tItemDescription));
-        item.setCategory(tItemCategory.getSelectedObject()); //    combo
-        item.setSupplierId(UIEty.cmbtostr(tSupplierItem)); //    combo
-        item.setCost(UIEty.tcToDouble(tItemCostPrice));//tItemCostPrice
-        item.setLandCost(UIEty.tcToDouble(tItemLandingCost)); //tItemLandingCost
-        item.setMinSalesPrice(UIEty.tcToDouble(tItemMinimumPrice)); //tItemMinimumPrice
-        item.setDiscount(UIEty.tcToDouble(tItemdiscount));//tItemdiscount
+        item.setCategory(tItemCategory.getSelectedObject());     
+        item.setSupplierId(UIEty.cmbtostr(tSupplierItem));    
+        item.setCost(UIEty.tcToDouble(tItemCostPrice));
+        item.setLandCost(UIEty.tcToDouble(tItemLandingCost)); 
+        item.setMinSalesPrice(UIEty.tcToDouble(tItemMinimumPrice)); 
+        item.setDiscount(UIEty.tcToDouble(tItemdiscount));
         item.setDiscountValue(UIEty.tcToDouble(tItemdiscValue));
-        item.setCommission(UIEty.tcToDouble(tItemCommission));//tItemCommission
-        item.setCommissionValue(UIEty.tcToDouble(tItemCommissionValue));//tItemCommission
-        item.setLocation(UIEty.cmbtostr(tItemLocation));//tItemLocation   combo
-        item.setMinStock(UIEty.tcToDouble(tItemMinimumStock));//tItemMinimumStock
-        item.setReOrder(UIEty.tcToDouble(tItemReOrder)); //tItemReOrder
-        item.setTrackSerial(tItemTrakSerial.isSelected());  //tItemTrakSerial chk
-        item.setTrackExpiry(tItemTrakExpiry.isSelected());  //tItemTrakExpiry chk
-        item.setNonStockItems(tItemTrakNonStockItem.isSelected());//tItemTrakNonStockItem chk
-        item.setManufactItem(tItemTrakManfctringItem.isSelected());//tItemTrakManfctringItem chk      
-        item.setInactive(tItemTrakInactive.isSelected());//tItemTrakInactive chk      
-        item.setWholesalePrice(UIEty.tcToDouble(tWholesalePrice));//tWholesalePrice
-        item.setMetaInfo(tMetaInfo.getText());  //tMetaInfo
+        item.setCommission(UIEty.tcToDouble(tItemCommission));
+        item.setCommissionValue(UIEty.tcToDouble(tItemCommissionValue));
+        item.setLocation(UIEty.cmbtostr(tItemLocation));   
+        item.setMinStock(UIEty.tcToDouble(tItemMinimumStock));
+        item.setReOrder(UIEty.tcToDouble(tItemReOrder)); 
+        item.setTrackSerial(tItemTrakSerial.isSelected());   
+        item.setTrackExpiry(tItemTrakExpiry.isSelected());   
+        item.setNonStockItems(tItemTrakNonStockItem.isSelected()); 
+        item.setManufactItem(tItemTrakManfctringItem.isSelected());       
+        item.setInactive(tItemTrakInactive.isSelected());      
+        item.setWholesalePrice(UIEty.tcToDouble(tWholesalePrice));
+        item.setMetaInfo(tMetaInfo.getText());  
         item.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, item.getId()));
         item.setModel(UIEty.tcToStr(tmodel));
         item.setType(UIEty.tcToStr(ttype));
@@ -1191,6 +1183,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private org.components.containers.CPanel cPanel3;
     private org.components.containers.CPanel cPanel4;
     private org.components.controls.CScrollPane cScrollPane1;
+    private org.components.controls.CButton cc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -1254,7 +1247,42 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private org.components.controls.CComboBox tunittype;
     // End of variables declaration//GEN-END:variables
 
-    //////////////////////////////////////////////
+     public Item uiToEty(Item i) throws Exception {
+        try {
+            i.setId(EntityService.getEntityService().getKey(""));
+            i.setCode(UIEty.tcToStr(tItemcode));
+            i.setDescription(UIEty.tcToStr(tItemDescription));
+//            i.setCategory(UIEty.cmbtostr(tItemCategory)); //    combo
+            i.setSupplierId(UIEty.cmbtostr(tSupplierItem)); //    combo
+            i.setCost(UIEty.tcToDble0(tItemCostPrice));//tItemCostPrice
+            i.setLandCost(UIEty.tcToDble0(tItemLandingCost)); //tItemLandingCost
+            i.setMinSalesPrice(UIEty.tcToDble0(tItemMinimumPrice)); //tItemMinimumPrice
+            i.setDiscount(UIEty.tcToDble0(tItemdiscount));//tItemdiscount
+            i.setDiscountValue(UIEty.tcToDble0(tItemdiscValue));
+            i.setCommission(UIEty.tcToDble0(tItemCommission));//tItemCommission
+            i.setCommissionValue(UIEty.tcToDble0(tItemCommissionValue));//tItemCommission
+            i.setLocation(UIEty.cmbtostr(tItemLocation));//tItemLocation   combo
+            i.setMinStock(UIEty.tcToDble0(tItemMinimumStock));//tItemMinimumStock
+            i.setReOrder(UIEty.tcToDble0(tItemReOrder)); //tItemReOrder
+            i.setTrackSerial(tItemTrakSerial.isSelected());  //tItemTrakSerial chk
+            i.setTrackExpiry(tItemTrakExpiry.isSelected());  //tItemTrakExpiry chk
+            i.setNonStockItems(tItemTrakNonStockItem.isSelected());//tItemTrakNonStockItem chk
+            i.setManufactItem(tItemTrakManfctringItem.isSelected());//tItemTrakManfctringItem chk      
+            i.setInactive(tItemTrakInactive.isSelected());//tItemTrakInactive chk      
+            i.setWholesalePrice(UIEty.tcToDble0(tWholesalePrice));//tWholesalePrice
+            i.setMetaInfo(tMetaInfo.getText());  //tMetaInfo
+            i.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, i.getId()));
+            i.setModel(UIEty.tcToStr(tmodel));
+            i.setType(UIEty.tcToStr(ttype));
+
+            i.setCategory(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return i;
+    }
+/////////////////////////////////////////////
     public Supplier getSupplier(String typedName) throws Exception {
         Supplier s = null;
         try {

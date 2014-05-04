@@ -21,7 +21,7 @@ public class Service {
     public Service() {
         
     }
-
+    
     /**
      *
      */
@@ -91,9 +91,7 @@ public class Service {
     public String getUniqueKey(){
             return EntityService.getKey("Test");
     }
-    
-    public void initUI(){
-    }
+
     
     public void PrintTracer(String msg){
 //        Tracer.printToOut("servies are set ");
@@ -117,4 +115,4 @@ public class Service {
     }
     
     
-}
+   }

@@ -11,11 +11,16 @@ import javax.persistence.Query;
  * @author jawath
  */
 public class CQuery  {
+    private String qryString; 
 
     public CQuery(Query qry) {
     this.query=qry;
     }
     
+    public CQuery(String qry,Object[] param) {
+     qryString=qry;
+        setQuery(qry, param);
+    }
     
     private Query query;
     
@@ -23,9 +28,18 @@ public class CQuery  {
 //            javax.persistence.Query qu = GenericDAOUtil.getQuery(sq,param);
             return query;
     }
+
+    public String getQryString() {
+        return qryString;
+    }
     
-    public void setQuery(){
     
+    
+    public void setQuery(String qry,Object[] param){
+             qryString=qry;
+
+            query = GenericDAOUtil.getQuery(qry,param);
+            
     }
     
 }

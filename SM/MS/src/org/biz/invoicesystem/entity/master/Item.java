@@ -568,9 +568,13 @@ public class Item extends BusObj{
 
         for (UOM uom : uoms) {
 
-            if (!StringUtility.isSameString(x.getId(), uom.getId()) && ((uom.isPrimary() && x.isPrimary())
-                    | StringUtility.isSameString(uom.getCode(), x.getCode()))) {
-                return false;
+            if (!StringUtility.isSameString(x.getId(), uom.getId())) {
+                if (StringUtility.isSameString(uom.getCode(), x.getCode())) {
+                    return false;
+                } else if (x.getType() == UOM.UOMType.Primary.getValue() && x.getType() == uom.getType() || 
+                        x.getType() == UOM.UOMType.Carton.getValue() && x.getType() == uom.getType()) {
+                    return false;
+                }
             }
 
         }

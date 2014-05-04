@@ -37,16 +37,15 @@ public class UOM extends BusObj {
     
     public UOM(String ID ,String code,double mult,byte type){
     super();
-    setId(id);
-    setCode(code);
-    
+    setId(ID);
+    setCode(code);    
     setMulti(mult);
     setType(type);
             
     }
     public enum UOMType {
 
-        Primary((byte)1), Carton((byte) 0), WholeSale((byte) 2), Other((byte) 3);
+     Carton((byte) 0)   ,Primary((byte)1) , WholeSale((byte) 2), Other((byte) 3);
         byte value;
 
         UOMType() {

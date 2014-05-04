@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
+import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
@@ -74,6 +75,7 @@ import org.components.windows.DetailPanel;
         setTabOrder();
         //controll pressed
 
+      tuom.setEditable(false);
 
     }
 
@@ -117,7 +119,8 @@ import org.components.windows.DetailPanel;
         //detailpanel init
         //detail panel events
 
-        titem.initPopup(Item.class, new Class[]{String.class, String.class, String.class}, new String[]{"code", "id", "desc"}, "code", new PopupListner() {
+        titem.initPopup(Item.class, new Class[]{String.class, String.class}, 
+                new String[]{"code", "desc"}, "code", new PopupListner() {
             @Override
             public List searchItem(Object searchQry) {
                 return itemser.getItemForPopup(titem.getText());
@@ -127,11 +130,11 @@ import org.components.windows.DetailPanel;
             @Override
             public Object[] getTableData(Object obj) {
                 Item item = (Item) obj;
-                return new Object[]{item, item.getId(), item.getCode()};
+                return new Object[]{item,  item.getCode(),  item.getDescription()};
             }
         });
 
-        tuom.initPopup(UOM.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code", new PopupListner() {
+        tuom.initPopup(UOM.class, new Class[]{String.class}, new String[]{"code"}, "code", new PopupListner() {
             @Override
             public List searchItem(Object searchQry) {
                 return null;
@@ -141,7 +144,7 @@ import org.components.windows.DetailPanel;
             @Override
             public Object[] getTableData(Object obj) {
                 UOM item = (UOM) obj;
-                return new Object[]{item, item.getId(), item.getCode()};
+                return new Object[]{item , item.getCode()};
             }
         });
 
@@ -170,7 +173,7 @@ import org.components.windows.DetailPanel;
 
     private void setTabOrder() {
         addToFocus(titem);
-        addToFocus(tuom);
+//        addToFocus(tuom);
         addToFocus(tqty);
         addToFocus(tcode);
         addToFocus(tdocref);
@@ -233,7 +236,8 @@ import org.components.windows.DetailPanel;
                 return true;
             }
         });
-        
+       
+              
     }
     
     
@@ -310,13 +314,16 @@ import org.components.windows.DetailPanel;
         InventoryJournal ij = new InventoryJournal();
         ij.setCode(tcode.getValue());
         ij.setDocRefNo(tdocref.getValue());
-        ij.setWarehouse(twarehouse.getSelectedObject());
+        ij.setWarehouse(twarehouse.   getSelectedObject());
+        ij.setShop(tshop.getSelectedObject());
         List list = tblLine.getModelCollection();
         ij.setLines(list);
+        ij.setEntryDate(tdate.getDate());//todo 
+
         //set line values according to in/out
-        if (ttransactionType.getSelectedIndex() == 0) {
-            ij.setTransactionOutType();            
-        }
+//        if (ttransactionType.getSelectedIndex() == 0) {
+//            ij.setTransactionOutType();            
+//        }
         return ij;
     }
 
@@ -326,6 +333,7 @@ import org.components.windows.DetailPanel;
         tdocref.setValue(obj.getDocRefNo());
         twarehouse.setSelectedObject(obj.getWarehouse());
         obj.setTransactionLinePlus();
+        tdate.setDate(obj.getEntryDate());//todo 
         tblLine.setModelCollection(obj.getLines());
         tblLine.addNewToLast();
         selectedObject=obj;
@@ -338,6 +346,7 @@ import org.components.windows.DetailPanel;
         tqty.clear();
         titem.clear();
         tuom.clear();
+        tdate.setDate(null);
         
         if (tshop.getSelectedObject() == null) {
             Shop shop = shopservice.getDao().find("123");
@@ -350,8 +359,11 @@ import org.components.windows.DetailPanel;
 
         tblLine.addNewToLast();
         selectedObject=null;
+        clearTask.invoke();
     }
 
+     Command clearTask=new Command();
+    
     @Override
     public void setService(Service service) {
         itemser = new ItemService();
@@ -376,12 +388,7 @@ import org.components.windows.DetailPanel;
       tshop.setSelectedObject((Shop)objs[0]);  
       twarehouse.setSelectedObject((Warehouse)objs[1]);  
     }
-    
-    public void clearAndInit(){
-    tcode.setValue("");//get new code for   
-    
-    }
-    
+      
     @Override
     public boolean isValideEntity() {
 
@@ -407,6 +414,17 @@ import org.components.windows.DetailPanel;
         return true;
     }
 
+    @Override
+    public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {
+        
+       
+        if (ttransactionType.getSelectedIndex() == 0) {
+            busObject.setTransactionOutType();
+        }
+    }
+    
+    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -423,13 +441,17 @@ import org.components.windows.DetailPanel;
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
         tcode = new org.components.controls.CTextField();
         tdocref = new org.components.controls.CTextField();
-        twarehouse = new com.components.custom.TextFieldWithPopUP<Warehouse>();
         tshop = new com.components.custom.TextFieldWithPopUP<Shop>();
         ttransactionType = new org.components.controls.CComboBox();
         cLabel1 = new org.components.controls.CLabel();
         cLabel2 = new org.components.controls.CLabel();
         cLabel3 = new org.components.controls.CLabel();
         cLabel4 = new org.components.controls.CLabel();
+        xx = new org.components.controls.CButton();
+        tdate = new org.components.controls.CDatePicker();
+        twarehouse = new org.biz.ui.master.list.WareHousePopup();
+
+        setLayout(null);
 
         lineDetailPanel.setBackground(new java.awt.Color(153, 255, 0));
         lineDetailPanel.setLayout(null);
@@ -472,15 +494,11 @@ import org.components.windows.DetailPanel;
         add(jScrollPane2);
         jScrollPane2.setBounds(10, 110, 720, 230);
         add(gridControllerPanel1);
-        gridControllerPanel1.setBounds(740, 110, 90, 230);
+        gridControllerPanel1.setBounds(730, 110, 90, 230);
         add(tcode);
         tcode.setBounds(30, 380, 150, 25);
         add(tdocref);
         tdocref.setBounds(190, 380, 150, 25);
-
-        twarehouse.setText("");
-        add(twarehouse);
-        twarehouse.setBounds(30, 420, 150, 40);
 
         tshop.setText("");
         add(tshop);
@@ -506,6 +524,12 @@ import org.components.windows.DetailPanel;
         cLabel4.setText("Doc");
         add(cLabel4);
         cLabel4.setBounds(10, 350, 104, 25);
+        add(xx);
+        xx.setBounds(840, 350, 39, 19);
+        add(tdate);
+        tdate.setBounds(350, 380, 140, 22);
+        add(twarehouse);
+        twarehouse.setBounds(20, 440, 150, 30);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;
@@ -520,12 +544,14 @@ import org.components.windows.DetailPanel;
     private org.components.containers.CPanel lineDetailPanel;
     private org.components.controls.ModelEditableTable tblLine;
     private org.components.controls.CTextField tcode;
+    private org.components.controls.CDatePicker tdate;
     private org.components.controls.CTextField tdocref;
     private com.components.custom.TextFieldWithPopUP<Item> titem;
     private org.components.controls.CTextField tqty;
     private com.components.custom.TextFieldWithPopUP<Shop> tshop;
     private org.components.controls.CComboBox ttransactionType;
     private com.components.custom.TextFieldWithPopUP<UOM> tuom;
-    private com.components.custom.TextFieldWithPopUP<Warehouse> twarehouse;
+    private org.biz.ui.master.list.WareHousePopup twarehouse;
+    private org.components.controls.CButton xx;
     // End of variables declaration//GEN-END:variables
 }

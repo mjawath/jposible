@@ -98,7 +98,9 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             public void resultTask(Object objs) {
                 if(objs==null)return;
                 noOfPages();
-                ctable.setModelCollection(((QueryManager)objs).getList() );                
+                ctable.setModelCollection(((QueryManager)objs).getList() );
+                ((QueryManager)objs).postQuery();
+
             }
         };
     
@@ -188,6 +190,9 @@ public class CPaginatedPanel extends javax.swing.JPanel {
   
     public void setTable(CxTable ctable){
         this.ctable=ctable;
+    }
+    public void findCommand(){
+        tFind.doClick();
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

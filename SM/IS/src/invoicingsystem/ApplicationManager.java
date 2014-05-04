@@ -54,8 +54,9 @@ public class ApplicationManager {
                 DetailPanel item=new ItemMasterUI2();
 //                initDetailUI(ItemService.class, "Item Detail " ,"ItemDetail",item);
 //                initListUI(ItemService.class, "Item List " ,"ItemList",new ItemList(),item);
-                initUI(ItemService.class, "Item Detail " ,"ItemDetail",ItemMasterUI2.class);
+//                initUI(ItemService.class, "Item Detail " ,"ItemDetail",ItemMasterUI2.class);
                 initUI(ItemService.class, "Item", ItemMasterUI2.class, ItemList.class);
+                initUI(CategoryService.class, "Category", CategoryUI.class, CategoryListUI.class);
 //                initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
                 initUI(InventoryJournalService.class, "InventoryJournal", InventoryJournalUI.class, InventoryJournalListViewUI.class);
 //                initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
@@ -106,7 +107,7 @@ public class ApplicationManager {
 
         }
         catch (Exception e) {
-            Tracer.exceptionOutPrint(e.getMessage());
+            Tracer.exceptionOutPrint("ApplicationManager> initUI ",e);
         }
         
     }

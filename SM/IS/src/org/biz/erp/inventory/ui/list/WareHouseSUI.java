@@ -12,13 +12,13 @@ import org.components.windows.SearchQueryUIPanel;
  *
  * @author jawath
  */
-public class WareHouseSearchQueryUIPanel extends SearchQueryUIPanel {
+public class WareHouseSUI extends SearchQueryUIPanel {
 
     
     /**
      * Creates new form SearchQueryUIPanel
      */
-    public WareHouseSearchQueryUIPanel() {
+    public WareHouseSUI() {
         super();
         initComponents();
         qms=qm;
@@ -31,7 +31,7 @@ public class WareHouseSearchQueryUIPanel extends SearchQueryUIPanel {
             public CQuery getCQuery() {
                 if(getService()==null)return null;
                 
-                return getService().getQueryByCodeLike("");
+                return getService().getQueryByCodeLike(tsearch.getText());
             }
         
         };
@@ -47,43 +47,35 @@ public class WareHouseSearchQueryUIPanel extends SearchQueryUIPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        tsearch = new javax.swing.JTextField();
 
-        jLabel1.setText("jLabel1");
-
-        jButton1.setText("jButton1");
-
-        jTextField1.setText("jTextField1");
+        jLabel1.setText("Enter WareHouse detail: -");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(175, 175, 175))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(315, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField tsearch;
     // End of variables declaration//GEN-END:variables
 
 }

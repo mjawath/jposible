@@ -103,7 +103,15 @@ public class GenericDAOUtil<T> {
         return ExecuteQuery(qry, cls);
 
     }
+        
+    public static <T> List<T> getByPropertyLike(String property, String key, Class cls) {
 
+        String qry = "select c from  " + cls.getSimpleName() + " c  where c." + property + " like '" + key + "%'";
+        return ExecuteQuery(qry, cls);
+
+    }
+
+    
     public EntityService getES() {
         return EntityService.getEntityService();
     }
@@ -154,6 +162,26 @@ public class GenericDAOUtil<T> {
                 getOrderBy(orderby));
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         return query.getResultList();
+    }
+    
+      public static <T> Query getAllQuery(String orderby, Class cls) {
+//        getEm().clear();
+        
+        
+        Query query = createEmNew().createQuery("select c from " + cls.getSimpleName() + " c   " +
+                getOrderBy(orderby));
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        return query;
+    }
+
+    public static <T> Query getAllCount(String orderby, Class cls) {
+//        getEm().clear();
+
+
+        Query query = createEmNew().createQuery("select count(c) from " + cls.getSimpleName() + " c   "
+                + getOrderBy(orderby));
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        return query;
     }
     
     public static String getOrderBy(String orderby){
@@ -442,9 +470,11 @@ public class GenericDAOUtil<T> {
         Query q = createEmNew().createQuery(qryString);
         int x = 1;
 
-        for (Object o : ps) {
-            q.setParameter(x, o);
-            x++;
+        if (ps != null) {
+            for (Object o : ps) {
+                q.setParameter(x, o);
+                x++;
+            }
         }
         return q;
     }
@@ -537,8 +567,20 @@ public class GenericDAOUtil<T> {
     }
 
     public static <T> Date currentTime() {
-        Date date = (Timestamp) createEmNew().createNativeQuery("select CURRENT_TIMESTAMP  ").getSingleResult();
+        // what is the db 
+        //db ==hsql then
+        //db ==mysqla then
+        final Object singleResult = createEmNew().createNativeQuery("select CURRENT_TIMESTAMP  ").getSingleResult();
+        if(singleResult==null )return null;
+        if((singleResult instanceof Timestamp)){
+        Date date = (Timestamp) singleResult;
         return date;
+        }
+        if(singleResult instanceof String){
+        Date date =Timestamp.valueOf(singleResult.toString());
+        return date;
+        }
+        return null;
     }
 
     /*

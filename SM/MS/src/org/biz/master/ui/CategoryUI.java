@@ -4,7 +4,6 @@
  */
 package org.biz.master.ui;
 
-import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Category;
 import org.biz.invoicesystem.service.master.CategoryService;
@@ -31,9 +30,9 @@ public class CategoryUI extends DetailPanel<Category> {
         clear();
     }
     
-    public void clear(){
-    tcode.clear();
-    tdesc.clear();
+    public void clear() {
+        tcode.clear();
+        tdesc.clear();
     }
 
     public void setService(Service service) {
@@ -43,14 +42,14 @@ public class CategoryUI extends DetailPanel<Category> {
 
     public Category getBusObject() {
         Category category = new Category();
-        category.setCode(UIEty.tcToStr(tcode));
-        category.setDescription(UIEty.tcToStr(tdesc));
+        category.setCode(tcode.getValue());
+        category.setDescription(tdesc.getValue());
         return category;
     }//todo crud control
 
     public void setBusObject(Category obj) {
-        tcode.setText(obj.getCode());
-        tdesc.setText(obj.getDescription());
+        tcode.setValue(obj.getCode());
+        tdesc.setValue(obj.getDescription());
     }    
     
     @SuppressWarnings("unchecked")

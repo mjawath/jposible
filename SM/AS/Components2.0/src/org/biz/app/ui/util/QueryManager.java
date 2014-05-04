@@ -19,7 +19,7 @@ public abstract class QueryManager {
     private     long count=0;
     private Service service;
     private     int noOfPages;
-    private List lastListPage;
+    protected List lastListPage;
     
     public  CQuery getCQuery(){
     return null;
@@ -70,13 +70,14 @@ public abstract class QueryManager {
 //        if(next>count)return null
         if(service==null)return;
         lastListPage=service.moveToPage(getCQuery(), next);
-        currentPage=0; 
+        currentPage=0;
+
     }
    
     public void getLastPage() {
         int next=noOfPages-1;
         lastListPage=service.moveToPage(getCQuery(), next);
-        currentPage=noOfPages; 
+        currentPage=noOfPages;
     }
 
     
@@ -107,5 +108,13 @@ public abstract class QueryManager {
     }
     
     public List getList(){
-    return lastListPage;}
+    return lastListPage;
+    }
+    
+    /**
+     * this method will be called after pagination events excecuted on EDt so be causes 
+     */
+    public void postQuery(){
+    
+    }
 }

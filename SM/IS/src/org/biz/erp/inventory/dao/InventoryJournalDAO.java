@@ -97,16 +97,54 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
         return ExecuteQuery(sel);
         
     }
-    //responsible for reutrning a string qury for pagiantion usage
-    public CQuery getSummerySql(String sid, String wid) {
+    
+    /*
+     sql query to do some work
+     * 
+     * 
+     * SELECT i.code,l.id , it.code FROM inventoryJournal  i 
+LEFT JOIN inventoryjournalline l  ON l.inv_id = i.id 
+LEFT JOIN item it ON it.id = l.item_id
+WHERE it.code LIKE 'xx%'
+* 
+* 
+* 
+* 
+     */
+    
+    
+    
+    public CQuery getSummerySql(String itemID) {
 
+        
+        String itemQ="";
         String sel = " select   i, ijls.uom, sum(ijls.qty)    "
                      + " from InventoryJournal  c left join c.lines ijls left join  ijls.item i   ";
         String qr = " group by  i ,ijls.uom ";
+        if(StringUtility.isEmptyString(itemID)){
+        itemQ="";
+        }else{
+            itemQ=" where  i.code like '"+itemID+"%' ";
+       }
+       
+         
+        return getQuery(sel + itemQ+qr);
+        
+        
+    }
+    //responsible for reutrning a string qury for pagiantion usage
+    public CQuery getSummerySql(String itemID,String sid, String wid) {
 
+        
+        String itemQ="";
+        String sel = " select   i, ijls.uom, sum(ijls.qty)    "
+                     + " from InventoryJournal  c left join c.lines ijls left join  ijls.item i   ";
+        String qr = " group by  i ,ijls.uom ";
+        if(!StringUtility.isEmptyString(itemID)) itemQ="  i.code like '%"+itemID+"' ";
         if (!StringUtility.isEmptyString(wid) && !StringUtility.isEmptyString(sid)) {
 
-            sel +=   " where c.shop.id =?1 and  c.warehouse.id =?2  "
+      
+            sel +=   " where c.shop.id =?1 and  c.warehouse.id =?2   "
                     + qr;
             
             return    getQuery(sel,wid,sid);
@@ -122,7 +160,7 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
             return getQuery(sel, sid);
         }
          
-        return getQuery(sel, "");
+        return getQuery(sel+ (StringUtility.isEmptyString(itemQ)?"":"where "+ itemQ)+qr);
         
         
     }
@@ -133,10 +171,4 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
         InventoryJournal ij=ExecuteQuerySR(qry);
         return ij;
     }
-    
-    public static void main(String[] args) {
-        InventoryJournalService ijs=new InventoryJournalService();
-//        List list= ijs.getDao().getSummery(new Date() );
-    }
-
 }

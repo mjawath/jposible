@@ -209,6 +209,10 @@ public class TextFieldWithPopUP<T>  extends CPanel {
     return fieldWithPopUP.hasFocus();
     }
 
+   
+   public void setEditable(boolean isEditable){
+       fieldWithPopUP.setEditable(isEditable);
+   } 
     
 //}
 

@@ -13,11 +13,7 @@ import org.biz.invoicesystem.entity.master.Category;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.components.parent.controls.editors.TableInteractionListner;
-import org.components.windows.ListViewPanel;
-
-
-
-/**
+import org.components.windows.ListViewPanel;/**
  *
  * @author d
  */

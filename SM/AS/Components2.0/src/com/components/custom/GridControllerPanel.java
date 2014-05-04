@@ -64,6 +64,23 @@ public class GridControllerPanel extends javax.swing.JPanel {
         });
          tclear.setText("Clear");
          
+         
+         tup.setAction(new AbstractAction("UP") {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            table.moveSelectedLineUp();    
+            }
+        });
+         
+
+        tdown.setAction(new AbstractAction("Down") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            table.moveSelectedLineDown();
+            }
+        });
+         
        //set "add" - "myaddaction"
     }
     

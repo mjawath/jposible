@@ -24,6 +24,7 @@ public class CDatePicker extends PDatePicker {
     public CDatePicker() {
         initComponents();
         setDate(new Date());
+        setFormats("dd/MM/yyyy");
     }
 
     /** This method is called from within the constructor to

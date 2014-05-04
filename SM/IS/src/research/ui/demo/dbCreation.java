@@ -44,6 +44,7 @@ public class dbCreation {
 //                System.out.println(x);
 //            }
 //        }
+        
         dbCreation db = new dbCreation();
 //        db.createDataBase();
 //        db.createmster();
@@ -142,6 +143,14 @@ public class dbCreation {
             cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lstw.add(cus);
         }
+        
+         Date date = new Date();
+        Warehouse shz = new Warehouse();
+        shz.setId("123");
+        shz.setCode("123s");
+        lstw.add(shz);
+        System.out.println("warehouse .......... ");
+
         new GenericDAO<Warehouse>().saveList(lstw);
 
 

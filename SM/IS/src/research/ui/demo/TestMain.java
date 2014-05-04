@@ -25,7 +25,22 @@ import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 public class TestMain {
 
     public static void main(String[] args) {
-        createManyToMany();
+////  first set of problem      
+//        InventoryJournalDAO id=new InventoryJournalDAO();
+//        String sel = " select   i, ijls.uom , sum(ijls.qty)  "
+//                     + " from InventoryJournal  c left join c.lines ijls left join  ijls.item i   ";
+//        String qr = " group by  i ,ijls.uom ";
+//        String wh = " where i.code like 'f%'";
+    
+        
+          
+        InventoryJournalDAO id=new InventoryJournalDAO();
+        String sel = " select   i, c.uom , sum(c.qty)  "
+                     + " from InventoryJournal ij  join InventoryJournalLine  c join  left join  c.item i   ";
+        String qr = " group by  i ,ijls.uom ";
+        String wh = " where i.code like 'xx%'";
+        List lst=id.executeQuery(sel+wh);
+        
     }
 
     private static void createManyToMany() {

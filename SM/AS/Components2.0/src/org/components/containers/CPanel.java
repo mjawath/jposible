@@ -94,6 +94,7 @@ public class CPanel extends PPanel implements IContainer ,IComponent {
     
     public void requestFocus() {
         super.requestFocus();
+        if(focus.size()<=0)return;
         IComponent comx = focus.get(0);
         if (comx != null) {
             ((Component) comx).requestFocus();

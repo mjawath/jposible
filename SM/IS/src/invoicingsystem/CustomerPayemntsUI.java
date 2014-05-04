@@ -49,7 +49,7 @@ public class CustomerPayemntsUI extends TabPanelUI {
     @Override
     public void save() {
 
-        service.getDao().save(null);
+        service.getDao().save();
     }
 
 

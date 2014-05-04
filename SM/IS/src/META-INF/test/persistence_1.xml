@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="InvoicingSystemPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>org.biz.invoicesystem.entity.contacts.Address</class>
+    <class>org.biz.invoicesystem.entity.contacts.ContactDetail</class>
+    <class>org.biz.invoicesystem.entity.inventory.GDN</class>
+    <class>org.biz.invoicesystem.entity.inventory.GDNLine</class>
+    <class>org.biz.invoicesystem.entity.inventory.GRN</class>
+    <class>org.biz.invoicesystem.entity.inventory.GRNLine</class>
+    <class>org.biz.invoicesystem.entity.inventory.InventoryJournal</class>
+    <class>org.biz.invoicesystem.entity.inventory.InventoryJournalLine</class>
+    <class>org.biz.invoicesystem.entity.inventory.InventoryMonthlySummery</class>
+    <class>org.biz.invoicesystem.entity.master.Category</class>
+    <class>org.biz.invoicesystem.entity.master.Customer</class>
+    <class>org.biz.invoicesystem.entity.master.ExtraSalesPrice</class>
+    <class>org.biz.invoicesystem.entity.master.Item</class>
+    <class>org.biz.invoicesystem.entity.master.ItemBarcode</class>
+    <class>org.biz.invoicesystem.entity.master.ItemTex</class>
+    <class>org.biz.invoicesystem.entity.master.ItemVariation</class>
+    <class>org.biz.invoicesystem.entity.master.Product</class>
+    <class>org.biz.invoicesystem.entity.master.PropertyData</class>
+    <class>org.biz.invoicesystem.entity.master.RoleTasks</class>
+    <class>org.biz.invoicesystem.entity.master.Roles</class>
+    <class>org.biz.invoicesystem.entity.master.Shop</class>
+    <class>org.biz.invoicesystem.entity.master.Staff</class>
+    <class>org.biz.invoicesystem.entity.master.Supplier</class>
+    <class>org.biz.invoicesystem.entity.master.UOM</class>
+    <class>org.biz.invoicesystem.entity.master.Variation</class>
+    <class>org.biz.invoicesystem.entity.master.VariationType</class>
+    <class>org.biz.invoicesystem.entity.master.Vehicle</class>
+    <class>org.biz.invoicesystem.entity.master.VehicleSale</class>
+    <class>org.biz.invoicesystem.entity.master.Warehouse</class>
+    <class>org.biz.invoicesystem.entity.transactions.CustomerStatement</class>
+    <class>org.biz.invoicesystem.entity.transactions.Payment</class>
+    <class>org.biz.invoicesystem.entity.transactions.PurchaseInvoice</class>
+    <class>org.biz.invoicesystem.entity.transactions.PurchaseInvoiceLineItem</class>
+    <class>org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem</class>
+    <class>org.biz.chequeChequing.entity.accounts.bank.ReturnCheques</class>
+    <class>org.biz.invoicesystem.entity.inventory.TransferOrder</class>
+    <class>org.biz.chequeChequing.entity.accounts.bank.ChequeState</class>
+    <class>org.biz.invoicesystem.entity.inventory.TransferOrderLineItem</class>
+    <class>org.biz.invoicesystem.entity.inventory.PosInvoiceJournal</class>
+    <class>org.biz.invoicesystem.entity.inventory.PosInvoiceJournalLineItem</class>
+    <class>org.biz.invoicesystem.entity.inventory.ItemMark</class>
+    <class>org.biz.books.entity.accounts.journal.CashJournal</class>
+    <class>org.biz.books.entity.accounts.journal.Journal</class>
+    <class>org.biz.books.entity.accounts.journal.PurchaseJounal</class>
+    <class>org.biz.books.entity.accounts.journal.SalesJournal</class>
+    <class>org.biz.books.entity.accounts.ledger.Accounts</class>
+    <class>org.biz.books.entity.accounts.ledger.JournelEntry</class>
+    <class>org.biz.books.entity.accounts.ledger.TransactionEvent</class>
+    <class>org.biz.books.entity.accounts.payments.CustomerPayments</class>
+    <class>org.biz.books.entity.accounts.payments.PaymentDocument</class>
+    <class>org.biz.books.entity.accounts.payments.SupplierPayments</class>
+    <class>org.biz.invoicesystem.entity.transactions.ChequeRegistry</class>
+    <class>org.biz.chequeChequing.entity.accounts.bank.Cheques</class>
+    <class>org.biz.books.entity.accounts.bank.Bank</class>
+    <class>org.biz.books.entity.accounts.bank.BankBranch</class>
+    <class>org.biz.invoicesystem.entity.transactions.SalesInvoice</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlite://f:/users/sampledb.sqlite "/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+      <!-- >        <property name="eclipselink.logging.level" value="FINE"/>  <!-->
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+    </properties>
+  </persistence-unit>
+</persistence>

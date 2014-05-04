@@ -7,7 +7,6 @@ package org.biz.erp.inventory.ui.list;
 import java.util.Date;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
-import org.biz.invoicesystem.entity.master.Warehouse;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewUI;
 
@@ -26,17 +25,17 @@ public class InventoryJournalLV extends ListViewUI {
 
     @Override
     public void initPaging(QueryManager qm) {
-   
-        super.initPaging(qm);    
-        tbl.init(InventoryJournal.class, new Class[]{String.class, String.class, Date.class, Date.class},
-                 new String[]{"id", "code", "savedDate", "editedDate"});
-        tbl.setTableInteractionListner(tableInteractionListner);
+         setPaging(cPaginatedPanel1,tbl); 
+         super.initPaging(qm);    
+//        tbl.init(InventoryJournal.class, new Class[]{String.class, String.class, Date.class, Date.class},
+//                 new String[]{"id", "code", "savedDate", "editedDate"});
+        tbl.setTableInteractionListner(new myTableInteractionListner());
         
     }
     
-    
-    
-     private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
+        class myTableInteractionListner extends TableInteractionListner {
+
+
         @Override
         public Object[] getTableData(Object row) {
             InventoryJournal item = (InventoryJournal) row;

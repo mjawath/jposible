@@ -31,20 +31,7 @@ public class SalesInvoiceService extends Service{
         super();
         dao = new SalesInvoiceDAO();
     }
-    
-    @Override
-    public void initUI(){
-        invoiceUI = new InvoiceUI();
-        invoicesListUI= new PostedInvoicesListUI();
-        SystemUtil.addToMainWindow(invoiceUI, "sales");
-        SystemUtil.addToMainWindow(invoicesListUI, "salesList");
-        new Thread(){
-            @Override
-            public void run() {
-                initServices();
-            }
-        }.start();       
-    }
+
     
     public void initServices() {
         dao = new SalesInvoiceDAO();

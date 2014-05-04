@@ -104,6 +104,11 @@ public class GenericDAO<T> {
 
     }
 
+    public List<T> getByPropertyLike(String property, String key) {
+        return GenericDAOUtil.getByPropertyLike(property, key, cls);
+
+    }
+    
 //    public T find(Object key ){
 //        em.find(T, key);
 //        return null;
@@ -114,7 +119,23 @@ public class GenericDAO<T> {
 //        getEm().clear();
         return GenericDAOUtil.getAll(orderby, cls);
     }
+    
+    public CQuery getAllQuery() {
+//        getEm().clear();
 
+        CQuery cq = new CQuery(GenericDAOUtil.getAllQuery(orderby, cls));
+
+        return cq;
+    }
+
+    
+    public CQuery getAllCountQuery() {
+//        getEm().clear();
+
+        CQuery cq = new CQuery(GenericDAOUtil.getAllCount(orderby, cls));
+
+        return cq;
+    }
 //    public List<T> getLastModefied() {
 ////        getEm().clear();
 //        
@@ -178,6 +199,11 @@ public class GenericDAO<T> {
     //@param query object is a string of jpql
     public List<T> ExecuteQuery(String qryString) {
         return GenericDAOUtil.ExecuteQuery(qryString, cls);
+    }
+    
+    public List<T> ExecuteQueryWhere(String qryString) {
+        
+        return GenericDAOUtil.ExecuteQuery(createWhere(qryString), cls);
     }
 
     public List ExecuteQueryOB(String qryString) {
@@ -398,9 +424,9 @@ public class GenericDAO<T> {
     }
 
     public CQuery getQuery(String qry,Object ...param){
-        Query qu = GenericDAOUtil.getQuery(qry,param);
-        
-        return new CQuery(qu);
+//        Query qu = GenericDAOUtil.getQuery(qry,param);
+        return   new CQuery(qry,param);
+
     }
     
 
@@ -456,6 +482,12 @@ public class GenericDAO<T> {
 
     }
 
+        
+    /**
+     * code can use '%' wild carts
+     * @param code
+     * @return 
+     */    
     public CQuery getQueryByCodeLike(String code) {
         String cus = "  c.code like '" + code + "%' ";
         return getQuery(createWhere(cus));

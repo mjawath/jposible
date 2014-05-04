@@ -4,7 +4,6 @@
  */
 package org.biz.erp.inventory.ui.list;
 
-import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.components.windows.ListViewPanel;
 
@@ -25,21 +24,16 @@ public class WareHouseListUI extends ListViewPanel<Warehouse> {
     @Override
     public void init() {
         initComponents();      
-        super.init();         
         listUI = wareHoueLV1;
         searchQueryUI = wareHouseSearchQueryUIPanel1;
-        listUI.setSearchQueryUI(searchQueryUI);
-        init(listUI.getTable());
+        super.init();         
+
+  
         //set query manager for pagination
     }
     
 
 
-    @Override
-    public void setService(Service service) {
-        super.setService(service);
-        searchQueryUI.setServiceForQuery(service);
-    }
 
 
     
@@ -54,7 +48,7 @@ public class WareHouseListUI extends ListViewPanel<Warehouse> {
     private void initComponents() {
 
         wareHoueLV1 = new org.biz.erp.inventory.ui.list.WareHoueLV();
-        wareHouseSearchQueryUIPanel1 = new org.biz.erp.inventory.ui.list.WareHouseSearchQueryUIPanel();
+        wareHouseSearchQueryUIPanel1 = new org.biz.erp.inventory.ui.list.WareHouseSUI();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -71,9 +65,9 @@ public class WareHouseListUI extends ListViewPanel<Warehouse> {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(wareHouseSearchQueryUIPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(wareHouseSearchQueryUIPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(wareHoueLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE))
+                .addComponent(wareHoueLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -81,6 +75,6 @@ public class WareHouseListUI extends ListViewPanel<Warehouse> {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.biz.erp.inventory.ui.list.WareHoueLV wareHoueLV1;
-    private org.biz.erp.inventory.ui.list.WareHouseSearchQueryUIPanel wareHouseSearchQueryUIPanel1;
+    private org.biz.erp.inventory.ui.list.WareHouseSUI wareHouseSearchQueryUIPanel1;
     // End of variables declaration//GEN-END:variables
 }

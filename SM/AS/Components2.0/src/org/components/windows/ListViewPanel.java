@@ -34,14 +34,21 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     public void init() {
 //        initComponents();
         super.init();
-
+        if(listUI==null)return;
+        listUI.setSearchQueryUI(searchQueryUI);
+        searchQueryUI.setListView(listUI);
+        init(listUI.getTable());
     }
 
     @Override
     public void setService(Service service) {
         super.setService(service);
-//        init(listUI.tbl);
+        if (searchQueryUI != null) {
+            searchQueryUI.setServiceForQuery(service);
+            
+        }
     }
+
     private DetailPanel dp;
     
     public void setDetailPanel(DetailPanel de){        

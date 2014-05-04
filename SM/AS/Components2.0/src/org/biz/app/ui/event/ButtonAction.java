@@ -6,6 +6,7 @@ package org.biz.app.ui.event;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.AbstractAction;
 import org.biz.app.ui.util.Command;
 import org.components.controls.CButton;
 
@@ -13,7 +14,7 @@ import org.components.controls.CButton;
  *
  * @author d
  */
-public class ButtonAction implements ActionListener {
+public class ButtonAction extends AbstractAction {
 
     
     protected CButton btn;

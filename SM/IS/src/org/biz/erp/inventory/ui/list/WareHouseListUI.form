@@ -30,9 +30,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Component id="wareHouseSearchQueryUIPanel1" max="32767" attributes="0"/>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="wareHoueLV1" pref="340" max="32767" attributes="0"/>
+              <Component id="wareHouseSearchQueryUIPanel1" min="-2" pref="93" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="wareHoueLV1" pref="367" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -40,7 +40,7 @@
   <SubComponents>
     <Component class="org.biz.erp.inventory.ui.list.WareHoueLV" name="wareHoueLV1">
     </Component>
-    <Component class="org.biz.erp.inventory.ui.list.WareHouseSearchQueryUIPanel" name="wareHouseSearchQueryUIPanel1">
+    <Component class="org.biz.erp.inventory.ui.list.WareHouseSUI" name="wareHouseSearchQueryUIPanel1">
     </Component>
   </SubComponents>
 </Form>

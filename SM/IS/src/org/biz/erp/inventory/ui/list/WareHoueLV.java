@@ -26,7 +26,12 @@ public class WareHoueLV extends ListViewUI {
     @Override
     public void initPaging(QueryManager qm) {
    
+        
+//        initComponents();
+        
+        setPaging(cPaginatedPanel1,tbl);        
         super.initPaging(qm);    
+//        super.initPaging(qm) ;    
         tbl.init(Warehouse.class, new Class[]{String.class, String.class, Date.class, Date.class},
                  new String[]{"id", "code", "savedDate", "editedDate"});
         tbl.setTableInteractionListner(tableInteractionListner);

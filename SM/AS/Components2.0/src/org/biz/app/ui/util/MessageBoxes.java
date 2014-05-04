@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 public class MessageBoxes {
 
     public static final int OK_OPTION = JOptionPane.OK_OPTION;
+    public static final int CANCEL_OPTION = JOptionPane.CANCEL_OPTION;
+    public static final int YES_OPTION = JOptionPane.YES_OPTION;
+    public static final int NO_OPTION = JOptionPane.NO_OPTION;
 
     public static int okCancel(JComponent component, String msg, String title) {
         return JOptionPane.showConfirmDialog(component, msg,

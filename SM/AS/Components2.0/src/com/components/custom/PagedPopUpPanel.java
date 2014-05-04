@@ -34,6 +34,7 @@ import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
+import org.biz.entity.BusObj;
 import org.components.controls.CPopupMenu;
 import org.components.controls.CTextField;
 import org.components.parent.controls.editors.TablePopUpCellEditor;
@@ -85,22 +86,24 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
             
         };
     
-    public void setModelCollection(List<T> modelCollection) {        
+    
+    //TODO - should be replaced with list view to hold table
+    public void setModelCollection(List<T> modelCollection) {
         cxTable1.clear();
         //for each item set values to table model
         if (modelCollection == null) {
             return;
         }
-          
-            Object [][] data=new Object[modelCollection.size()][];
-            for (int x=0;x< modelCollection.size() ;x++) {
-               Object [] objrow= popupListner.getTableData(modelCollection.get(x));
-               data[x]=objrow;
-            }
-            TableUtil.filldata(cxTable1, data);
-            showPopUp();
+
+        Object[][] data = new Object[modelCollection.size()][];
+        for (int x = 0; x < modelCollection.size(); x++) {
+            Object[] objrow = popupListner.getTableData(modelCollection.get(x));
+            data[x] = objrow;
         }
-    
+        TableUtil.filldata(cxTable1, data);
+        showPopUp();
+    }
+
 
 
     public int getSelectedColumn() {
@@ -378,27 +381,9 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cTextField1 = new org.components.controls.CTextField();
-        cButton1 = new org.components.controls.CButton();
-        cButton2 = new org.components.controls.CButton();
-        cButton3 = new org.components.controls.CButton();
-        cButton4 = new org.components.controls.CButton();
-        cButton5 = new org.components.controls.CButton();
-        cButton6 = new org.components.controls.CButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         cxTable1 = new org.components.controls.CxTable();
-
-        cButton1.setText(">");
-
-        cButton2.setText(">>");
-
-        cButton3.setText(">|");
-
-        cButton4.setText("<");
-
-        cButton5.setText("<<");
-
-        cButton6.setText("|<");
+        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
 
         cxTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -416,53 +401,28 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(cButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(cButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(cButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(cPaginatedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(11, 11, 11)
+                .addGap(25, 25, 25)
+                .addComponent(cPaginatedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.controls.CButton cButton1;
-    private org.components.controls.CButton cButton2;
-    private org.components.controls.CButton cButton3;
-    private org.components.controls.CButton cButton4;
-    private org.components.controls.CButton cButton5;
-    private org.components.controls.CButton cButton6;
-    private org.components.controls.CTextField cTextField1;
+    private org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
     private org.components.controls.CxTable cxTable1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
@@ -472,7 +432,6 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
         Object ob = TableUtil.getSelectedModelsValueAt(cxTable1, getSelectedColumn());
         if (ob != null) {
-            //find object from list and select
             if (textField instanceof JTextField) {
                 selectedObject = (T) ob;
                 setSelectedText();
@@ -491,7 +450,11 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
                 UIEty.objToUi(textField,"");
                 return;
             }
+            if(selectedObject instanceof BusObj){
             UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
+            }else if(selectedObject instanceof String ){
+             UIEty.objToUi(textField,selectedObject);
+            }
         }
     }
 

@@ -483,9 +483,9 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         setLayout(null);
         add(tItemCostPrice);
-        tItemCostPrice.setBounds(80, 320, 90, 25);
+        tItemCostPrice.setBounds(100, 320, 90, 25);
         add(tItemMinimumStock);
-        tItemMinimumStock.setBounds(80, 470, 210, 25);
+        tItemMinimumStock.setBounds(100, 470, 210, 25);
 
         jLabel9.setText("Min.Price");
         add(jLabel9);
@@ -495,13 +495,13 @@ public class ItemMasterUI2 extends TabPanelUI {
         add(jLabel22);
         jLabel22.setBounds(20, 320, 60, 20);
         add(tItemCommissionValue);
-        tItemCommissionValue.setBounds(200, 410, 90, 25);
+        tItemCommissionValue.setBounds(220, 410, 90, 25);
 
         tSupplierItem.setEditable(true);
         add(tSupplierItem);
-        tSupplierItem.setBounds(80, 110, 210, 20);
+        tSupplierItem.setBounds(120, 110, 210, 20);
         add(tItemDescription);
-        tItemDescription.setBounds(80, 50, 210, 25);
+        tItemDescription.setBounds(120, 50, 210, 25);
 
         jLabel17.setText("Min.Stock");
         add(jLabel17);
@@ -513,11 +513,11 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         jLabel23.setText("Val");
         add(jLabel23);
-        jLabel23.setBounds(180, 400, 20, 40);
+        jLabel23.setBounds(200, 400, 20, 40);
 
         jLabel16.setText("Commission");
         add(jLabel16);
-        jLabel16.setBounds(20, 410, 60, 20);
+        jLabel16.setBounds(20, 410, 70, 20);
 
         cButton1.setText("Browse");
         cButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -526,25 +526,25 @@ public class ItemMasterUI2 extends TabPanelUI {
             }
         });
         add(cButton1);
-        cButton1.setBounds(300, 390, 80, 20);
+        cButton1.setBounds(360, 390, 80, 20);
         add(tItemdiscount);
-        tItemdiscount.setBounds(80, 380, 90, 25);
+        tItemdiscount.setBounds(100, 380, 90, 25);
 
         jLabel2.setText("Description ");
         add(jLabel2);
-        jLabel2.setBounds(20, 50, 60, 20);
+        jLabel2.setBounds(10, 50, 80, 20);
         add(tItemLandingCost);
-        tItemLandingCost.setBounds(200, 320, 90, 25);
+        tItemLandingCost.setBounds(220, 320, 90, 25);
 
         cScrollPane1.setAutoscrolls(true);
         cScrollPane1.setViewportView(cPanel4);
 
         add(cScrollPane1);
-        cScrollPane1.setBounds(300, 300, 460, 90);
+        cScrollPane1.setBounds(360, 300, 460, 90);
 
         cLabel7.setText("You Can Select More than one Product Image");
         add(cLabel7);
-        cLabel7.setBounds(390, 390, 370, 25);
+        cLabel7.setBounds(450, 390, 370, 25);
 
         jLabel15.setText("Location");
         add(jLabel15);
@@ -552,7 +552,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         jLabel21.setText("Supplier");
         add(jLabel21);
-        jLabel21.setBounds(20, 110, 50, 20);
+        jLabel21.setBounds(10, 110, 70, 20);
 
         cPanel6.setMinimumSize(new java.awt.Dimension(150, 150));
         cPanel6.setPreferredSize(new java.awt.Dimension(600, 400));
@@ -609,7 +609,7 @@ public class ItemMasterUI2 extends TabPanelUI {
             }
         });
         cPanel6.add(cButton2);
-        cButton2.setBounds(470, 70, 70, 23);
+        cButton2.setBounds(470, 70, 70, 21);
 
         cLabel2.setText("Symbol");
         cPanel6.add(cLabel2);
@@ -747,31 +747,31 @@ public class ItemMasterUI2 extends TabPanelUI {
         jTabbedPane1.addTab("Meta Details ", cPanel3);
 
         add(jTabbedPane1);
-        jTabbedPane1.setBounds(310, 20, 470, 220);
+        jTabbedPane1.setBounds(370, 20, 470, 220);
 
         jLabel13.setText("$");
         add(jLabel13);
-        jLabel13.setBounds(190, 320, 10, 20);
+        jLabel13.setBounds(210, 320, 10, 20);
         add(tItemMinimumPrice);
-        tItemMinimumPrice.setBounds(80, 350, 90, 25);
+        tItemMinimumPrice.setBounds(100, 350, 90, 25);
 
         tItemLocation.setEditable(true);
         add(tItemLocation);
-        tItemLocation.setBounds(80, 440, 210, 23);
+        tItemLocation.setBounds(100, 440, 210, 23);
         add(tItemdiscValue);
-        tItemdiscValue.setBounds(200, 380, 90, 25);
+        tItemdiscValue.setBounds(220, 380, 90, 25);
         add(tItemCommission);
-        tItemCommission.setBounds(80, 410, 90, 20);
+        tItemCommission.setBounds(100, 410, 90, 20);
 
         jLabel4.setText("Category");
         add(jLabel4);
-        jLabel4.setBounds(20, 80, 60, 14);
+        jLabel4.setBounds(10, 80, 70, 16);
         add(tItemReOrder);
-        tItemReOrder.setBounds(80, 500, 210, 25);
+        tItemReOrder.setBounds(100, 500, 210, 25);
 
         jLabel14.setText("Val");
         add(jLabel14);
-        jLabel14.setBounds(180, 380, 20, 30);
+        jLabel14.setBounds(200, 380, 20, 30);
 
         cPanel2.setLayout(null);
 
@@ -800,7 +800,7 @@ public class ItemMasterUI2 extends TabPanelUI {
         tItemTrakManfctringItem.setBounds(330, 0, 120, 40);
 
         add(cPanel2);
-        cPanel2.setBounds(310, 240, 450, 40);
+        cPanel2.setBounds(370, 240, 450, 40);
 
         jLabel19.setText("Re Order");
         add(jLabel19);
@@ -810,33 +810,33 @@ public class ItemMasterUI2 extends TabPanelUI {
         add(jLabel12);
         jLabel12.setBounds(20, 380, 60, 20);
         add(tItemcode);
-        tItemcode.setBounds(80, 20, 210, 25);
+        tItemcode.setBounds(120, 20, 210, 25);
 
         jLabel6.setText("Landing Cost");
         add(jLabel6);
-        jLabel6.setBounds(200, 300, 80, 20);
+        jLabel6.setBounds(220, 300, 80, 20);
 
         tItemCategory.setEditable(true);
         add(tItemCategory);
-        tItemCategory.setBounds(80, 80, 210, 23);
+        tItemCategory.setBounds(120, 80, 210, 23);
 
         jLabel1.setText("Item Code");
         add(jLabel1);
-        jLabel1.setBounds(20, 20, 50, 20);
+        jLabel1.setBounds(10, 20, 70, 20);
         add(crudcontrolPanel);
-        crudcontrolPanel.setBounds(330, 440, 340, 30);
+        crudcontrolPanel.setBounds(390, 440, 340, 30);
 
         cLabel8.setText("Type");
         add(cLabel8);
-        cLabel8.setBounds(20, 130, 40, 20);
+        cLabel8.setBounds(10, 140, 70, 20);
         add(ttype);
-        ttype.setBounds(80, 140, 210, 20);
+        ttype.setBounds(120, 140, 210, 20);
 
         cLabel9.setText("Model");
         add(cLabel9);
-        cLabel9.setBounds(20, 160, 50, 20);
+        cLabel9.setBounds(10, 170, 50, 20);
         add(ttype1);
-        ttype1.setBounds(80, 170, 210, 20);
+        ttype1.setBounds(120, 170, 210, 20);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

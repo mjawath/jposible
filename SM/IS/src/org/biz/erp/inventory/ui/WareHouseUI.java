@@ -49,11 +49,10 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
 
     @Override
     public Warehouse getBusObject() {
-        if (selectedObject == null) {
-            selectedObject = new Warehouse();
-        }
-        selectedObject.setCode(tcode.getValue());
-        return selectedObject;
+
+        Warehouse so = new Warehouse();
+        so.setCode(tcode.getValue());
+        return so;
     }
 
     @Override
@@ -84,14 +83,12 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
         cLabel1 = new org.components.controls.CLabel();
 
         setLayout(null);
-
-        tcode.setText("Code");
         add(tcode);
-        tcode.setBounds(130, 50, 260, 25);
+        tcode.setBounds(60, 50, 260, 25);
 
-        cLabel1.setText("Store Name");
+        cLabel1.setText("Warehouse name");
         add(cLabel1);
-        cLabel1.setBounds(20, 50, 104, 25);
+        cLabel1.setBounds(20, 20, 130, 25);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;

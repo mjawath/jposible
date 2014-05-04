@@ -4,12 +4,7 @@
  */
 package org.biz.erp.inventory.ui.list;
 
-import java.util.Date;
-import org.biz.app.ui.util.QueryManager;
-import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
-import org.components.controls.CxTable;
-import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
 
 /**
@@ -29,43 +24,13 @@ public class InventoryJournalListViewUI extends ListViewPanel<InventoryJournal> 
     @Override
     public void init() {
         initComponents();      
-        super.init();         
+                
         listUI = inventoryJournalLV1;
         searchQueryUI = inventoryJournalSearchUI1;
-        listUI.setSearchQueryUI(searchQueryUI);
-        init(listUI.getTable());
-    }
-    
-       @Override
-    public void init(CxTable tbl) {
-        super.init(tbl);
-        tbl.init(InventoryJournal.class, new Class[]{String.class, String.class,  Date.class, Date.class},
-                 new String[]{"id", "code", "savedDate", "editedDate"});
-
-        tbl.setTableInteractionListner(tableInteractionListner);
-//        cPaginatedPanel1.init(service, searchListener, tbl);
-
-        
-
-    }
+        super.init(); 
        
-       private TableInteractionListner tableInteractionListner = new TableInteractionListner(){
-
-        @Override
-        public Object[] getTableData(Object row) {
-            InventoryJournal item= (InventoryJournal)row;
-            return new Object[]{item,item.getId(),item.getCode(),item.getSavedDate(),item.getEditedDate()};
-        }
-    
-    };
-
-  @Override
-    public void setService(Service service) {
-        super.setService(service);
-        searchQueryUI.setServiceForQuery(service);
     }
-
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,26 +43,17 @@ public class InventoryJournalListViewUI extends ListViewPanel<InventoryJournal> 
         inventoryJournalLV1 = new org.biz.erp.inventory.ui.list.InventoryJournalLV();
         inventoryJournalSearchUI1 = new org.biz.erp.inventory.ui.list.InventoryJournalSearchUI();
 
-        javax.swing.GroupLayout inventoryJournalSearchUI1Layout = new javax.swing.GroupLayout(inventoryJournalSearchUI1);
-        inventoryJournalSearchUI1.setLayout(inventoryJournalSearchUI1Layout);
-        inventoryJournalSearchUI1Layout.setHorizontalGroup(
-            inventoryJournalSearchUI1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        inventoryJournalSearchUI1Layout.setVerticalGroup(
-            inventoryJournalSearchUI1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inventoryJournalLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
-                    .addComponent(inventoryJournalSearchUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(inventoryJournalLV1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(inventoryJournalSearchUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -105,8 +61,8 @@ public class InventoryJournalListViewUI extends ListViewPanel<InventoryJournal> 
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(inventoryJournalSearchUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(inventoryJournalLV1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(inventoryJournalLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -114,18 +70,4 @@ public class InventoryJournalListViewUI extends ListViewPanel<InventoryJournal> 
     private org.biz.erp.inventory.ui.list.InventoryJournalLV inventoryJournalLV1;
     private org.biz.erp.inventory.ui.list.InventoryJournalSearchUI inventoryJournalSearchUI1;
     // End of variables declaration//GEN-END:variables
-private QueryManager searchListener = new QueryManager() {
-//        @Override
-        public String getQuery() {
-            String qry ="";// "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
-            return qry;
-        }
-
-//        @Override
-        public Object[] getParams() {
-            return new Object[]{ };
-        }
-    };
-    
-
 }
