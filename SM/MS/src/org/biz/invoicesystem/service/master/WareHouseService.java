@@ -4,9 +4,7 @@
  */
 package org.biz.invoicesystem.service.master;
 
-import app.utils.SystemStatic;
 import org.biz.dao.service.Service;
-import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.WareHouseDao;
 import org.components.util.Sessions;
 

@@ -4,7 +4,6 @@
  */
 package org.biz.invoicesystem.dao.master;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.biz.dao.service.GenericDAO;
 import org.biz.invoicesystem.entity.master.Shop;

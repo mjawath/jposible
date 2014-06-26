@@ -5,13 +5,15 @@
 
 package org.biz.erp.inventory.dao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import org.biz.app.ui.util.StringUtility;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.service.CQuery;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
-import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 
 /**
  *
@@ -72,7 +74,52 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
     }
     
     public List getSummery(String sid, String wid) {
+        return getSummery(sid, wid, null);
+    }
+    
+    public List getSummery(String sid, String wid, List lst) {
 
+        String sel = " select   i, ijls.uom, sum(ijls.qty)    "
+                + " from InventoryJournal  c left join c.lines ijls left join  ijls.item i   ";
+        String qr = " group by  i ,ijls.uom ";
+
+        ArrayList<String> lstW = new ArrayList();
+        HashMap conditions = new HashMap();
+
+        if (!StringUtility.isEmptyString(sid)) {
+            conditions.put("shopid", sid);
+            lstW.add("  c.shop.id =:shopid   ");
+        } else if (!StringUtility.isEmptyString(wid)) {
+            lstW.add("   c.warehouse.id = :wareid  ");
+            conditions.put("wareid", wid);
+        }
+        if (lst != null && !lst.isEmpty()) {
+            lstW.add("   i.id in :items  ");
+            conditions.put("items", lst);
+        }
+
+        //create the where clause using lst
+        StringBuilder s = new StringBuilder();
+        int size = lstW.size();
+        if (size > 0) {
+            s.append(" where ");
+        }
+
+        for (int i = 0; i < size; i++) {
+            String object = lstW.get(i);
+            s.append(object);
+            if (i + 1 != size) {
+                s.append("  and ");
+            }
+        }
+
+        sel = sel + s.toString() + qr;
+        return executeQuery(sel, conditions);
+
+    }
+
+    
+    public List getInventorySummeryForItems(String sid, String wid,ArrayList items){
         String sel = " select   i, ijls.uom, sum(ijls.qty)    "
                      + " from InventoryJournal  c left join c.lines ijls left join  ijls.item i   ";
         String qr = " group by  i ,ijls.uom ";
@@ -95,9 +142,7 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
         }
         sel +=  qr;
         return ExecuteQuery(sel);
-        
     }
-    
     /*
      sql query to do some work
      * 
@@ -164,11 +209,17 @@ WHERE it.code LIKE 'xx%'
         
         
     }
-
+    
     
     public InventoryJournal refDoc(String refcode,String documentType) {
         String qry="select i   from InventoryJournal c  where c.refCode="+refcode+" and c.documentType="+documentType+" ";
         InventoryJournal ij=ExecuteQuerySR(qry);
         return ij;
+    }
+    
+    public static void main(String[] args) {
+        InventoryJournalDAO dao = new InventoryJournalDAO();
+        List lst = dao.getSummery("", "", Arrays.asList("09KL6DNYSSKOE3Z", "0DTSE5SPV7W7DCK",
+                "0YYXS1ODFIJQ0J3", "1393687695761-XQ", "1394248512343-U0"));
     }
 }

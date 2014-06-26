@@ -789,7 +789,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             tItemcode.requestFocus();
             return false;
         }
-        cleanUOMs();
+        boolean isuomvalid=cleanUOMs();
+        if(!isuomvalid){
+        return isuomvalid;
+        }
         
         Item item=service.getByCode(tItemcode.getText());
         if(selectedObject==null && item!=null){
@@ -859,15 +862,15 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tblunitprices.clearSelection();
     }
 
-    private void cleanUOMs() {
+    private boolean cleanUOMs() {
         //for each table uoms
         //check code ,duplicate , primary duplicate , multi 
 
         List<UOM> uoms = tblunitprices.getModelCollection();
-        if (uoms != null && uoms.size() <= 2) {
+        if (uoms != null && uoms.size() < 2) {
             MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
             focusManager.setTemCom(tunitsymbot);
-            return;
+            return false;
         }
         boolean isPrim=false;
         boolean isCar=false;
@@ -888,10 +891,10 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         if(!(isPrim && isCar)){
             MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
             focusManager.setTemCom(tunitsymbot);
-            return;
+            return false;
         }
         
-
+        return true;
     }
 
     private boolean isValidUOM(UOM uom) {

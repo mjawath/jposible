@@ -79,6 +79,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
                 //should check query is exisiting or modified
                 if (tFind==btn) {
                     qryManager.getFirstPage();
+                    qryManager.postQuery(new Object[]{});
                 }else
                 if (tnextpage==btn) {//get excuting source
                     qryManager.getNextPage();
@@ -99,7 +100,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
                 if(objs==null)return;
                 noOfPages();
                 ctable.setModelCollection(((QueryManager)objs).getList() );
-                ((QueryManager)objs).postQuery();
+                ((QueryManager)objs).postQuery(((QueryManager)objs));
 
             }
         };
@@ -169,7 +170,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
     }
 
     public void noOfPages() {
-        qryManager.getCount();
+//        qryManager.getCount();
         long pages = qryManager.getNoOfPages();
        
         tinfo.setText(" " + (qryManager.getCurrentPage() + 1) + " OF " + pages + " Pages " + qryManager.count()+ " Count");

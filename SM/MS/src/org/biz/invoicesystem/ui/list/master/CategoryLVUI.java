@@ -35,7 +35,7 @@ public class CategoryLVUI extends ListViewUI {
         super.initPaging(qm);    
 //        super.initPaging(qm) ;    
         tbl.init(Warehouse.class, new Class[]{String.class, String.class, Date.class, Date.class},
-                 new String[]{"id", "code", "savedDate", "editedDate"});
+                 new String[]{ "code", "description","savedDate", "editedDate"});
         tbl.setTableInteractionListner(tableInteractionListner);
         
     }
@@ -47,7 +47,7 @@ public class CategoryLVUI extends ListViewUI {
         @Override
         public Object[] getTableData(Object row) {
             Category item= (Category)row;
-            return new Object[]{item,item.getId(),item.getCode(),item.getDescription(),item.getSavedDate(),item.getEditedDate()};
+            return new Object[]{item,item.getCode(),item.getDescription(),item.getSavedDate(),item.getEditedDate()};
         }
     
     };

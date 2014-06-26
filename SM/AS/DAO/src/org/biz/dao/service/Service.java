@@ -114,5 +114,8 @@ public class Service {
         return getDao().getQueryByCodeLike(qry);
     }
     
-    
+     public CQuery getCountQueryByCodeLike(String qry){
+         
+        return getDao().getCountQueryByCodeLike(qry);
+    }
    }

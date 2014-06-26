@@ -4,12 +4,42 @@
  */
 package research.prototype.transaction;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
+import org.components.containers.CPanel;
+
 /**
  *
  * @author yy
  */
 public class PosTicket extends javax.swing.JPanel {
 
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                JFrame fr=new JFrame();
+                Container rp= fr.getContentPane();
+                rp.add(new PosTicket());
+                fr.setSize(800,800);
+                fr.setVisible(true);
+                
+                        
+            }
+        });
+    }
+    
     /**
      * Creates new form PosTicket
      */
@@ -30,8 +60,9 @@ public class PosTicket extends javax.swing.JPanel {
         cButton1 = new org.components.controls.CButton();
         cButton2 = new org.components.controls.CButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        cPanel2 = new org.components.containers.CPanel();
-        cPanel3 = new org.components.containers.CPanel();
+        listPanel = new org.components.containers.CPanel();
+        listContentPanel = new org.components.containers.CPanel();
+        lbl = new javax.swing.JLabel();
         cPanel4 = new org.components.containers.CPanel();
         cPanel5 = new org.components.containers.CPanel();
         cPanel6 = new org.components.containers.CPanel();
@@ -45,26 +76,51 @@ public class PosTicket extends javax.swing.JPanel {
         setLayout(null);
 
         cPanel1.setLayout(null);
+
+        cButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton1ActionPerformed(evt);
+            }
+        });
         cPanel1.add(cButton1);
         cButton1.setBounds(10, 80, 70, 60);
+
+        cButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton2ActionPerformed(evt);
+            }
+        });
         cPanel1.add(cButton2);
         cButton2.setBounds(10, 10, 70, 60);
 
         add(cPanel1);
         cPanel1.setBounds(10, 11, 90, 420);
 
-        cPanel3.setBackground(new java.awt.Color(0, 255, 102));
+        listPanel.setLayout(null);
 
-        javax.swing.GroupLayout cPanel3Layout = new javax.swing.GroupLayout(cPanel3);
-        cPanel3.setLayout(cPanel3Layout);
-        cPanel3Layout.setHorizontalGroup(
-            cPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        listContentPanel.setBackground(new java.awt.Color(0, 255, 102));
+
+        lbl.setText("jLabel1");
+
+        javax.swing.GroupLayout listContentPanelLayout = new javax.swing.GroupLayout(listContentPanel);
+        listContentPanel.setLayout(listContentPanelLayout);
+        listContentPanelLayout.setHorizontalGroup(
+            listContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listContentPanelLayout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(lbl)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        cPanel3Layout.setVerticalGroup(
-            cPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 78, Short.MAX_VALUE)
+        listContentPanelLayout.setVerticalGroup(
+            listContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, listContentPanelLayout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(lbl)
+                .addGap(30, 30, 30))
         );
+
+        listPanel.add(listContentPanel);
+        listContentPanel.setBounds(10, 11, 288, 78);
 
         cPanel4.setBackground(new java.awt.Color(255, 102, 255));
 
@@ -79,28 +135,10 @@ public class PosTicket extends javax.swing.JPanel {
             .addGap(0, 84, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout cPanel2Layout = new javax.swing.GroupLayout(cPanel2);
-        cPanel2.setLayout(cPanel2Layout);
-        cPanel2Layout.setHorizontalGroup(
-            cPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(cPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        cPanel2Layout.setVerticalGroup(
-            cPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
-        );
+        listPanel.add(cPanel4);
+        cPanel4.setBounds(10, 95, 288, 84);
 
-        jScrollPane1.setViewportView(cPanel2);
+        jScrollPane1.setViewportView(listPanel);
 
         add(jScrollPane1);
         jScrollPane1.setBounds(120, 20, 310, 350);
@@ -239,6 +277,31 @@ public class PosTicket extends javax.swing.JPanel {
         add(cPanel8);
         cPanel8.setBounds(440, 20, 70, 320);
     }// </editor-fold>//GEN-END:initComponents
+
+    List<JPanel> panels=new ArrayList();
+    private void cButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton2ActionPerformed
+        
+        listPanel.removeAll();
+        for (int i = 0; i < 10; i++) {
+            CPanel listContentPanel = new CPanel();
+            listContentPanel.setBounds(10,  i*80,150,80);
+            JLabel lbl= new JLabel();
+            lbl.setText(String.valueOf(i));
+            listContentPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            listContentPanel.add(lbl);
+            listPanel.add(listContentPanel);
+            panels.add(listContentPanel);
+
+        }
+        listPanel.setPreferredSize(new Dimension(110,10*100));
+        listPanel.revalidate();
+        listPanel.repaint();
+    }//GEN-LAST:event_cButton2ActionPerformed
+
+    private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
+        //remove panel with 
+    }//GEN-LAST:event_cButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
     private org.components.controls.CButton cButton2;
@@ -246,8 +309,6 @@ public class PosTicket extends javax.swing.JPanel {
     private org.components.containers.CPanel cPanel10;
     private org.components.containers.CPanel cPanel11;
     private org.components.containers.CPanel cPanel12;
-    private org.components.containers.CPanel cPanel2;
-    private org.components.containers.CPanel cPanel3;
     private org.components.containers.CPanel cPanel4;
     private org.components.containers.CPanel cPanel5;
     private org.components.containers.CPanel cPanel6;
@@ -255,5 +316,8 @@ public class PosTicket extends javax.swing.JPanel {
     private org.components.containers.CPanel cPanel8;
     private org.components.containers.CPanel cPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl;
+    private org.components.containers.CPanel listContentPanel;
+    private org.components.containers.CPanel listPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,6 +2,7 @@ package org.biz.dao.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.biz.app.ui.util.StringUtility;
@@ -24,7 +25,7 @@ public class GenericDAO<T> {
     Class<T> cls;
     protected String orderby  =" c.savedDate  desc  , c.editedDate  desc ";   
     protected Cache cache;
-    int noofrows = 100;
+    public static int noofrows = 100;
 
     public GenericDAO(EntityManager em) {
         this.em = em;
@@ -285,7 +286,12 @@ public class GenericDAO<T> {
         return ts;
     }
 
+    public List executeQuery(String qry,Map params){
     
+        List<T> ts = GenericDAOUtil.ExecuteQuery(qry, params);
+        return ts;
+    }
+
 
     public Long getCount(String qry ,Object ...param) {
         String sq = createCount(qry);
@@ -408,6 +414,13 @@ public class GenericDAO<T> {
 
         return where+ GenericDAOUtil.getOrderBy(orderby);
     }
+    
+      public String createWhereWithOrderby(String whr,String orderby) {
+        String select= StringUtility.containsStringIgnoreCase(whr, "select")?"":createSelect();
+        String where= StringUtility.containsStringIgnoreCase(whr, "where")?select: select + " where  " + whr +" ";
+
+        return where+ GenericDAOUtil.getOrderBy(orderby);
+    }
     /*
      ///////////////
      //
@@ -477,7 +490,7 @@ public class GenericDAO<T> {
         public List<T> getByCodeLike(String code) {
         String cus = "  c.code like '" + code + "%' ";
         
-        List<T> lst = ExecuteQuery(createWhere(cus));
+        List<T> lst = ExecuteQuery(createWhereWithOrderby(cus," c.code asc "));
         return lst;
 
     }
@@ -491,6 +504,18 @@ public class GenericDAO<T> {
     public CQuery getQueryByCodeLike(String code) {
         String cus = "  c.code like '" + code + "%' ";
         return getQuery(createWhere(cus));
+//        return lst;
+
+    }
+    
+       /**
+     * code can use '%' wild carts
+     * @param code
+     * @return 
+     */    
+    public CQuery getCountQueryByCodeLike(String code) {
+        String cus = "  c.code like '" + code + "%' ";
+        return getQuery(createCount(cus));
 //        return lst;
 
     }

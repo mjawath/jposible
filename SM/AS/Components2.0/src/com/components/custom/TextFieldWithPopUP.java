@@ -8,6 +8,7 @@ package com.components.custom;
 
 import java.awt.event.ActionListener;
 import java.util.List;
+import org.biz.app.ui.util.Command;
 import org.components.containers.CPanel;
 import org.components.controls.CTextField;
 
@@ -31,21 +32,19 @@ public class TextFieldWithPopUP<T>  extends CPanel {
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        cTextField1.setText("cTextField1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 417, Short.MAX_VALUE)
+            .addGap(0, 132, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(cTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))
+                .addComponent(cTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
+            .addGap(0, 23, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(cTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
+                .addComponent(cTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -91,6 +90,15 @@ public class TextFieldWithPopUP<T>  extends CPanel {
         addToFocus(fieldWithPopUP);
     }
 
+    public void setSearchResult(Object objs) {
+        pagedPopUpPanel.setSearchResult(objs);
+        
+    }
+    public void setCommand(Command command) {
+        pagedPopUpPanel.setCommand(command);
+    }
+    
+    
     public void setPagedPopUpPanel(PagedPopUpPanel<T> pagedPopUpPanel) {
         this.pagedPopUpPanel = pagedPopUpPanel;
     }

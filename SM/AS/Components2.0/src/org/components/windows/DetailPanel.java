@@ -151,11 +151,13 @@ public class DetailPanel<T> extends TabPanelUI {
 
     @Override
     public Object saveX() {
+        long x=System.currentTimeMillis();
+        
         ArrayList result = new ArrayList();
         ArrayList toSave = new ArrayList();
         ArrayList toDelete = new ArrayList();
         ArrayList toUpdate = new ArrayList();
-
+        System.out.println("01"+ (System.currentTimeMillis()- x));
         busObject = getBusObject();
         if (service != null) {
             if (!isValideEntity()) {
@@ -173,7 +175,10 @@ public class DetailPanel<T> extends TabPanelUI {
                 Tracer.printToOut("Detail panel -> SaveX -> Bus Object is null ,Not saved");
                 return null;
             }
+                    System.out.println("find b"+ (System.currentTimeMillis()- x));
+
             Object obj = service.getDao().find(key);
+        System.out.println("find 02"+ (System.currentTimeMillis()- x));
 
             if (obj == null) {
                 //should retrieve new id and set to new objects
@@ -184,6 +189,7 @@ public class DetailPanel<T> extends TabPanelUI {
                 auditUpdatedData(toUpdate, key,GenericDAOUtil.currentTime());
                 Tracer.printToOut(" Object  is not found  So creation will be called");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
+        System.out.println("saved "+ (System.currentTimeMillis()- x));
 
                 postCreate(toSave, toUpdate, toDelete);
             }
@@ -218,6 +224,7 @@ public class DetailPanel<T> extends TabPanelUI {
         for (BusObj bus : objs) {            
             bus.setId( EntityService.getKey(""));
             bus.setSavedDate(cDate);
+            bus.setEditedDate(cDate);
             bus.setDepententEntitiesIDs();
                 
         }
@@ -388,7 +395,7 @@ public class DetailPanel<T> extends TabPanelUI {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 60, Short.MAX_VALUE)
+                .addGap(0, 647, Short.MAX_VALUE)
                 .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -396,7 +403,7 @@ public class DetailPanel<T> extends TabPanelUI {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addContainerGap(425, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -15,6 +15,8 @@ import org.biz.dao.service.Service;
 public class SearchQueryUIPanel extends javax.swing.JPanel {
   
     protected QueryManager qms;
+    protected ListViewUI listView;
+
     /**
      * Creates new form SearchQueryUIPanel
      */
@@ -89,7 +91,6 @@ public class SearchQueryUIPanel extends javax.swing.JPanel {
         this.qm = qm;
     }
     
-    private ListViewUI listView;
     
     public void setListView(ListViewUI listView){
         this.listView = listView; 

@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.MessageBoxes;
+import org.biz.app.ui.util.PropertyUtil;
 import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.entity.BusObj;
@@ -165,6 +166,9 @@ public class PxTable<T> extends JTable implements IComponent {
         }
 
         TableUtil.createTableModel(this, newTitle,newclassTypes);
+        if(PropertyUtil.getApplicationmod()== 1){
+        
+        }
     }
 
     

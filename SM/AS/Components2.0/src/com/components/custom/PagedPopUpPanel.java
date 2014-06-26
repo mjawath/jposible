@@ -64,28 +64,39 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
         @Override
         public Object executeTask() {
-            if(popupListner==null){
-                Tracer.printToOut("Popuplistner in PagedPopUpPanel is NULL ");
-                return null;
-            }
-            
-//            String text=(String)command.objs.get(0);
-          return  popupListner.searchItem("qry param");
+            return doSearch();
         }
 
         @Override
         public void resultTask(Object objs) {
-            if(objs==null && list!=null){
-            setModelCollection(list);
-                return;
-            }
-//            tItemCategory.setObjectToTable();
-//            Object [][] objas=new Object[0][];
-            setModelCollection((List)objs);
+            setSearchResult(objs);
         }
             
         };
+
+    public Object doSearch() {
+        if (popupListner == null) {
+            Tracer.printToOut("Popuplistner in PagedPopUpPanel is NULL ");
+            return null;
+        }
+//            String text=(String)command.objs.get(0);
+        return popupListner.searchItem(textField.getText());
+    }
     
+    public void setSearchResult(Object objs) {
+        if (objs == null && list != null) {
+            setModelCollection(list);
+            return;
+        }
+//            tItemCategory.setObjectToTable();
+//            Object [][] objas=new Object[0][];
+        setModelCollection((List) objs);
+    }
+    
+    public void setSearchTask(Command com){
+        this.command = com;
+        
+    }
     
     //TODO - should be replaced with list view to hold table
     public void setModelCollection(List<T> modelCollection) {
@@ -474,7 +485,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     }
 
     public void setObjectToTable(List lst) {
-        list = lst;
+//        list = lst;
         long yx = System.currentTimeMillis() ;
 
         if(lst==null)return;

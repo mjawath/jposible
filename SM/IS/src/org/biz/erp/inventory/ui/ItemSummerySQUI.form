@@ -30,15 +30,13 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="tShop" min="-2" pref="147" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                              <Component id="cDatePicker1" min="-2" pref="186" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                               <Component id="tfind" min="-2" pref="52" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="188" max="32767" attributes="0"/>
+              <EmptySpace pref="347" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,10 +57,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="tShop" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="cDatePicker1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="tfind" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="tfind" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -72,8 +67,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="org.components.controls.CDatePicker" name="cDatePicker1">
-    </Component>
     <Component class="org.components.controls.CTextField" name="titem">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

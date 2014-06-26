@@ -203,7 +203,12 @@ public class ItemList extends ListViewPanel {
 //            String qry = "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
             return service.getQueryByCodeLike(tsearch.getText());
         }
+        public CQuery getCountQuery() {
 
+            return service.getCountQueryByCodeLike(tsearch.getText());
+        }
+        
+        
     };
     
     

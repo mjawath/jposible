@@ -33,6 +33,7 @@ public class CategoryUI extends DetailPanel<Category> {
     public void clear() {
         tcode.clear();
         tdesc.clear();
+           super.clear();
     }
 
     public void setService(Service service) {
@@ -59,16 +60,25 @@ public class CategoryUI extends DetailPanel<Category> {
         cLabel1 = new org.components.controls.CLabel();
         tcode = new org.components.controls.CTextField();
         tdesc = new org.components.controls.CTextField();
+        cLabel2 = new org.components.controls.CLabel();
 
+        setLayout(null);
+
+        cLabel1.setText("Description");
         add(cLabel1);
-        cLabel1.setBounds(21, 39, 104, 25);
+        cLabel1.setBounds(20, 70, 120, 25);
         add(tcode);
-        tcode.setBounds(130, 40, 190, 25);
+        tcode.setBounds(150, 40, 190, 25);
         add(tdesc);
-        tdesc.setBounds(130, 90, 190, 25);
+        tdesc.setBounds(150, 70, 190, 25);
+
+        cLabel2.setText("Category Name");
+        add(cLabel2);
+        cLabel2.setBounds(21, 39, 120, 25);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;
+    private org.components.controls.CLabel cLabel2;
     private org.components.controls.CTextField tcode;
     private org.components.controls.CTextField tdesc;
     // End of variables declaration//GEN-END:variables

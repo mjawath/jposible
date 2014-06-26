@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -411,5 +413,9 @@ e.printStackTrace();
         return jTabbedPane1;
     }
     
+
+  
     
+    
+
 }

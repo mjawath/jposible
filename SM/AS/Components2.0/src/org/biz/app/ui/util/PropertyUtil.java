@@ -14,6 +14,11 @@ import java.util.Properties;
  * @author mjawath
  */
 public class PropertyUtil {
+    
+   public final static  Properties  properties = loadProperties("config.properties");
+   public final static  Properties  SystemProperties = loadProperties("config.properties");
+   public final static  Properties  ComponentProperties = loadProperties("config.properties");
+    
 
     public static  Properties loadProperties(String file){
 
@@ -25,4 +30,20 @@ public class PropertyUtil {
         }
      return properties;
     }
+    
+    public static byte getApplicationmod() {
+        final Object value = properties.get("applicationmode");
+        if (value != null) {
+            try {
+                return new Byte(value.toString());
+            } catch (Exception e) {
+            Tracer.exceptionOutPrint("Invalid Property specified in config.properyfile for applicationmode");
+            }
+        }
+        return 0;
+    }
+    public static void main(String[] args) {
+        System.out.println("============="+   getApplicationmod());
+    }
+    
 }

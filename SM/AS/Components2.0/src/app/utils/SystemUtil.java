@@ -5,6 +5,7 @@
 package app.utils;
 
 import app.AppMainWindow;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
 import javax.swing.JToolBar;
@@ -135,9 +136,29 @@ public class SystemUtil {
         AppMainWindow mw=(AppMainWindow) getMainWindow();        
         return mw.getToolbar();        
     }
+    private static ArrayList<JComponent> toolbarList=new ArrayList();
+
+  
+       public static void addSystemToolsToToolbar(){
+           for (JComponent com : toolbarList) {
+               getToolbar().add(com);
+           }
+    }
+     
+    public static void addToSystemToolsToToolbar(JComponent com) {
+
+        toolbarList.add(com);
+        getToolbar().add(com);
+
+    }
     
+    static {
+    addSystemToolsToToolbar();
+    }
+     
     public static void setTools(JComponent com){
         getToolbar().removeAll();
+        addSystemToolsToToolbar();
         if(com!=null){
         getToolbar().add(com);
         }        

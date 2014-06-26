@@ -1,15 +1,20 @@
 package app;
 
 import java.awt.Component;
+import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingWorker;
 import org.biz.dao.service.Service;
 import org.biz.util.ReflectionUtility;
+import org.components.controls.CButton;
 import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 
@@ -25,8 +30,19 @@ public class AppMainWindow extends org.components.windows.MainWindow {
         init();
         System.out.println("--------------------------------");
         Sessions.addToSession("mainui", this);
+        
+        tmnuGDN.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                
+                
+            }
+        });
     }
     String propfile;
+
 
  
 
@@ -38,6 +54,10 @@ public class AppMainWindow extends org.components.windows.MainWindow {
         jToolBar1 = new javax.swing.JToolBar();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        tmnuTrans = new javax.swing.JMenu();
+        tmnuGDN = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,6 +67,19 @@ public class AppMainWindow extends org.components.windows.MainWindow {
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
+
+        tmnuTrans.setText("Transaction");
+
+        tmnuGDN.setText("GRN");
+        tmnuTrans.add(tmnuGDN);
+
+        jMenu2.setText("jMenu2");
+        tmnuTrans.add(jMenu2);
+
+        jMenuItem1.setText("jMenuItem1");
+        tmnuTrans.add(jMenuItem1);
+
+        jMenuBar1.add(tmnuTrans);
 
         setJMenuBar(jMenuBar1);
 
@@ -73,6 +106,10 @@ public class AppMainWindow extends org.components.windows.MainWindow {
     
     public JToolBar getToolbar(){
     return jToolBar1;
+    }
+    
+    public JMenuBar getJMenuBar(){
+    return jMenuBar1;
     }
     
     public javax.swing.JTabbedPane getjTabbedPane1() {
@@ -144,11 +181,25 @@ public class AppMainWindow extends org.components.windows.MainWindow {
 
     }
  
+   
+      public void addMenu(JMenu menu){
+    jMenuBar1.add(menu);
+    }
+    
+    public static void setMenuItemToMenu(JMenu menu,JMenuItem mi){
+        menu.add(mi);
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cstattus;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem tmnuGDN;
+    private javax.swing.JMenu tmnuTrans;
     // End of variables declaration//GEN-END:variables
 }

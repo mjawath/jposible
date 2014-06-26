@@ -14,17 +14,21 @@ import org.biz.invoicesystem.dao.master.ShopDao;
  */
 public class ShopService extends Service {
 
-    ShopDao dao;
+    final static ShopDao dao=new ShopDao();
 
     public ShopService() {
-        dao = new ShopDao();
     }
 
-    @Override
     public ShopDao getDao() {
+    return dao;
+    }
+
+    public static ShopDao getDAO() {
         return dao;
     }
 
+   
+    
     public void setList(List shops) {
         dao.setList(shops);
     }

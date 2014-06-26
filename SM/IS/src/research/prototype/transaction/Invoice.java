@@ -4,7 +4,7 @@
  */
 package research.prototype.transaction;
 
-import org.biz.invoicesystem.entity.master.Item;
+import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 
 /**
  *
@@ -18,6 +18,22 @@ public class Invoice extends javax.swing.JPanel {
     public Invoice() {
         initComponents();
     }
+    
+    public void init() {
+        
+      
+        // create line item
+        // validate line item
+        // add or update line item
+        // remove line item
+        // calulate totel 
+        // set total
+        // get whole bus object
+        
+        
+    }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,7 +48,6 @@ public class Invoice extends javax.swing.JPanel {
         tblInvoiceLine1 = new org.components.controls.ModelEditableTable();
         cButton1 = new org.components.controls.CButton();
         tinv = new org.components.controls.CTextField();
-        cButton9 = new org.components.controls.CButton();
         ttotal = new org.components.controls.CLabel();
         tdiscount = new org.components.controls.CLabel();
         cLabel1 = new org.components.controls.CLabel();
@@ -41,10 +56,13 @@ public class Invoice extends javax.swing.JPanel {
         tpnlLineDetail = new org.components.containers.CPanel();
         tqty = new org.components.controls.CTextField();
         tprice = new org.components.controls.CTextField();
-        titem = new com.components.custom.TextFieldWithPopUP<Item>();
         tline = new org.components.controls.CLabel();
-        controlPanel1 = new com.components.custom.ControlPanel();
+        itemPopup1 = new research.prototype.transaction.ItemPopup();
+        tline1 = new org.components.controls.CLabel();
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
+        cLabel4 = new org.components.controls.CLabel();
+        cLabel5 = new org.components.controls.CLabel();
+        cLabel6 = new org.components.controls.CLabel();
 
         setLayout(null);
 
@@ -59,7 +77,7 @@ public class Invoice extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tblInvoiceLine1);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(20, 170, 720, 210);
+        jScrollPane2.setBounds(20, 170, 770, 210);
 
         cButton1.setText("Find");
         cButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -72,83 +90,88 @@ public class Invoice extends javax.swing.JPanel {
         add(tinv);
         tinv.setBounds(20, 10, 93, 25);
 
-        cButton9.setText("Top");
-        cButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton9ActionPerformed(evt);
-            }
-        });
-        add(cButton9);
-        cButton9.setBounds(750, 120, 54, 19);
-
         ttotal.setText("Total");
         add(ttotal);
-        ttotal.setBounds(445, 448, 235, 38);
+        ttotal.setBounds(580, 460, 70, 30);
 
         tdiscount.setText("Discount");
         add(tdiscount);
-        tdiscount.setBounds(445, 497, 235, 41);
+        tdiscount.setBounds(580, 500, 80, 30);
 
         cLabel1.setText("Paid");
         add(cLabel1);
-        cLabel1.setBounds(248, 450, 171, 34);
+        cLabel1.setBounds(230, 430, 70, 40);
 
         cLabel2.setText("Tax");
         add(cLabel2);
-        cLabel2.setBounds(248, 505, 104, 25);
+        cLabel2.setBounds(250, 490, 70, 40);
 
         cLabel3.setText("Sub Total");
         add(cLabel3);
-        cLabel3.setBounds(445, 405, 235, 32);
+        cLabel3.setBounds(580, 420, 80, 32);
 
         tpnlLineDetail.setLayout(null);
-
-        tqty.setText("Qty");
         tpnlLineDetail.add(tqty);
         tqty.setBounds(200, 10, 160, 30);
-
-        tprice.setText("Price");
         tpnlLineDetail.add(tprice);
         tprice.setBounds(370, 10, 130, 30);
 
-        titem.setText("Item");
-        tpnlLineDetail.add(titem);
-        titem.setBounds(10, 10, 180, 30);
-
-        tline.setText("Line Amount");
+        tline.setText("");
         tpnlLineDetail.add(tline);
-        tline.setBounds(510, 10, 104, 30);
+        tline.setBounds(630, 10, 90, 30);
+
+        itemPopup1.setText("");
+        tpnlLineDetail.add(itemPopup1);
+        itemPopup1.setBounds(30, 10, 140, 30);
+
+        tline1.setText("Line Amount");
+        tpnlLineDetail.add(tline1);
+        tline1.setBounds(510, 10, 104, 30);
 
         add(tpnlLineDetail);
-        tpnlLineDetail.setBounds(40, 120, 650, 40);
-        add(controlPanel1);
-        controlPanel1.setBounds(20, 390, 410, 30);
+        tpnlLineDetail.setBounds(20, 120, 770, 50);
         add(gridControllerPanel1);
-        gridControllerPanel1.setBounds(750, 170, 90, 230);
+        gridControllerPanel1.setBounds(800, 160, 90, 220);
+
+        cLabel4.setBackground(new java.awt.Color(204, 204, 255));
+        cLabel4.setText("");
+        cLabel4.setOpaque(true);
+        add(cLabel4);
+        cLabel4.setBounds(690, 500, 200, 30);
+
+        cLabel5.setBackground(new java.awt.Color(204, 204, 255));
+        cLabel5.setText("");
+        cLabel5.setOpaque(true);
+        add(cLabel5);
+        cLabel5.setBounds(690, 420, 200, 30);
+
+        cLabel6.setBackground(new java.awt.Color(204, 204, 255));
+        cLabel6.setText("");
+        cLabel6.setOpaque(true);
+        add(cLabel6);
+        cLabel6.setBounds(690, 460, 200, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
     
     }//GEN-LAST:event_cButton1ActionPerformed
 
-    private void cButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton9ActionPerformed
-
-    }//GEN-LAST:event_cButton9ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
-    private org.components.controls.CButton cButton9;
     private org.components.controls.CLabel cLabel1;
     private org.components.controls.CLabel cLabel2;
     private org.components.controls.CLabel cLabel3;
-    private com.components.custom.ControlPanel controlPanel1;
+    private org.components.controls.CLabel cLabel4;
+    private org.components.controls.CLabel cLabel5;
+    private org.components.controls.CLabel cLabel6;
     private com.components.custom.GridControllerPanel gridControllerPanel1;
+    private research.prototype.transaction.ItemPopup itemPopup1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.components.controls.ModelEditableTable tblInvoiceLine1;
     private org.components.controls.CLabel tdiscount;
     private org.components.controls.CTextField tinv;
-    private com.components.custom.TextFieldWithPopUP<Item> titem;
     private org.components.controls.CLabel tline;
+    private org.components.controls.CLabel tline1;
     private org.components.containers.CPanel tpnlLineDetail;
     private org.components.controls.CTextField tprice;
     private org.components.controls.CTextField tqty;

@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import org.biz.dao.service.GenericDAO;
 import org.biz.invoicesystem.entity.master.Item;
 import app.utils.SystemStatic;
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import org.dao.util.JPAUtil;
 
 /**
@@ -24,14 +25,14 @@ public class ItemDAO extends GenericDAO<Item> {
     }
 
     
-     public  List<Item> findItemListByCode(String itemcode) {
-  String qry ="  c.code like '" + itemcode + "%' ";
-        List<Item> lst = pagedData(qry,0);
+    public List<Item> findItemListByCode(String itemcode) {
+        String qry = "  c.code like '" + itemcode + "%' ";
+        List<Item> lst = pagedData(qry, 0);
 //
-        getCache().createAndAddCache(findItemListByCode,qry, 0, 0l, lst);
+        getCache().createAndAddCache(findItemListByCode, qry, 0, 0l, lst);
         return lst;
     }
-     
+
     public Item findItemByCode(String itemcode) {
         Item i = null;
 //        try { 
@@ -178,7 +179,7 @@ public class ItemDAO extends GenericDAO<Item> {
     
     public  List getByCodeOrDescriptionLike(String code){
     
-        String qry ="select DISTINCT c from Item  c where   c.code like '" + code + "%'  or  c.description  like '%" + code + "%' or c.description  like '%"+code+"%'";
+        String qry ="select DISTINCT c from Item  c where   c.code like '" + code + "%'  or  c.code  like '%" + code + "%' or c.description  like '%"+code+"%'";
         return ExecuteQuery(qry);
     }
     

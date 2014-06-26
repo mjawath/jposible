@@ -10,7 +10,6 @@
  */
 package org.biz.erp.inventory.ui;
 
-import org.biz.dao.service.Service;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.inventory.InventoryMonthlySummeryService;
 import org.components.windows.ListViewPanel;
@@ -121,7 +120,7 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
                 seleShop==null?null: seleShop.getId(),warehouse==null?null:warehouse.getId());
 //        tbl.setModelCollection(lst);
 
-        return null;
+        return null;  
     }
             
     

@@ -8,16 +8,18 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Parameter;
 import javax.persistence.Query;
-import org.eclipse.persistence.config.HintValues;
-import org.eclipse.persistence.config.QueryHints;
+import javax.persistence.criteria.CriteriaBuilder;
 import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
 import org.dao.util.DAOException;
 import org.dao.util.JPAUtil;
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
 
 /**
  * @author mjawath
@@ -178,8 +180,8 @@ public class GenericDAOUtil<T> {
 //        getEm().clear();
 
 
-        Query query = createEmNew().createQuery("select count(c) from " + cls.getSimpleName() + " c   "
-                + getOrderBy(orderby));
+        Query query = createEmNew().createQuery("select count(c) from " + cls.getSimpleName() + " c   ");
+                
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         return query;
     }
@@ -478,6 +480,15 @@ public class GenericDAOUtil<T> {
         }
         return q;
     }
+    
+    public static Query getQuery(String qryString, Map ps) {
+        Query q = createEmNew().createQuery(qryString);
+        for (Object object : ps.entrySet()) {
+            Map.Entry enty=(Map.Entry)object;
+            q.setParameter(enty.getKey().toString(), enty.getValue());
+        }
+        return q;
+    }
 
     //set parameters  as object array in the accoridng to the order of  to qry string 
     //eg select c from cusomter c where c.x =?1 and c.y= ?2  -===here new object[]{"jawath", 2005}
@@ -485,6 +496,11 @@ public class GenericDAOUtil<T> {
         return getQuery(qryString, ps).getResultList();
     }
 
+      //set parameters  as object array in the accoridng to the order of  to qry string 
+    //eg select c from cusomter c where c.x =?1 and c.y= ?2  -===here new object[]{"jawath", 2005}
+    public static <T> List<T> ExecuteQuery(String qryString, Map ps) {
+        return getQuery(qryString, ps).getResultList();
+    }
     public static <T> List<T> ExecuteQuery(String qryString, Class cls) {
         Query query = JPAUtil.getEntityManager().createQuery(qryString, cls);
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
@@ -570,8 +586,22 @@ public class GenericDAOUtil<T> {
         // what is the db 
         //db ==hsql then
         //db ==mysqla then
-        final Object singleResult = createEmNew().createNativeQuery("select CURRENT_TIMESTAMP  ").getSingleResult();
-        if(singleResult==null )return null;
+
+        Object singleResult = null;
+        try {
+            singleResult = createEmNew().createNativeQuery(" values  CURRENT_TIMESTAMP  ").getSingleResult();
+        } catch (Exception e) {
+            System.out.println("DB IS NOT SUPPORTING values  CURRENT_TIMESTAMP  ");
+            try {
+                singleResult = createEmNew().createNativeQuery(" SELECT  CURRENT_TIMESTAMP  ").getSingleResult();
+
+            } catch (Exception ee) {
+                System.out.println("DB IS NOT SUPPORTING  SELECT  CURRENT_TIMESTAMP   ");
+
+            }
+        }
+ 
+        if(singleResult==null )return new Date();
         if((singleResult instanceof Timestamp)){
         Date date = (Timestamp) singleResult;
         return date;

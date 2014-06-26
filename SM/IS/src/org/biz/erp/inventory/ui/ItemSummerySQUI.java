@@ -6,11 +6,16 @@ package org.biz.erp.inventory.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.dao.service.CQuery;
+import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
+import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.SearchQueryUIPanel;
 
 /**
@@ -49,13 +54,14 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
     
     
     class QueryManagerx extends QueryManager {
+
         @Override
         public CQuery getCQuery() {
             if (getService() == null) {
                 return null;
             }
-        Shop seleShop=tShop.getSelectedObject();
-        Warehouse warehouse=twarehouse.getSelectedObject();
+            Shop seleShop = tShop.getSelectedObject();
+            Warehouse warehouse = twarehouse.getSelectedObject();
 //        List lst = service.getDao().getSummery(
 //                seleShop==null?null: seleShop.getId(),warehouse==null?null:warehouse.getId());
 ////        tbl.setModelCollection(lst);
@@ -70,25 +76,43 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
         }
 
         @Override
-        public void postQuery() {
-        //create new thread 
+        public void postQuery(final Object objs) {
+            //create new thread 
             //get first  n object / item and 
             // get the summery of the inventory for those items 
             // set the items to table  in the EDT
-          new Thread(){
+            new Thread() {
 
-              @Override
-              public void run() {
-                 lastListPage.size();
-                  
-              }
-          
-          }.start();
-            
+                @Override
+                public void run() {
+                    lastListPage.size();
+                 //if this  > 0 
+                    //get first n item ids
+                    // get the sql 
+                    //set to table
+                    ArrayList<String> str = new ArrayList();
+                    List oobjs = ((QueryManagerx) objs).getList();
+                    int v = 0;
+                    for (Object strobj : oobjs) {
+                        Object[] xd = (Object[]) strobj;
+                        Item it = (Item) xd[0];
+                        str.add(it.getId());
+                        if (v == 5) {
+                            break;
+                        }
+                        v++;
+                    }
+
+                    List lst = new InventoryJournalService().getDao().getSummery("", "", str);
+                    ((ItemSummeryLVUI) listView).setValueToTable(lst);
+                }
+
+            }.start();
+
         }
-        
-        
+
     };
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,7 +122,6 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cDatePicker1 = new org.components.controls.CDatePicker();
         titem = new org.components.controls.CTextField();
         jLabel1 = new javax.swing.JLabel();
         tShop = new com.components.custom.TextFieldWithPopUP<Shop>();
@@ -133,11 +156,9 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(tShop, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(64, 64, 64)
                                 .addComponent(tfind, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,15 +176,12 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tShop, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tfind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(tfind, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.controls.CDatePicker cDatePicker1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private com.components.custom.TextFieldWithPopUP<Shop> tShop;

@@ -163,8 +163,8 @@ public class ModelEditableTable<T> extends PxTable implements ListSelectionListe
                 "ID", "Name"
             }
         ));
+        setEditable(true);
         setRowHeight(38);
-        setRowSelectionAllowed(true);
         setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

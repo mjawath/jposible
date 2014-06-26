@@ -33,7 +33,7 @@ public class WareHoueLV extends ListViewUI {
         super.initPaging(qm);    
 //        super.initPaging(qm) ;    
         tbl.init(Warehouse.class, new Class[]{String.class, String.class, Date.class, Date.class},
-                 new String[]{"id", "code", "savedDate", "editedDate"});
+                 new String[]{ "code"});
         tbl.setTableInteractionListner(tableInteractionListner);
         
     }
@@ -46,7 +46,7 @@ public class WareHoueLV extends ListViewUI {
         @Override
         public Object[] getTableData(Object row) {
             Warehouse item = (Warehouse) row;
-            return new Object[]{item, item.getId(), item.getCode(), item.getSavedDate(), item.getEditedDate()};
+            return new Object[]{item,  item.getCode()};
         }
     };
      

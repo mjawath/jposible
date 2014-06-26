@@ -1,5 +1,6 @@
 package app.utils;
 
+import app.AppMainWindow;
 import org.components.util.Sessions;
 import org.components.windows.MainWindow;
 
@@ -23,8 +24,8 @@ public abstract class SystemStatic {
     public   static  <T,E,X>  T entity2Ui(E i,X ii){
     return null;}
 
-    public static MainWindow getMainWindow() {
-        MainWindow jf = (MainWindow) Sessions.getObj("mainui");
+    public static AppMainWindow getMainWindow() {
+        AppMainWindow jf = (AppMainWindow) Sessions.getObj("mainui");
         return jf;
     }
 }

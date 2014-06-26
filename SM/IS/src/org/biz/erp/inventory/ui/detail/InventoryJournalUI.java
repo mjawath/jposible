@@ -118,21 +118,20 @@ import org.components.windows.DetailPanel;
 
         //detailpanel init
         //detail panel events
+        tuom.initPopup(Item.class, new Class[]{String.class, String.class},new String[]{"code", "desc"}, "code",
+                new PopupListner() {
+                    @Override
+                    public List searchItem(Object searchQry) {
+                        return itemser.getItemForPopup(tuom.getText());
 
-        titem.initPopup(Item.class, new Class[]{String.class, String.class}, 
-                new String[]{"code", "desc"}, "code", new PopupListner() {
-            @Override
-            public List searchItem(Object searchQry) {
-                return itemser.getItemForPopup(titem.getText());
+                    }
 
-            }
-
-            @Override
-            public Object[] getTableData(Object obj) {
-                Item item = (Item) obj;
-                return new Object[]{item,  item.getCode(),  item.getDescription()};
-            }
-        });
+                    @Override
+                    public Object[] getTableData(Object obj) {
+                        Item item = (Item) obj;
+                        return new Object[]{item, item.getCode(), item.getDescription()};
+                    }
+                });
 
         tuom.initPopup(UOM.class, new Class[]{String.class}, new String[]{"code"}, "code", new PopupListner() {
             @Override
@@ -171,6 +170,15 @@ import org.components.windows.DetailPanel;
     
     
 
+    public Command itemCommand = new Command(){
+
+        @Override
+        public Object executeTask() {
+            return super.executeTask(); //To change body of generated methods, choose Tools | Templates.
+        }
+    
+    };
+    
     private void setTabOrder() {
         addToFocus(titem);
 //        addToFocus(tuom);
@@ -344,12 +352,12 @@ import org.components.windows.DetailPanel;
         tdocref.clear();
         tblLine.clear();
         tqty.clear();
-        titem.clear();
+        tuom.clear();
         tuom.clear();
         tdate.setDate(null);
         
         if (tshop.getSelectedObject() == null) {
-            Shop shop = shopservice.getDao().find("123");
+            Shop shop = shopservice.getDAO().find("123");
             tshop.setSelectedObject(shop);
         }
         if (twarehouse.getSelectedObject() == null) {
@@ -377,7 +385,7 @@ import org.components.windows.DetailPanel;
     public Object[] loadAfterService() {
         //get shop from properties /db
         //get warehouse from properties /db
-        Shop shop = shopservice.getDao().find("123");
+        Shop shop = shopservice.getDAO().find("123");
         Warehouse wh = wser.getDao().find("123");        
         
         return new Object[]{shop, wh};
@@ -396,7 +404,7 @@ import org.components.windows.DetailPanel;
             return false;
         }
         if (busObject.getLines() == null || busObject.getLines().isEmpty()) {
-            titem.requestFocus();
+            tuom.requestFocus();
             return false;
         }
         
@@ -431,11 +439,11 @@ import org.components.windows.DetailPanel;
 
         lineDetailPanel = new org.components.containers.CPanel();
         tqty = new org.components.controls.CTextField();
-        titem = new com.components.custom.TextFieldWithPopUP<Item>();
         tuom = new com.components.custom.TextFieldWithPopUP<UOM>();
         cLabel5 = new org.components.controls.CLabel();
         cLabel6 = new org.components.controls.CLabel();
         cLabel7 = new org.components.controls.CLabel();
+        titem = new research.prototype.transaction.ItemPopup();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblLine = new org.components.controls.ModelEditableTable();
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
@@ -447,24 +455,17 @@ import org.components.windows.DetailPanel;
         cLabel2 = new org.components.controls.CLabel();
         cLabel3 = new org.components.controls.CLabel();
         cLabel4 = new org.components.controls.CLabel();
-        xx = new org.components.controls.CButton();
         tdate = new org.components.controls.CDatePicker();
-        twarehouse = new org.biz.ui.master.list.WareHousePopup();
+        twarehouse = new research.prototype.transaction.WareHousePopup();
 
         setLayout(null);
 
         lineDetailPanel.setBackground(new java.awt.Color(153, 255, 0));
         lineDetailPanel.setLayout(null);
         lineDetailPanel.add(tqty);
-        tqty.setBounds(330, 20, 130, 30);
-
-        titem.setText("");
-        lineDetailPanel.add(titem);
-        titem.setBounds(30, 20, 150, 30);
-
-        tuom.setText("");
+        tqty.setBounds(330, 20, 130, 25);
         lineDetailPanel.add(tuom);
-        tuom.setBounds(190, 20, 130, 30);
+        tuom.setBounds(190, 20, 130, 25);
 
         cLabel5.setText("Item");
         lineDetailPanel.add(cLabel5);
@@ -472,11 +473,13 @@ import org.components.windows.DetailPanel;
 
         cLabel6.setText("UOM");
         lineDetailPanel.add(cLabel6);
-        cLabel6.setBounds(160, 0, 104, 25);
+        cLabel6.setBounds(190, 0, 104, 20);
 
         cLabel7.setText("Qty");
         lineDetailPanel.add(cLabel7);
         cLabel7.setBounds(330, 0, 80, 20);
+        lineDetailPanel.add(titem);
+        titem.setBounds(40, 20, 134, 25);
 
         add(lineDetailPanel);
         lineDetailPanel.setBounds(10, 40, 650, 60);
@@ -499,10 +502,8 @@ import org.components.windows.DetailPanel;
         tcode.setBounds(30, 380, 150, 25);
         add(tdocref);
         tdocref.setBounds(190, 380, 150, 25);
-
-        tshop.setText("");
         add(tshop);
-        tshop.setBounds(190, 420, 150, 40);
+        tshop.setBounds(200, 440, 150, 30);
 
         ttransactionType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "OUT", "IN" }));
         ttransactionType.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -511,11 +512,11 @@ import org.components.windows.DetailPanel;
 
         cLabel1.setText("Shop");
         add(cLabel1);
-        cLabel1.setBounds(180, 400, 104, 25);
+        cLabel1.setBounds(200, 410, 104, 25);
 
         cLabel2.setText("Warehouse");
         add(cLabel2);
-        cLabel2.setBounds(0, 400, 104, 25);
+        cLabel2.setBounds(20, 410, 104, 25);
 
         cLabel3.setText("Ref");
         add(cLabel3);
@@ -524,13 +525,12 @@ import org.components.windows.DetailPanel;
         cLabel4.setText("Doc");
         add(cLabel4);
         cLabel4.setBounds(10, 350, 104, 25);
-        add(xx);
-        xx.setBounds(840, 350, 39, 19);
         add(tdate);
         tdate.setBounds(350, 380, 140, 22);
         add(twarehouse);
-        twarehouse.setBounds(20, 440, 150, 30);
+        twarehouse.setBounds(40, 440, 134, 25);
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;
     private org.components.controls.CLabel cLabel2;
@@ -546,12 +546,11 @@ import org.components.windows.DetailPanel;
     private org.components.controls.CTextField tcode;
     private org.components.controls.CDatePicker tdate;
     private org.components.controls.CTextField tdocref;
-    private com.components.custom.TextFieldWithPopUP<Item> titem;
+    private research.prototype.transaction.ItemPopup titem;
     private org.components.controls.CTextField tqty;
     private com.components.custom.TextFieldWithPopUP<Shop> tshop;
     private org.components.controls.CComboBox ttransactionType;
     private com.components.custom.TextFieldWithPopUP<UOM> tuom;
-    private org.biz.ui.master.list.WareHousePopup twarehouse;
-    private org.components.controls.CButton xx;
+    private research.prototype.transaction.WareHousePopup twarehouse;
     // End of variables declaration//GEN-END:variables
 }
