@@ -13,9 +13,11 @@ import javax.swing.event.DocumentListener;
  */
 public class DocumentListenerx  implements DocumentListener{
 
+    
+    
     @Override
-    public void insertUpdate(DocumentEvent e) {
-       action(e); 
+    public void insertUpdate(DocumentEvent e) {       
+        action(e); 
     }
 
     @Override

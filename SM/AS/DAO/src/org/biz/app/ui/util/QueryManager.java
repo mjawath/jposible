@@ -20,9 +20,10 @@ public abstract class QueryManager {
     private Service service;
     private     int noOfPages;
     private List lastListPage;
-    
-    public abstract CQuery getCQuery();
 
+    public CQuery getCQuery() {
+        return null;
+    }
 //    public abstract Object[] getParams();
 
     public int getCurrentPage() {

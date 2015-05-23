@@ -16,7 +16,7 @@ import java.util.Set;
 public class Sessions {
 
     static  HashMap<String, Object> hashMap;
-    public static  Sessions sessions;
+    public static  Sessions sessions = new Sessions();
 
     public static void create() {
         getSession();

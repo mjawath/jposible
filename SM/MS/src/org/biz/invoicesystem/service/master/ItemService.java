@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import org.biz.app.ui.util.QueryManager;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.Item;
@@ -55,5 +56,9 @@ public class ItemService extends Service{
         
         
     }
+    
+
+
+ 
  
     }

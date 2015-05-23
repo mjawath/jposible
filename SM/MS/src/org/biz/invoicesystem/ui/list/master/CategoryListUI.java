@@ -4,16 +4,7 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
-import java.util.Date;
-import java.util.List;
-import org.biz.app.ui.util.QueryManager;
-import org.biz.dao.service.CQuery;
-import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Category;
-import org.biz.invoicesystem.entity.master.Item;
-import org.biz.invoicesystem.service.master.CategoryService;
-import org.components.controls.CxTable;
-import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewPanel;
 
 /**
@@ -22,19 +13,7 @@ import org.components.windows.ListViewPanel;
  */
 public class CategoryListUI extends ListViewPanel<Category> {
 
-    private CategoryService categoryService;
-    
-    private List<Category> items;
-    private TableInteractionListner tableInteractionListner = new TableInteractionListner(){
-
-        @Override
-        public Object[] getTableData(Object row) {
-            Category item= (Category)row;
-            return new Object[]{item,item.getId(),item.getCode(),item.getDescription(),item.getSavedDate(),item.getEditedDate()};
-        }
-    
-    };
-
+   
     /**
      * Creates new form CategoryListUI
      */
@@ -47,6 +26,7 @@ public class CategoryListUI extends ListViewPanel<Category> {
         initComponents();      
         listUI = categoryLVUI1;
         searchQueryUI = categorySUI1;
+
         super.init();         
 
   
@@ -54,20 +34,6 @@ public class CategoryListUI extends ListViewPanel<Category> {
     }
     
 
-
-
-  
- 
-
-    private QueryManager searchListener = new QueryManager() {
-        public CQuery getCQuery() {
-            //" where c."+myfield+" "+ myoperator +" ?1 ";
-            
-            return service.getQueryByCodeLike("");
-        }
-    };
-
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -83,7 +49,7 @@ public class CategoryListUI extends ListViewPanel<Category> {
         );
         categorySUI1Layout.setVerticalGroup(
             categorySUI1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 137, Short.MAX_VALUE)
+            .addGap(0, 63, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -92,9 +58,9 @@ public class CategoryListUI extends ListViewPanel<Category> {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(categoryLVUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(categorySUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(categorySUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(categoryLVUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -102,8 +68,8 @@ public class CategoryListUI extends ListViewPanel<Category> {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(categorySUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(categoryLVUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(categoryLVUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

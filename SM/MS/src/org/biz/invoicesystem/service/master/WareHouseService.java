@@ -14,9 +14,10 @@ import org.components.util.Sessions;
  */
 public class WareHouseService extends Service{
 
-    WareHouseDao dao;
+    static WareHouseDao dao=new WareHouseDao();
+    
     public WareHouseService() {
-    dao=new WareHouseDao();
+    
     Sessions.addToSession(WareHouseDao.class.getSimpleName(), dao);
     }
 
@@ -28,7 +29,7 @@ public class WareHouseService extends Service{
     
     public static WareHouseDao getDAO() {
         
-        return (WareHouseDao)Sessions.getObj(WareHouseDao.class.getSimpleName());
+        return dao;//(WareHouseDao)Sessions.getObj(WareHouseDao.class.getSimpleName());
         
     }
     

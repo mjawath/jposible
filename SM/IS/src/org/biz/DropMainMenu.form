@@ -16,14 +16,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cButton2" min="-2" pref="160" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="cButton1" min="-2" pref="160" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="cButton3" min="-2" pref="160" max="-2" attributes="0"/>
-              <EmptySpace pref="249" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="cButton2" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cButton1" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cButton3" min="-2" pref="160" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="twareHouse" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="265" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -36,7 +41,9 @@
                   <Component id="cButton1" alignment="3" min="-2" pref="92" max="-2" attributes="0"/>
                   <Component id="cButton3" alignment="3" min="-2" pref="92" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="276" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="twareHouse" min="-2" pref="92" max="-2" attributes="0"/>
+              <EmptySpace pref="178" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -46,16 +53,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Item"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cButton1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="org.components.controls.CButton" name="cButton2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Category"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cButton2ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="org.components.controls.CButton" name="cButton3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Inventory Journal"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cButton3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="org.components.controls.CButton" name="twareHouse">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="WareHouse"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="twareHouseActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

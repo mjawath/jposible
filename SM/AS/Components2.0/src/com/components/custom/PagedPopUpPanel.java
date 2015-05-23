@@ -37,7 +37,9 @@ import org.biz.app.ui.util.UIEty;
 import org.biz.entity.BusObj;
 import org.components.controls.CPopupMenu;
 import org.components.controls.CTextField;
+import org.components.controls.CxTable;
 import org.components.parent.controls.editors.TablePopUpCellEditor;
+import org.components.windows.ListViewUI;
 
 /**
  *
@@ -60,15 +62,18 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     private String selectedProperty;
     private JPopupMenu jpm;
     private PopupListner popupListner;
+    private ListViewUI listView;
+    private CxTable cxTable1;
+    
     private Command command=  new Command(){
 
         @Override
-        public Object executeTask() {
+        public Object doBackgroundTask(Object ...objs) {
             return doSearch();
         }
 
         @Override
-        public void resultTask(Object objs) {
+        public void doResultTask(Object ...objs) {
             setSearchResult(objs);
         }
             
@@ -100,7 +105,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     
     //TODO - should be replaced with list view to hold table
     public void setModelCollection(List<T> modelCollection) {
-        cxTable1.clear();
+        listView.getTable().clear();
         //for each item set values to table model
         if (modelCollection == null) {
             return;
@@ -111,7 +116,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
             Object[] objrow = popupListner.getTableData(modelCollection.get(x));
             data[x] = objrow;
         }
-        TableUtil.filldata(cxTable1, data);
+        TableUtil.filldata(listView.getTable(), data);
         showPopUp();
     }
 
@@ -181,7 +186,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         editor = field;
         textField = (CTextField) field.getComponent();
         editor.setMasterTbl(tbl);
-        init();
+    
     }
 
     public List getList() {
@@ -221,7 +226,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 //            if (getPropertiesEL() == null || getPropertiesEL().length == 0) {
 //                throw new BizException("not specified properties ");
 //            }
-            if (cxTable1.getColumnCount() == 0) {
+            if (listView.getTable().getColumnCount() == 0) {
                 throw new BizException("not specified column ");
             }
 
@@ -240,6 +245,11 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
         }
 
 
+    }
+    public void setListView(ListViewUI ui){
+    listView = ui;
+      cxTable1=listView.getTable();
+          init();
     }
 
     public void init() {
@@ -266,8 +276,8 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
                 closePopup();
             }
         });
-
-        cxTable1.addMouseListener(new MouseAdapter() {
+    
+        listView.getTable().addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -300,7 +310,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(cxTable1, e);
+                KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(listView.getTable(), e);
             }
         }, KeyEvent.VK_UP);
         textField.addKeyListener(new KeyAdapter() {
@@ -350,7 +360,7 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
             command.objs.add(textField.getText());
-            command.invoke();//
+            command.start();//
             //
             //what ever class 
             //get item list 
@@ -392,50 +402,19 @@ public abstract class PagedPopUpPanel<T> extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        cxTable1 = new org.components.controls.CxTable();
-        cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
-
-        cxTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        cxTable1.setFocusable(false);
-        jScrollPane1.setViewportView(cxTable1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(cPaginatedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+            .addGap(0, 530, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(cPaginatedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+            .addGap(0, 368, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.app.ui.util.CPaginatedPanel cPaginatedPanel1;
-    private org.components.controls.CxTable cxTable1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     public void selectItem() {

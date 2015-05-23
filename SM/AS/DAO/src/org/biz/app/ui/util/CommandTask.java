@@ -30,7 +30,7 @@ public class CommandTask extends SwingWorker<Object, Object>{
     @Override
     protected Object doInBackground() throws Exception {
         state = EXECUTION;
-       return command.executeTask();
+       return command.sta();
     }
     
     @Override

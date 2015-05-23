@@ -10,12 +10,14 @@
  */
 package org.biz.app.ui.util; 
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import org.biz.app.ui.event.ButtonAction;
+import org.biz.app.ui.event.OAction;
 import org.biz.dao.service.Service;
 import org.components.controls.CButton;
 import org.components.controls.CxTable;
+import org.components.test.ResultPage;
 
 
 
@@ -25,31 +27,37 @@ import org.components.controls.CxTable;
  */
 public class CPaginatedPanel extends javax.swing.JPanel {
 
-    /** Creates new form CPaginatedPanel */
-    public CPaginatedPanel() {
-        initComponents();
-        tnextpage.addActionListener(action);
-        tPreviousPage.addActionListener(action);  
-        tFind.addActionListener(action);
-        tlast.addActionListener(action);
-        tfirst.addActionListener(action);
-    }
-    
     private String qryName = "";
     private Service service;
     private PagedListUI listUI;
-    
     private QueryManager qryManager;
-    int currentPage=0;
+    int currentPage = 0;
     private CxTable ctable;
-
-    public void setSearchListener(QueryManager searchListener){
-    qryManager=searchListener;
+    
+    /** Creates new form CPaginatedPanel */
+    public CPaginatedPanel() {
+        initComponents();
+        firstaction.setCommand(command);
+        tFind.setAction(firstaction);
+        tnextpage.setAction(firstaction);
+        tPreviousPage.setAction(firstaction);
+        tlast.setAction(firstaction);
     }
     
-    public void setService(Service service){
-    this.service =service;
-    qryManager.setService(service);
+
+
+    public void setSearchListener(QueryManager searchListener){
+        qryManager=searchListener;
+    }
+
+    public void setSearchListener(QueryManager searchListener, Service service) {
+        setSearchListener(searchListener);
+        setService(service);
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+        qryManager.setService(service);
     }
     
     public void init(Service service,QueryManager qm,CxTable table){
@@ -67,11 +75,11 @@ public class CPaginatedPanel extends javax.swing.JPanel {
     }
     
             
-    private ButtonAction  action = new ButtonAction() {
+    private OAction  action = new OAction() {
             
-            public Object executeTask(Object objs) {
+            public Object doBackgroundTask(Object objs) {
                 ArrayList al=(ArrayList)(objs); 
-                CButton btn=(CButton)(al.get(0)); 
+                CButton btn=(CButton)((ActionEvent)(al.get(0))).getSource(); 
                 
 //                if(service==null)return null;
                 
@@ -79,7 +87,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
                 //should check query is exisiting or modified
                 if (tFind==btn) {
                     qryManager.getFirstPage();
-                    qryManager.postQuery(new Object[]{});
+                    
                 }else
                 if (tnextpage==btn) {//get excuting source
                     qryManager.getNextPage();
@@ -90,9 +98,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
                 else if (tlast==btn) {
                     qryManager.getLastPage();
                 }
-                else if (tfirst==btn) {
-                    qryManager.getFirstPage();
-                }
+          
                 return qryManager;
             }
 
@@ -104,6 +110,55 @@ public class CPaginatedPanel extends javax.swing.JPanel {
 
             }
         };
+    
+
+     
+       
+     private Command command = new Command(){
+         
+      public Object doBackgroundTask(Object ...objs) {
+
+          
+            if (qryManager == null) {
+                return null;
+            }
+            ResultPage rp=null;
+            long count = qryManager.executeCountQuery();
+            int noOfRowsPerPage = qryManager.getNoOfRowsPerPage();
+            int noOfPages = (int) Math.ceil((float) count / noOfRowsPerPage);
+            if(objs!=null && objs.length<= 0 )return null;
+            if(objs[0]  instanceof ActionEvent  && ((ActionEvent)objs[0]).getSource()==tFind){
+            Object obj = qryManager.executeQuery(0);
+            rp = new ResultPage((int) count, noOfPages, 0, obj);
+               
+            }
+                      
+
+            return rp;
+        }
+
+        public void doResultTask(Object ...objs) {
+            if (objs == null) {
+            }
+            ResultPage l = (ResultPage) objs[0];
+            if(l==null)return;
+            if (qryManager != null) {
+                qryManager.postQuery(l);
+            }
+            if (ctable != null) {
+                ctable.setModelCollection((List) l.getResult());
+            }
+        }
+     
+     };
+       
+     private OAction firstaction = new OAction() {
+
+       
+    };
+
+
+       
     
     private void setKeySearchEvent(){
         //key down
@@ -200,7 +255,6 @@ public class CPaginatedPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         tPreviousPage = new org.components.controls.CButton();
-        tfirst = new org.components.controls.CButton();
         tlast = new org.components.controls.CButton();
         tnextpage = new org.components.controls.CButton();
         cPageCount = new org.components.controls.CTextFieldPopUp();
@@ -212,25 +266,26 @@ public class CPaginatedPanel extends javax.swing.JPanel {
 
         tPreviousPage.setText("<");
         add(tPreviousPage);
-        tPreviousPage.setBounds(40, 10, 30, 19);
-
-        tfirst.setText("<<");
-        add(tfirst);
-        tfirst.setBounds(10, 10, 30, 19);
+        tPreviousPage.setBounds(10, 10, 30, 20);
 
         tlast.setText(">>");
         add(tlast);
-        tlast.setBounds(170, 10, 30, 19);
+        tlast.setBounds(170, 10, 30, 20);
 
         tnextpage.setText(">");
         add(tnextpage);
-        tnextpage.setBounds(140, 10, 30, 19);
+        tnextpage.setBounds(130, 10, 30, 20);
         add(cPageCount);
-        cPageCount.setBounds(70, 10, 30, 20);
+        cPageCount.setBounds(50, 10, 30, 20);
 
         tFind.setText("Find");
+        tFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tFindActionPerformed(evt);
+            }
+        });
         add(tFind);
-        tFind.setBounds(110, 10, 30, 19);
+        tFind.setBounds(90, 10, 30, 20);
 
         tinfo.setText("");
         add(tinfo);
@@ -241,11 +296,14 @@ public class CPaginatedPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cButton6ActionPerformed
 
+    private void tFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFindActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tFindActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CTextFieldPopUp cPageCount;
     private org.components.controls.CButton tFind;
     private org.components.controls.CButton tPreviousPage;
-    private org.components.controls.CButton tfirst;
     private org.components.controls.CLabel tinfo;
     private org.components.controls.CButton tlast;
     private org.components.controls.CButton tnextpage;

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public interface ICommand  {
 
-    public Object executeTask();
+    public Object sta();
     
     public void resultTask(Object  objs);
     

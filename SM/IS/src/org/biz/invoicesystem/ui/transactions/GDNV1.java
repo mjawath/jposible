@@ -7,7 +7,6 @@
 package org.biz.invoicesystem.ui.transactions;
 
 import com.components.custom.ActionTask;
-import com.components.custom.PopupListner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,16 +16,13 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
-import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
-import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.ShopService;
 import org.biz.invoicesystem.service.master.WareHouseService;
 import org.components.parent.controls.editors.TableInteractionListner;
@@ -47,16 +43,14 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
         
     }
 
-    public void init(){
+    public void init() {
         super.init();
         initComponents();
         crudcontrolPanel.setCrudController(this);
-        
-          setTabOrder();
-        //controll pressed
 
-     
-      initLineItemTablePanel();
+        //controll pressed
+        initLineItemTablePanel();
+        setTabOrder();
     }
     
       /*
@@ -70,64 +64,9 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
         tblLine.init(InventoryJournalLine.class, new Class[]{Item.class, String.class, String.class, String.class},
                 new String[]{"Item", "Item desc", "UOM", "QTY"});
 
-        tblLine.setTableInteractionListner(new TableInteractionListner() {
-            @Override
-            public boolean onBeforeRowSelectionChange() {
-//                if(tblLine.getSelectedObject()==null)return true;
-                return true;//isValidLine((InventoryJournalLine)tblLine.getSelectedObject());
-            }
-
-            @Override
-            public Object[] getTableData(Object row) {
-                InventoryJournalLine sil = (InventoryJournalLine) row;
-                Item itm = sil.getItem();
-                UOM uom = sil.getUom();
-                return new Object[]{sil, itm, itm != null ? itm.getCode() : null,
-                            uom != null ? uom.getCode() : "", sil.getQty()};
-            }
-
-            @Override
-            public void selectionChanged(Object newRowObject) {
-                setLineItemDetail((InventoryJournalLine) newRowObject);
-            }
-        });
-
+        tblLine.setTableInteractionListner(new TIL());
         gridControllerPanel1.setTable(tblLine);
 
-
-
-        //detailpanel init
-        //detail panel events
-        tuom.initPopup(Item.class, new Class[]{String.class, String.class},new String[]{"code", "desc"}, "code",
-                new PopupListner() {
-                    @Override
-                    public List searchItem(Object searchQry) {
-                        return ItemService.getItemForPopup(tuom.getText());
-
-                    }
-
-                    @Override
-                    public Object[] getTableData(Object obj) {
-                        Item item = (Item) obj;
-                        return new Object[]{item, item.getCode(), item.getDescription()};
-                    }
-                });
-
-        tuom.initPopup(UOM.class, new Class[]{String.class}, new String[]{"code"}, "code", new PopupListner() {
-            @Override
-            public List searchItem(Object searchQry) {
-                return null;
-
-            }
-
-            @Override
-            public Object[] getTableData(Object obj) {
-                UOM item = (UOM) obj;
-                return new Object[]{item , item.getCode()};
-            }
-        });
-            
-        
         tblLine.addNewToLast();
 
 
@@ -135,15 +74,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
     
     
 
-    public Command itemCommand = new Command(){
-
-        @Override
-        public Object executeTask() {
-            return super.executeTask(); //To change body of generated methods, choose Tools | Templates.
-        }
-    
-    };
-    
+       
     private void setTabOrder() {
         addToFocus(titem);
 //        addToFocus(tuom);
@@ -157,13 +88,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
     @Override
     public void events() {
         super.events();
-        ActionListener act = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
-        titem.setDocAction(act);
-        tqty.setDocAction(act);
+
         ComponentFactory.createDoubleTextField(tqty);
         titem.setActionActionTask(new ActionTask() {
             @Override
@@ -213,7 +138,27 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
               
     }
     
-    
+    class  TIL extends TableInteractionListner {
+            @Override
+            public boolean onBeforeRowSelectionChange() {
+//                if(tblLine.getSelectedObject()==null)return true;
+                return true;//isValidLine((InventoryJournalLine)tblLine.getSelectedObject());
+            }
+
+            @Override
+            public Object[] getTableData(Object row) {
+                InventoryJournalLine sil = (InventoryJournalLine) row;
+                Item itm = sil.getItem();
+                UOM uom = sil.getUom();
+                return new Object[]{sil, itm, itm != null ? itm.getCode() : null,
+                            uom != null ? uom.getCode() : "", sil.getQty()};
+            }
+
+            @Override
+            public void selectionChanged(Object newRowObject) {
+                setLineItemDetail((InventoryJournalLine) newRowObject);
+            }
+        };
 
     private void setLineItemDetail(InventoryJournalLine obj) {
         if (obj == null) {
@@ -234,7 +179,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
 //                addtoLine();
             }
         });
-        tqty.addaction(0, new ActionTask() {
+        tqty.setActionTask(new ActionTask() {
             @Override
             public void actionCall(Object obj) {
                 addtoLine();
@@ -252,7 +197,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
             //        // get top bus object / create top bus object
             // validate on         // validate line item on  / top bus obj
             InventoryJournal ij=getBusObject();
-            ij.addIJLine(li);            
+            ij.addIJLine(li);  //if ij valid proceed          
             tblLine.addNewOrModifySelectedRow(li);
   
 //        }
@@ -332,21 +277,9 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
 
         tblLine.addNewToLast();
         selectedObject=null;
-        clearTask.invoke();
     }
 
-     Command clearTask=new Command();
     
-    @Override
-    public void setService(Service service) {
-//        itemser = new ItemService();
-//        wser = new WareHouseService();
-//        shopservice=new ShopService();
-        //set ui data       
-        super.setService(service);        
-    }
-
-    @Override
     public Object[] loadAfterService() {
         //get shop from properties /db
         //get warehouse from properties /db
@@ -368,52 +301,51 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
         if (busObject == null) {
             return false;
         }
-        if (busObject.getLines() == null || busObject.getLines().isEmpty()) {
-            tuom.requestFocus();
-            return false;
-        }
+        
         
         if (busObject.getWarehouse() == null) {
             MessageBoxes.errormsg(this, "Please provide a valid store room", "Invalid data");
             twarehouse.requestFocus();
             return false;
         }
-            
+        
+         if (busObject.getShop()== null) {
+            MessageBoxes.errormsg(this, "Please provide a valid Shop room", "Invalid data");
+            tshop.requestFocus();
+            return false;
+        }
         for (Iterator<InventoryJournalLine> it = busObject.getLines().iterator(); it.hasNext();) {
             InventoryJournalLine inventoryJournalLine = it.next();
             if(!inventoryJournalLine.isValidLine())it.remove();
 
         }
+        if (busObject.getLines() == null || busObject.getLines().isEmpty()) {
+            titem.requestFocus();
+            return false;
+        }
         return true;
     }
 
     @Override
-    public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {
-        
+    public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {        
        
         if (ttransactionType.getSelectedIndex() == 0) {
             busObject.setTransactionOutType();
         }
-    }
-      
+    }  
   
     
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lineDetailPanel = new org.components.containers.CPanel();
         tqty = new org.components.controls.CTextField();
-        tuom = new com.components.custom.TextFieldWithPopUP<UOM>();
         cLabel5 = new org.components.controls.CLabel();
         cLabel6 = new org.components.controls.CLabel();
         cLabel7 = new org.components.controls.CLabel();
         titem = new research.prototype.transaction.ItemPopup();
+        tuom = new research.prototype.transaction.UOMPopup();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblLine = new org.components.controls.ModelEditableTable();
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
@@ -428,13 +360,12 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
         twarehouse = new research.prototype.transaction.WareHousePopup();
         crudcontrolPanel = new com.components.custom.ControlPanel();
         tshop = new research.prototype.transaction.ShopPopup();
+        cLabel8 = new org.components.controls.CLabel();
 
         lineDetailPanel.setBackground(new java.awt.Color(125, 222, 250));
         lineDetailPanel.setLayout(null);
         lineDetailPanel.add(tqty);
         tqty.setBounds(330, 20, 130, 25);
-        lineDetailPanel.add(tuom);
-        tuom.setBounds(190, 20, 130, 25);
 
         cLabel5.setText("Item");
         lineDetailPanel.add(cLabel5);
@@ -449,6 +380,8 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
         cLabel7.setBounds(330, 0, 80, 20);
         lineDetailPanel.add(titem);
         titem.setBounds(40, 20, 134, 25);
+        lineDetailPanel.add(tuom);
+        tuom.setBounds(180, 20, 134, 25);
 
         tblLine.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -469,7 +402,9 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
 
         cLabel3.setText("Ref");
 
-        cLabel4.setText("Doc");
+        cLabel4.setText("Doc No");
+
+        cLabel8.setText("Doc Date");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -478,39 +413,43 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lineDetailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(gridControllerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(cLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(tcode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(tdocref, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(tdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(226, 226, 226)
-                        .addComponent(ttransactionType, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tshop, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(twarehouse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tcode, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tdocref, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(113, 113, 113)
+                                .addComponent(cLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43))
+                            .addComponent(ttransactionType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,29 +459,30 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
                 .addComponent(lineDetailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gridControllerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                    .addComponent(gridControllerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tdocref, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                    .addComponent(tdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(twarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(ttransactionType, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(68, 68, 68))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tshop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(ttransactionType, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(71, 71, 71))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -555,6 +495,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
     private org.components.controls.CLabel cLabel5;
     private org.components.controls.CLabel cLabel6;
     private org.components.controls.CLabel cLabel7;
+    private org.components.controls.CLabel cLabel8;
     protected com.components.custom.ControlPanel crudcontrolPanel;
     private com.components.custom.GridControllerPanel gridControllerPanel1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -567,7 +508,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
     private org.components.controls.CTextField tqty;
     private research.prototype.transaction.ShopPopup tshop;
     private org.components.controls.CComboBox ttransactionType;
-    private com.components.custom.TextFieldWithPopUP<UOM> tuom;
+    private research.prototype.transaction.UOMPopup tuom;
     private research.prototype.transaction.WareHousePopup twarehouse;
     // End of variables declaration//GEN-END:variables
 }

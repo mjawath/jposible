@@ -88,6 +88,7 @@ public class Service {
         return dao.getByCode(code);
     }
     
+       
     public String getUniqueKey(){
             return EntityService.getKey("Test");
     }
@@ -117,5 +118,14 @@ public class Service {
      public CQuery getCountQueryByCodeLike(String qry){
          
         return getDao().getCountQueryByCodeLike(qry);
+    }
+     
+    public long getCountByCodeLike(String qry){
+         
+        return getCount(getDao().getCountQueryByCodeLike(qry));
+    }
+     
+     public List getByCodeLike(int page,String qry){
+        return getDao().getByCodeLike(page,qry);
     }
    }

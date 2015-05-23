@@ -74,23 +74,14 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        jPanel1.setLayout(null);
-
-        jButton1.setText("jButton1");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(95, 33, 73, 23);
-
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(400, 130, 340, 90);
 
         jLayeredPane1.setBackground(new java.awt.Color(255, 102, 204));
         jLayeredPane1.setOpaque(true);
@@ -108,8 +99,17 @@ public class NewJFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLayeredPane1.add(jScrollPane1);
         jScrollPane1.setBounds(70, 70, 375, 200);
-        jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jPanel1.setLayout(null);
+
+        jButton1.setText("jButton1");
+        jPanel1.add(jButton1);
+        jButton1.setBounds(95, 33, 73, 23);
+
+        jLayeredPane1.add(jPanel1);
+        jPanel1.setBounds(100, 100, 340, 90);
 
         getContentPane().add(jLayeredPane1);
         jLayeredPane1.setBounds(40, 30, 520, 310);

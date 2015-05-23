@@ -14,7 +14,7 @@ import org.components.windows.ListViewUI;
  *
  * @author jawath
  */
-public class WareHoueLV extends ListViewUI {
+ public class WareHoueLV extends ListViewUI {
 
     /**
      * Creates new form WareHoueLV
@@ -42,11 +42,11 @@ public class WareHoueLV extends ListViewUI {
     
     
     
-      private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
+    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
         @Override
         public Object[] getTableData(Object row) {
             Warehouse item = (Warehouse) row;
-            return new Object[]{item,  item.getCode()};
+            return new Object[]{item, item.getCode()};
         }
     };
      
@@ -59,11 +59,11 @@ public class WareHoueLV extends ListViewUI {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGap(0, 1001, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGap(0, 527, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

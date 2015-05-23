@@ -4,6 +4,7 @@
  */
 package org.components.windows;
 
+import java.util.List;
 import org.biz.app.ui.util.CPaginatedPanel;
 import org.biz.app.ui.util.QueryManager;
 import org.components.controls.CxTable;
@@ -28,6 +29,7 @@ public class ListViewUI extends javax.swing.JPanel {
     public void initPaging(QueryManager qman){
 //        cPaginatedPanel1.init(service, searchListener, tbl);
         queryManager=qman;
+        setPaging(pagePanel, tbl);
         if(pagePanel==null)return;
         pagePanel.init(qman, tbl);
     }
@@ -36,6 +38,10 @@ public class ListViewUI extends javax.swing.JPanel {
     public void setPaging(CPaginatedPanel pp,CxTable  table){
         pagePanel=pp;
         tbl=table;
+    }
+    
+    public void executeQuery(){
+        pagePanel.findCommand();
     }
     
     
@@ -57,6 +63,9 @@ public class ListViewUI extends javax.swing.JPanel {
     
     public void findCommand(){
         cPaginatedPanel1.findCommand();
+    }
+    public void setCollection(List list){
+    tbl.setModelCollection(list);
     }
     
 

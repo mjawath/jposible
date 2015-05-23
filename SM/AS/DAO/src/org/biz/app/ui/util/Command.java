@@ -24,7 +24,7 @@ public class Command implements ICommand{
         result = new ArrayList();
     }
 
-    public void invoke() {
+    public void start() {
         CommandTask com = new CommandTask(command);
     }
 
@@ -41,7 +41,7 @@ public class Command implements ICommand{
     }
 
     @Override
-    public Object executeTask() {
+    public Object sta() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -51,69 +52,31 @@ public class MainWindow extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cButton1 = new org.components.controls.CButton();
         cstattus = new org.components.controls.CLabel();
-        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cButton1.setText("LogOut");
-        cButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cButton1ActionPerformed(evt);
-            }
-        });
-
         cstattus.setText("");
-
-        jButton1.setText("jButton1");
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(304, 304, 304)
-                .addComponent(jButton1)
-                .addGap(70, 70, 70)
-                .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cstattus, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cstattus, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(448, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cstattus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)))
+                .addContainerGap(439, Short.MAX_VALUE)
+                .addComponent(cstattus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
-
-
-        Sessions.remove("user");
-        cstattus.setText("You have to login ....");
-        Set<String> st = new HashSet<String>();
-        for (String string : Sessions.keys()) {
-            st.add(string);
-        }
-        for (String object : st) {
-            int s = getjTabbedPane1().indexOfTab(object);
-            if (s != -1) {
-                System.out.println("s " + s);
-                Sessions.remove(object);
-            }
-        }
-        getjTabbedPane1().removeAll();
-//        showlogin();
-    }//GEN-LAST:event_cButton1ActionPerformed
  
     public void init() {
 //
@@ -265,6 +228,35 @@ public class MainWindow extends JFrame {
         }
     }
     
+     public void addToTabpanelToUI(JPanel tab, String title, final Object obj) {
+        try {
+           
+            JPanel tpui = (JPanel) Sessions.getObj(title);
+       
+            if (tpui == null) {
+                tpui = tab;
+                getjTabbedPane1().add(title, tpui);
+                int sx = getjTabbedPane1().indexOfTab(title);
+                Sessions.addToSession(title, tpui);
+//                initCloseButtonForTab(getjTabbedPane1(), sx);
+                getjTabbedPane1().setSelectedIndex(sx);
+//                tpui.setTabName(title);
+
+            } else {
+                 int ix = getjTabbedPane1().indexOfTab(title);
+                 getjTabbedPane1().setSelectedIndex(ix);
+//               initCloseButtonForTab(getjTabbedPane1(), ix);
+           
+//                 tpui.setobj(obj);
+            }
+   
+          
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    
     public void initCloseButtonForTab(JTabbedPane pane,int index){
         try {
     TabCLosePnl p=new TabCLosePnl();
@@ -401,9 +393,7 @@ e.printStackTrace();
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.controls.CButton cButton1;
     private org.components.controls.CLabel cstattus;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 

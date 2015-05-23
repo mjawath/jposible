@@ -9,29 +9,20 @@ import app.utils.SystemUtil;
 import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.Service;
-import org.biz.erp.inventory.ui.list.InventoryJournalListViewUI;
-import org.biz.erp.inventory.ui.detail.InventoryJournalUI;
 import app.utils.SystemStatic;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import org.biz.DropMainMenu;
-import org.biz.erp.inventory.ui.ItemInventorySummary;
-import org.biz.erp.inventory.ui.WareHouseUI;
-import org.biz.erp.inventory.ui.list.WareHouseListUI;
-import org.biz.invoicesystem.service.inventory.InventoryJournalService;
-import org.biz.invoicesystem.service.master.CategoryService;
-import org.biz.invoicesystem.service.master.ItemService;
-import org.biz.invoicesystem.service.master.WareHouseService;
-import org.biz.invoicesystem.ui.list.master.CategoryListUI;
-import org.biz.invoicesystem.ui.list.master.ItemList;
-import org.biz.invoicesystem.ui.transactions.GRNFrame;
-import org.biz.master.ui.CategoryUI;
-import org.biz.master.ui.ItemMasterUI2;
+import org.biz.erp.ui.transaction.detail.InvoiceDetailUI;
+import org.biz.invoicesystem.ui.transactions.ItemMasterFrame;
+import org.biz.invoicesystem.ui.transactions.WareHouseFrame;
 import org.components.controls.CButton;
 import org.components.util.Sessions;
 import org.components.windows.DetailPanel;
@@ -45,48 +36,44 @@ public class ApplicationManager {
 
     public static void main(String[] args) {
 //         GenericDAOUtil.createEMFWithCustomProperties();
+       
 
+            try {
+                   for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+                } catch (Exception e) {
+                    System.out.println("------");
+                } 
+//        final InvoiceDetailUI iv =new InvoiceDetailUI();
+//                
+//        
+//        SwingUtilities.invokeLater(new Runnable() {
+//
+//            @Override
+//            public void run() {                
+//                iv.showAsFrame();
+//            }
+//        });
+    
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Sessions.create();
-                System.out.println("===============================");
+                System.out.println("============Application is starting..........===================");
                 AppMainWindow app = new AppMainWindow();
                 addSystemToolsToToolbar();
                 app.setExtendedState(Frame.MAXIMIZED_BOTH);
-//              app.addToTabpanelToUI("Item",ItemMasterUI2.class);
                 app.setVisible(true);
-                DetailPanel item=new ItemMasterUI2();
-//                initDetailUI(ItemService.class, "Item Detail " ,"ItemDetail",item);
-//                initListUI(ItemService.class, "Item List " ,"ItemList",new ItemList(),item);
-//                initUI(ItemService.class, "Item Detail " ,"ItemDetail",ItemMasterUI2.class);
-                initUI(ItemService.class, "Item", ItemMasterUI2.class, ItemList.class);
-                initUI(CategoryService.class, "Category", CategoryUI.class, CategoryListUI.class);
-//                initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
-                initUI(InventoryJournalService.class, "InventoryJournal", InventoryJournalUI.class, InventoryJournalListViewUI.class);
-//                initUI(SalesInvoiceService.class, "Sales", InvoiceUI.class, PostedInvoicesListUI.class);
-//                initUI(SupplierService.class, "Supplier", SupplerDetailUI.class, SupplierListUi.class);
-//                initUI(CustomerService.class, "Customer", CustomerDetailUI.class, CustomerListUi.class);
-//                initUI(StaffService.class, "Staff", StaffDetailUI.class, StaffListUi.class);
-                initUI(WareHouseService.class, "WareHouse", WareHouseUI.class, WareHouseListUI.class);
-//                initUI(ShopService.class, "Shop", ShopUI.class, ShopListUI.class);
-                 
-        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("item", ItemMasterUI2.class,ItemService.class);
-        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("itemList", ItemList.class,ItemService.class);
-        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("Category", CategoryUI.class,CategoryService.class);
-        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("CategoryList", CategoryListUI.class,CategoryService.class);
-        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("InventoryJournalDETAIL", InventoryJournalUI.class,InventoryJournalService.class);
-        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("InventoryJournalLIST", InventoryJournalListViewUI.class,InventoryJournalService.class);
-        ((AppMainWindow)SystemStatic.getMainWindow()).addMenu("InventorySummery", ItemInventorySummary.class,InventoryJournalService.class);
-            
-            setMenuBar();
+
+                setMenuBar();
             }
         });
-//            SalesInvoiceService sis=new SalesInvoiceService(); 
-//            sis.initUI();
-//            ItemService itemser=new ItemService();
-//            itemser.initUI();
-        
-    }
+
+  
+}
     
     
 
@@ -203,18 +190,20 @@ public class ApplicationManager {
         final CButton btn = new CButton();
         btn.setPreferredSize(new Dimension(100,180));
         btn.setText("Tools");
-        popup.add(new DropMainMenu());
+    
         
         btn.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 //show popup              
-                popup.show(btn, btn.getWidth(), btn.getHeight());
+//                popup.show(btn, btn.getWidth(), btn.getHeight());
+                dropmenu.showPopup(btn);
             }
         });
         SystemUtil.addToSystemToolsToToolbar(btn);
     }
+    static DropMainMenu dropmenu=new DropMainMenu();
 
     public static void setMenuBar() {
         JMenu menu = new JMenu("Trans");
@@ -226,17 +215,47 @@ public class ApplicationManager {
         menu.add(mi);
         menu.add(mi2);
         
-        mi.addActionListener(new xx());
+//        mi.addActionListener(new xx());
+        
+        setMenuItem(menu, "WareHouse", WareHouseFrame.class);
+        setMenuItem(menu, "ItemMaster", ItemMasterFrame.class);
+ 
+    }
+    
+    public static void setMenuItem(JMenu menu,String MenuName,Class frameName){
+        JMenuItem menuItem = new JMenuItem(MenuName);
+        JFrame fr =(JFrame)ReflectionUtility.getDynamicInstance(frameName);
+       
+        Act act =new Act(fr,popup);
+        menuItem.addActionListener(act);
+        menu.add(menuItem);
+        
+    }
+}
+ 
+class Act implements ActionListener {
+
+    JPopupMenu pop;
+    public Act(JFrame frm,JPopupMenu pop) {
+        this.frm = frm;
+        this.pop = pop;
     }
 
-    static class xx implements ActionListener {
+    
+    
+    
+    
+        JFrame frm;
+        public void setJframe(JFrame frm){
+            this.frm = frm;
 
+        }
+        
         @Override
         public void actionPerformed(ActionEvent e) {
-            GRNFrame fr = new GRNFrame();
-            fr.setVisible(true);
+//            GRNFrame fr = new GRNFrame();
+            frm.setVisible(true);
+            pop.setVisible(false);
             System.out.println("================");
         }
-
-    }
 }

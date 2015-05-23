@@ -19,8 +19,6 @@ import org.components.controls.CxTable;
  */
 public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListener{
 
-    protected ListViewUI listUI;
-    protected SearchQueryUIPanel searchQueryUI;
     
     /**
      * Creates new form ListViewPanel
@@ -34,9 +32,11 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     public void init() {
 //        initComponents();
         super.init();
-        if(listUI==null)return;
+        if(listUI==null)return;        
         listUI.setSearchQueryUI(searchQueryUI);
+         if(searchQueryUI!=null){
         searchQueryUI.setListView(listUI);
+         }        
         init(listUI.getTable());
     }
 
@@ -44,8 +44,7 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     public void setService(Service service) {
         super.setService(service);
         if (searchQueryUI != null) {
-            searchQueryUI.setServiceForQuery(service);
-            
+            searchQueryUI.setServiceForQuery(service);            
         }
     }
 
@@ -101,17 +100,17 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        searchQueryUIPanel1 = new org.components.windows.SearchQueryUIPanel();
-        listViewUI1 = new org.components.windows.ListViewUI();
+        searchQueryUI = new org.components.windows.SearchQueryUIPanel();
+        listUI = new org.components.windows.ListViewUI();
 
-        javax.swing.GroupLayout searchQueryUIPanel1Layout = new javax.swing.GroupLayout(searchQueryUIPanel1);
-        searchQueryUIPanel1.setLayout(searchQueryUIPanel1Layout);
-        searchQueryUIPanel1Layout.setHorizontalGroup(
-            searchQueryUIPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout searchQueryUILayout = new javax.swing.GroupLayout(searchQueryUI);
+        searchQueryUI.setLayout(searchQueryUILayout);
+        searchQueryUILayout.setHorizontalGroup(
+            searchQueryUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        searchQueryUIPanel1Layout.setVerticalGroup(
-            searchQueryUIPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        searchQueryUILayout.setVerticalGroup(
+            searchQueryUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 94, Short.MAX_VALUE)
         );
 
@@ -119,28 +118,27 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchQueryUIPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(listViewUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(searchQueryUI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listUI, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(searchQueryUIPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchQueryUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listViewUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(listUI, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.windows.ListViewUI listViewUI1;
-    private org.components.windows.SearchQueryUIPanel searchQueryUIPanel1;
+    protected org.components.windows.ListViewUI listUI;
+    protected org.components.windows.SearchQueryUIPanel searchQueryUI;
     // End of variables declaration//GEN-END:variables
 
     @Override

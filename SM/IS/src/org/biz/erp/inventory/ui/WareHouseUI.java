@@ -32,6 +32,7 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
      */
     public WareHouseUI() {
         super();
+        
     }
 
     @Override
@@ -40,12 +41,12 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
         service = new WareHouseService();
         initComponents();
         super.init();
-        wareHouseListUI1.init();
     }
 
     @Override
     public void setBusObject(Warehouse obj) {
         tcode.setValue(obj.getCode());
+        selectedObject = obj;
     }
 
     @Override
@@ -76,13 +77,18 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
         warehouse.setCode(UIEty.tcToStrE(tcode));
     }
 
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         tcode = new org.components.controls.CTextField();
         cLabel1 = new org.components.controls.CLabel();
-        wareHouseListUI1 = new org.biz.erp.inventory.ui.list.WareHouseListUI();
+
+        tcode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tcodeActionPerformed(evt);
+            }
+        });
 
         cLabel1.setText("Warehouse name");
 
@@ -93,35 +99,31 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(tcode, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 872, Short.MAX_VALUE))
+                        .addGap(81, 81, 81)
+                        .addComponent(tcode, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(wareHouseListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(53, 53, 53)
                 .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(wareHouseListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                .addGap(17, 17, 17))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tcodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tcodeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;
     private org.components.controls.CTextField tcode;
-    private org.biz.erp.inventory.ui.list.WareHouseListUI wareHouseListUI1;
     // End of variables declaration//GEN-END:variables
 
 

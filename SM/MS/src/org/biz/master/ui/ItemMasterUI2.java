@@ -60,13 +60,13 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private TableInteractionListner tblInterUnit;
     private Command commandCode = new Command() {
         @Override
-        public Object executeTask() {
-            return super.executeTask();
+        public Object doBackgroundTask(Object ...objs) {
+            return super.doBackgroundTask();
         }
 
         @Override
-        public void resultTask(Object objs) {
-            super.resultTask(objs);
+        public void doResultTask(Object ...objs) {
+            super.doResultTask(objs);
         }
     };
 
@@ -1031,7 +1031,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         itemService = (ItemService) service;
         categoryService = new CategoryService();
 
-//        commandGUI.invoke();
+//        commandGUI.start();
     }
 
     public void loadGUIData() {
@@ -1042,12 +1042,12 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     }
     Command commandGUI = new Command() {
         @Override
-        public Object executeTask() {
+        public Object doBackgroundTask(Object ...objs) {
             return loadComboData();
         }
 
         @Override
-        public void resultTask(Object objs) {
+        public void doResultTask(Object ...objs) {
             Object[] obs = (Object[]) objs;
             //set values to combos
         }

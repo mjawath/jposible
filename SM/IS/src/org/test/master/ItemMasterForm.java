@@ -4,15 +4,10 @@
  */
 package org.test.master;
 
-import app.utils.SystemUtil;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
-import org.biz.invoicesystem.ui.list.master.ItemList;
-import org.biz.master.ui.ItemMasterUI2;
-import org.biz.master.ui.MasterDetailViewerUI;
 import org.components.parent.controls.editors.DoubleCellEditor;
 import org.components.parent.controls.editors.ObjectCellEditor;
 

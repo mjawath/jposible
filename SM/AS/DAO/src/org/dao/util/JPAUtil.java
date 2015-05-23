@@ -2,12 +2,15 @@ package org.dao.util;
 
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.biz.app.ui.util.Tracer;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.eclipse.persistence.jpa.JpaHelper;
 
 public class JPAUtil {
 
@@ -34,20 +37,34 @@ public class JPAUtil {
      * create entitimanager factory if there is not any 
      */
     public static EntityManager getEntityManager() {
-        if (entityManager == null) {
-                entityManager=getEntityManagerFactory().createEntityManager();
-                return entityManager;
+        if (entityManagerFactory == null) {
+            entityManagerFactory = getEntityManagerFactory();
         }
 
-        return entityManagerFactory.createEntityManager();
+        if (entityManagerFactory != null) {
+            try {
+                return entityManagerFactory.createEntityManager();
+
+            } catch (Exception e) {
+                Tracer.printToOut("Problem creating entity manager  in getEntityManager" + e.getMessage());
+
+            }
+        }
+        return null;
     }
 
     public static EntityManagerFactory getEntityManagerFactory() {
-         if (entityManagerFactory == null) {
+        try {
+            if (entityManagerFactory == null) {
+                entityManagerFactory = Persistence.createEntityManagerFactory(PU);
+                return entityManagerFactory;
+            }
+        } catch (Exception e) {
+            
+            Tracer.printToOut("Problem creating entity manager factory in getEntityManagerFactory"+e.getMessage());
 
-            entityManagerFactory = Persistence.createEntityManagerFactory(PU);
-            return entityManagerFactory;
         }
+
         return entityManagerFactory;
     }
 
@@ -55,6 +72,17 @@ public class JPAUtil {
         Query query = entityManager.createQuery(key);
         return query;
     }
+
+    public static Query createQuery(String key, Class cls) {
+        final EntityManager em = getEntityManager();
+        if (em == null) {
+            return null;
+        }
+        Query query = em.createQuery(key, cls);
+        return query;
+    }
+    
+    
 
     public static Connection getConnection() {
         Connection connection = entityManager.unwrap(Connection.class);
@@ -106,14 +134,17 @@ public class JPAUtil {
 //         props.put("eclipselink.jdbc.password", "");\
         
         props.put(PersistenceUnitProperties.APP_LOCATION, ".");
-        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
-        props.put("eclipselink.ddl-generation", "drop-and-create-tables");
-        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
+        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_DATABASE_GENERATION);
+        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
+
+        props.put(PersistenceUnitProperties.DEPLOY_ON_STARTUP, "true");
+
+//        props.put("eclipselink.ddl-generation", "create-or-extend-tables");
+//        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
 //        props.put("eclipselink.logging.level", "FINE");
 //        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
 //        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
         props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
-//        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
         props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
 
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU, props);
@@ -126,8 +157,11 @@ public class JPAUtil {
         }//        for (String string : emf.getProperties().keySet()) {
 //            System.out.println(emf.getProperties().get(string));
 //        }
-//        entityManager=entityManagerFactory.createEntityManager();
-//     List s=   emf.createEntityManager().createQuery("select item from Item item").getResultList();
+        entityManager=entityManagerFactory.createEntityManager();
+        
+//                JpaHelper.getEntityManagerFactory(entityManager).refreshMetadata(props);
+
+     List s=   entityManager.createQuery("select item from Item item").getResultList();
 //        System.out.println(s);
         return entityManagerFactory;
     }

@@ -6,17 +6,28 @@
 
 package org.biz;
 
+import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
+import org.biz.invoicesystem.ui.transactions.CategoryTab;
+import org.biz.invoicesystem.ui.transactions.WareHouseTab;
+import test.test.AppStart;
+
 /**
  *
  * @author Jawad
  */
 public class DropMainMenu extends javax.swing.JPanel {
 
+    JPopupMenu popup;
+    
     /**
      * Creates new form DropMainMenu
      */
     public DropMainMenu() {
         initComponents();
+        popup = new JPopupMenu();
+        popup.add(this);
+        
     }
 
     /**
@@ -31,12 +42,35 @@ public class DropMainMenu extends javax.swing.JPanel {
         cButton1 = new org.components.controls.CButton();
         cButton2 = new org.components.controls.CButton();
         cButton3 = new org.components.controls.CButton();
+        twareHouse = new org.components.controls.CButton();
 
         cButton1.setText("Item");
+        cButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton1ActionPerformed(evt);
+            }
+        });
 
         cButton2.setText("Category");
+        cButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton2ActionPerformed(evt);
+            }
+        });
 
         cButton3.setText("Inventory Journal");
+        cButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton3ActionPerformed(evt);
+            }
+        });
+
+        twareHouse.setText("WareHouse");
+        twareHouse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                twareHouseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -44,12 +78,15 @@ public class DropMainMenu extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(twareHouse, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,14 +96,51 @@ public class DropMainMenu extends javax.swing.JPanel {
                     .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(twareHouse, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(178, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton2ActionPerformed
+               app.utils.SystemUtil.addToMainWindow(new CategoryTab(),"category");
+        hidePopup();
+    }//GEN-LAST:event_cButton2ActionPerformed
 
+    private void twareHouseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twareHouseActionPerformed
+      
+        //if system already contains the Tab page then bring to front othervise 
+        // create new one and add them
+        
+        app.utils.SystemUtil.addToMainWindow(new WareHouseTab(),"WareHouse");
+        hidePopup();
+        
+    }//GEN-LAST:event_twareHouseActionPerformed
+
+    private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cButton1ActionPerformed
+
+    private void cButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton3ActionPerformed
+       
+        AppStart.main();
+        hidePopup();
+        
+    }//GEN-LAST:event_cButton3ActionPerformed
+
+    public void showPopup(JComponent btn) {
+        popup.setLocation(btn.getX(), btn.getY());
+        popup.show(btn,100, 80);
+    }
+
+    public void hidePopup() {
+        popup.setVisible(false);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
     private org.components.controls.CButton cButton2;
     private org.components.controls.CButton cButton3;
+    private org.components.controls.CButton twareHouse;
     // End of variables declaration//GEN-END:variables
 }

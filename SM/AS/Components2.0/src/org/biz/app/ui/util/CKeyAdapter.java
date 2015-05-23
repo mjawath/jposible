@@ -7,7 +7,7 @@ package org.biz.app.ui.util;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import org.biz.app.ui.event.ButtonAction;
+import org.biz.app.ui.event.OAction;
 
 /**
  *
@@ -33,17 +33,17 @@ public class CKeyAdapter extends KeyAdapter  {
         if (type == KeyEvent.KEY_PRESSED) {
                 final Command com= new Command() {
             @Override
-            public Object executeTask() {
+            public Object doBackgroundTask(Object ...objs) {
                 getParams().add(e);
-                return CKeyAdapter.this.executeTask(getParams());
+                return CKeyAdapter.this.doBackgroundTask(getParams());
             }
 
             @Override
-            public void resultTask(Object objs) {
-                CKeyAdapter.this.resultTask(objs);
+            public void doResultTask(Object ...objs) {
+                CKeyAdapter.this.doResultTask(objs);
             }
         };
-        com.invoke();
+        com.start();
         }
     }
 
@@ -52,7 +52,7 @@ public class CKeyAdapter extends KeyAdapter  {
     }
 
     
-    public Object executeTask(Object obj) {
+    public Object doBackgroundTask(Object ...obj) {
 
 //        System.out.println("start executing-------" + com.objs);
         try {
@@ -64,7 +64,7 @@ public class CKeyAdapter extends KeyAdapter  {
         return "key event";
     }
 
-    public void resultTask(Object objs) {
+    public void doResultTask(Object ...objs) {
         System.out.println("-------result ##########----" + objs);
 
     }

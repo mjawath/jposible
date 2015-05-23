@@ -25,7 +25,7 @@ public class UOMPopup extends TextFieldWithPopUP<UOM> implements PopupListner{
     public UOMPopup() {
 //        initComponents();?
         super();
-        initPopup(Item.class, new Class[]{UOM.class,String.class},new String[]{"Code"} ,"code",this);
+        initPopup(UOM.class, new Class[]{UOM.class,String.class},new String[]{"Code"} ,"code",this);
     }
 
     /**
@@ -55,7 +55,7 @@ public class UOMPopup extends TextFieldWithPopUP<UOM> implements PopupListner{
 
     @Override
     public List searchItem(Object searchQry) {
-        return ItemService.getItemForPopup((String) searchQry);
+        return null;
     }
 
     @Override

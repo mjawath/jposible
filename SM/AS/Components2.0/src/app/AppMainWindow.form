@@ -57,18 +57,27 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="1" max="32767" attributes="0"/>
           <Component id="cstattus" alignment="1" pref="1029" max="32767" attributes="0"/>
-          <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="cPanel1" min="-2" pref="0" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jToolBar1" max="32767" attributes="0"/>
+                  <Component id="topTabPane" max="32767" attributes="0"/>
+              </Group>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="jToolBar1" min="-2" pref="33" max="-2" attributes="0"/>
+              <Component id="jToolBar1" min="-2" pref="31" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" pref="637" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="cPanel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="topTabPane" min="-2" pref="673" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="cstattus" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -80,7 +89,7 @@
         <Property name="text" type="java.lang.String" value=""/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="topTabPane">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
     </Container>
@@ -90,6 +99,81 @@
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+    </Container>
+    <Container class="org.components.containers.CPanel" name="cPanel1">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="tbtnItem" alignment="0" max="32767" attributes="0"/>
+                      <Component id="tbtnWarehouse" alignment="0" max="32767" attributes="0"/>
+                      <Component id="tbtnCategory" alignment="0" max="32767" attributes="0"/>
+                      <Component id="tbtnShop" alignment="0" max="32767" attributes="0"/>
+                      <Component id="tGRN" alignment="0" max="32767" attributes="0"/>
+                      <Component id="cButton6" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="tbtnWarehouse" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="tbtnItem" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="tbtnCategory" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                  <Component id="tbtnShop" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="tGRN" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="cButton6" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace pref="273" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="org.components.controls.CButton" name="tbtnItem">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Item"/>
+          </Properties>
+        </Component>
+        <Component class="org.components.controls.CButton" name="tbtnWarehouse">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ware House"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbtnWarehouseActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="org.components.controls.CButton" name="tbtnCategory">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Category"/>
+          </Properties>
+        </Component>
+        <Component class="org.components.controls.CButton" name="tbtnShop">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Shop"/>
+          </Properties>
+        </Component>
+        <Component class="org.components.controls.CButton" name="tGRN">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="GRN"/>
+          </Properties>
+        </Component>
+        <Component class="org.components.controls.CButton" name="cButton6">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="GDN"/>
+          </Properties>
+        </Component>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>

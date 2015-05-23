@@ -23,9 +23,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="132" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="263" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="cTextField1" alignment="0" pref="132" max="32767" attributes="0"/>
+              <Component id="textField" alignment="0" pref="263" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -33,13 +33,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="cTextField1" alignment="1" pref="23" max="32767" attributes="0"/>
+              <Component id="textField" alignment="1" pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="org.components.controls.CTextField" name="cTextField1">
+    <Component class="org.components.controls.CTextField" name="textField">
     </Component>
   </SubComponents>
 </Form>

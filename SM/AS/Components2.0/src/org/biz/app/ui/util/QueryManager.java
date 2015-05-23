@@ -4,16 +4,19 @@
  */
 package org.biz.app.ui.util;
 
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 import org.biz.dao.service.CQuery;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.service.Service;
+import org.components.test.ResultPage;
 
 /**
  *
  * @author yy
  */
-public abstract class QueryManager {
+public  class QueryManager {
     
     private final static int noofrows=GenericDAO.noofrows;
     
@@ -23,7 +26,10 @@ public abstract class QueryManager {
     private Service service;
     private int noOfPages;
     protected List lastListPage;
+    protected List<UIListener> uiListners = new ArrayList();
 
+    
+    
     public CQuery getCQuery() {
         return null;
     }
@@ -40,6 +46,11 @@ public abstract class QueryManager {
     public void setCurrentPage(int cur) {
         this.currentPage = cur;
     }
+    
+    public void fetchPage(int x){
+        //goto next page       
+        
+    }
 
     public void getNextPage() {
         int next = currentPage + 1;
@@ -50,6 +61,7 @@ public abstract class QueryManager {
         lastListPage = executeQuery(next);
         currentPage++;
     }
+    
 
     public Long count() {
         return count;//=service.getCount(getCQuery());
@@ -73,13 +85,13 @@ public abstract class QueryManager {
         return service.getDao().getNoOfRows();
     }
 
-    public void getFirstPage() {
+     public void getFirstPage() {
         int next = 0;
         getCount();
 //        if(next>count)return null
-        if (service == null) {
-            return;
-        }
+//        if (service == null) {
+//            return;
+//        }
         lastListPage = executeQuery(next);
         currentPage = 0;
     }
@@ -129,6 +141,10 @@ public abstract class QueryManager {
     public List getList() {
         return lastListPage;
     }
+    
+    public int getNoOfRowsPerPage(){
+    return noOfRowsPerPage;
+    }
 
     /**
      * this method will be called after pagination events excecuted on EDt so be
@@ -137,4 +153,83 @@ public abstract class QueryManager {
     public void postQuery(Object objs) {
 
     }
+    
+    
+    //*** new implementation
+    public void goToFirstPage(){
+        
+        //get count query
+        //get query
+        // execute query 
+        // update status 
+        //update ui
+    
+        command.start(0);
+    
+    }
+    
+    public void notifyObservers(){
+    
+                                      
+    }
+    
+    public void getListFromController(int x){
+        
+        
+    }
+    
+    private void notifyGUIListners(){
+    
+        for (UIListener ui : uiListners) {
+            ui.updateUI(this);
+        }
+        
+    }
+    
+    
+    
+    private Command command = new Command() {
+
+        public Object doBackgroundTask(Object... objs) {
+
+            ResultPage rp = null;
+            long count = QueryManager.this.executeCountQuery();
+            int noOfRowsPerPage = QueryManager.this.getNoOfRowsPerPage();
+            int noOfPages = (int) Math.ceil((float) count / noOfRowsPerPage);
+            if (objs != null && objs.length <= 0) {
+                return null;
+            }
+//            if(objs[0]  instanceof ActionEvent  && ((ActionEvent)objs[0]).getSource()==1){
+            int pageType = (int) objs[0];
+            int index = 0;
+            if (pageType == 0) {
+                index = 0;
+                Object obj = QueryManager.this.executeQuery(index);
+                rp = new ResultPage((int) count, noOfPages, index, obj);
+                return rp;
+            }
+
+            return null;
+        }
+
+        public void doResultTask(Object... objs) {
+            if (objs == null) {
+                return;
+            }
+            ResultPage l = (ResultPage) objs[0];
+            if (l == null) {
+                return;
+            }
+            QueryManager.this.notifyGUIListners();
+        }
+
+    };
+
+
+}
+
+interface UIListener {
+
+    public void updateUI(QueryManager ui);
+    
 }

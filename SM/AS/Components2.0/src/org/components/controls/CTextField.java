@@ -136,6 +136,7 @@ public class CTextField extends PTextField {
 
       public void setActionTask(ActionTask actionTask) {
           addActionListener(actionTask);
+          addaction(0, actionTask);
       }
 
       @Override

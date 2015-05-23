@@ -5,11 +5,16 @@
 package app.utils;
 
 import app.AppMainWindow;
+import java.awt.Component;
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import org.biz.app.ui.util.Tracer;
 import org.components.util.Sessions;
 import org.components.windows.MainWindow;
 import org.components.windows.TabPanelUI;
@@ -114,6 +119,17 @@ public class SystemUtil {
         });
 
     }
+    
+    public static void addToMainWindow(final JPanel tab, final String tabname) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainWindow jf = SystemStatic.getMainWindow();//MainWindow) Sessions.getObj("mainui");
+                jf.addToTabpanelToUI(tab, tabname ,null);
+            }
+        });
+
+    }
 
     public static void addToMainWindow(final TabPanelUI tab, final String tabname,final String tablbl) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -136,6 +152,26 @@ public class SystemUtil {
         AppMainWindow mw=(AppMainWindow) getMainWindow();        
         return mw.getToolbar();        
     }
+    
+    
+    public static JButton getSaveButton() {
+        return getButton("SaveButton");
+    }
+    
+    public static JButton getButton(String btnName) {
+        final JToolBar toolbar = getToolbar();
+        if (toolbar == null) {
+            return null;
+        }
+        for (Component com : toolbar.getComponents()) {
+            if (com instanceof JButton &&  btnName.equals(com.getName())) {
+                return (JButton) com;
+            }
+        }
+        return null;
+    }
+    
+    
     private static ArrayList<JComponent> toolbarList=new ArrayList();
 
   
@@ -183,6 +219,21 @@ public class SystemUtil {
         MainWindow jf =  getMainWindow();
         jf.selectTab(tab.getTabName());
 
+    }
+    
+    public static void printParent(JComponent com){
+        if(com==null){
+            Tracer.printToOut("Null Container Specified");
+            return;
+        }
+        StringBuilder cs=new StringBuilder();
+        Container cont=com.getParent();
+        while (cont!=null) {            
+            cs.append(cont.getClass()+">>>>> ");
+            cont=cont.getParent();
+        } 
+        Tracer.printToOut("GUI Action container hierachy");
+        System.out.println(cs.toString());
     }
 
 }

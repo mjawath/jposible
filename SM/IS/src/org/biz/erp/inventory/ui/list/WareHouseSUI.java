@@ -4,8 +4,11 @@
  */
 package org.biz.erp.inventory.ui.list;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.dao.service.CQuery;
+import org.biz.invoicesystem.service.master.WareHouseService;
 import org.components.windows.SearchQueryUIPanel;
 
 /**
@@ -14,7 +17,7 @@ import org.components.windows.SearchQueryUIPanel;
  */
 public class WareHouseSUI extends SearchQueryUIPanel {
 
-    
+    private WareHouseService whs = new WareHouseService();
     /**
      * Creates new form SearchQueryUIPanel
      */
@@ -22,20 +25,39 @@ public class WareHouseSUI extends SearchQueryUIPanel {
         super();
         initComponents();
         qms=qm;
+        tsearch.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                
+                //execute the query 
+                
+                // 1) create the query 
+                // 2) execute the query 
+                //3) set the result tof ui
+                
+                
+            }       
+        });
         //
     }
     
-    QueryManager qm=new QueryManager() {
+    QueryManager qm = new QueryManager() {
 
-            @Override
-            public CQuery getCQuery() {
-                if(getService()==null)return null;
-                
-                return getService().getQueryByCodeLike(tsearch.getText());
-            }
-        
-        };
-    
+        @Override
+        public CQuery getCQuery() {
+//                if(getService()==null)return null;
+
+            return whs.getDAO().getQueryByCodeLike(tsearch.getText());
+        }
+
+        public CQuery getCountQuery() {
+
+            return whs.getDAO().getCountQueryByCodeLike(tsearch.getText());
+        }
+
+    };
+
 
     /**
      * This method is called from within the constructor to initialize the form.

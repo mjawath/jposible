@@ -7,10 +7,8 @@ package com.components.custom;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
-import org.biz.app.ui.event.ButtonAction;
-import org.components.util.ComponentFactory;
+import javax.swing.Action;
 
 /**
  *
@@ -23,9 +21,8 @@ public class ControlPanel extends javax.swing.JPanel {
     /** Creates new form ControlPanel */
     public ControlPanel() {
         initComponents();
-        btsave.addActionListener(comSave);
-        tdelete.addActionListener(comDelete);
-        tprint.addActionListener(comPrint);
+//        tdelete.addActionListener(comDelete);
+//        tprint.addActionListener(comPrint);
         
           AbstractAction actxx=new AbstractAction() {
 
@@ -35,47 +32,30 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         };
         x=xx++;        
-        ComponentFactory.setKeyAction(btsave, comSave, KeyEvent.VK_F5);
+//        ComponentFactory.setKeyAction(btsave, comSave, KeyEvent.VK_F5);
     }
     
     private CrudControl control;
-    private ButtonAction comSave=new ButtonAction(){
 
-        @Override
-        public Object executeTask(Object objs  ) {
-            return control.saveX();
-        }
-
-        @Override
-        public void resultTask(Object objs) {
-            control.onSaveComplete(objs);
-        }  
-    };
     
-    private ButtonAction comDelete=new ButtonAction(){
-
-        @Override
-        public Object executeTask(Object objs) {
-             control.delete();
-            return super.executeTask(objs);
-        }
-
-        @Override
-        public void resultTask(Object objs) {
-            control.onDeleteComplete(objs);
-        }  
-    };
+    public void setSaveAction(Action act){
+        btsave.setAction(act);    
+    }
     
     
-    private ButtonAction comPrint=new ButtonAction(){
-
-        @Override
-        public Object executeTask(Object objs) {
-             control.printPage();
-            return super.executeTask(objs);
-        }
-
-    };
+    public void setClearAction(Action act){
+        btclear.setAction(act);
+    
+    }
+    
+       public void setDeleteAction(Action act){
+        tdelete.setAction(act);
+    
+    }
+    
+    public void setPrintAction(Action act){
+        tprint.setAction(act);    
+    }
     
 
     public void setCrudController(CrudControl control) {
@@ -102,8 +82,13 @@ public class ControlPanel extends javax.swing.JPanel {
 
         btsave.setText("Save");
         btsave.setPreferredSize(new java.awt.Dimension(30, 20));
+        btsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btsaveActionPerformed(evt);
+            }
+        });
         add(btsave);
-        btsave.setBounds(0, 0, 50, 30);
+        btsave.setBounds(0, 0, 60, 30);
 
         tclear.setText("Clear");
         tclear.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +97,7 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(tclear);
-        tclear.setBounds(100, 0, 50, 30);
+        tclear.setBounds(140, 0, 70, 30);
 
         btclear.setText("Copy");
         btclear.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +106,7 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(btclear);
-        btclear.setBounds(150, 0, 50, 30);
+        btclear.setBounds(210, 0, 70, 30);
 
         tprint.setText("Print");
         tprint.addActionListener(new java.awt.event.ActionListener() {
@@ -130,15 +115,15 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(tprint);
-        tprint.setBounds(200, 0, 50, 30);
+        tprint.setBounds(280, 0, 70, 30);
 
         btgotoGrid.setText("Goto Grid >");
         add(btgotoGrid);
-        btgotoGrid.setBounds(250, 0, 80, 30);
+        btgotoGrid.setBounds(350, 0, 80, 30);
 
         tdelete.setText("Delete");
         add(tdelete);
-        tdelete.setBounds(50, 0, 50, 30);
+        tdelete.setBounds(60, 0, 80, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearActionPerformed
@@ -152,6 +137,10 @@ public class ControlPanel extends javax.swing.JPanel {
     private void tprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tprintActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tprintActionPerformed
+
+    private void btsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btsaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton btclear;

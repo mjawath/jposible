@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public interface ICommand  {
 
-    public Object executeTask();
+    public Object doBackgroundTask(Object ...objs);
     
-    public void resultTask(Object  objs);
+    public void doResultTask(Object  ...objs);
     
 //    public ArrayList getParams();
 }

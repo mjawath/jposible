@@ -158,10 +158,20 @@ public class GenericDAOUtil<T> {
 //    }
     public static <T> List<T> getAll(String orderby, Class cls) {
 //        getEm().clear();
+
+        Query query = createEmNew().createQuery("select c from " + cls.getSimpleName() + " c   "
+                + getOrderBy(orderby));
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        return query.getResultList();
+    }
+    
+        public static <T> List<T> getAll(int page, int noOfRows,String orderby, Class cls) {
+//        getEm().clear();
         
         
         Query query = createEmNew().createQuery("select c from " + cls.getSimpleName() + " c   " +
                 getOrderBy(orderby));
+        
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         return query.getResultList();
     }
@@ -501,8 +511,12 @@ public class GenericDAOUtil<T> {
     public static <T> List<T> ExecuteQuery(String qryString, Map ps) {
         return getQuery(qryString, ps).getResultList();
     }
+
     public static <T> List<T> ExecuteQuery(String qryString, Class cls) {
-        Query query = JPAUtil.getEntityManager().createQuery(qryString, cls);
+        Query query = JPAUtil.createQuery(qryString, cls);
+        if (query == null) {
+            return null;
+        }
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         List ts = query.getResultList();
         return ts;

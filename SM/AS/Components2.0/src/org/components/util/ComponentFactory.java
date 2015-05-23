@@ -168,14 +168,14 @@ public class ComponentFactory {
         
     }
 
-    public static void setKeyAction(JComponent component,Action escpli,String keycode){
+
+    
+       public static void setKeyAction(JComponent component,Action escpli,String keycode){
         String xx="act"+ ++x;
-        component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke( keycode), xx);
+        component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke( keycode), xx);
 
         component.getActionMap().put(xx, escpli);
     }
-    
-    
     
     
     public static void setKeyAction(JComponent component,Action escpli,int keycode,int keyModifier, int focusBehave){
@@ -203,4 +203,13 @@ public class ComponentFactory {
     }
 
 
+    public static void setKeyActxxion(JComponent component,Action escpli,int keycode){
+
+        String xx="act"+ ++x;
+        component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke( keycode,0), xx);
+
+        component.getActionMap().put(xx, escpli);
+    }
+
+ 
 }

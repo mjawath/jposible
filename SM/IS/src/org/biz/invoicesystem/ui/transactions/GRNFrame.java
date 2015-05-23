@@ -17,6 +17,7 @@ public class GRNFrame extends javax.swing.JFrame {
      */
     public GRNFrame() {
         initComponents();
+        setTitle("Good Dispatch Note");
         gDNListV11.config();
         gDNV11.config();
         
@@ -94,7 +95,7 @@ public class GRNFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

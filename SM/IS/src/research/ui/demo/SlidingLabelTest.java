@@ -137,7 +137,7 @@ label.isVisible())
                 label.setVisible(true);
                 positionLabel(vertOffset);
 
-                vertOffset += 2;
+                vertOffset += 20;
             }
         });
     }

@@ -536,7 +536,7 @@ public class InvoiceMasterUIV3 extends TabPanelUI {
             }
         });
         add(ttype);
-        ttype.setBounds(690, 150, 150, 23);
+        ttype.setBounds(690, 150, 150, 25);
 
         tinvoiceManualNo.setText("Inv No manually");
         add(tinvoiceManualNo);
@@ -687,12 +687,6 @@ public class InvoiceMasterUIV3 extends TabPanelUI {
 
         add(jScrollPane4);
         jScrollPane4.setBounds(50, 20, 810, 120);
-
-        tsalesman.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tsalesmanActionPerformed(evt);
-            }
-        });
         add(tsalesman);
         tsalesman.setBounds(770, 240, 130, 25);
     }// </editor-fold>//GEN-END:initComponents

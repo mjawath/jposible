@@ -17,6 +17,7 @@ import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import org.biz.app.ui.event.OAction;
 import org.biz.dao.service.Service;
 import org.components.containers.CPanel;
 import org.components.util.Sessions;
@@ -55,7 +56,7 @@ public abstract class TabPanelUI extends CPanel implements TabChildUI,CrudContro
     public void events() {
 
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

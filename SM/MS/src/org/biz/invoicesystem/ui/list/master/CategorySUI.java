@@ -4,8 +4,11 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
+import java.util.List;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.dao.service.CQuery;
+import org.biz.invoicesystem.service.master.CategoryService;
+import org.components.test.ResultPage;
 import org.components.windows.SearchQueryUIPanel;
 
 /**
@@ -13,6 +16,8 @@ import org.components.windows.SearchQueryUIPanel;
  * @author jawath
  */
 public class CategorySUI extends SearchQueryUIPanel {
+
+        private CategoryService cs  = new CategoryService();
 
     /**
      * Creates new form CategorySUI
@@ -26,39 +31,25 @@ public class CategorySUI extends SearchQueryUIPanel {
     
     
     
-   public void increaseWidth(){
-       System.out.println("nothing tho print "
-               + "");
-       System.out.println("exceuting system comands t0o override the execuation methods"
-               + "");
-       System.out.println("simple tent a4f"  );
-       System.out.println("laptop maniac i am not a moron"
-               + "go through the code "+
-               .20
-               
-               
-               );
-   
-   }
-   
-   QueryManager qm=new QueryManager() {
-
-            @Override
-            public CQuery getCQuery() {
-                if(getService()==null)return null;
-                
-                return getService().getDao().getAllQuery();
-            }
+    QueryManager qm = new QueryManager() {
 
         @Override
-        public CQuery getCountQuery() {
-            
-            return getService().getDao().getAllCountQuery();
+        public Long executeCountQuery() {
+           
+            return (long)cs.getDao().getAllCount(); 
         }
-            
-            
+
+        @Override
+        public List executeQuery(int page) {
+           return cs.getDao().getAll(page);
+       
+        }
         
-        };
+       public void postQuery(Object objs) {
+//          listView.setCollection((List)((ResultPage)objs).getResult()); 
+          
+        }
+    };
 
     /**
      * This method is called from within the constructor to initialize the form.

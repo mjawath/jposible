@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.biz.app.ui.util.StringUtility;
+import org.biz.app.ui.util.Tracer;
 import org.dao.util.JPAUtil;
 import org.eclipse.persistence.queries.ScrollableCursor;
 //http://code.google.com/p/krank/wiki/UsingDAO
@@ -32,7 +33,11 @@ public class GenericDAO<T> {
     }
 
     public GenericDAO() {
-        em = JPAUtil.getEntityManager();
+        try {
+        em = JPAUtil.getEntityManager();            
+        } catch (Exception e) {
+            Tracer.printToOut("There was a problem loading the Entity manager   "+e.getMessage());
+        }
         cache = new Cache();
 
     }
@@ -120,6 +125,11 @@ public class GenericDAO<T> {
 //        getEm().clear();
         return GenericDAOUtil.getAll(orderby, cls);
     }
+
+    public List<T> getAll(int page) {
+
+        return pagedData(GenericDAOUtil.getAllQuery(orderby, cls), page);
+    }
     
     public CQuery getAllQuery() {
 //        getEm().clear();
@@ -137,6 +147,22 @@ public class GenericDAO<T> {
 
         return cq;
     }
+    
+    public int getAllCount() {
+//        getEm().clear();
+        try {
+
+            CQuery cq = new CQuery(GenericDAOUtil.getAllCount(orderby, cls));
+            Object obj = ExecuteQuerySR(cq.getQuery());
+            return Integer.valueOf(obj.toString());
+
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    
+       
 //    public List<T> getLastModefied() {
 ////        getEm().clear();
 //        
@@ -251,24 +277,12 @@ public class GenericDAO<T> {
 
     public List pagedData(String qry, int pageNo) {
         String sq = createWhere(qry);
-//        List lst=GenericDAOUtil.getCache().getbySpecialKey(classname, sq,pageNo);
-//        if(lst!=null && !lst.isEmpty()){
-//            System.out.println("dddddddddf");
-//            return lst;
-//        }
-        Query qu = GenericDAOUtil.getQuery(sq);
-        int fr = pageNo == 0 ? 0 : pageNo * noofrows;
-        qu.setFirstResult(fr);//firstresult
-        qu.setMaxResults(noofrows); //max result = noofrows+ 0
+        Query qu = getPagedQuery(qry, pageNo, noofrows);
         return ExecuteQuery(qu);
     }
     
     public List pagedData(String qry , int pageNo,Object ...param) {
-        String sq = createWhere(qry);//TODO -take out the create where statement
-        Query qu = GenericDAOUtil.getQuery(sq,param);
-        int fr = pageNo == 0 ? 0 : pageNo * noofrows;
-        qu.setFirstResult(fr);//firstresult
-        qu.setMaxResults(noofrows); //max result = noofrows+ 0
+        Query qu=getPagedQuery(qry, pageNo, noofrows, param);
         return ExecuteQuery(qu);
     }
     
@@ -280,6 +294,17 @@ public class GenericDAO<T> {
         qu.setMaxResults(noofrows); //max result = noofrows+ 0
         return ExecuteQuery(qu);
     }
+
+    public Query getPagedQuery(String qry, int pageNo, int noOfRows, Object... param) {
+
+        String sq = createWhere(qry);//TODO -take out the create where statement
+        Query qu = GenericDAOUtil.getQuery(sq, param);
+        int fr = pageNo == 0 ? 0 : pageNo * noOfRows;
+        qu.setFirstResult(fr);//firstresult
+        qu.setMaxResults(noOfRows); //max result = noofrows+ 0
+        return qu;
+    }
+    
     public List executeQuery(String qry,Object ...param){
     
         List<T> ts = GenericDAOUtil.ExecuteQuery(qry, param);
@@ -495,7 +520,14 @@ public class GenericDAO<T> {
 
     }
 
-        
+    public List<T> getByCodeLike(int page,String code) {
+        String cus = "  c.code like '" + code + "%' ";
+        List<T> lst = pagedData(createWhereWithOrderby(cus, " c.code asc "));
+        return lst;
+
+    }
+
+
     /**
      * code can use '%' wild carts
      * @param code
@@ -519,6 +551,19 @@ public class GenericDAO<T> {
 //        return lst;
 
     }
+    
+        
+       /**
+     * code can use '%' wild carts
+     * @param code
+     * @return 
+     */    
+    public long getCountByCodeLike(String code) {        
+        return getCount(getCountQueryByCodeLike(code).getQuery());
+//        return lst;
+
+    }
+    
     public List<T> byCodeLikeOrBarcode(String qry) {
         List<T> lst = getByCodeLike(qry);
         if (lst == null || lst.isEmpty()) {

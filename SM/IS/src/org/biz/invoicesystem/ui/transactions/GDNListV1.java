@@ -20,9 +20,16 @@ public class GDNListV1 extends ListViewPanel<InventoryJournal> {
      */
     public GDNListV1() {
         super();
-        initComponents();
     }
-
+  
+    
+    
+    public void init() {
+        super.init();
+        initComponents();
+        inventoryJournalListViewUI1.config();
+   
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,30 +39,43 @@ public class GDNListV1 extends ListViewPanel<InventoryJournal> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cLabel1 = new org.components.controls.CLabel();
+        inventoryJournalListViewUI1 = new org.biz.erp.inventory.ui.list.InventoryJournalListViewUI();
 
-        cLabel1.setText("List");
+        javax.swing.GroupLayout inventoryJournalListViewUI1Layout = new javax.swing.GroupLayout(inventoryJournalListViewUI1);
+        inventoryJournalListViewUI1.setLayout(inventoryJournalListViewUI1Layout);
+        inventoryJournalListViewUI1Layout.setHorizontalGroup(
+            inventoryJournalListViewUI1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 934, Short.MAX_VALUE)
+        );
+        inventoryJournalListViewUI1Layout.setVerticalGroup(
+            inventoryJournalListViewUI1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+            .addGap(0, 968, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(inventoryJournalListViewUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(24, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(161, Short.MAX_VALUE))
+            .addGap(0, 517, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(inventoryJournalListViewUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(26, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.controls.CLabel cLabel1;
+    private org.biz.erp.inventory.ui.list.InventoryJournalListViewUI inventoryJournalListViewUI1;
     // End of variables declaration//GEN-END:variables
 }

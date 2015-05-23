@@ -24,9 +24,13 @@ public class Command implements ICommand{
         result = new ArrayList();
     }
 
-    public void invoke() {
+    public void start() {
         CommandTask com = new CommandTask(command);
         objs.clear();
+    }
+    
+     public void start(Object... params) {
+        CommandTask com = new CommandTask(command,params);
     }
 
     public void setParam(Object object) {
@@ -42,13 +46,13 @@ public class Command implements ICommand{
     }
 
     @Override
-    public Object executeTask() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Object doBackgroundTask(Object ...objs) {
+       return null;
     }
 
     @Override
-    public void resultTask(Object objs) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void doResultTask(Object ...objs) {
+      
     }
     
     public  ArrayList getParams(){

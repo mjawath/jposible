@@ -11,7 +11,7 @@ import java.util.List;
  * @author d
  */
 public interface PopupListner {
-    
+     
     public List searchItem(Object searchQry);
     
     public Object[] getTableData(Object obj);

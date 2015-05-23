@@ -45,6 +45,8 @@ public class SalesInvoice extends BusObj {
     @OneToOne
     private Warehouse warehouse;
     String docRefNo;
+    private String code;
+    private String pekapoo;
     private String invNo;
     private String Remarks;
     private String notes;
@@ -61,8 +63,24 @@ public class SalesInvoice extends BusObj {
         setLineItems(new ArrayList<SalesInvoiceLineItem>());
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
+    
     public byte getStatus() {
         return status;
+    }
+
+    public String getPekapoo() {
+        return pekapoo;
+    }
+
+    public void setPekapoo(String pekapoo) {
+        this.pekapoo = pekapoo;
     }
 
     public void setStatus(byte status) {

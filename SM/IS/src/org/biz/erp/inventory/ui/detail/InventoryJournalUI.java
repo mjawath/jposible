@@ -173,8 +173,8 @@ import org.components.windows.DetailPanel;
     public Command itemCommand = new Command(){
 
         @Override
-        public Object executeTask() {
-            return super.executeTask(); //To change body of generated methods, choose Tools | Templates.
+        public Object doBackgroundTask(Object ...objs) {
+            return super.doBackgroundTask(); //To change body of generated methods, choose Tools | Templates.
         }
     
     };
@@ -367,7 +367,7 @@ import org.components.windows.DetailPanel;
 
         tblLine.addNewToLast();
         selectedObject=null;
-        clearTask.invoke();
+        clearTask.start();
     }
 
      Command clearTask=new Command();

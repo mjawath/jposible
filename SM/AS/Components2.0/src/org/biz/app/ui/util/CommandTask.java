@@ -11,6 +11,7 @@ import javax.swing.SwingWorker;
 public class CommandTask extends SwingWorker<Object, Object>{
 
     public ICommand command;
+    private Object []objs;
     private int state= NOT_STARTED;
     
     
@@ -27,10 +28,17 @@ public class CommandTask extends SwingWorker<Object, Object>{
     execute();
     }
     
+    public CommandTask(ICommand com,Object... params) {
+    command =com;
+    objs =params;
+    execute();
+    }
+    
+    
     @Override
     protected Object doInBackground() throws Exception {
         state = EXECUTION;
-       return command.executeTask();
+       return command.doBackgroundTask(objs);
     }
     
     public Object executeTask(){
@@ -52,7 +60,7 @@ public class CommandTask extends SwingWorker<Object, Object>{
             ex.printStackTrace();//if anything goes wrong an state should be set 
         }
         state=state==EXCEPTION?EXCEPTION:SUCCESS;
-        command.resultTask(obj);
+        command.doResultTask(obj);
     }
 
 }

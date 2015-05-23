@@ -818,9 +818,6 @@
       </Constraints>
     </Component>
     <Component class="com.components.custom.TextFieldWithPopUP" name="tItemCategory">
-      <Properties>
-        <Property name="text" type="java.lang.String" value=""/>
-      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Category&gt;"/>
       </AuxValues>
