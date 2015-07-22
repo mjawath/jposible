@@ -21,8 +21,7 @@ public class ItemListUI extends ListViewPanel<Item> {
      */
     public ItemListUI() {
         initComponents();
-        setController(itemController);
-        
+        setController(itemController);        
     }
 
     /**
@@ -63,9 +62,11 @@ public class ItemListUI extends ListViewPanel<Item> {
     public void init() {
         listUI = itemLV1;
         searchQueryUI = itemSUI1;
+        searchQueryUI.setController(controller);        
         super.init();         
-
-  
+        
+        searchQueryUI.setListView(listUI);
+        
         //set query manager for pagination
     }
 
