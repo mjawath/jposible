@@ -150,6 +150,7 @@ public class SystemUtil {
     public static JToolBar getToolbar(){
     
         AppMainWindow mw=(AppMainWindow) getMainWindow();        
+        if(mw==null )return null;
         return mw.getToolbar();        
     }
     

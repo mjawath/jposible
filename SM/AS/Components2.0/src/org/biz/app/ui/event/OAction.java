@@ -47,7 +47,7 @@ public class OAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         final Object btn = (Object) e.getSource();
-        if (btn instanceof JComponent) {
+        if (btn instanceof JButton) {
             SystemUtil.printParent((JButton) btn);
         }
         com.start(e);

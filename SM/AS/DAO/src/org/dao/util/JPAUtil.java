@@ -134,8 +134,8 @@ public class JPAUtil {
 //         props.put("eclipselink.jdbc.password", "");\
         
         props.put(PersistenceUnitProperties.APP_LOCATION, ".");
-        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_DATABASE_GENERATION);
-        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
+//        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_DATABASE_GENERATION);
+        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
 
         props.put(PersistenceUnitProperties.DEPLOY_ON_STARTUP, "true");
 
@@ -144,8 +144,8 @@ public class JPAUtil {
 //        props.put("eclipselink.logging.level", "FINE");
 //        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
 //        	<property name="eclipselink.ddl-generation.output-mode" value="both" />
-        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
-        props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
+//        props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
+//        props.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "drop.sql");
 
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU, props);
 //        entityManagerFactory = emf;

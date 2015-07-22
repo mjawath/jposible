@@ -47,7 +47,7 @@ public class dbCreation {
         
         dbCreation db = new dbCreation();
 //        db.createDataBase();
-//        db.createmster();
+        db.createmster();
 //           List lsts = new ArrayList();
 
 //            new dbCreation().createCategory();

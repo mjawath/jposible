@@ -7,8 +7,6 @@
 package research.prototype.transaction;
 
 import com.components.custom.TextFieldWithPopUP;
-import java.util.List;
-import org.biz.app.ui.util.QueryManager;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
@@ -23,24 +21,7 @@ public class ItemPopup extends TextFieldWithPopUP<Item> {
     
     ItemService itemservice=new ItemService();
     
-    QueryManager itemQuery = new QueryManager() {
-
-        @Override
-        public List executeQuery(int page) {
-            
-//            itemservice.getDao().getby
-            return super.executeQuery(page);
-        }
-
-        @Override
-        public Long executeCountQuery() {
-            
-            return super.executeCountQuery();
-        }
-        
-        
-    };
-    /**
+       /**
      * Creates new form ItemPopup
      */
     public ItemPopup() {
@@ -71,14 +52,5 @@ public class ItemPopup extends TextFieldWithPopUP<Item> {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-//    @Override
-//    public List searchItem(Object searchQry) {
-//        return ItemService.getItemForPopup((String) searchQry);
-//    }
-//
-//    @Override
-//    public Object[] getTableData(Object obj) {
-//        Item item=(Item)obj;
-//        return new Object[]{item,item.getCode(),item.getDescription()};
-//    }
+
 }

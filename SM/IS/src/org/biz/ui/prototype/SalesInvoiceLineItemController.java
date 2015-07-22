@@ -5,6 +5,7 @@
  */
 package org.biz.ui.prototype;
 
+import org.biz.invoicesystem.ui.list.master.ItemController;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 
 /**

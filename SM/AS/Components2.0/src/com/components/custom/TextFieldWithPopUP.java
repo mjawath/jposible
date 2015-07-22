@@ -4,8 +4,7 @@
  */
 package com.components.custom;
 
-
-
+import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -31,27 +31,28 @@ import org.biz.util.ReflectionUtility;
 import org.components.containers.CPanel;
 import org.components.controls.CPopupMenu;
 import org.components.controls.CTextField;
+import org.components.test.ResultPage;
+import org.components.windows.ListViewPanel;
 import org.components.windows.ListViewUI;
 
 /**
  *
  * @author d
  */
-public class TextFieldWithPopUP<T>  extends CPanel {
+public class TextFieldWithPopUP<T> extends CPanel {
 
     private JPopupMenu jpm;
     private ListViewUI listView;
-
-     protected PagedPopUpPanel<T> pagedPopUpPanel;
+    protected PagedPopUpPanel<T> pagedPopUpPanel;
     private CTextField fieldWithPopUP;
     private ActionTask searchActionTask;
-    private ActionTask actionActionTask;    
+    private ActionTask actionActionTask;
     private int selectedColumn = 0;
     private T selectedObject;
     private String selectedID;
     private String pageKey;
     private Boolean popupDisabled = false;
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -63,9 +64,9 @@ public class TextFieldWithPopUP<T>  extends CPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 263, Short.MAX_VALUE)
+            .addGap(0, 268, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
+                .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,25 +79,16 @@ public class TextFieldWithPopUP<T>  extends CPanel {
     private org.components.controls.CTextField textField;
     // End of variables declaration//GEN-END:variables
 
-
-
-    
     public TextFieldWithPopUP() {
         super();
         initComponents();
-        
-        
+
         fieldWithPopUP = textField;
 
-        
         addToFocus(fieldWithPopUP);
-        
-         jpm = new CPopupMenu();
-        this.setSize(600, 300);
-        jpm.add(this);
+
+        jpm = new CPopupMenu();
         jpm.setSize(200, 200);
-//        this.requestFocusInWindow();
-//        cTextField1.requestFocus();
         jpm.setFocusable(false);
 
         textField.addFocusListener(new FocusAdapter() {
@@ -107,8 +99,7 @@ public class TextFieldWithPopUP<T>  extends CPanel {
                 closePopup();
             }
         });
-    
-    
+
         textField.getDocument().addDocumentListener(new DocumentListener() {
 
             public void insertUpdate(DocumentEvent e) {
@@ -124,12 +115,15 @@ public class TextFieldWithPopUP<T>  extends CPanel {
             }
         });
 
-    }   
-    
-    
+    }
+
+    public void setListOverView(ListViewPanel<T> listViewPanel) {
+        setListView(listViewPanel.getListViewUI());
+    }
+
     public void setListView(ListViewUI ui) {
         listView = ui;
-        
+
         listView.getTable().addMouseListener(new MouseAdapter() {
 
             @Override
@@ -179,36 +173,41 @@ public class TextFieldWithPopUP<T>  extends CPanel {
             }
         });
 
+        jpm.removeAll();
+        jpm.add(listView);
+        jpm.setPreferredSize(listView.getPreferredSize());
+
     }
- 
+
     private Command command = new Command() {
 
         @Override
-        public Object doBackgroundTask(Object ...objs) {
-            
-            
+        public Object doBackgroundTask(Object... objs) {
+
             return doSearch();
         }
 
         @Override
-        public void doResultTask(Object ...objs) {
+        public void doResultTask(Object... objs) {
 //            setSearchResult(objs);
         }
 
     };
 
-        public Object doSearch() {
+    public Object doSearch() {
 //        listView.executeQuery();
         return null;
     }
+
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
-            
-        
-            if(listView!=null){            
-            listView.executeQuery();
-            return;
-            }    
+
+            if (at != null) {
+                at.action();
+            } else if (listView != null) {
+                listView.executeQuery();
+                return;
+            }
             command.objs.add(textField.getText());
             command.start();//
             //
@@ -219,11 +218,23 @@ public class TextFieldWithPopUP<T>  extends CPanel {
             //set to table
         }
     }
+
+    public void setAt(ActionTest at) {
+        this.at = at;
+    }
+
+    protected ActionTest at;
+
+    public interface ActionTest {
+
+        public abstract void action();
+    }
+
     public int getSelectedColumn() {
         return selectedColumn;
     }
 
-     public void selectItem() {
+    public void selectItem() {
         popupDisabled = true;
 
         Object ob = TableUtil.getSelectedModelsValueAt(listView.getTable(), getSelectedColumn());
@@ -238,25 +249,27 @@ public class TextFieldWithPopUP<T>  extends CPanel {
         popupDisabled = false;
 
     }
-    
+
     public void setPopDesable(Boolean disable) {
         popupDisabled = disable;
     }
+
     public void setSelectedText() {
         if (textField instanceof JTextField) {
             //get selected object
-            if(selectedObject==null ||getSelectedProperty()==null ){
-                UIEty.objToUi(textField,"");
+            if (selectedObject == null || getSelectedProperty() == null) {
+                UIEty.objToUi(textField, "");
                 return;
             }
-            if(selectedObject instanceof BusObj){
-            UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
-            }else if(selectedObject instanceof String ){
-             UIEty.objToUi(textField,selectedObject);
+            if (selectedObject instanceof BusObj) {
+                UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
+            } else if (selectedObject instanceof String) {
+                UIEty.objToUi(textField, selectedObject);
             }
         }
     }
-        private String selectedProperty;
+    private String selectedProperty;
+
     public String getSelectedProperty() {
         return selectedProperty;
     }
@@ -282,15 +295,11 @@ public class TextFieldWithPopUP<T>  extends CPanel {
 
     public void setSearchResult(Object objs) {
         pagedPopUpPanel.setSearchResult(objs);
-        
+
     }
+
     public void setCommand(Command command) {
         pagedPopUpPanel.setCommand(command);
-    }
-    
-    
-    public void setPagedPopUpPanel(PagedPopUpPanel<T> pagedPopUpPanel) {
-        this.pagedPopUpPanel = pagedPopUpPanel;
     }
 
     public PagedPopUpPanel<T> getPagedPopUpPanel() {
@@ -323,12 +332,9 @@ public class TextFieldWithPopUP<T>  extends CPanel {
         pagedPopUpPanel.setPopDesable(false);
     }
 
-
-
     public void setTitle(String[] title) {
         pagedPopUpPanel.setTitle(title);
     }
-
 
     public String getSelectedID() {
         return pagedPopUpPanel.getSelectedID();
@@ -388,51 +394,45 @@ public class TextFieldWithPopUP<T>  extends CPanel {
     public void setValue(String val) {
         fieldWithPopUP.setValue(val);
     }
-    
-    public String getText(){
-    return fieldWithPopUP.getText(); 
+
+    public String getText() {
+        return fieldWithPopUP.getText();
     }
 
     @Override
     public void requestFocus() {
         fieldWithPopUP.requestFocus();
     }
+
     public boolean hasFocus() {
 
-    return fieldWithPopUP.hasFocus();
+        return fieldWithPopUP.hasFocus();
     }
 
-   
-   public void setEditable(boolean isEditable){
-       fieldWithPopUP.setEditable(isEditable);
-   } 
-   
-   
-   public void showPopUp() {
-        try {
-//            if (getPropertiesEL() == null || getPropertiesEL().length == 0) {
-//                throw new BizException("not specified properties ");
-//            }
-//            if (listView.getTable().getColumnCount() == 0) {
-//                throw new BizException("not specified column ");
-//            }
-
-            if (!jpm.isVisible() && textField.hasFocus()) {
-                jpm.setFocusable(false);
-                this.setSize(600, 300);
-                jpm.setSize(200, 200);
-                this.setVisible(true);
-                jpm.setVisible(true);
-                jpm.show(textField, 30, 30);
-                jpm.setFocusable(true);
-            }
- 
-        } catch (Exception e) {
-             Tracer.printToOut(" --------------   " + e.getMessage());
+    public void setEditable(boolean isEditable) {
+        fieldWithPopUP.setEditable(isEditable);
+    }
+    
+    public void showPopUp(ResultPage rp){
+        listView.setResult(rp);
+        System.out.println(" rp "+ ((List)rp.getResult()).size());
+        showPopUp();
+    }
+        
+    public void showPopUp() {        
+        if (!jpm.isVisible() && textField.hasFocus()) {
+            jpm.setFocusable(false);
+//            listView.setPreferredSize(new Dimension(600, 400));
+//            jpm.add(listView);
+            jpm.setVisible(true);
+            jpm.show(textField, 30, 30);
+//                jpm.setFocusable(true);
         }
-
-
     }
 //}
+
+    public boolean hasListView() {
+        return listView != null;
+    }
 
 }

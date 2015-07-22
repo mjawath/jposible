@@ -2,14 +2,12 @@ package org.biz.app.ui.util;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-import sun.misc.BASE64Decoder;
-
-import sun.misc.BASE64Encoder;
 
 
 
@@ -37,7 +35,8 @@ import sun.misc.BASE64Encoder;
     }
 
     public static String base64Encode(byte[] bytes) {
-        return new BASE64Encoder().encode(bytes);
+        Base64.Encoder doc=Base64.getEncoder();
+        return doc.encodeToString(bytes);
     }
 
     public static String decrypt(String property) throws GeneralSecurityException, IOException {
@@ -50,7 +49,8 @@ import sun.misc.BASE64Encoder;
     }
 
     public static byte[] base64Decode(String property) throws IOException {
-        return new BASE64Decoder().decodeBuffer(property);
+        Base64.Decoder doc=Base64.getDecoder();
+        return doc.decode(property);
     }
 }
 /*// Location: D:\intel Biz\jxpower\JxPower.jar

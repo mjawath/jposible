@@ -16,7 +16,7 @@ import org.biz.invoicesystem.master.ui.ItemMasterUI2;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.TabPanelUI;
 
-public class ItemListUi extends TabPanelUI implements PagedListUI {
+public class ItemListUix extends TabPanelUI implements PagedListUI {
 
     private ItemService itemService;
     private ItemMasterTab mastertab;
@@ -24,7 +24,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
     int currentPageNo = 0;
     List<Item> items;
 
-    public ItemListUi() {
+    public ItemListUix() {
 //        
 //    init();
     }
@@ -196,7 +196,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         tblItemList.setColumnSelectionAllowed(true);
-        tblItemList.setFont(new java.awt.Font("Tahoma", 0, 14));
+        tblItemList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblItemList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblItemListMouseClicked(evt);
@@ -209,12 +209,14 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
         });
         jScrollPane1.setViewportView(tblItemList);
         tblItemList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblItemList.getColumnModel().getColumn(0).setMinWidth(85);
-        tblItemList.getColumnModel().getColumn(0).setPreferredWidth(85);
-        tblItemList.getColumnModel().getColumn(0).setMaxWidth(85);
-        tblItemList.getColumnModel().getColumn(1).setMinWidth(200);
-        tblItemList.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tblItemList.getColumnModel().getColumn(1).setMaxWidth(200);
+        if (tblItemList.getColumnModel().getColumnCount() > 0) {
+            tblItemList.getColumnModel().getColumn(0).setMinWidth(85);
+            tblItemList.getColumnModel().getColumn(0).setPreferredWidth(85);
+            tblItemList.getColumnModel().getColumn(0).setMaxWidth(85);
+            tblItemList.getColumnModel().getColumn(1).setMinWidth(200);
+            tblItemList.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblItemList.getColumnModel().getColumn(1).setMaxWidth(200);
+        }
 
         add(jScrollPane1);
         jScrollPane1.setBounds(20, 120, 810, 370);
@@ -226,7 +228,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         add(cButton5);
-        cButton5.setBounds(630, 20, 53, 23);
+        cButton5.setBounds(630, 20, 25, 19);
         add(cPaginatedPanel1);
         cPaginatedPanel1.setBounds(180, 60, 390, 40);
     }// </editor-fold>//GEN-END:initComponents

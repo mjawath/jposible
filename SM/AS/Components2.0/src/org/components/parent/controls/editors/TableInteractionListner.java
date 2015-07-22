@@ -62,6 +62,12 @@ public class TableInteractionListner {
     return new Object[0];
     }
     
+   /**
+    * same way table can return column definiton and data for each row
+    * public Object[] getTableData(Object row){
+    return new Object[0];// new mycolumndefinition("olumnname , column type , column value for specific row)
+    }
+    */
     public void selectionChanged(Object newRowObject){
     }
 }

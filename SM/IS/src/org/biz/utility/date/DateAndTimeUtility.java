@@ -1,12 +1,11 @@
 package org.biz.utility.date;
 
-import sun.util.calendar.ZoneInfo;
+//import sun.util.calendar.ZoneInfo;
 
 import javax.xml.datatype.*;
 import java.text.*;
 import java.util.*;
 import org.biz.app.ui.util.StringUtility;
-import org.joda.time.DateTime;
 
 
 public class DateAndTimeUtility {
@@ -2560,15 +2559,15 @@ public class DateAndTimeUtility {
   }
 
   public static void setDefaultTimeZone(String tzone) {
-    TimeZone tz = ZoneInfo.getTimeZone(tzone);
-    if (tz != null) {
-//      Tracer.print(Tracer.SYS_MSG, "Setting default timezone as identified by parameter : " + tzone);
-      oldTz = TimeZone.getDefault(); //keep old value for later display for super user
-      TimeZone.setDefault(tz);
-    }
-    else {
-//      Tracer.print(Tracer.SYS_MSG, "Timezone cannot be identified for given parameter : " + tzone);
-    }
+//    TimeZone tz = ZoneInfo.getTimeZone(tzone);
+//    if (tz != null) {
+////      Tracer.print(Tracer.SYS_MSG, "Setting default timezone as identified by parameter : " + tzone);
+//      oldTz = TimeZone.getDefault(); //keep old value for later display for super user
+//      TimeZone.setDefault(tz);
+//    }
+//    else {
+////      Tracer.print(Tracer.SYS_MSG, "Timezone cannot be identified for given parameter : " + tzone);
+//    }
   }
 
 

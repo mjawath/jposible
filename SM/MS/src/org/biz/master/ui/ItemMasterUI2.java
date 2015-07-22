@@ -41,7 +41,7 @@ import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.master.ui.*;
 import org.biz.invoicesystem.service.master.CategoryService;
 import org.biz.invoicesystem.service.master.ItemService;
-import org.biz.invoicesystem.ui.list.master.ItemListUi;
+import org.biz.invoicesystem.ui.list.master.ItemListUix;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.DetailPanel;
 
@@ -53,7 +53,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private CategoryService categoryService;//f
     private ItemPopUp ipu;
     private ItemMasterTab mastertab;
-    private ItemListUi listUi;
+    private ItemListUix listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
     private JFileChooser chooser;
     private List<File> images = new ArrayList<File>();
@@ -114,21 +114,21 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         tblunitprices.setPropertiesEL(new String[]{"simbol", "salesPrice", "type", "multi"});
         tblunitprices.setColumnHeader(new String[]{"Simbol", "SalesPrice", "Type", "Multi"});
 
-
-        tItemCategory.initPopup(Category.class, new Class[]{String.class, String.class, String.class},
-                new String[]{"id", "Code", "Descrption"}, "code", new PopupListner() {
-            @Override
-            public List searchItem(Object searchQry) {
-
-                return categoryService.getByCodeLike(tItemCategory.getText());
-            }
-
-            @Override
-            public Object[] getTableData(Object obj) {
-                Category cat = (Category) obj;
-                return new Object[]{cat, cat.getId(), cat.getCode(), cat.getDescription()};
-            }
-        });
+//
+//        tItemCategory.initPopup(Category.class, new Class[]{String.class, String.class, String.class},
+//                new String[]{"id", "Code", "Descrption"}, "code", new PopupListner() {
+//            @Override
+//            public List searchItem(Object searchQry) {
+//
+//                return categoryService.getByCodeLike(tItemCategory.getText());
+//            }
+//
+//            @Override
+//            public Object[] getTableData(Object obj) {
+//                Category cat = (Category) obj;
+//                return new Object[]{cat, cat.getId(), cat.getCode(), cat.getDescription()};
+//            }
+//        });
 
 
 
@@ -402,7 +402,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cPanel4 = new org.components.containers.CPanel();
         cLabel7 = new org.components.controls.CLabel();
         cLabel13 = new org.components.controls.CLabel();
-        cc = new org.components.controls.CButton();
 
         tItemTrakSerial.setText("Track Serial Number");
         tItemTrakSerial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -724,8 +723,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cLabel9.setBounds(10, 250, 50, 20);
         add(ttype1);
         ttype1.setBounds(80, 250, 210, 30);
-
-        tItemCategory.setText("");
         add(tItemCategory);
         tItemCategory.setBounds(80, 120, 210, 30);
 
@@ -756,8 +753,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         cLabel13.setText("Item Master");
         add(cLabel13);
         cLabel13.setBounds(20, 10, 260, 25);
-        add(cc);
-        cc.setBounds(980, 120, 37, 19);
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1186,7 +1181,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private org.components.containers.CPanel cPanel3;
     private org.components.containers.CPanel cPanel4;
     private org.components.controls.CScrollPane cScrollPane1;
-    private org.components.controls.CButton cc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -1334,14 +1328,14 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     /**
      * @return the listUi
      */
-    public ItemListUi getListUi() {
+    public ItemListUix getListUi() {
         return listUi;
     }
 
     /**
      * @param listUi the listUi to set
      */
-    public void setListUi(ItemListUi listUi) {
+    public void setListUi(ItemListUix listUi) {
         this.listUi = listUi;
     }
 

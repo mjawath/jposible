@@ -26,7 +26,6 @@ public class Command implements ICommand{
 
     public void start() {
         CommandTask com = new CommandTask(command);
-        objs.clear();
     }
     
      public void start(Object... params) {

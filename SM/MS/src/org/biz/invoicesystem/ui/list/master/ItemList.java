@@ -4,10 +4,7 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
-import java.util.Date;
 import java.util.List;
-import org.biz.app.ui.util.QueryManager;
-import org.biz.dao.service.CQuery;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Category;
 import org.biz.invoicesystem.entity.master.Item;
@@ -17,7 +14,7 @@ import org.components.windows.ListViewPanel;/**
  *
  * @author d
  */
-public class ItemList extends ListViewPanel {
+public class ItemList extends ListViewPanel<Item> {
 
     private ItemService itemService;
     private List<Item> items;

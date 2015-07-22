@@ -4,13 +4,13 @@
  */
 package org.biz.app.ui.util;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import org.biz.dao.service.CQuery;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.service.Service;
 import org.components.test.ResultPage;
+import org.components.windows.SearchQueryUIPanel;
 
 /**
  *
@@ -27,6 +27,7 @@ public  class QueryManager {
     private int noOfPages;
     protected List lastListPage;
     protected List<UIListener> uiListners = new ArrayList();
+    protected SearchQueryUIPanel searchQueryUIPanel;        
 
     
     
@@ -121,7 +122,7 @@ public  class QueryManager {
         if(service==null)return -1l;
         return service.getCount(getCountQuery());
     }
-
+    
     public void createPages() {
         noOfPages = (int) Math.ceil((float) count / noOfRowsPerPage);
     }
@@ -154,9 +155,9 @@ public  class QueryManager {
 
     }
     
-    
+
     //*** new implementation
-    public void goToFirstPage(){
+    public void executeToFirstPageTask(){
         
         //get count query
         //get query
@@ -164,7 +165,7 @@ public  class QueryManager {
         // update status 
         //update ui
     
-        command.start(0);
+        command.start();
     
     }
     
@@ -178,49 +179,48 @@ public  class QueryManager {
         
     }
     
-    private void notifyGUIListners(){
-    
+    private void notifyGUIListners(ResultPage rp){
+        if(uiListners==null || uiListners.isEmpty())return;
         for (UIListener ui : uiListners) {
-            ui.updateUI(this);
+            ui.updateUI(rp);
         }
         
     }
     
     
+    public void addUIListener(UIListener uil){
+        uiListners.add(uil);
+    }
     
     private Command command = new Command() {
 
         public Object doBackgroundTask(Object... objs) {
 
-            ResultPage rp = null;
-            long count = QueryManager.this.executeCountQuery();
+       
+            Long count = QueryManager.this.executeCountQuery();
             int noOfRowsPerPage = QueryManager.this.getNoOfRowsPerPage();
             int noOfPages = (int) Math.ceil((float) count / noOfRowsPerPage);
             if (objs != null && objs.length <= 0) {
                 return null;
             }
-//            if(objs[0]  instanceof ActionEvent  && ((ActionEvent)objs[0]).getSource()==1){
-            int pageType = (int) objs[0];
-            int index = 0;
-            if (pageType == 0) {
-                index = 0;
-                Object obj = QueryManager.this.executeQuery(index);
-                rp = new ResultPage((int) count, noOfPages, index, obj);
-                return rp;
-            }
 
-            return null;
+            Object obj = QueryManager.this.executeQuery(currentPage);
+            ResultPage rp = new ResultPage(count, noOfPages, currentPage, obj);
+            System.out.println(" doBackgroundTask "+ ((List)rp.getResult()).size());
+            return rp;
         }
 
         public void doResultTask(Object... objs) {
             if (objs == null) {
                 return;
             }
-            ResultPage l = (ResultPage) objs[0];
-            if (l == null) {
+            ResultPage resultPage = (ResultPage) objs[0];
+            if (resultPage == null) {
                 return;
             }
-            QueryManager.this.notifyGUIListners();
+            System.out.println(" doResultTask "+ ((List)resultPage.getResult()).size());
+            System.out.println("Setting results ");
+            QueryManager.this.notifyGUIListners(resultPage);
         }
 
     };
@@ -228,8 +228,3 @@ public  class QueryManager {
 
 }
 
-interface UIListener {
-
-    public void updateUI(QueryManager ui);
-    
-}

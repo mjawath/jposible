@@ -57,7 +57,7 @@ public class SalesInvoice extends BusObj {
     private Double texPer;
     private Double texAmount;
     private Double cashRecieveds;
-    private byte status;
+    private Byte status;
 
     public SalesInvoice() {
         setLineItems(new ArrayList<SalesInvoiceLineItem>());
@@ -83,7 +83,7 @@ public class SalesInvoice extends BusObj {
         this.pekapoo = pekapoo;
     }
 
-    public void setStatus(byte status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 

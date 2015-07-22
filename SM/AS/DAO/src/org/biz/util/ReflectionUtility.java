@@ -208,13 +208,13 @@ public class ReflectionUtility {
         }
         catch (NoSuchFieldException exception) {
           Method classMethod = ReflectionUtility.getMethodMember(className, fieldOrMethodName, null);
-          return classMethod.invoke(obj, null);
+          return classMethod.invoke(obj);
         }
       }
       else if (mode == METHOD_FIRST) {
         try {
           Method classMethod = ReflectionUtility.getMethodMember(className, fieldOrMethodName, null);
-          return classMethod.invoke(obj, null);
+          return classMethod.invoke(obj);
         }
         catch (NoSuchMethodException exception) {
           Field classfield = ReflectionUtility.getFieldMember(className, fieldOrMethodName);

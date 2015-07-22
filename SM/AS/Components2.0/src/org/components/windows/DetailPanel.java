@@ -4,11 +4,9 @@
  */
 package org.components.windows;
 
-import app.AppMainWindow;
 import app.utils.SystemUtil;
 import com.components.custom.FocusManager;
 import com.components.custom.IComponent;
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -19,10 +17,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import org.biz.app.ui.event.OAction;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
@@ -45,6 +40,7 @@ public class DetailPanel<T> extends TabPanelUI {
     protected T busObject;
     protected T selectedObject;
     protected FocusManager focusManager;
+    private UIController<T> controller;
 
     protected OAction delete = new OAction("Delete") {
 
@@ -66,7 +62,7 @@ public class DetailPanel<T> extends TabPanelUI {
         public Object doBackgroundTask(Object... objs) {
             System.out.println("doBackgroundTask saveAction on Detail panel");
             saveX();
-            return 1;
+            return objs;
 
         }
 
@@ -84,7 +80,7 @@ public class DetailPanel<T> extends TabPanelUI {
         @Override
         public Object doBackgroundTask(Object... objs) {
             System.out.println("doBackgroundTask clear");
-            return 1;
+            return null;
 
         }
 
@@ -144,7 +140,7 @@ public class DetailPanel<T> extends TabPanelUI {
         ComponentFactory.setKeyAction(this, saveAction, KeyEvent.VK_F5);
         ComponentFactory.setKeyAction(this, delete, KeyEvent.VK_F6);
 //        ComponentFactory.setKeyAction(this, delete, KeyEvent.VK_ENTER);
-        setCrudControl();
+//        setCrudControl();
     }
     
     public void setCrudControl(){
@@ -229,59 +225,57 @@ public class DetailPanel<T> extends TabPanelUI {
 
     @Override
     public Object saveX() {
-        long x=System.currentTimeMillis();
-        
+        long x = System.currentTimeMillis();
+
         ArrayList result = new ArrayList();
         ArrayList toSave = new ArrayList();
         ArrayList toDelete = new ArrayList();
         ArrayList toUpdate = new ArrayList();
-        System.out.println("01"+ (System.currentTimeMillis()- x));
+        System.out.println("  saving   " + (System.currentTimeMillis() - x));
         busObject = getBusObject();
         if (service != null) {
             if (!isValideEntity()) {
                 return null;
             }
-            preSave(toSave,toUpdate,toDelete);
+            preSave(toSave, toUpdate, toDelete);
 
 //            if (toSave.isEmpty()) {
 //                Tracer.printToOut("no object found to Save");
 //                return;
 //            }
-            Object key = ReflectionUtility.getProperty(selectedObject, "id");//0 is the index of the main object , id is id property
-
             if (busObject == null) {
                 Tracer.printToOut("Detail panel -> SaveX -> Bus Object is null ,Not saved");
                 return null;
             }
-                    System.out.println("find b"+ (System.currentTimeMillis()- x));
+            Object id = ((BusObj) busObject).getId();//0 is the index of the main object , id is id property
 
-            Object obj = service.getDao().find(key);
-  
+            System.out.println("find b" + (System.currentTimeMillis() - x));
+
+            Object obj = id == null ? null : service.getDao().find(id);
 
             if (obj == null) {
                 //should retrieve new id and set to new objects
-                
+
                 toSave.add(busObject);
                 preCreate(toSave, toUpdate, toDelete);
                 auditPersistenceData(toSave);
-                auditUpdatedData(toUpdate, key,GenericDAOUtil.currentTime());
+                auditUpdatedData(toUpdate, id, GenericDAOUtil.currentTime());
                 Tracer.printToOut(" Object  is not found  So creation will be called");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-        System.out.println("saved "+ (System.currentTimeMillis()- x));
+                System.out.println("saved " + (System.currentTimeMillis() - x));
 
                 postCreate(toSave, toUpdate, toDelete);
-            }
-            else {
-                if(MessageBoxes.yesNo(this, "Current record already exist in the DATABASE Are you sure\n"
-                        + "You want to update the record", "Update Confirmation")==MessageBoxes.NO_OPTION){
+            } else {
+                if (MessageBoxes.yesNo(this, "Current record already exist in the DATABASE Are you sure\n"
+                        + "You want to update the record", "Update Confirmation") == MessageBoxes.NO_OPTION) {
                     return null;
                 }
-                
-                ((BusObj) busObject).setId(key.toString());
+
+                ((BusObj) busObject).setId(id.toString());
                 toUpdate.add(busObject);
                 preUpdate(toSave, toUpdate, toDelete);
                 auditPersistenceData(toSave);
-                auditUpdatedData(toUpdate, key,((BusObj)obj).getSavedDate());
+                auditUpdatedData(toUpdate, id, ((BusObj) obj).getSavedDate());
 
                 Tracer.printToOut("Updation is called  Object  is  found");
                 service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
@@ -291,7 +285,7 @@ public class DetailPanel<T> extends TabPanelUI {
         result.add(toSave);
         result.add(toUpdate);
         result.add(toDelete);
-        
+
         //call some observer method
         Tracer.printToOut("Detail panel Save is successfully performed , result is returned, method is called using BT");
         return result;
@@ -404,7 +398,9 @@ public class DetailPanel<T> extends TabPanelUI {
         return null;
     }
 
-    public void setBusObject(T obj) {
+    public void setBusObject(T obj) {      
+        controller.setBussinesObject(obj);
+        this.busObject = obj;
     }
 
     public void setSelectedBusObj(T obj) {
@@ -481,6 +477,10 @@ public class DetailPanel<T> extends TabPanelUI {
             
         });
         
+    }
+    
+    public void setController(UIController controller){
+        this.controller = controller;
     }
     
     @SuppressWarnings("unchecked")

@@ -6,6 +6,8 @@
 
 package org.biz.ui.prototype;
 
+import org.biz.invoicesystem.ui.list.master.ItemController;
+
 /**
  *
  * @author user
@@ -17,6 +19,31 @@ public class ApplicationLauncher extends javax.swing.JFrame {
      */
     public ApplicationLauncher() {
         initComponents();
+//        tSearchItem.getDocument().addDocumentListener(new DocumentListener() {
+//
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                //search for item 
+//                //search listener execute search with above text
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                
+//            }
+//        });
+        
+        ItemController itemControler = new ItemController();
+//        itemControler.setSearchUI(itemSUI1);
+//        itemControler.setListUI(itemListUI1);
+        itemSUI1.setController(itemControler);
+        
+        itemListUI1.config(); 
     }
 
     /**
@@ -28,7 +55,8 @@ public class ApplicationLauncher extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        salesUI1 = new org.biz.ui.prototype.SalesUI();
+        itemSUI1 = new org.biz.invoicesystem.ui.list.master.ItemSUI();
+        itemListUI1 = new org.biz.invoicesystem.ui.list.master.ItemListUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -36,21 +64,21 @@ public class ApplicationLauncher extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1247, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(salesUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(itemListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(574, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 561, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(salesUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(itemListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -67,7 +95,7 @@ public class ApplicationLauncher extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -92,6 +120,7 @@ public class ApplicationLauncher extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.ui.prototype.SalesUI salesUI1;
+    private org.biz.invoicesystem.ui.list.master.ItemListUI itemListUI1;
+    private org.biz.invoicesystem.ui.list.master.ItemSUI itemSUI1;
     // End of variables declaration//GEN-END:variables
 }

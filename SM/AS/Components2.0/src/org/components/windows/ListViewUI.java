@@ -8,6 +8,7 @@ import java.util.List;
 import org.biz.app.ui.util.CPaginatedPanel;
 import org.biz.app.ui.util.QueryManager;
 import org.components.controls.CxTable;
+import org.components.test.ResultPage;
 
 /**
  *
@@ -17,31 +18,36 @@ public class ListViewUI extends javax.swing.JPanel {
 
     
     private QueryManager queryManager;
-    private CPaginatedPanel pagePanel;
+//    private CPaginatedPanel pagePanel;
     /**
      * Creates new form ListViewUI
      */
     public ListViewUI() {
         initComponents();
-        pagePanel=cPaginatedPanel1;
+//        pagePanel=cPaginatedPanel1;
     }
     
     public void initPaging(QueryManager qman){
 //        cPaginatedPanel1.init(service, searchListener, tbl);
         queryManager=qman;
-        setPaging(pagePanel, tbl);
-        if(pagePanel==null)return;
-        pagePanel.init(qman, tbl);
+//        setPaging(pagePanel, tbl);
+        if(cPaginatedPanel1==null)return;
+        cPaginatedPanel1.init(qman, tbl);
+    }
+    
+    public void setResult(ResultPage resp){
+        tbl.setModelCollection((List)resp.getResult());
+//        pag
     }
 
     
     public void setPaging(CPaginatedPanel pp,CxTable  table){
-        pagePanel=pp;
+//        pagePanel=pp;
         tbl=table;
     }
     
     public void executeQuery(){
-        pagePanel.findCommand();
+        cPaginatedPanel1.findCommand();
     }
     
     

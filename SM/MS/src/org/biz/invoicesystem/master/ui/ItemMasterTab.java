@@ -67,7 +67,7 @@ public class ItemMasterTab extends TabPanelUI {
         tItemDescription = new org.components.controls.CTextField();
         itemTabPane = new javax.swing.JTabbedPane();
         itemMasterUI21 = new org.biz.invoicesystem.master.ui.ItemMasterUI2();
-        itemListUi1 = new org.biz.invoicesystem.ui.list.master.ItemListUi();
+        itemListUi1 = new org.biz.invoicesystem.ui.list.master.ItemListUix();
 
         itemTabPane.addTab("tab2", itemMasterUI21);
         itemTabPane.addTab("tab1", itemListUi1);
@@ -86,7 +86,7 @@ public class ItemMasterTab extends TabPanelUI {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.invoicesystem.ui.list.master.ItemListUi itemListUi1;
+    private org.biz.invoicesystem.ui.list.master.ItemListUix itemListUi1;
     private org.biz.invoicesystem.master.ui.ItemMasterUI2 itemMasterUI21;
     private javax.swing.JTabbedPane itemTabPane;
     private org.components.controls.CTextField tItemDescription;

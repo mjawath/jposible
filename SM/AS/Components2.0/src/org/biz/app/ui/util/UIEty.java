@@ -224,13 +224,6 @@ public class UIEty {
 
     }
 
-    public static String uiToString(Object object) {
-        if (object == null) {
-            return null;
-        } else {
-            return object.toString().trim();
-        }
-    }
 
     public static String etyToStr(Object object) {
         if (object == null) {

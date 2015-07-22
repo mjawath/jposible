@@ -43,7 +43,7 @@ import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.service.master.CategoryService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.TabPanelUI;
-import org.biz.invoicesystem.ui.list.master.ItemListUi;
+import org.biz.invoicesystem.ui.list.master.ItemListUix;
 
 public class ItemMasterUI2 extends TabPanelUI { 
 
@@ -56,7 +56,7 @@ public class ItemMasterUI2 extends TabPanelUI {
     ItemPopUp ipu;
     private Item selectedItem;
     private ItemMasterTab mastertab;
-    private ItemListUi listUi;
+    private ItemListUix listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
     JFileChooser chooser;
     List<File> images = new ArrayList<File>();
@@ -1590,14 +1590,14 @@ public class ItemMasterUI2 extends TabPanelUI {
     /**
      * @return the listUi
      */
-    public ItemListUi getListUi() {
+    public ItemListUix getListUi() {
         return listUi;
     }
 
     /**
      * @param listUi the listUi to set
      */
-    public void setListUi(ItemListUi listUi) {
+    public void setListUi(ItemListUix listUi) {
         this.listUi = listUi;
     }
 

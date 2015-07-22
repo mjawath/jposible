@@ -42,7 +42,7 @@ public class ItemMasterFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        itemListUI1 = new org.biz.erp.inventory.ui.list.ItemListUI();
+        itemListUI1 = new org.biz.invoicesystem.ui.list.master.ItemListUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +102,6 @@ public class ItemMasterFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.erp.inventory.ui.list.ItemListUI itemListUI1;
+    private org.biz.invoicesystem.ui.list.master.ItemListUI itemListUI1;
     // End of variables declaration//GEN-END:variables
 }

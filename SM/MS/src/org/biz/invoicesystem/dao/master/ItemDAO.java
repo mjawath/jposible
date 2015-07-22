@@ -8,7 +8,6 @@ import javax.persistence.Query;
 import org.biz.dao.service.GenericDAO;
 import org.biz.invoicesystem.entity.master.Item;
 import app.utils.SystemStatic;
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import org.dao.util.JPAUtil;
 
 /**

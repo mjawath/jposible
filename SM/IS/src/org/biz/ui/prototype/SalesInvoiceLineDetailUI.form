@@ -16,12 +16,16 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="mypanel" min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="mypanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="mypanel" min="-2" max="-2" attributes="0"/>
+          <Component id="mypanel" alignment="1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -33,7 +37,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="tItemSearchTextComp" min="-2" pref="126" max="-2" attributes="0"/>
+                  <Component id="tItemSearchTextComp" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="tPrice" min="-2" pref="94" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -42,7 +46,7 @@
                   <Component id="tTotal" min="-2" pref="84" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cButton1" min="-2" pref="69" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="28" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -50,25 +54,21 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tItemSearchTextComp" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tPrice" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tQty" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tTotal" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cButton1" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="tItemSearchTextComp" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="tPrice" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tQty" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tTotal" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cButton1" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="13" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="org.components.controls.CTextField" name="tItemSearchTextComp">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tItemSearchTextCompActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tItemSearchTextCompKeyTyped"/>
-          </Events>
-        </Component>
         <Component class="org.components.controls.CTextField" name="tPrice">
         </Component>
         <Component class="org.components.controls.CTextField" name="tQty">
@@ -79,6 +79,8 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cButton1ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="research.prototype.transaction.ItemPopup" name="tItemSearchTextComp">
         </Component>
       </SubComponents>
     </Container>

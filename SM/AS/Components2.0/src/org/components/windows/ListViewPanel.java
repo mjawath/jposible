@@ -12,14 +12,19 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.biz.dao.service.Service;
 import org.components.controls.CxTable;
+import org.components.test.ResultPage;
 
 /**
  *
  * @author d
  */
 public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListener{
-
     
+    protected UIController controller;
+    
+    public void setController(UIController controller){
+        this.controller = controller;
+    } 
     /**
      * Creates new form ListViewPanel
      */
@@ -90,6 +95,10 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     }
   
     
+    public void setResultPage(ResultPage res){
+        listUI.setResult(res);        
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,5 +155,9 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
       
        
        
+    }
+    
+    public ListViewUI getListViewUI(){
+    return listUI;
     }
 }

@@ -74,46 +74,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
         this.ctable=table;
     }
     
-            
-    private OAction  action = new OAction() {
-            
-            public Object doBackgroundTask(Object objs) {
-                ArrayList al=(ArrayList)(objs); 
-                CButton btn=(CButton)((ActionEvent)(al.get(0))).getSource(); 
-                
-//                if(service==null)return null;
-                
-                //create pages 
-                //should check query is exisiting or modified
-                if (tFind==btn) {
-                    qryManager.getFirstPage();
-                    
-                }else
-                if (tnextpage==btn) {//get excuting source
-                    qryManager.getNextPage();
-                   
-                }else if (tPreviousPage==btn) {
-                    qryManager.getPrePage();
-                }
-                else if (tlast==btn) {
-                    qryManager.getLastPage();
-                }
           
-                return qryManager;
-            }
-
-            public void resultTask(Object objs) {
-                if(objs==null)return;
-                noOfPages();
-                ctable.setModelCollection(((QueryManager)objs).getList() );
-                ((QueryManager)objs).postQuery(((QueryManager)objs));
-
-            }
-        };
-    
-
-     
-       
      private Command command = new Command(){
          
       public Object doBackgroundTask(Object ...objs) {
@@ -129,7 +90,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             if(objs!=null && objs.length<= 0 )return null;
             if(objs[0]  instanceof ActionEvent  && ((ActionEvent)objs[0]).getSource()==tFind){
             Object obj = qryManager.executeQuery(0);
-            rp = new ResultPage((int) count, noOfPages, 0, obj);
+            rp = new ResultPage( count, noOfPages, 0, obj);
                
             }
                       
@@ -248,7 +209,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
         this.ctable=ctable;
     }
     public void findCommand(){
-        tFind.doClick();
+                     tFind.doClick();
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -266,17 +227,17 @@ public class CPaginatedPanel extends javax.swing.JPanel {
 
         tPreviousPage.setText("<");
         add(tPreviousPage);
-        tPreviousPage.setBounds(10, 10, 30, 20);
+        tPreviousPage.setBounds(0, 10, 50, 20);
 
         tlast.setText(">>");
         add(tlast);
-        tlast.setBounds(170, 10, 30, 20);
+        tlast.setBounds(200, 10, 50, 20);
 
         tnextpage.setText(">");
         add(tnextpage);
-        tnextpage.setBounds(130, 10, 30, 20);
+        tnextpage.setBounds(150, 10, 40, 20);
         add(cPageCount);
-        cPageCount.setBounds(50, 10, 30, 20);
+        cPageCount.setBounds(60, 10, 30, 20);
 
         tFind.setText("Find");
         tFind.addActionListener(new java.awt.event.ActionListener() {
@@ -285,7 +246,7 @@ public class CPaginatedPanel extends javax.swing.JPanel {
             }
         });
         add(tFind);
-        tFind.setBounds(90, 10, 30, 20);
+        tFind.setBounds(100, 10, 40, 20);
 
         tinfo.setText("");
         add(tinfo);

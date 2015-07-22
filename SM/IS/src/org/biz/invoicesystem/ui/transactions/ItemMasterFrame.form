@@ -41,7 +41,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="org.biz.erp.inventory.ui.list.ItemListUI" name="itemListUI1">
+    <Component class="org.biz.invoicesystem.ui.list.master.ItemListUI" name="itemListUI1">
     </Component>
   </SubComponents>
 </Form>

@@ -434,16 +434,15 @@ public class GenericDAO<T> {
     }
 
     public String createWhere(String whr) {
-        String select= StringUtility.containsStringIgnoreCase(whr, "select")?"":createSelect();
-        String where= StringUtility.containsStringIgnoreCase(whr, "where")?select: select + " where  " + whr +" ";
-
-        return where+ GenericDAOUtil.getOrderBy(orderby);
+        String select= StringUtility.containsStringIgnoreCase(whr, "select")?whr:createSelect();
+        String where= StringUtility.containsStringIgnoreCase(select, "where")?select: select + " where  " + whr +" ";
+        String orderBy= StringUtility.containsStringIgnoreCase(where, "order by")?where: where +  GenericDAOUtil.getOrderBy(orderby);
+        return orderBy;
     }
     
       public String createWhereWithOrderby(String whr,String orderby) {
         String select= StringUtility.containsStringIgnoreCase(whr, "select")?"":createSelect();
         String where= StringUtility.containsStringIgnoreCase(whr, "where")?select: select + " where  " + whr +" ";
-
         return where+ GenericDAOUtil.getOrderBy(orderby);
     }
     /*
@@ -513,7 +512,7 @@ public class GenericDAO<T> {
     }
 
         public List<T> getByCodeLike(String code) {
-        String cus = "  c.code like '" + code + "%' ";
+        String cus = "  LOWER(c.code) like '" + code.toLowerCase() + "%' ";
         
         List<T> lst = ExecuteQuery(createWhereWithOrderby(cus," c.code asc "));
         return lst;
@@ -521,8 +520,8 @@ public class GenericDAO<T> {
     }
 
     public List<T> getByCodeLike(int page,String code) {
-        String cus = "  c.code like '" + code + "%' ";
-        List<T> lst = pagedData(createWhereWithOrderby(cus, " c.code asc "));
+        String cus = "  LOWER(c.code) like '" + code.toLowerCase()  + "%' ";
+        List<T> lst = pagedData(createWhereWithOrderby(cus, " c.code asc "),page);
         return lst;
 
     }
@@ -534,7 +533,7 @@ public class GenericDAO<T> {
      * @return 
      */    
     public CQuery getQueryByCodeLike(String code) {
-        String cus = "  c.code like '" + code + "%' ";
+        String cus = " LOWER(c.code) like '" +  code.toLowerCase() + "%' ";
         return getQuery(createWhere(cus));
 //        return lst;
 
@@ -546,7 +545,7 @@ public class GenericDAO<T> {
      * @return 
      */    
     public CQuery getCountQueryByCodeLike(String code) {
-        String cus = "  c.code like '" + code + "%' ";
+        String cus = "  LOWER(c.code) like '" +  code.toLowerCase() + "%' ";
         return getQuery(createCount(cus));
 //        return lst;
 

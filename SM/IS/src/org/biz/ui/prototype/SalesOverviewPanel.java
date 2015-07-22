@@ -8,50 +8,68 @@ package org.biz.ui.prototype;
 
 import java.util.List;
 import org.biz.app.ui.util.QueryManager;
+import org.biz.app.ui.util.UIListener;
+import org.biz.invoicesystem.entity.transactions.SalesInvoice;
+import org.components.test.ResultPage;
+import org.components.windows.ListViewPanel;
+import org.components.windows.UIController;
 
 /**
  *
  * @author user
  */
-public class SalesOverviewPanel extends javax.swing.JPanel {
+public class SalesOverviewPanel extends ListViewPanel<SalesInvoice> implements UIListener{
 
-    private SalesInvoiceControler sc = new SalesInvoiceControler();
-    private QueryManager qm;
+    private SalesInvoiceControler sc = new SalesInvoiceControler();    
+      
+    private class myQM extends QueryManager {
+
+        public Long executeCountQuery() {
+            return ((SalesInvoiceControler)controller).getCountByCodeLike(tSearch.getText());
+        }
+
+        public List executeQuery(int page) {
+            return ((SalesInvoiceControler)controller).getByCodeLike(page, tSearch.getText());
+        }
+
+    };
+    private myQM qm;
 
     /**
      * Creates new form SalesOverviewPanel
      */
     public SalesOverviewPanel() {
         initComponents();
-        
-        qm = new QueryManager() {
 
-            public Long executeCountQuery() {
-                return sc.getCountByCodeLike(tSearch.getText());
-            }
+       listUI = salesInvoiceListUI1;
 
-            public List executeQuery(int page) {
-                return sc.getByCodeLike(page, tSearch.getText());
-            }
-
-        };
+        qm = new myQM();
         qm.setService(sc.getSalesService());
+
+        qm.addUIListener(this);
+        init();
+//        config();
     }
 
+    @Override
+    public void setController(UIController controller) {
+        super.setController(controller); //To change body of generated methods, choose Tools | Templates.
+        sc = (SalesInvoiceControler)controller;
+    }
+
+    
+   
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        cTableMaster1 = new org.components.controls.CTableMaster();
         jPanel1 = new javax.swing.JPanel();
         btnind = new org.components.controls.CButton();
         btnPre = new javax.swing.JButton();
         tSearch = new org.components.controls.CTextField();
         btnNext = new javax.swing.JButton();
         btnLast = new javax.swing.JButton();
-
-        jScrollPane1.setViewportView(cTableMaster1);
+        salesInvoiceListUI1 = new org.biz.ui.prototype.SalesInvoiceListUI();
 
         btnind.setText("Find");
         btnind.addActionListener(new java.awt.event.ActionListener() {
@@ -61,8 +79,6 @@ public class SalesOverviewPanel extends javax.swing.JPanel {
         });
 
         btnPre.setText("<");
-
-        tSearch.setText("Code");
 
         btnNext.setText(">");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -119,19 +135,25 @@ public class SalesOverviewPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(salesInvoiceListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(381, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(70, Short.MAX_VALUE)
+                    .addComponent(salesInvoiceListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -145,7 +167,7 @@ public class SalesOverviewPanel extends javax.swing.JPanel {
 
 
 //        sc.findItem(qryText);
-        qm.goToFirstPage();
+//        sc.executeToFirstPageTask();
         
         
     }//GEN-LAST:event_btnindActionPerformed
@@ -162,19 +184,40 @@ public class SalesOverviewPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLastActionPerformed
 
     
-    
-    public void showDetailView(){
-    
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPre;
     private org.components.controls.CButton btnind;
-    private org.components.controls.CTableMaster cTableMaster1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private org.biz.ui.prototype.SalesInvoiceListUI salesInvoiceListUI1;
     private org.components.controls.CTextField tSearch;
     // End of variables declaration//GEN-END:variables
+    
+    public void updateUI(ResultPage ui) {        
+    
+        if(ui==null){
+            //should clear ui
+            return;
+        }
+        
+       Object resultObj = ui.getResult();
+       
+       if(resultObj instanceof List){
+           //overview set result /
+           salesInvoiceListUI1.getTable().setModelCollection((List)resultObj);
+           
+       }
+        
+        
+    }
+    
+
+        
+    public void showDetailView(){
+        Object si = salesInvoiceListUI1.getTable().getSelectedObject();
+        sc.showDetailView(si);
+    }
+
 }

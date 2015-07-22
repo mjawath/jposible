@@ -37,7 +37,7 @@ public class PaginatedPanel extends javax.swing.JPanel {
                 int noOfRowsPerPage=qryManager.getNoOfRowsPerPage();
                 int noOfPages = (int) Math.ceil((float) count / noOfRowsPerPage);
                 Object obj=qryManager.executeQuery(0);
-                ResultPage rp = new ResultPage((int)count,noOfPages,0,obj);
+                ResultPage rp = new ResultPage(count,noOfPages,0,obj);
         
                 return rp;
             }

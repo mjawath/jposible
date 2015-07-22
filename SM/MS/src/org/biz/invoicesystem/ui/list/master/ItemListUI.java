@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.biz.erp.inventory.ui.list;
+package org.biz.invoicesystem.ui.list.master;
 
 import org.biz.invoicesystem.entity.master.Item;
 import org.components.windows.ListViewPanel;
@@ -15,11 +15,14 @@ import org.components.windows.ListViewPanel;
  */
 public class ItemListUI extends ListViewPanel<Item> {
 
+    private ItemController itemController = new ItemController();
     /**
      * Creates new form ItemListUI
      */
     public ItemListUI() {
         initComponents();
+        setController(itemController);
+        
     }
 
     /**
@@ -31,8 +34,8 @@ public class ItemListUI extends ListViewPanel<Item> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        itemSUI1 = new org.biz.erp.inventory.ui.list.ItemSUI();
-        itemLV1 = new org.biz.erp.inventory.ui.list.ItemLV();
+        itemLV1 = new org.biz.invoicesystem.ui.list.master.ItemLV();
+        itemSUI1 = new org.biz.invoicesystem.ui.list.master.ItemSUI();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -42,23 +45,22 @@ public class ItemListUI extends ListViewPanel<Item> {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(itemSUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(itemLV1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(itemLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(itemLV1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
     public void init() {
-        initComponents();      
         listUI = itemLV1;
         searchQueryUI = itemSUI1;
         super.init();         
@@ -68,7 +70,7 @@ public class ItemListUI extends ListViewPanel<Item> {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.erp.inventory.ui.list.ItemLV itemLV1;
-    private org.biz.erp.inventory.ui.list.ItemSUI itemSUI1;
+    private org.biz.invoicesystem.ui.list.master.ItemLV itemLV1;
+    private org.biz.invoicesystem.ui.list.master.ItemSUI itemSUI1;
     // End of variables declaration//GEN-END:variables
 }

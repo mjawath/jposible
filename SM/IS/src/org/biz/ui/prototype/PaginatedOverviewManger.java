@@ -8,13 +8,16 @@ package org.biz.ui.prototype;
 
 /**
  *
- * @author user
+ * @author jawa
  */
-class ItemController {
-
-    public void findItem(String myQuery) {
-        System.out.println(myQuery);
-        System.out.println("Updateng my window"+myQuery);        
-    }
+public class PaginatedOverviewManger {
+    
+//    private UI gueryUI;
+//    private UI ListUI;
+    
+    
+//    private executeQuery;
+//    private setListUI;
+    
     
 }
