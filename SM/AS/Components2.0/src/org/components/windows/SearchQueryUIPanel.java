@@ -78,8 +78,8 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
                 ttxtsearch.showPopUp(result);
             }
             
-            if(UIType ==POPUP_searchUIType){
-//                initAndShowPopup();
+            if(listView!=null){
+                listView.setResult(result);
             }
             
         }
@@ -229,6 +229,7 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
     
     public void setListViewForPopup(ListViewUI lv){
         ttxtsearch.setListView(lv);
+        lv.initPaging(qms);
     }
     
 }

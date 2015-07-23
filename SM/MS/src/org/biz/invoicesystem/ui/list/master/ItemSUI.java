@@ -29,9 +29,7 @@ public class ItemSUI extends  SearchQueryUIPanel {
      */
     public ItemSUI() {
         super();       
-        ItemListViewUI itl =new ItemListViewUI();        
-        itl.initPaging(qms);
-        setListViewForPopup(itl);
+        
     }
     
     

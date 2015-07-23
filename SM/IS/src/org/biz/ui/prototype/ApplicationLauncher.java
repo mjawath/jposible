@@ -7,6 +7,7 @@
 package org.biz.ui.prototype;
 
 import org.biz.invoicesystem.ui.list.master.ItemController;
+import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
 
 /**
  *
@@ -42,7 +43,9 @@ public class ApplicationLauncher extends javax.swing.JFrame {
 //        itemControler.setSearchUI(itemSUI1);
 //        itemControler.setListUI(itemListUI1);
         itemSUI1.setController(itemControler);
-        
+        ItemListViewUI itl =new ItemListViewUI();    
+    
+        itemSUI1.setListViewForPopup(itl);
         itemListUI1.config(); 
     }
 
