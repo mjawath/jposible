@@ -259,7 +259,7 @@ public class AppMainWindow extends org.components.windows.MainWindow {
  
    
       public void addMenu(JMenu menu){
-    jMenuBar1.add(menu);
+            jMenuBar1.add(menu);
     }
     
     public static void setMenuItemToMenu(JMenu menu,JMenuItem mi){

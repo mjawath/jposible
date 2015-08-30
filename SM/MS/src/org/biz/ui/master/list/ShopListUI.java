@@ -9,13 +9,13 @@ import org.biz.app.ui.util.QueryManager;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.components.controls.CxTable;
 import org.components.parent.controls.editors.TableInteractionListner;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author d
  */
-public class ShopListUI extends ListViewPanel<Shop> {
+public class ShopListUI extends MasterViewUI<Shop> {
 
     /**
      * Creates new form ShopListUI

@@ -10,6 +10,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.biz.app.ui.util.QueryManager;
+import org.biz.app.ui.util.UIListener;
 import org.biz.dao.service.Service;
 import org.components.controls.CxTable;
 import org.components.test.ResultPage;
@@ -18,17 +20,28 @@ import org.components.test.ResultPage;
  *
  * @author d
  */
-public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListener{
+public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener ,UIListener {
     
     protected UIController controller;
     
     public void setController(UIController controller){
         this.controller = controller;
+        if(searchQueryUI!=null)
+        searchQueryUI.setController(controller);
+        if(listUI!=null)
+        listUI.setController(controller);
     } 
+    
+    public void setQueryMananger(QueryManager qm){
+        listUI.initPaging(qm);
+        qm.addUIListener(this);
+
+        
+    }
     /**
      * Creates new form ListViewPanel
      */
-    public ListViewPanel() {
+    public MasterViewUI() {
         super();
 //        initComponents();
     }
@@ -42,7 +55,7 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
          if(searchQueryUI!=null){
         searchQueryUI.setListView(listUI);
          }        
-        init(listUI.getTable());
+//        init(listUI.getTable());
     }
 
     @Override
@@ -78,7 +91,7 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
                     }
                    if(dp!=null){
                     dp.setSelectedBusObj(obj);
-                    dp.setBusObject(obj);
+                    dp.setDataToUI(obj);
                     SystemUtil.bringTabToFront(dp);
                 }
                 }
@@ -150,6 +163,12 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     protected org.components.windows.SearchQueryUIPanel searchQueryUI;
     // End of variables declaration//GEN-END:variables
 
+    
+    
+    public SearchQueryUIPanel getSearchUI(){
+    return searchQueryUI;
+    }
+    
     @Override
     public void valueChanged(ListSelectionEvent e) {
       
@@ -160,4 +179,15 @@ public class ListViewPanel<T> extends TabPanelUI implements ListSelectionListene
     public ListViewUI getListViewUI(){
     return listUI;
     }
+
+    void setResult(ResultPage result) {
+    listUI.setResult(result);
+    }
+    
+    
+    public void updateUI(ResultPage result) {
+        setResult(result);
+
+    }
+
 }

@@ -286,7 +286,7 @@ import org.components.windows.DetailPanel;
         //add this to bus object 
             //        // get top bus object / create top bus object
             // validate on         // validate line item on  / top bus obj
-            InventoryJournal ij=getBusObject();
+            InventoryJournal ij=uiToData();
             ij.addIJLine(li);            
             tblLine.addNewOrModifySelectedRow(li);
   
@@ -318,7 +318,7 @@ import org.components.windows.DetailPanel;
     }
 
     @Override
-    public InventoryJournal getBusObject() {
+    public InventoryJournal uiToData() {
         InventoryJournal ij = new InventoryJournal();
         ij.setCode(tcode.getValue());
         ij.setDocRefNo(tdocref.getValue());
@@ -336,7 +336,7 @@ import org.components.windows.DetailPanel;
     }
 
      @Override
-    public void setBusObject(InventoryJournal obj) {
+    public void setDataToUI(InventoryJournal obj) {
         tcode.setValue(obj.getCode());
         tdocref.setValue(obj.getDocRefNo());
         twarehouse.setSelectedObject(obj.getWarehouse());

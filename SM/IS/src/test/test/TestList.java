@@ -7,13 +7,13 @@
 package test.test;
 
 import org.biz.invoicesystem.entity.master.Category;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author Jawad
  */
-public class TestList extends ListViewPanel<Category> {
+public class TestList extends MasterViewUI<Category> {
 
     /**
      * Creates new form TestList

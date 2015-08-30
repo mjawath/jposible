@@ -27,8 +27,11 @@ public  class QueryManager {
     private int noOfPages;
     protected List lastListPage;
     protected List<UIListener> uiListners = new ArrayList();
-    protected SearchQueryUIPanel searchQueryUIPanel;        
-
+    protected SearchQueryUIPanel searchQueryUIPanel;
+    
+    private Object gui;
+    
+    
     
     
     public CQuery getCQuery() {
@@ -157,17 +160,26 @@ public  class QueryManager {
     
 
     //*** new implementation
-    public void executeToFirstPageTask(){
-        
-        //get count query
-        //get query
-        // execute query 
-        // update status 
-        //update ui
+    public void executeToFirstPageTask(){        
+        command.start("first");    
+    }
     
-        command.start();
+        //*** new implementation
+    public void executeToNextPageTask(){        
+        command.start("next");
     
     }
+    
+    
+    public void executeToPreviousPageTask(){        
+        command.start("previous");    
+    }
+    
+    public void executeToLastPageTask(){        
+        command.start("last");    
+    }
+    
+    
     
     public void notifyObservers(){
     
@@ -203,10 +215,21 @@ public  class QueryManager {
             if (objs != null && objs.length <= 0) {
                 return null;
             }
-
-            Object obj = QueryManager.this.executeQuery(currentPage);
-            ResultPage rp = new ResultPage(count, noOfPages, currentPage, obj);
-            System.out.println(" doBackgroundTask "+ ((List)rp.getResult()).size());
+            
+            int futurePage =  currentPage;
+            final String paramN = objs[0].toString().toLowerCase();
+            if("next".toLowerCase().equals(paramN))
+                futurePage = currentPage + 1;
+            if("previous".toLowerCase().equals(paramN))
+                futurePage = currentPage - 1;
+            if("last".toLowerCase().equals(paramN))
+                futurePage = noOfPages -1;
+            if("first".toLowerCase().equals(paramN))
+                futurePage = 0;
+            Object obj = QueryManager.this.executeQuery(futurePage);
+            ResultPage rp = new ResultPage(count, noOfPages, futurePage, obj);
+            
+            currentPage = futurePage;
             return rp;
         }
 
@@ -217,13 +240,21 @@ public  class QueryManager {
             ResultPage resultPage = (ResultPage) objs[0];
             if (resultPage == null) {
                 return;
-            }
-            System.out.println(" doResultTask "+ ((List)resultPage.getResult()).size());
-            System.out.println("Setting results ");
+            }          
+            
             QueryManager.this.notifyGUIListners(resultPage);
         }
 
     };
+
+    
+    public Object getGui() {
+        return gui;
+    }
+
+    public void setGui(Object gui) {
+        this.gui = gui;
+    }
 
 
 }

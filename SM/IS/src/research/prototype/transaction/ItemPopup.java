@@ -17,11 +17,7 @@ import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
  */
 public class ItemPopup extends TextFieldWithPopUP<Item> {
 
-    
-    
-    ItemService itemservice=new ItemService();
-    
-       /**
+           /**
      * Creates new form ItemPopup
      */
     public ItemPopup() {

@@ -5,13 +5,13 @@
 package org.biz.erp.inventory.ui.list;
 
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author d
  */
-public class WareHouseListUI extends ListViewPanel<Warehouse>{ 
+public class WareHouseListUI extends MasterViewUI<Warehouse>{ 
     
     
 

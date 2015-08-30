@@ -43,15 +43,15 @@ public class SalesInvoiceDetailUI extends DetailPanel<SalesInvoice> implements L
     
     
 
-    public void setBusObject(SalesInvoice object){
+    public void setDataToUI(SalesInvoice object){
         busObject = (SalesInvoice) object;
         cCode.setText(object.getCode());
         cInvNo.setText(object.getInvNo());
-        super.setBusObject(object);
+        super.setDataToUI(object);
     }
  
 
-    public SalesInvoice getBusObject() {
+    public SalesInvoice uiToData() {
 
         if (busObject == null) {
             busObject = new SalesInvoice();

@@ -20,9 +20,9 @@ import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.CustomerService;
 import org.components.parent.controls.editors.TableInteractionListner;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
-public class CustomerListUi extends ListViewPanel<Customer> {
+public class CustomerListUi extends MasterViewUI<Customer> {
 
     private CustomerService cService;
     // List<Customer> customers;

@@ -3,10 +3,10 @@ package org.biz.invoicesystem.ui.list.master;
 
 import javax.swing.JPanel;
 import org.biz.invoicesystem.entity.master.Staff;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
  
-public class StaffListUi extends ListViewPanel<Staff>   {
+public class StaffListUi extends MasterViewUI<Staff>   {
 
      public StaffListUi() {
         initComponents();

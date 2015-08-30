@@ -148,16 +148,16 @@ public class GenericDAO<T> {
         return cq;
     }
     
-    public int getAllCount() {
+    public Long getAllCount() {
 //        getEm().clear();
         try {
 
             CQuery cq = new CQuery(GenericDAOUtil.getAllCount(orderby, cls));
             Object obj = ExecuteQuerySR(cq.getQuery());
-            return Integer.valueOf(obj.toString());
+            return Long.valueOf(obj.toString());
 
         } catch (Exception e) {
-            return -1;
+            return -1l;
         }
     }
 

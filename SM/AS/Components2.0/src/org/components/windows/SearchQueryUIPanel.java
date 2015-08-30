@@ -34,14 +34,20 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
      * Creates new form SearchQueryUIPanel
      */
     public SearchQueryUIPanel() {
-        
-//        initComponents();
-        init();
-        
+//        config();
+//        initComponents();    
     }
    
-    protected void init(){       
-        qms = new MYQueryManger();
+    private void config(){    
+        init();
+        postInit();        
+    
+    }
+    
+    
+    
+    protected void init(){
+      qms = new MYQueryManger();
         if (POPUP_searchUIType == UIType) {
             initComponents();
             initSearchTextField();
@@ -49,6 +55,10 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
         } else if (Listview_searchUIType == UIType) {
             
         }
+    }
+    
+    protected void postInit(){       
+      
         
     }
 
@@ -71,20 +81,20 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
      simpleSearchListener sl =new simpleSearchListener();
     
      
-         private class simpleSearchListener implements UIListener {
+    private class simpleSearchListener implements UIListener {
 
         public void updateUI(ResultPage result) {
-            if (ttxtsearch != null && ttxtsearch.hasListView()) {                                
+            if (ttxtsearch != null && ttxtsearch.hasListView()) {
                 ttxtsearch.showPopUp(result);
             }
-            
-            if(listView!=null){
+
+            if (listView != null) {
                 listView.setResult(result);
             }
-            
+
         }
 
-    }        
+    }    
        
 
     public Long executeCountQuery() {        
@@ -93,10 +103,8 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
     }
 
     public List executeQuery(int page) {  
-        String txt =  ttxtsearch.getText();
-        System.out.println(" executeQuery text "+txt);
-        final List byCodeLike = controller.getService().getByCodeLike(page, txt);
-        System.out.println(" executeQuery result "+byCodeLike.size());
+        String txt =  ttxtsearch.getText();        
+        final List byCodeLike = controller.getService().getByCodeLike(page, txt);        
         return byCodeLike;
     }
 
@@ -122,7 +130,7 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
     }
     
     public void setController(UIController controller){
-    this.controller  = controller;
+    this.controller  = controller;    
     }
     
 
@@ -188,24 +196,23 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ttxtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ttxtsearch, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tbtnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(21, 21, 21))
+                .addComponent(tbtnSearch)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ttxtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tbtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tbtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
-        controller.executeSearch(this);
         
         
     }//GEN-LAST:event_tbtnSearchActionPerformed

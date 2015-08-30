@@ -30,7 +30,7 @@ public class SimpleBillUI extends DetailPanel<SalesInvoice> {
         @Override
         public void onCellEditing(Object cellObj, int column) {
          if(column==1 ||column==2   ){
-             SalesInvoice si = getBusObject();
+             SalesInvoice si = uiToData();
              ((SalesInvoiceLineItem) cellObj).calculateLineItem();
              tblInviceLine.replaceSelectedModel(cellObj);
              //update invoice ui

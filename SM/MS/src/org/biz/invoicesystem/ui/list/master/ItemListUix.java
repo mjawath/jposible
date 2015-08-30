@@ -12,7 +12,7 @@ import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.Item;
 import app.utils.SystemStatic;
 import org.biz.invoicesystem.master.ui.ItemMasterTab;
-import org.biz.invoicesystem.master.ui.ItemMasterUI2;
+import org.biz.invoicesystem.master.ui.ItemMasterUIxxxxx;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.TabPanelUI;
 
@@ -20,7 +20,7 @@ public class ItemListUix extends TabPanelUI implements PagedListUI {
 
     private ItemService itemService;
     private ItemMasterTab mastertab;
-    private ItemMasterUI2 formUi;
+    private ItemMasterUIxxxxx formUi;
     int currentPageNo = 0;
     List<Item> items;
 
@@ -433,14 +433,14 @@ public class ItemListUix extends TabPanelUI implements PagedListUI {
     /**
      * @return the formUi
      */
-    public ItemMasterUI2 getFormUi() {
+    public ItemMasterUIxxxxx getFormUi() {
         return formUi;
     }
 
     /**
      * @param formUi the formUi to set
      */
-    public void setFormUi(ItemMasterUI2 formUi) {
+    public void setFormUi(ItemMasterUIxxxxx formUi) {
         this.formUi = formUi;
     }
 

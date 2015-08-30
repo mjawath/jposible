@@ -43,13 +43,13 @@ public class ShopUI extends DetailPanel<Shop> {
     }
 //
     @Override
-    public void setBusObject(Shop obj) {
+    public void setDataToUI(Shop obj) {
         tshopcode.setValue(obj.getCode());
 //        tshopname.setValue(obj.get());
     }
 //
     @Override
-    public Shop getBusObject() {
+    public Shop uiToData() {
         if (selectedObject == null) {
             selectedObject = new Shop();
         }

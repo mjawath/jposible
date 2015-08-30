@@ -134,7 +134,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     }
 
     
-    public void setBusObject(Customer obj) {
+    public void setDataToUI(Customer obj) {
         this.selectedCus = obj;
         try {
             UIEty.objToUi(tCusCode, obj.getCode());
@@ -163,7 +163,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         }
     }
 
-    public Customer getBusObject(){
+    public Customer uiToData(){
             Customer c=new Customer();
             try {
             c.setId(EntityService.getEntityService().getKey(""));

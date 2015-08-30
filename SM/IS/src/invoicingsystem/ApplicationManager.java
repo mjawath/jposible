@@ -10,23 +10,33 @@ import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.Service;
 import app.utils.SystemStatic;
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
 import org.biz.DropMainMenu;
-import org.biz.erp.ui.transaction.detail.InvoiceDetailUI;
+import org.biz.invoicesystem.ui.list.master.CategoryController;
+import org.biz.invoicesystem.ui.list.master.ItemController;
 import org.biz.invoicesystem.ui.transactions.ItemMasterFrame;
 import org.biz.invoicesystem.ui.transactions.WareHouseFrame;
 import org.components.controls.CButton;
+import org.components.controls.Menu;
+import org.components.controls.MenuItem;
 import org.components.util.Sessions;
 import org.components.windows.DetailPanel;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
+import org.components.windows.UIController;
+import org.components.windows.UIFrame;
 
 /**
  *
@@ -68,7 +78,8 @@ public class ApplicationManager {
                 app.setExtendedState(Frame.MAXIMIZED_BOTH);
                 app.setVisible(true);
 
-                setMenuBar();
+//                setMenuBar();
+                buildMenuBar();
             }
         });
 
@@ -76,12 +87,145 @@ public class ApplicationManager {
 }
     
     
+    
+    private static void buildMenuBar(){
+        
+        //get Parent menu name
+        //get child menu name
+        //get controller class
+        
+        
+        JMenuBar mb = SystemUtil.getMenuBar();
+        
+        
+        Menu myMenuParent = new Menu();
+        myMenuParent.setName("Master");
+        myMenuParent.setText("Master");
+        
+        mb.add(myMenuParent);
+        
+        MenuItem myMenu = new MenuItem();
+        myMenuParent.add(myMenu);
+        
+        myMenu.setName("Category");
+        myMenu.setText("Category");
+        
+        final CategoryController itc = new CategoryController();        
+        itc.initUI();
+        if(itc instanceof UIController){            
+//            itc.get
+            myMenu.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    itc.showFrame();
+                }
+            });
+            ItemController it = new ItemController();
+            it.initUI();
+            addMenu("Master", "Item", "Item Detail", "Item Master", it);
+        }
+    
+    }
+    
+    private static void addMenu(String parentMenu,String childMenuName,final String MenuItemDetail,final String MenuItemMaster,final UIController controller){
+        
+        
+        
+        JMenuBar mb = SystemUtil.getMenuBar();
+//        mb.add(myMenuParent);
+        Menu myMenuParent  = null;
+        for (Component component : mb.getComponents()) {
+            if(component instanceof Menu){
+                Menu mym = (Menu)component;
+                if(parentMenu.equals(mym.getName())){
+                    myMenuParent = mym;
+                    break;
+                }
+            }
+        }
+        if(myMenuParent== null){
+        myMenuParent = new Menu();
+        myMenuParent.setName("menu"+parentMenu);
+        myMenuParent.setText(parentMenu); 
+        mb.add(myMenuParent);
+        }        
+        
+        if(controller.getUIFrame()!= null ){
+        MenuItem myMenu = new MenuItem();
+        myMenuParent.add(myMenu);
+        
+        myMenu.setName("subMenu"+childMenuName);
+        myMenu.setText(childMenuName);
+        myMenu.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.showFrame();
+                }
+            });
+        }else{            
+        
+        Menu myLocalMenuParent = new Menu();
+        myLocalMenuParent.setName("subMenu"+childMenuName);
+        myLocalMenuParent.setText(childMenuName); 
+        myMenuParent.add(myLocalMenuParent);
+            
+            
+        MenuItem myMenu = new MenuItem();
+        myLocalMenuParent.add(myMenu);        
+        
+        myMenu.setName("subMenuDetail"+MenuItemDetail);
+        myMenu.setText(MenuItemDetail);
+        myMenu.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    showFrame(MenuItemMaster, controller.getDetailView());
+                }
+            });   
+        
+        
+        
+        MenuItem myMenu2 = new MenuItem();
+        myLocalMenuParent.add(myMenu2);        
+        myMenu2.setName("subMenuMaster"+MenuItemMaster);
+        myMenu2.setText(MenuItemMaster);
+        myMenu2.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+//                    controller.showFrame();//show master frame
+                    showFrame(MenuItemDetail, controller.getListView());
+                }
+            });   
+    }
+    }
+
+    
+  
+    public static void showFrame(String title,JComponent panel){
+    
+        UIFrame fr = new UIFrame();
+        fr.setTitle(title);
+        fr.setSize(1300,700);
+        fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        final Container contentPane = fr.getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        contentPane.add(panel,BorderLayout.CENTER);
+        fr.pack();
+        fr.setVisible(true);
+        fr.toFront();
+    }
+      
+    
+    
 
     public static void initUI(final Class service, String title, Class dp, Class lv) {
         try {
             final DetailPanel obj2 = (DetailPanel) ReflectionUtility.getDynamicInstance(dp);
             obj2.config();
-            final ListViewPanel obj3 = (ListViewPanel) ReflectionUtility.getDynamicInstance(lv);
+            final MasterViewUI obj3 = (MasterViewUI) ReflectionUtility.getDynamicInstance(lv);
             obj3.config();
             obj3.setDetailPanel(obj2);
             SystemUtil.addToMainWindow(obj2, title + "DETAIL");
@@ -109,7 +253,7 @@ public class ApplicationManager {
         try {
             final DetailPanel obj2 = (DetailPanel) ReflectionUtility.getDynamicInstance(dp);
             obj2.config();
-//            final ListViewPanel obj3 = (ListViewPanel) ReflectionUtility.getDynamicInstance(lv);
+//            final MasterViewUI obj3 = (MasterViewUI) ReflectionUtility.getDynamicInstance(lv);
 //            obj3.config();
             obj2.setTabName(title);
             SystemUtil.addToMainWindow(obj2, title ,tablabel);
@@ -159,7 +303,7 @@ public class ApplicationManager {
     }
 
         
-    public static void initListUI(final Class service, String tablabel,String title,  final ListViewPanel dp,DetailPanel det) {
+    public static void initListUI(final Class service, String tablabel,String title,  final MasterViewUI dp,DetailPanel det) {
         try {
             dp.config();
             dp.setDetailPanel(det);

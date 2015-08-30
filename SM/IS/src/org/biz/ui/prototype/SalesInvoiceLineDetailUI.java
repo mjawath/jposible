@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.event.DocumentEvent;
-import org.biz.invoicesystem.ui.list.master.ItemListUI;
+import org.biz.invoicesystem.ui.list.master.ItemMasterUI;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.components.parent.Documents.DocumentListenerx;
 
@@ -139,7 +139,7 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
     public void initUI() {
 
         silc = new SalesInvoiceLineItemController();
-        ItemListUI itemList =new ItemListUI();
+        ItemMasterUI itemList =new ItemMasterUI();
         itemList.config();
         tItemSearchTextComp.setListOverView(itemList);
 

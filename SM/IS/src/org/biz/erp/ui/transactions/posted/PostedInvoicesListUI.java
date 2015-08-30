@@ -19,13 +19,13 @@ import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.components.parent.controls.editors.TableInteractionListner;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author nnjj
  */
-public class PostedInvoicesListUI extends ListViewPanel<SalesInvoice> {
+public class PostedInvoicesListUI extends MasterViewUI<SalesInvoice> {
 
     private List<SalesInvoice> invoices;
     private SalesInvoiceService salesService;   

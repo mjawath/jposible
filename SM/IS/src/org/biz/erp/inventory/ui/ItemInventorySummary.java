@@ -12,13 +12,13 @@ package org.biz.erp.inventory.ui;
 
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.inventory.InventoryMonthlySummeryService;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author Administrator
  */
-public class ItemInventorySummary extends ListViewPanel<Object> {
+public class ItemInventorySummary extends MasterViewUI<Object> {
 
     private InventoryJournalService service;
     
@@ -41,21 +41,21 @@ public class ItemInventorySummary extends ListViewPanel<Object> {
 
 /*
     @Override
-    public void init() {
-        super.init();        
+    public void postInit() {
+        super.postInit();        
         initComponents();
 //        selectitem();
          listUI = wareHoueLV1;
         searchQueryUI = wareHouseSearchQueryUIPanel1;
         listUI.setSearchQueryUI(searchQueryUI);
-        init(listUI.getTable());
+        postInit(listUI.getTable());
         
         
         tbtnFind.addActionListener(findAction);
-        tbl.init(InventoryJournal.class, new Class[]{Item.class, String.class,  String.class, String.class},
+        tbl.postInit(InventoryJournal.class, new Class[]{Item.class, String.class,  String.class, String.class},
                  new String[]{"Item", "code","uom","qty"});
         tbl.setTableInteractionListner(tableInteractionListner);
-        cPaginatedPanel1.init(service, searchListener, tbl);
+        cPaginatedPanel1.postInit(service, searchListener, tbl);
 
     }
     

@@ -4,9 +4,11 @@
  */
 package org.biz.master.ui;
 
-import org.biz.dao.service.Service;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.beanutils.BeanUtils;
 import org.biz.invoicesystem.entity.master.Category;
-import org.biz.invoicesystem.service.master.CategoryService;
 import org.components.windows.DetailPanel;
 
 /**
@@ -15,43 +17,47 @@ import org.components.windows.DetailPanel;
  */
 public class CategoryUI extends DetailPanel<Category> {
 
-    private CategoryService categoryService;
     private Category selected;
     /**
      * Creates new form CategoryUI
      */
-    public CategoryUI() {
-       super();
+    public CategoryUI() {    
+        super();   
     }
 
     public void init() {
-        super.init();
-        initComponents();        
-        clear();
+        
+      initComponents(); 
+      super.init();
+      clear();
     }
     
     public void clear() {
         tcode.clear();
         tdesc.clear();
-           super.clear();
+        super.clear();
     }
+   
+    
 
-    public void setService(Service service) {
-        super.setService(service);
-        categoryService=(CategoryService)service;
-    }
-
-    public Category getBusObject() {
-        Category category = new Category();
-        category.setCode(tcode.getValue());
-        category.setDescription(tdesc.getValue());
-        return category;
+    public Category uiToData() {
+        //do we set id        
+        if(busObject ==null ){
+           busObject  = new Category();
+        }
+        
+        busObject.setCode(tcode.getValue());
+        busObject.setDescription(tdesc.getValue());
+        return busObject;
     }//todo crud control
 
-    public void setBusObject(Category obj) {
+    public void setDataToUI(Category obj) {
+      super.setDataToUI(obj);
         tcode.setValue(obj.getCode());
-        tdesc.setValue(obj.getDescription());
-    }    
+        tdesc.setValue(obj.getDescription());       
+    } 
+    
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -62,19 +68,20 @@ public class CategoryUI extends DetailPanel<Category> {
         tdesc = new org.components.controls.CTextField();
         cLabel2 = new org.components.controls.CLabel();
 
+        setPreferredSize(new java.awt.Dimension(600, 200));
         setLayout(null);
 
         cLabel1.setText("Description");
         add(cLabel1);
-        cLabel1.setBounds(20, 70, 120, 25);
+        cLabel1.setBounds(20, 90, 120, 25);
         add(tcode);
-        tcode.setBounds(150, 40, 190, 25);
+        tcode.setBounds(150, 60, 190, 25);
         add(tdesc);
-        tdesc.setBounds(150, 70, 190, 25);
+        tdesc.setBounds(150, 90, 190, 25);
 
         cLabel2.setText("Category Name");
         add(cLabel2);
-        cLabel2.setBounds(21, 39, 120, 25);
+        cLabel2.setBounds(20, 60, 120, 25);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;

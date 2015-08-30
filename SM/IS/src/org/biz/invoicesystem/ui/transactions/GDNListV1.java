@@ -7,13 +7,13 @@
 package org.biz.invoicesystem.ui.transactions;
 
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author Jawad
  */
-public class GDNListV1 extends ListViewPanel<InventoryJournal> {
+public class GDNListV1 extends MasterViewUI<InventoryJournal> {
 
     /**
      * Creates new form GDNListV1

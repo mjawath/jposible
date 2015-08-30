@@ -4,33 +4,31 @@
  * and open the template in the editor.
  */
 
-package org.biz.invoicesystem.ui.transactions;
+package org.biz.invoicesystem.ui.list.master;
+
+import org.components.windows.DetailPanel;
+import org.components.windows.MasterViewUI;
+import org.components.windows.UIFrame;
 
 /**
  *
- * @author Jawad
+ * @author jawa
  */
-public class ItemMasterFrame extends javax.swing.JFrame {
+public class CategoryFrame extends UIFrame {
 
-    
-    
-    
-    
-    
-    
-    /**er
-     * Creates new form ItemMasterFrame
+    /**
+     * Creates new form CategoryFrame
      */
-    public ItemMasterFrame() {
+    public CategoryFrame() {
         initComponents();
-        
-        
-//                .config();
-//        wareHouseUI1.setService(whs);
-////        crudcontrolPanel.setCrudController(wareHouseUI1);
-//        wareHouseListUI1.config();
-//        wareHouseListUI1.setService(whs);
-//        wareHouseListUI1.setDetailPanel(wareHouseUI1);
+    }
+
+    public MasterViewUI getMaster() {
+        return categoryListUI1;
+    }
+
+    public DetailPanel getDetail() {
+        return categoryUI1;
     }
 
     /**
@@ -42,17 +40,30 @@ public class ItemMasterFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        categoryListUI1 = new org.biz.invoicesystem.ui.list.master.CategoryListUI();
+        categoryUI1 = new org.biz.master.ui.CategoryUI();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1187, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(categoryListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(categoryUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(categoryUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(categoryListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -75,24 +86,26 @@ public class ItemMasterFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CategoryFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CategoryFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CategoryFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CategoryFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ItemMasterFrame().setVisible(true);
+                new CategoryFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.biz.invoicesystem.ui.list.master.CategoryListUI categoryListUI1;
+    private org.biz.master.ui.CategoryUI categoryUI1;
     // End of variables declaration//GEN-END:variables
 }

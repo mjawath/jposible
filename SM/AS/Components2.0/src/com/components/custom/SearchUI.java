@@ -22,7 +22,7 @@ public class SearchUI<T> extends  SearchQueryUIPanel {
      */
     public SearchUI() {
 //        initComponents();
-//        init();
+//        postInit();
 //        qm = new myQM();
 //        qms = qm;
 //        initSearchTextField();

@@ -8,6 +8,7 @@ import java.util.List;
 import org.biz.app.ui.util.CPaginatedPanel;
 import org.biz.app.ui.util.QueryManager;
 import org.components.controls.CxTable;
+import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.test.ResultPage;
 
 /**
@@ -25,10 +26,12 @@ public class ListViewUI extends javax.swing.JPanel {
     public ListViewUI() {
         initComponents();
 //        pagePanel=cPaginatedPanel1;
+         tbl.setTableInteractionListner(tableInteractionListner);
+
     }
     
     public void initPaging(QueryManager qman){
-//        cPaginatedPanel1.init(service, searchListener, tbl);
+//        cPaginatedPanel1.postInit(service, searchListener, tbl);
         queryManager=qman;
 //        setPaging(pagePanel, tbl);
         if(cPaginatedPanel1==null)return;
@@ -71,9 +74,33 @@ public class ListViewUI extends javax.swing.JPanel {
         cPaginatedPanel1.findCommand();
     }
     public void setCollection(List list){
-    tbl.setModelCollection(list);
+        tbl.setModelCollection(list);
     }
     
+    
+    
+    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
+
+        @Override
+        public Object[] getTableData(Object row) {
+            return ListViewUI.this.getTableData(row);
+        }
+
+        @Override
+        public void selectionChanged(Object newRowObject) {
+            ListViewUI.this.selectionChanged(newRowObject); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    };
+         
+    public Object[] getTableData(Object row) {
+        return null;
+    }
+    
+    public void selectionChanged(Object newRowObject) {
+        controller.setCurrentBusObject(newRowObject);
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,5 +148,11 @@ public class ListViewUI extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     protected org.components.controls.CxTable tbl;
     // End of variables declaration//GEN-END:variables
+
+    private UIController controller;
+    
+    public void setController(UIController controller) {
+        this.controller = controller;
+    }
 
 }

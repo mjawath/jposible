@@ -48,10 +48,7 @@ public class Address  extends BusObj  implements Serializable {
         return homeNo;
     }
 
-    public String getId() {
-        return id;
-    }
-
+   
     public String getStreet1() {
         return street1;
     }

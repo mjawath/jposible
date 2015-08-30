@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
+import org.components.parent.controls.PTableColumn;
 import org.components.parent.controls.PxTable;
 import org.components.parent.controls.editors.BaseCellEditor;
 import org.components.parent.controls.editors.TableInteractionListner;
@@ -48,6 +49,34 @@ public class TableUtil {
                 return types[columnIndex];
             }
             
+            
+        };
+
+        jTable.setModel(dtm);
+
+    }
+
+    
+      public static void createTableModel(JTable jTable,  List<PTableColumn> columntypes) {
+
+          
+          String columns [] = new String[columntypes.size()];
+          final Class columnCls [] = new Class[columntypes.size()];
+          
+          for (int i = 0; i < columns.length; i++) {
+               columns[i] = columntypes.get(i).getTitle();              
+               columnCls[i] = columntypes.get(i).getClassType();
+          }
+          
+          DefaultTableModel dtm = new DefaultTableModel(
+                new Object[][]{}, columns) {
+
+            Class[] types = columnCls;
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }            
             
         };
 

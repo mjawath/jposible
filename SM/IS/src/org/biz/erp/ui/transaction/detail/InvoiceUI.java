@@ -142,7 +142,7 @@ import org.components.windows.DetailPanel;
                  *
                  * column option are
                  */
-                SalesInvoice si = getBusObject();
+                SalesInvoice si = uiToData();
                 ((SalesInvoiceLineItem) cel).calculateLineItem();
                 tblInvoiceLine1.replaceSelectedModel(cel);
                 //set total to ui
@@ -205,7 +205,7 @@ import org.components.windows.DetailPanel;
          sil.calculateLineItem();
          UIEty.objToUi(tline, sil.getLineAmount());
          tblInvoiceLine1.replaceSelectedModel(sil);
-         SalesInvoice si=getBusObject();
+         SalesInvoice si=uiToData();
          si.setTotal();
          UIEty.objToUi(tbal, si.calculateBalance());
          UIEty.objToUi(tsubTotal, si.getTotal());
@@ -445,7 +445,7 @@ import org.components.windows.DetailPanel;
     // End of variables declaration//GEN-END:variables
 
     
-    public SalesInvoice getBusObject() {
+    public SalesInvoice uiToData() {
         
         SalesInvoice si= new SalesInvoice();
         si.setInvNo(tinv.getText());//should implement invoice number generation l;oic

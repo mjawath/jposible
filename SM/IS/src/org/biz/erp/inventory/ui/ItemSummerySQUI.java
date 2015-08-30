@@ -31,11 +31,11 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
         super();
     }
 
-    public void init(){
+    public void postInit(){
         
         initComponents();      
         
-        super.init();
+        super.postInit();
         
         qms=new QueryManagerx();
         tfind.addActionListener(new ActionListener() {

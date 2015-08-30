@@ -4,12 +4,10 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
-import java.util.List;
-import org.biz.app.ui.util.QueryManager;
-import org.biz.dao.service.CQuery;
-import org.biz.invoicesystem.service.master.CategoryService;
-import org.components.test.ResultPage;
+import java.util.HashMap;
+import java.util.Map;
 import org.components.windows.SearchQueryUIPanel;
+import static org.components.windows.SearchQueryUIPanel.QRY;
 
 /**
  *
@@ -17,40 +15,23 @@ import org.components.windows.SearchQueryUIPanel;
  */
 public class CategorySUI extends SearchQueryUIPanel {
 
-        private CategoryService cs  = new CategoryService();
 
     /**
      * Creates new form CategorySUI
      */
     public CategorySUI() {
         super();
-        initComponents();
-        init();
-        qms=qm;
+        initComponents();       
     }
     
+
+    public Map<String, Object> getQueryParameterMap() {
+
+        Map<String, Object> p = new HashMap<>();
+        p.put(QRY, ttSearch.getText());
+        return p;
+    }
     
-    
-    QueryManager qm = new QueryManager() {
-
-        @Override
-        public Long executeCountQuery() {
-           
-            return (long)cs.getDao().getAllCount(); 
-        }
-
-        @Override
-        public List executeQuery(int page) {
-           return cs.getDao().getAll(page);
-       
-        }
-        
-       public void postQuery(Object objs) {
-//          listView.setCollection((List)((ResultPage)objs).getResult()); 
-          
-        }
-    };
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,17 +41,46 @@ public class CategorySUI extends SearchQueryUIPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ttSearch = new javax.swing.JTextField();
+        tbtnSearch = new javax.swing.JButton();
+
+        tbtnSearch.setText("Search");
+        tbtnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbtnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ttSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbtnSearch)
+                .addContainerGap(239, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ttSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tbtnSearch))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
+
+        ((CategoryController)controller).executeSearchForCustom();
+
+    }//GEN-LAST:event_tbtnSearchActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton tbtnSearch;
+    private javax.swing.JTextField ttSearch;
     // End of variables declaration//GEN-END:variables
 }

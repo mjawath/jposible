@@ -23,23 +23,25 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.ComponentFactory;
+import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
+import org.biz.app.ui.util.UIListener;
 import org.biz.entity.BusObj;
 import org.biz.util.ReflectionUtility;
 import org.components.containers.CPanel;
 import org.components.controls.CPopupMenu;
 import org.components.controls.CTextField;
 import org.components.test.ResultPage;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 import org.components.windows.ListViewUI;
 
 /**
  *
  * @author d
  */
-public class TextFieldWithPopUP<T> extends CPanel {
+public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
 
     private JPopupMenu jpm;
     private ListViewUI listView;
@@ -52,6 +54,7 @@ public class TextFieldWithPopUP<T> extends CPanel {
     private String selectedID;
     private String pageKey;
     private Boolean popupDisabled = false;
+    private QueryManager qm;
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,7 +75,7 @@ public class TextFieldWithPopUP<T> extends CPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 23, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(textField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
+                .addComponent(textField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -114,10 +117,58 @@ public class TextFieldWithPopUP<T> extends CPanel {
                 searchWhenDocumentChange();
             }
         });
+        
+        textField.addaction(0, new ActionTask() {
+            @Override
+            public void actionCall(Object obj) {
+                selectItem();
+            }
+        });
+        
+        
+        ComponentFactory.setKeyAction(textField, new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(listView.getTable(), e);
+            }
+        }, KeyEvent.VK_DOWN);
+        ComponentFactory.setKeyAction(textField, new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(listView.getTable(), e);
+            }
+        }, KeyEvent.VK_UP);
+        textField.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    if (jpm.isVisible()) {
+                        KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(listView.getTable(), e);
+                        e.consume();
+                    }
+                }
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    if (jpm.isVisible()) {
+                        KeyboardFocusManager.getCurrentKeyboardFocusManager().redispatchEvent(listView.getTable(), e);
+                        e.consume();
+                    }
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    if (jpm.isVisible()) {
+                        jpm.setVisible(false);
+                        e.consume();
+                    }
+                }
+            }
+        });
 
     }
 
-    public void setListOverView(ListViewPanel<T> listViewPanel) {
+    public void setListOverView(MasterViewUI<T> listViewPanel) {
         setListView(listViewPanel.getListViewUI());
     }
 
@@ -202,28 +253,33 @@ public class TextFieldWithPopUP<T> extends CPanel {
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
 
-            if (at != null) {
+            if (qm != null) {
+                qm.executeToFirstPageTask();
+            } else if (at != null) {
                 at.action();
-            } else if (listView != null) {
-                listView.executeQuery();
-                return;
             }
-            command.objs.add(textField.getText());
-            command.start();//
-            //
-            //what ever class 
-            //get item list 
-            // get  attributes from obj
-            //create data array
-            //set to table
         }
     }
 
+    public void setListViewQueryManger(QueryManager qm,ListViewUI listViewUI){
+        this.qm =  qm ; 
+        qm.setGui(this);
+        qm.addUIListener(this);
+        this.listView = listViewUI;
+        listView.initPaging(qm);
+
+    }
+    
     public void setAt(ActionTest at) {
         this.at = at;
     }
 
     protected ActionTest at;
+
+    @Override
+    public void updateUI(ResultPage ui) {        
+        showPopUp(ui);
+    }
 
     public interface ActionTest {
 
@@ -341,6 +397,7 @@ public class TextFieldWithPopUP<T> extends CPanel {
     }
 
     public void setSelectedObject(T it) {
+        if(pagedPopUpPanel==null)return;
         pagedPopUpPanel.setPopDesable(true);
         pagedPopUpPanel.setSelectedObject(it);
         pagedPopUpPanel.setSelectedText();
@@ -414,16 +471,15 @@ public class TextFieldWithPopUP<T> extends CPanel {
     }
     
     public void showPopUp(ResultPage rp){
-        listView.setResult(rp);
-        System.out.println(" rp "+ ((List)rp.getResult()).size());
+        listView.setResult(rp);        
         showPopUp();
     }
         
     public void showPopUp() {        
         if (!jpm.isVisible() && textField.hasFocus()) {
             jpm.setFocusable(false);
-//            listView.setPreferredSize(new Dimension(600, 400));
-//            jpm.add(listView);
+            listView.setPreferredSize(new Dimension(600, 400));
+            jpm.add(listView);
             jpm.setVisible(true);
             jpm.show(textField, 30, 30);
 //                jpm.setFocusable(true);

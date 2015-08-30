@@ -4,35 +4,35 @@
  * and open the template in the editor.
  */
 
-package org.biz.invoicesystem.ui.transactions;
+package org.components.windows;
 
 /**
  *
- * @author Jawad
+ * @author jawa
  */
-public class ItemMasterFrame extends javax.swing.JFrame {
+public class UIFrame extends javax.swing.JFrame {
 
     
-    
-    
-    
-    
-    
-    /**er
-     * Creates new form ItemMasterFrame
+    private UIController controller;
+    /**
+     * Creates new form UIFrame
      */
-    public ItemMasterFrame() {
+    public UIFrame() {
         initComponents();
-        
-        
-//                .config();
-//        wareHouseUI1.setService(whs);
-////        crudcontrolPanel.setCrudController(wareHouseUI1);
-//        wareHouseListUI1.config();
-//        wareHouseListUI1.setService(whs);
-//        wareHouseListUI1.setDetailPanel(wareHouseUI1);
     }
 
+    
+    public void setController( UIController controller ){
+        this.controller = controller;
+    }
+    
+    public MasterViewUI getMaster(){
+    return null;
+    }
+    
+    public DetailPanel getDetail(){
+    return null;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,11 +48,11 @@ public class ItemMasterFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1187, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -75,20 +75,20 @@ public class ItemMasterFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ItemMasterFrame().setVisible(true);
+                new UIFrame().setVisible(true);
             }
         });
     }

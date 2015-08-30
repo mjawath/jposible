@@ -196,7 +196,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
         //add this to bus object 
             //        // get top bus object / create top bus object
             // validate on         // validate line item on  / top bus obj
-            InventoryJournal ij=getBusObject();
+            InventoryJournal ij=uiToData();
             ij.addIJLine(li);  //if ij valid proceed          
             tblLine.addNewOrModifySelectedRow(li);
   
@@ -228,7 +228,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
     }
 
     @Override
-    public InventoryJournal getBusObject() {
+    public InventoryJournal uiToData() {
         InventoryJournal ij = new InventoryJournal();
         ij.setCode(tcode.getValue());
         ij.setDocRefNo(tdocref.getValue());
@@ -246,7 +246,7 @@ public class GDNV1 extends DetailPanel<InventoryJournal> {
     }
 
      @Override
-    public void setBusObject(InventoryJournal obj) {
+    public void setDataToUI(InventoryJournal obj) {
         tcode.setValue(obj.getCode());
         tdocref.setValue(obj.getDocRefNo());
         twarehouse.setSelectedObject(obj.getWarehouse());

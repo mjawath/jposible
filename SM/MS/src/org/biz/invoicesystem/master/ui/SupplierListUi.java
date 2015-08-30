@@ -17,14 +17,14 @@ import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.SupplierService;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 import org.components.windows.TabPanelUI;
 
 /**
  *
  * @author Administrator
  */
-public class SupplierListUi extends ListViewPanel<Supplier> {
+public class SupplierListUi extends MasterViewUI<Supplier> {
 
     SupplierService supser;
 

@@ -6,7 +6,10 @@
 
 package org.biz.invoicesystem.ui.list.master;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.biz.invoicesystem.entity.master.Item;
+import org.components.parent.controls.PTableColumn;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewUI;
 
@@ -22,8 +25,12 @@ public class ItemLV extends ListViewUI  {
     public ItemLV() {
         super();
         getTable().setTableInteractionListner(tableInteractionListner);
-        getTable().init(Item.class, new Class[]{String.class, String.class},
-                new String[]{"ID", "Code"});
+        List<PTableColumn> tblCols = new ArrayList();
+          tblCols.add( new PTableColumn(String.class, "ID"));
+          tblCols.add( new PTableColumn(String.class, "Code"));
+          tblCols.add( new PTableColumn(String.class, "Desc"));
+        
+        getTable().init(Item.class, tblCols);
     }
 
     /**

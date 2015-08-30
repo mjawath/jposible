@@ -6,47 +6,42 @@
 
 package org.biz.ui.prototype;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.plaf.TabbedPaneUI;
+import org.biz.invoicesystem.entity.master.Category;
+import org.biz.invoicesystem.ui.list.master.CategoryController;
 import org.biz.invoicesystem.ui.list.master.ItemController;
-import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
+import org.components.windows.DetailPanel;
+import org.components.windows.UIController;
+
 
 /**
  *
  * @author user
  */
 public class ApplicationLauncher extends javax.swing.JFrame {
-
+    
+    private ItemController ic ;
+    private CategoryController cat;
     /**
      * Creates new form ApplicationLauncher
      */
     public ApplicationLauncher() {
         initComponents();
-//        tSearchItem.getDocument().addDocumentListener(new DocumentListener() {
-//
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                //search for item 
-//                //search listener execute search with above text
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                
-//            }
-//        });
+
+        ic= new ItemController();       
+        ic.initUI();
         
-        ItemController itemControler = new ItemController();
-//        itemControler.setSearchUI(itemSUI1);
-//        itemControler.setListUI(itemListUI1);
-        itemSUI1.setController(itemControler);
-        ItemListViewUI itl =new ItemListViewUI();    
-    
-        itemSUI1.setListViewForPopup(itl);
-        itemListUI1.config(); 
+        cat = new CategoryController();
+        cat.initUI();
+
+        
+//        create menu for specific controller
+        
     }
 
     /**
@@ -58,35 +53,128 @@ public class ApplicationLauncher extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        itemSUI1 = new org.biz.invoicesystem.ui.list.master.ItemSUI();
-        itemListUI1 = new org.biz.invoicesystem.ui.list.master.ItemListUI();
+        tMenuBar = new javax.swing.JMenuBar();
+        tItem = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        tItemDetailMenuItem = new javax.swing.JMenuItem();
+        tItemListMenuItem = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        tMnueItemCategoryDetail = new javax.swing.JMenuItem();
+        tMenuItemCategoryList = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tItem.setText("Master");
+
+        jMenu4.setText("Item");
+
+        tItemDetailMenuItem.setText("Item Detail");
+        tItemDetailMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tItemDetailMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(tItemDetailMenuItem);
+
+        tItemListMenuItem.setText("Item List");
+        tItemListMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tItemListMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(tItemListMenuItem);
+
+        tItem.add(jMenu4);
+
+        jMenu1.setText("Category");
+
+        tMnueItemCategoryDetail.setText("Category Detail");
+        tMnueItemCategoryDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tMnueItemCategoryDetailActionPerformed(evt);
+            }
+        });
+        jMenu1.add(tMnueItemCategoryDetail);
+
+        tMenuItemCategoryList.setText("Category List");
+        tMenuItemCategoryList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tMenuItemCategoryListActionPerformed(evt);
+            }
+        });
+        jMenu1.add(tMenuItemCategoryList);
+
+        tItem.add(jMenu1);
+
+        tMenuBar.add(tItem);
+
+        jMenu3.setText("Edit");
+        tMenuBar.add(jMenu3);
+
+        setJMenuBar(tMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(itemListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(574, Short.MAX_VALUE))
+            .addGap(0, 1004, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(itemListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+            .addGap(0, 471, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void tItemDetailMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tItemDetailMenuItemActionPerformed
+        
+        
+        showFrame("Item master", ic.getDetailView());
+        
+    }//GEN-LAST:event_tItemDetailMenuItemActionPerformed
+
+    private void tItemListMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tItemListMenuItemActionPerformed
+       
+        showFrame("Item List", ic.getListView());
+    }//GEN-LAST:event_tItemListMenuItemActionPerformed
+
+    private void tMnueItemCategoryDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMnueItemCategoryDetailActionPerformed
+        showFrame("Category Detail", cat.getDetailView());
+    }//GEN-LAST:event_tMnueItemCategoryDetailActionPerformed
+
+    private void tMenuItemCategoryListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMenuItemCategoryListActionPerformed
+        showFrame("Category List", cat.getListView());
+    }//GEN-LAST:event_tMenuItemCategoryListActionPerformed
+
+    public void showFrame(String title,JComponent panel){
+    
+        JFrame fr = new JFrame(title);
+        fr.setSize(1300,700);
+        fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        fr.getContentPane().add(panel);
+        fr.setVisible(true);
+        fr.toFront();
+    }
+    
+     
+    private void addMenuItemToMenubar(UIController controller){
+        DetailPanel tab =  controller.getDetailView();
+        JMenuItem mi = new JMenuItem("my view");//get the
+        mi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+        
+        
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -123,7 +211,14 @@ public class ApplicationLauncher extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.invoicesystem.ui.list.master.ItemListUI itemListUI1;
-    private org.biz.invoicesystem.ui.list.master.ItemSUI itemSUI1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu tItem;
+    private javax.swing.JMenuItem tItemDetailMenuItem;
+    private javax.swing.JMenuItem tItemListMenuItem;
+    private javax.swing.JMenuBar tMenuBar;
+    private javax.swing.JMenuItem tMenuItemCategoryList;
+    private javax.swing.JMenuItem tMnueItemCategoryDetail;
     // End of variables declaration//GEN-END:variables
 }

@@ -45,7 +45,7 @@ import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.TabPanelUI;
 import org.biz.invoicesystem.ui.list.master.ItemListUix;
 
-public class ItemMasterUI2 extends TabPanelUI { 
+public class ItemMasterUIxxxxx extends TabPanelUI { 
 
     List<Item> items;
     List<Category> categorys;
@@ -61,7 +61,7 @@ public class ItemMasterUI2 extends TabPanelUI {
     JFileChooser chooser;
     List<File> images = new ArrayList<File>();
 
-    public ItemMasterUI2() {
+    public ItemMasterUIxxxxx() {
         initComponents();
 //        keyListeners();
 //        init();
@@ -231,7 +231,7 @@ public class ItemMasterUI2 extends TabPanelUI {
                             //prime  unit
                             //logic changes type is defined 
                             if (selectedItem.isUOMValid(uom)) {
-                                MessageBoxes.wrnmsg(ItemMasterUI2.this, "unit already exists ", "duplicate uom");
+                                MessageBoxes.wrnmsg(ItemMasterUIxxxxx.this, "unit already exists ", "duplicate uom");
                                 return;
                             }
                             selectedItem.addUOMorUpdate(uom);//should change to keep list of uoms
@@ -582,10 +582,12 @@ public class ItemMasterUI2 extends TabPanelUI {
             }
         });
         jScrollPane3.setViewportView(tblunitprices);
-        tblunitprices.getColumnModel().getColumn(0).setResizable(false);
-        tblunitprices.getColumnModel().getColumn(1).setResizable(false);
-        tblunitprices.getColumnModel().getColumn(2).setResizable(false);
-        tblunitprices.getColumnModel().getColumn(3).setResizable(false);
+        if (tblunitprices.getColumnModel().getColumnCount() > 0) {
+            tblunitprices.getColumnModel().getColumn(0).setResizable(false);
+            tblunitprices.getColumnModel().getColumn(1).setResizable(false);
+            tblunitprices.getColumnModel().getColumn(2).setResizable(false);
+            tblunitprices.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         cPanel6.add(jScrollPane3);
         jScrollPane3.setBounds(10, 70, 450, 180);
@@ -609,7 +611,7 @@ public class ItemMasterUI2 extends TabPanelUI {
             }
         });
         cPanel6.add(cButton2);
-        cButton2.setBounds(470, 70, 70, 21);
+        cButton2.setBounds(470, 70, 70, 28);
 
         cLabel2.setText("Symbol");
         cPanel6.add(cLabel2);
@@ -621,7 +623,7 @@ public class ItemMasterUI2 extends TabPanelUI {
             }
         });
         cPanel6.add(tunittype);
-        tunittype.setBounds(250, 40, 80, 23);
+        tunittype.setBounds(250, 40, 80, 27);
 
         cScrollPane2.setViewportView(cPanel6);
 
@@ -719,7 +721,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         tPriceRange.setEditable(true);
         jPanel1.add(tPriceRange);
-        tPriceRange.setBounds(50, 70, 130, 23);
+        tPriceRange.setBounds(50, 70, 130, 35);
 
         cLabel1.setText("Feed Price Ranges For Wholesale Needs");
         jPanel1.add(cLabel1);
@@ -738,7 +740,7 @@ public class ItemMasterUI2 extends TabPanelUI {
         jScrollPane4.setViewportView(tMetaInfo);
 
         cPanel3.add(jScrollPane4);
-        jScrollPane4.setBounds(10, 80, 440, 96);
+        jScrollPane4.setBounds(10, 80, 440, 98);
 
         cLabel3.setText("Meta Information ");
         cPanel3.add(cLabel3);
@@ -757,7 +759,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         tItemLocation.setEditable(true);
         add(tItemLocation);
-        tItemLocation.setBounds(100, 440, 210, 23);
+        tItemLocation.setBounds(100, 440, 210, 35);
         add(tItemdiscValue);
         tItemdiscValue.setBounds(220, 380, 90, 25);
         add(tItemCommission);
@@ -818,7 +820,7 @@ public class ItemMasterUI2 extends TabPanelUI {
 
         tItemCategory.setEditable(true);
         add(tItemCategory);
-        tItemCategory.setBounds(120, 80, 210, 23);
+        tItemCategory.setBounds(120, 80, 210, 35);
 
         jLabel1.setText("Item Code");
         add(jLabel1);

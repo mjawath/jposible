@@ -605,12 +605,12 @@ public class GenericDAOUtil<T> {
         try {
             singleResult = createEmNew().createNativeQuery(" values  CURRENT_TIMESTAMP  ").getSingleResult();
         } catch (Exception e) {
-            System.out.println("DB IS NOT SUPPORTING values  CURRENT_TIMESTAMP  ");
+            System.out.println("******!!!!ERROR!!***********DB IS NOT SUPPORTING values  CURRENT_TIMESTAMP  ");
             try {
                 singleResult = createEmNew().createNativeQuery(" SELECT  CURRENT_TIMESTAMP  ").getSingleResult();
 
             } catch (Exception ee) {
-                System.out.println("DB IS NOT SUPPORTING  SELECT  CURRENT_TIMESTAMP   ");
+                System.out.println("******!!!!ERROR!!***********DB IS NOT SUPPORTING  SELECT  CURRENT_TIMESTAMP   ");
 
             }
         }

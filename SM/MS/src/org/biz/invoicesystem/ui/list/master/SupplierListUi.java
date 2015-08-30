@@ -12,13 +12,13 @@ package org.biz.invoicesystem.ui.list.master;
 
 import javax.swing.JPanel;
 import org.biz.invoicesystem.entity.master.Supplier;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author Administrator
  */
-public class SupplierListUi extends ListViewPanel<Supplier>   {
+public class SupplierListUi extends MasterViewUI<Supplier>   {
 
     /** Creates new form CustomerListUi */
     public SupplierListUi() {

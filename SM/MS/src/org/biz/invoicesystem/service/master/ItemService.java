@@ -5,19 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import org.biz.app.ui.util.QueryManager;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.Item;
-import org.biz.invoicesystem.ui.list.master.ItemList;
-import org.biz.master.ui.ItemMasterUI2;
+
 
     
 public class ItemService extends Service{
     
-    public  final static String qryName="item list search ";
-    private ItemMasterUI2 itemMasterUI2;
-    private ItemList itemList;
+    public  final static String qryName="item list search ";       
     public static ItemDAO dao=new ItemDAO();
  
     public ItemService() {

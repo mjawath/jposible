@@ -5,6 +5,7 @@
 package org.components.windows;
 
 import app.utils.SystemUtil;
+import com.components.custom.ControlPanel;
 import com.components.custom.FocusManager;
 import com.components.custom.IComponent;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.apache.commons.beanutils.BeanUtils;
 import org.biz.app.ui.event.OAction;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
@@ -46,12 +48,14 @@ public class DetailPanel<T> extends TabPanelUI {
 
         public Object doBackgroundTask(Object... objs) {
             System.out.println("doBackgroundTask delete Detail panel");
+            controller.delete(selectedObject);
             return 1;
 
         }
 
         public void doResultTask(Object... objs) {
             System.out.println("doResultTask delete  Detail panel");
+//            controller.pos(selectedObject);
         }
 
     };
@@ -119,8 +123,8 @@ public class DetailPanel<T> extends TabPanelUI {
             }
         };
         ComponentFactory.setKeyAction(this, upKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
-        initComponents();
-        this.crudcontrolPanel.setCrudController(this);
+//        initComponents();
+ 
         focusManager = new FocusManager();
         super.config();
 
@@ -140,10 +144,11 @@ public class DetailPanel<T> extends TabPanelUI {
         ComponentFactory.setKeyAction(this, saveAction, KeyEvent.VK_F5);
         ComponentFactory.setKeyAction(this, delete, KeyEvent.VK_F6);
 //        ComponentFactory.setKeyAction(this, delete, KeyEvent.VK_ENTER);
-//        setCrudControl();
+        setCrudControl();
     }
     
     public void setCrudControl(){
+        crudcontrolPanel = new ControlPanel();
         crudcontrolPanel.setBounds(10,10,455,30);
         this.add(crudcontrolPanel);
         
@@ -152,10 +157,10 @@ public class DetailPanel<T> extends TabPanelUI {
          crudcontrolPanel.setDeleteAction(delete);
          crudcontrolPanel.setClearAction(clearAction);
 //         crudcontrolPanel.setPrintAction(p);
-    
+           this.crudcontrolPanel.setCrudController(this);
          //get all the menues and tool buttons
          // set appropriate action to buttons
-         setToolbar();
+//         setToolbar();
          
     }
      
@@ -224,71 +229,8 @@ public class DetailPanel<T> extends TabPanelUI {
 
 
     @Override
-    public Object saveX() {
-        long x = System.currentTimeMillis();
-
-        ArrayList result = new ArrayList();
-        ArrayList toSave = new ArrayList();
-        ArrayList toDelete = new ArrayList();
-        ArrayList toUpdate = new ArrayList();
-        System.out.println("  saving   " + (System.currentTimeMillis() - x));
-        busObject = getBusObject();
-        if (service != null) {
-            if (!isValideEntity()) {
-                return null;
-            }
-            preSave(toSave, toUpdate, toDelete);
-
-//            if (toSave.isEmpty()) {
-//                Tracer.printToOut("no object found to Save");
-//                return;
-//            }
-            if (busObject == null) {
-                Tracer.printToOut("Detail panel -> SaveX -> Bus Object is null ,Not saved");
-                return null;
-            }
-            Object id = ((BusObj) busObject).getId();//0 is the index of the main object , id is id property
-
-            System.out.println("find b" + (System.currentTimeMillis() - x));
-
-            Object obj = id == null ? null : service.getDao().find(id);
-
-            if (obj == null) {
-                //should retrieve new id and set to new objects
-
-                toSave.add(busObject);
-                preCreate(toSave, toUpdate, toDelete);
-                auditPersistenceData(toSave);
-                auditUpdatedData(toUpdate, id, GenericDAOUtil.currentTime());
-                Tracer.printToOut(" Object  is not found  So creation will be called");
-                service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                System.out.println("saved " + (System.currentTimeMillis() - x));
-
-                postCreate(toSave, toUpdate, toDelete);
-            } else {
-                if (MessageBoxes.yesNo(this, "Current record already exist in the DATABASE Are you sure\n"
-                        + "You want to update the record", "Update Confirmation") == MessageBoxes.NO_OPTION) {
-                    return null;
-                }
-
-                ((BusObj) busObject).setId(id.toString());
-                toUpdate.add(busObject);
-                preUpdate(toSave, toUpdate, toDelete);
-                auditPersistenceData(toSave);
-                auditUpdatedData(toUpdate, id, ((BusObj) obj).getSavedDate());
-
-                Tracer.printToOut("Updation is called  Object  is  found");
-                service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                postUpdate(toSave, toUpdate, toDelete);
-            }
-        }
-        result.add(toSave);
-        result.add(toUpdate);
-        result.add(toDelete);
-
-        //call some observer method
-        Tracer.printToOut("Detail panel Save is successfully performed , result is returned, method is called using BT");
-        return result;
+    public Object saveX() {        
+        return controller.save();        
     }
 
     private void auditPersistenceData(ArrayList<BusObj> objs) {
@@ -394,25 +336,25 @@ public class DetailPanel<T> extends TabPanelUI {
     public void preSave(ArrayList toSave,ArrayList toUpdate,ArrayList toDelete) {
     }
 
-    public T getBusObject() {
+    public T uiToData() {
         return null;
     }
 
-    public void setBusObject(T obj) {      
-        controller.setBussinesObject(obj);
-        this.busObject = obj;
+    public void setDataToUI(T obj) {
+//        controller.setBussinesObject(obj);                
+        try {
+            busObject = (T) BeanUtils.cloneBean(obj);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void setSelectedBusObj(T obj) {
-        this.selectedObject = obj;
+        this.selectedObject = obj;                
+        setDataToUI(obj);
+        
     }
-
-    public void etyToUI(T obj) {
-    }
-
-    public T UIToEty() {
-        return null;
-    }
+  
     
     public void clear() {
         selectedObject = null;
@@ -493,16 +435,17 @@ public class DetailPanel<T> extends TabPanelUI {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(750, Short.MAX_VALUE)
                 .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 436, Short.MAX_VALUE))
+                .addContainerGap(517, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

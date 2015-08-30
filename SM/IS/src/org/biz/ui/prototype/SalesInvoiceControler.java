@@ -65,7 +65,7 @@ public class SalesInvoiceControler extends UIController{
 
     public void showDetailView(Object newRowObject) {
         SalesInvoice si =(SalesInvoice)newRowObject;
-        detailScreen.setBusObject(si);
+        detailScreen.setDataToUI(si);
     }
     
     public void setDetail(SalesInvoiceDetailUI detail){

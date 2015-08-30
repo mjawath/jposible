@@ -44,13 +44,13 @@ public class WareHouseUI extends DetailPanel<Warehouse> {
     }
 
     @Override
-    public void setBusObject(Warehouse obj) {
+    public void setDataToUI(Warehouse obj) {
         tcode.setValue(obj.getCode());
         selectedObject = obj;
     }
 
     @Override
-    public Warehouse getBusObject() {
+    public Warehouse uiToData() {
 
         Warehouse so = new Warehouse();
         so.setCode(tcode.getValue());

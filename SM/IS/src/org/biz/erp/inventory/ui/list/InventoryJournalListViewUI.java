@@ -5,13 +5,13 @@
 package org.biz.erp.inventory.ui.list;
 
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 
 /**
  *
  * @author d
  */
-public class InventoryJournalListViewUI extends ListViewPanel<InventoryJournal> {
+public class InventoryJournalListViewUI extends MasterViewUI<InventoryJournal> {
 
     /**
      * Creates new form InventoryJournalListViewUI

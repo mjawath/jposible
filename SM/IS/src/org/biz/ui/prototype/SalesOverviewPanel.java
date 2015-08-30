@@ -11,14 +11,14 @@ import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.UIListener;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.components.test.ResultPage;
-import org.components.windows.ListViewPanel;
+import org.components.windows.MasterViewUI;
 import org.components.windows.UIController;
 
 /**
  *
  * @author user
  */
-public class SalesOverviewPanel extends ListViewPanel<SalesInvoice> implements UIListener{
+public class SalesOverviewPanel extends MasterViewUI<SalesInvoice> implements UIListener{
 
     private SalesInvoiceControler sc = new SalesInvoiceControler();    
       

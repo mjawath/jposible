@@ -11,7 +11,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.biz.invoicesystem.master.ui.CustomerMasterUI2;
 import org.biz.invoicesystem.ui.list.master.CustomerListUi;
-import org.biz.invoicesystem.ui.list.master.ItemList;
 import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 
@@ -100,11 +99,10 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
                 MasterDetailViewerUI it = new MasterDetailViewerUI();
                 SystemUtil.addTabToSessions("main", it);
                 ItemMasterUI2 item = new ItemMasterUI2();
-                ItemList list = new ItemList();
 
                 CustomerMasterUI2 customerMasterUI2 = new CustomerMasterUI2();
                 CustomerListUi custList = new CustomerListUi();
-                it.init(item,"Item", list);
+                
                 it.init(customerMasterUI2,"Customer", custList);
                 JFrame fram = new JFrame();
                 fram.getContentPane().add(it);

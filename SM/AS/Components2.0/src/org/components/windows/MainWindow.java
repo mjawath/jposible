@@ -41,13 +41,7 @@ public class MainWindow extends JFrame {
 //        init();
     }
     String propfile;
-    private final String tabBill = "Bill Counter";
-    private final String tabviewBill = "View Bills ";
-    private final String tabCashier = "Cashier Counter";
-    private final String tabParcel = "Parcel Counter";
-    private final String tabViewParcel = "View Parcel Counter Bills";
-    private final String tabCasBill = "Cashier Bill Counter";
-    private final String tab = " Counter";
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

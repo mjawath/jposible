@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
@@ -154,6 +155,14 @@ public class SystemUtil {
         return mw.getToolbar();        
     }
     
+    public static JMenuBar getMenuBar(){
+    
+        AppMainWindow mw=(AppMainWindow) getMainWindow();        
+        if(mw==null )return null;
+        return mw.getJMenuBar();        
+    }
+    
+
     
     public static JButton getSaveButton() {
         return getButton("SaveButton");

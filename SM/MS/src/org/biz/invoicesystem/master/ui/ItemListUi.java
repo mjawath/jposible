@@ -21,7 +21,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
 
     private ItemService itemService;
     private ItemMasterTab mastertab;
-    private ItemMasterUI2 formUi;
+    private ItemMasterUIxxxxx formUi;
     int currentPageNo = 0;
     List<Item> items;
 
@@ -600,14 +600,14 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
     /**
      * @return the formUi
      */
-    public ItemMasterUI2 getFormUi() {
+    public ItemMasterUIxxxxx getFormUi() {
         return formUi;
     }
 
     /**
      * @param formUi the formUi to set
      */
-    public void setFormUi(ItemMasterUI2 formUi) {
+    public void setFormUi(ItemMasterUIxxxxx formUi) {
         this.formUi = formUi;
     }
 

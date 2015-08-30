@@ -48,7 +48,7 @@ public class PxTable<T> extends JTable implements IComponent {
     public static final String newRowId_cons = "#NewRow#";
     private int newRowId_SEED = -10000001;
     protected TableInteractionListner tableInteractionListner;
-    
+    private List<PTableColumn>  columnDefs;
     private boolean editable;
 
     public boolean isEditable() {
@@ -99,7 +99,17 @@ public class PxTable<T> extends JTable implements IComponent {
         TableUtil.hideColumn(this, 0);      
         
     }
-    
+
+    public void init(Class tableType, List<PTableColumn>  columnDefs){
+        modelClass=tableType;
+        this.columnDefs = columnDefs;
+        setColumnTypes(columnDefs);
+        //Tables first column which holds the model object will be not visible
+        TableUtil.hideColumn(this, 0);      
+        
+    }
+   
+   
     static class DateRendererX extends DefaultTableCellRenderer.UIResource {
         DateFormat formatter=new SimpleDateFormat("HH:mm:ss dd-MM-yyyy ");
         public DateRendererX() { super(); }
@@ -169,6 +179,12 @@ public class PxTable<T> extends JTable implements IComponent {
         if(PropertyUtil.getApplicationmod()== 1){
         
         }
+    }
+    
+    public void setColumnTypes(List<PTableColumn>  classType) {                
+        PTableColumn idCol = new PTableColumn(modelClass, "objectIDColumn", null);
+        classType.add(0, idCol);
+        TableUtil.createTableModel(this, classType);        
     }
 
     
