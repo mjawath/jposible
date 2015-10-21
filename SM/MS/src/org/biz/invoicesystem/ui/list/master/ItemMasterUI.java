@@ -8,7 +8,6 @@ package org.biz.invoicesystem.ui.list.master;
 
 import org.biz.invoicesystem.entity.master.Item;
 import org.components.windows.MasterViewUI;
-import org.components.windows.UIController;
 
 /**
  *

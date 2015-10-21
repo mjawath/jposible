@@ -8,6 +8,7 @@ package org.biz.ui.prototype;
 import java.util.List;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
+import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.components.windows.UIController;
 
@@ -15,20 +16,28 @@ import org.components.windows.UIController;
  *
  * @author user
  */
-public class SalesInvoiceControler extends UIController{
+public class SalesInvoiceControler extends UIController<SalesInvoice>{
 
 
-    private SalesInvoiceDetailUI detailScreen;
-    private SalesOverviewPanel OverviewScreen;
     private SalesInvoiceService salesService;
 
     private QueryManager qmForSearch = new QueryManager();
         
     public SalesInvoiceControler() {
         salesService = new SalesInvoiceService();
+        currentBusObject = new SalesInvoice();
     }
 
-    
+    public void initUI(){
+        SalesInvoiceDetailUI salesUI = new SalesInvoiceDetailUI();
+        detailView = salesUI;
+        setDetailView(detailView);
+        SalesOverviewPanel ov = new SalesOverviewPanel();
+        setListView(ov,getQueryForPage());
+        salesUI.config();
+        ov.config();
+        
+    }
     
     /**
      * @return the salesService
@@ -50,9 +59,7 @@ public class SalesInvoiceControler extends UIController{
     }
     
 
-    public void setQty(Double qty) {
-    }
-
+    
     public long getCountByCodeLike(String code) {        
         return salesService.getCountByCodeLike(code) ;
     }
@@ -65,19 +72,33 @@ public class SalesInvoiceControler extends UIController{
 
     public void showDetailView(Object newRowObject) {
         SalesInvoice si =(SalesInvoice)newRowObject;
-        detailScreen.setDataToUI(si);
+//        detailScreen.setDataToUI(si);
     }
     
-    public void setDetail(SalesInvoiceDetailUI detail){
-        detailScreen  = detail;
-        detailScreen.setController(this);
-        detailScreen.setService(salesService);
+
+      
+    
+    public void onSalesInvoiceLineItemQTYChanged(GridDataLineDetailUI lineDetailUI) {
+        SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
+        SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
+        salesInvoiceLineItem.calculateLineItem();
+        salesLineUI.setDataToUI(salesInvoiceLineItem);
+        detailView.uiToData();
+        currentBusObject.setTotal();
+        detailView.setDataToUI(currentBusObject);
+        salesLineUI.getPrice().requestFocus();
     }
     
-    public void setOverview(SalesOverviewPanel overview){
-        OverviewScreen  = overview;
-        OverviewScreen.setController(this);
-        OverviewScreen.setService(salesService);
-    }
     
+     public void onSalesInvoiceLineItemPriceChanged(GridDataLineDetailUI lineDetailUI) {
+        SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;       
+        SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
+        salesInvoiceLineItem.calculateLineItem();
+        salesLineUI.setDataToUI(salesInvoiceLineItem);
+        detailView.uiToData();
+        currentBusObject.setTotal();
+        detailView.setDataToUI(currentBusObject);
+        salesLineUI.getPrice().requestFocus();
+    }
+
 }

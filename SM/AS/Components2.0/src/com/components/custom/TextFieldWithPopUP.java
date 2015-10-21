@@ -224,10 +224,7 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
             }
         });
 
-        jpm.removeAll();
-        jpm.add(listView);
-        jpm.setPreferredSize(listView.getPreferredSize());
-
+        jpm.removeAll();        
     }
 
     private Command command = new Command() {

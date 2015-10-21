@@ -118,6 +118,13 @@ public class SalesInvoice extends BusObj {
     public List<SalesInvoiceLineItem> getLineItems() {
         return lineItems;
     }
+    
+    public void addLine(SalesInvoiceLineItem salesInvoiceLineItem){
+        if(lineItems!=null ){
+            return;
+        }
+        lineItems.add(salesInvoiceLineItem);
+    }
 
     public String getId() {
         return id;
@@ -250,10 +257,8 @@ public class SalesInvoice extends BusObj {
         }
         setSubTotal(db);
 
-
         db = MathUtil.sub(db, getTexAmount());
         db = MathUtil.sub(db, getDiscount());
-
 
         setTotal(db);
         Double bal = db;

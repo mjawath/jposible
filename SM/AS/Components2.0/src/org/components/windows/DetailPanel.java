@@ -23,8 +23,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.biz.app.ui.event.OAction;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
-import org.biz.util.ReflectionUtility;
-import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
@@ -212,20 +210,20 @@ public class DetailPanel<T> extends TabPanelUI {
         }
     }
 
-    public void addToFocus(CPanel cp) {
-        List<IComponent> coms = cp.getFocus();
-        if (coms.size() == 0) {
-            return;
-        }
+//    public void addToFocus(CPanel cp) {
+//        List<IComponent> coms = cp.getFocus();
+//        if (coms.size() == 0) {
+//            return;
+//        }
+//
+//        addToFocus(coms);
+//
+//    }
 
-        addToFocus(coms);
-
-    }
-
-    public void addToFocus(IComponent cp) {
-        focusManager.addToFocus(cp);
-        cp.setContainer(this);
-    }
+//    public void addToFocus(IComponent cp) {
+//        focusManager.addToFocus(cp);
+//        cp.setContainer(this);
+//    }
 
 
     @Override

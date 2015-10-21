@@ -11,6 +11,7 @@
 package org.components.parent.controls;
 
 import app.utils.SystemUtil;
+import com.components.custom.ActionTask;
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,17 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
 
     protected  IContainer container;
     private String id;
+    private ActionTask actionTask;
+
+    public ActionTask getActionTask() {
+        return actionTask;
+    }
+
+    public void setActionTask(ActionTask actionTask) {
+        this.actionTask = actionTask;
+    }
+    
+   
 
     public String getId() {
         return id;

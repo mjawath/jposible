@@ -11,8 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.plaf.TabbedPaneUI;
-import org.biz.invoicesystem.entity.master.Category;
 import org.biz.invoicesystem.ui.list.master.CategoryController;
 import org.biz.invoicesystem.ui.list.master.ItemController;
 import org.components.windows.DetailPanel;

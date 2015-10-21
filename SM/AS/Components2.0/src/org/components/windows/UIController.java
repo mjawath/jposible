@@ -10,7 +10,6 @@ import com.components.custom.TextFieldWithPopUP;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.swing.JOptionPane;
 import org.biz.app.ui.util.MessageBoxes;
@@ -98,6 +97,10 @@ public class UIController<T> {
         return true;
     }
     
+    public void initUI(){
+    
+    }
+    
     private class PoupQueryManger extends QueryManager {
 
         public Long executeCountQuery() {
@@ -137,7 +140,7 @@ public class UIController<T> {
         }     
     }
      
-    MYQueryManger mmm = new MYQueryManger();
+    protected MYQueryManger mmm = new MYQueryManger();
 
     
     

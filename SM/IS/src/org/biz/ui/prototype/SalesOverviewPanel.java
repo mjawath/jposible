@@ -20,7 +20,7 @@ import org.components.windows.UIController;
  */
 public class SalesOverviewPanel extends MasterViewUI<SalesInvoice> implements UIListener{
 
-    private SalesInvoiceControler sc = new SalesInvoiceControler();    
+    private SalesInvoiceControler sc ;    
       
     private class myQM extends QueryManager {
 
@@ -44,9 +44,9 @@ public class SalesOverviewPanel extends MasterViewUI<SalesInvoice> implements UI
        listUI = salesInvoiceListUI1;
 
         qm = new myQM();
-        qm.setService(sc.getSalesService());
+//        qm.setService(sc.getSalesService());
 
-        qm.addUIListener(this);
+//        qm.addUIListener(this);
         init();
 //        config();
     }

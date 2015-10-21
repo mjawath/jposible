@@ -4,18 +4,16 @@
  * and open the template in the editor.
  */
 
-package org.biz.ui.prototype;
+package org.biz.app.ui.util;
+
+import java.util.Map;
 
 /**
  *
- * @author user
+ * @author jawa
  */
-public interface LineItemAdder {
-    
-    public GridDataLineDetailUI getLineUI();
-    
-    public void removeLine(GridDataLineDetailUI line);
-    
+public interface QueryCountParamListener {
 
+    public Map<String,Object> getCountParams();
     
 }

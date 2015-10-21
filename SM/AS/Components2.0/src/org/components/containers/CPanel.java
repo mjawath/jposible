@@ -15,11 +15,8 @@ import com.components.custom.IComponent;
 import com.components.custom.IContainer;
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import org.biz.app.ui.util.Tracer;
 import org.components.parent.containers.PPanel;
-import org.components.windows.DetailPanel;
 
 /**
  *
@@ -88,9 +85,96 @@ public class CPanel extends PPanel implements IContainer ,IComponent {
         }
 
     }
-  
-  
+            
+    public Component gotoNextComponentNew(Component jc) {
+        //get current focused compnentt
+//        Component jc=KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
+        
+        focus.indexOf(jc);
+        //find from compnent list
+        int x = 0;
+        for (IComponent com : focus) {
+            if (com == jc) {
+                if (x >= 0 && x < focus.size() - 1) {
+                    IComponent yx = focus.get(x + 1);                    
+                    return ((Component) yx);
+                }
+            }
+            x++;
+        }
+        return null;
+
+    }
+
     
+    public Component  gotoFirstComponent() {
+        if(focus==null || focus.isEmpty()){
+            return null;
+        }else{
+         if(focus.get(0) instanceof CPanel){
+            return ((CPanel)focus.get(0)).gotoFirstComponent();
+         }
+         else{
+             return ((Component) focus.get(0));
+         }
+        }     
+    }
+    
+    public Component gotoNextComponentInThisPanel(Component com) {
+        if (focus == null || focus.isEmpty()) {
+            return null;
+        } else {
+            int x = focus.indexOf(com);
+                
+          
+                if (x >= 0 && x+1 < focus.size()) {             
+               final Component current = (Component)focus.get(x+1);
+               if (current instanceof CPanel) {
+                    return ((CPanel) current).gotoFirstComponent();
+                } else {
+                    return ((Component) current);
+                }    
+            }else{
+            
+                return null;
+            
+            }
+            
+        }
+    }
+    
+//    public void gotToNextComponent(Component aComponent) {
+//        final Object parent = aComponent.getParent();
+//        if (parent != null && parent instanceof CPanel) {
+//            Component focus = ((CPanel) parent).gotoNextComponentNew(aComponent);
+//            if (focus == null) {
+//                gotToNextComponent((CPanel) parent);
+//            } else {
+//                if (focus instanceof CPanel) {
+//                    Component focus2 = ((CPanel) focus).gotoFirstComponent();
+//
+//                } else {
+//                    focus.requestFocus();
+//                }
+//            }
+//        }
+//
+//    }
+  
+    private void getParentOfComponent(Component acomp) {
+        if (acomp == null) {
+            return;
+        }
+        if (acomp.getParent() instanceof CPanel) {
+            final CPanel parent = (CPanel) acomp.getParent();
+            if ((parent).getFocus().contains(acomp)) {
+                (parent).gotoNextComponent(acomp);
+            } else if (parent.getParent() != null && parent.getParent() instanceof CPanel) {
+                getParentOfComponent(parent);
+            }
+
+        }
+    }  
     
     public void requestFocus() {
         super.requestFocus();
@@ -111,7 +195,18 @@ public class CPanel extends PPanel implements IContainer ,IComponent {
     }
     
     
+    public boolean hasFocusableComponents(){
+        return focus!=null && !focus.isEmpty();
+    }
 
+    public boolean hasFocusableComponents(Component com) {
+        return focus!=null && !focus.isEmpty() &&  focus.size()>1 && focus.indexOf(com)!=-1  && focus.indexOf(com)<=(focus.size()-2);
+    }
+    
+    
+    public void iamInsideThis(Component com) {
+
+    }
 
     public void setTempFocusComponent(IComponent com) {
         temCom = com;

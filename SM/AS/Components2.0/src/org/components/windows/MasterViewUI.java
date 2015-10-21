@@ -7,7 +7,6 @@ package org.components.windows;
 import app.utils.SystemUtil;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.biz.app.ui.util.QueryManager;
@@ -48,14 +47,14 @@ public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener
 
     @Override
     public void init() {
-//        initComponents();
         super.init();
-        if(listUI==null)return;        
+        if (listUI == null) {
+            return;
+        }
         listUI.setSearchQueryUI(searchQueryUI);
-         if(searchQueryUI!=null){
-        searchQueryUI.setListView(listUI);
-         }        
-//        init(listUI.getTable());
+        if (searchQueryUI != null) {
+            searchQueryUI.setListView(listUI);
+        }
     }
 
     @Override
@@ -144,7 +143,7 @@ public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(searchQueryUI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(listUI, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                    .addComponent(listUI, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -153,7 +152,7 @@ public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener
                 .addContainerGap()
                 .addComponent(searchQueryUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listUI, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(listUI, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

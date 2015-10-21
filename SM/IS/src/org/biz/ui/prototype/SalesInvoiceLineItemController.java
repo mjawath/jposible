@@ -5,7 +5,6 @@
  */
 package org.biz.ui.prototype;
 
-import org.biz.invoicesystem.ui.list.master.ItemController;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 
 /**
@@ -13,34 +12,31 @@ import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
  * @author user
  */
 public class SalesInvoiceLineItemController {
-
-    private ItemController itemController;
-    private SalesInvoiceLineItem sili;
     
-    public SalesInvoiceLineItemController() {
-        
-        sili = new SalesInvoiceLineItem();
+    private SalesInvoiceLineItem salesInvoiceLineItem;
+    
+    public SalesInvoiceLineItemController() {        
+        salesInvoiceLineItem = new SalesInvoiceLineItem();
     }
 
     public void setQty(Double qty) {
-       sili.setQty(qty);
-       sili.calculateLineItem();
-        
+       salesInvoiceLineItem.setQty(qty);
+       salesInvoiceLineItem.calculateLineItem();        
     }
 
     public void setPrice(Double qty) {
-        sili.setPrice(qty);
-        sili.calculateLineItem();
+        salesInvoiceLineItem.setPrice(qty);
+        salesInvoiceLineItem.calculateLineItem();
         
     }
     
 
-    public SalesInvoiceLineItem getSili() {
-        return sili;
+    public SalesInvoiceLineItem getSalesInvoiceLineItem() {
+        return salesInvoiceLineItem;
     }
 
-    public void setSili(SalesInvoiceLineItem sili) {
-        this.sili = sili;
+    public void setSalesInvoiceLineItem(SalesInvoiceLineItem sili) {
+        this.salesInvoiceLineItem = sili;
     }
 
 }

@@ -19,6 +19,7 @@ public class UIFrame extends javax.swing.JFrame {
      */
     public UIFrame() {
         initComponents();
+        setFocusTraversalPolicy(new MyFocusPolicy());
     }
 
     

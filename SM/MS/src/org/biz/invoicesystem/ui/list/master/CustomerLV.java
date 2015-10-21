@@ -8,6 +8,7 @@ package org.biz.invoicesystem.ui.list.master;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Item;
 import org.components.parent.controls.PTableColumn;
 import org.components.parent.controls.editors.TableInteractionListner;
@@ -17,18 +18,18 @@ import org.components.windows.ListViewUI;
  *
  * @author Jawad
  */
-public class ItemLV extends ListViewUI  {
+public class CustomerLV extends ListViewUI  {
 
     /**
      * Creates new form ItemLV
      */
-    public ItemLV() {
+    public CustomerLV() {
         super();
         getTable().setTableInteractionListner(tableInteractionListner);
         List<PTableColumn> tblCols = new ArrayList();
           tblCols.add( new PTableColumn(String.class, "ID"));
           tblCols.add( new PTableColumn(String.class, "Code"));
-          tblCols.add( new PTableColumn(String.class, "Desc"));
+          tblCols.add( new PTableColumn(String.class, "Name"));
         
         getTable().init(Item.class, tblCols);
     }
@@ -61,7 +62,7 @@ public class ItemLV extends ListViewUI  {
 
         @Override
         public Object[] getTableData(Object row) {
-            Item  item = (Item) row;
+            Customer  item = (Customer) row;
             return new Object[]{item, item.getId(), item.getCode()};
         }
 

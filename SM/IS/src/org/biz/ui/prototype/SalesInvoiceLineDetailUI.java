@@ -6,31 +6,44 @@
 
 package org.biz.ui.prototype;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import javax.swing.event.DocumentEvent;
-import org.biz.invoicesystem.ui.list.master.ItemMasterUI;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
+import org.biz.invoicesystem.ui.list.master.ItemController;
+import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
+import org.components.controls.CTextField;
 import org.components.parent.Documents.DocumentListenerx;
+import org.components.windows.UIController;
 
 /**
  *
  * @author user
  */
 public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
-    
-    private SalesInvoiceLineItemController silc;    
+        
+    private SalesInvoiceControler sic;
+    private SalesInvoiceLineItem salesLine = new SalesInvoiceLineItem();
     /**
      * Creates new form SalesInvoiceLineDetailUI
      */
     public SalesInvoiceLineDetailUI() {
         initComponents();
+        setFocusable(true);
         initUI();
+
+    }
+    
+    public Object getLineObject(){
+        return salesLine;
     }
         
   
+    
+    public void setSalesInvoiceController(UIController  con ){
+        sic = (SalesInvoiceControler) con;        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,10 +59,19 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
         tTotal = new org.components.controls.CTextField();
         cButton1 = new org.components.controls.CButton();
         tItemSearchTextComp = new research.prototype.transaction.ItemPopup();
+        cButton2 = new org.components.controls.CButton();
 
+        cButton1.setText("+");
         cButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cButton1ActionPerformed(evt);
+            }
+        });
+
+        cButton2.setText("X");
+        cButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cButton2ActionPerformed(evt);
             }
         });
 
@@ -59,29 +81,32 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
             mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mypanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tItemSearchTextComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tItemSearchTextComp, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(tQty, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         mypanelLayout.setVerticalGroup(
-            mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(mypanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tItemSearchTextComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tItemSearchTextComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         mypanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cButton1, tPrice, tQty, tTotal});
@@ -90,14 +115,13 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(mypanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mypanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mypanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -116,15 +140,19 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
 
         ///listener . addLineItem
     }//GEN-LAST:event_cButton1ActionPerformed
+
+    private void cButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton2ActionPerformed
+        containerUI.removLineItem(this);        
+    }//GEN-LAST:event_cButton2ActionPerformed
     
     
-    public void setUIToData(){
+    public SalesInvoiceLineItem UIToData(){
         
-        SalesInvoiceLineItem sili =  new SalesInvoiceLineItem();
-//        sili.setItem(tItemSearchTextComp.getDoubleValue());
-        sili.setQty(tQty.getDoubleValue());
-        sili.setPrice(tPrice.getDoubleValue());
-        sili.setLineAmount(tTotal.getDoubleValue());
+
+        salesLine.setItem(tItemSearchTextComp.getSelectedObject());
+        salesLine.setQty(tQty.getDoubleValue());
+        salesLine.setPrice(tPrice.getDoubleValue());
+        return salesLine;
         
     }
     
@@ -137,60 +165,36 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
     }
     
     public void initUI() {
+        
+        ItemController ic = new ItemController();
+        ic.initUI();
+        tItemSearchTextComp.setListViewQueryManger(ic.getPopupQueryManger(),new ItemListViewUI());
+        tItemSearchTextComp.setSelectedProperty("code");
 
-        silc = new SalesInvoiceLineItemController();
-        ItemMasterUI itemList =new ItemMasterUI();
-        itemList.config();
-        tItemSearchTextComp.setListOverView(itemList);
-
-        tPrice.addDocumentListener(new MyCalculator());
+        
         tQty.addDocumentListener(new MyCalculator());
+        
+        tPrice.addDocumentListener(new MyCalculator());
+        
         tQty.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("  qty " + ae.getID());
-                try {
-                    double qty = tQty.getDoubleValue();
-                    silc.setQty(qty);
-                    setUIToData();
-                    setDataToUI(silc.getSili());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e.getMessage());
-                }
-
+                sic.onSalesInvoiceLineItemQTYChanged(SalesInvoiceLineDetailUI.this);
             }
         });
 
-        tQty.addFocusListener(new FocusAdapter() {
-
-            public void focusLost(FocusEvent e) {
-                System.out.println("-----------------------------------------------------");
-                System.out.println("-----------------------------------------------------");
-                System.out.println("-----------------------------------------------------");
-                System.out.println("-----------------------------------------------------");
-            }
-
-        });
-
+        
         tPrice.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("  setting price to price  " + ae.getID());
-                try {
-                    Double price = tPrice.getDoubleValue();
-                    silc.setPrice(price);
-                    setUIToData();
-
-                } catch (Exception e) {
-
-                }
-
+                sic.onSalesInvoiceLineItemPriceChanged(SalesInvoiceLineDetailUI.this);
             }
         });
-//        tblLineItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        
+        
+    //        tblLineItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 //            
 //            public void valueChanged(ListSelectionEvent e) {
 //                
@@ -199,27 +203,29 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
 ////                setDataToUI(tQty);
 //            }
 //        });
+        
+        addToFocus(tItemSearchTextComp);
+        addToFocus(tPrice);
+        addToFocus(tQty);        
+        
+        
+        
 
     }
 
-      private class ItemSearchDocList extends DocumentListenerx {
-
-        public void action(DocumentEvent e) {
-            System.out.println("printing what ever changed " + e);
-//            itemController.findItem(tItemSearchTextComp.getText());]
-            
-            
-            
-            
+    public void iamInsideThis(Component com) {
+        if(com ==tQty){
+        
         }
-
+        
     }
+
       
      private class MyCalculator extends DocumentListenerx{
         
         public void action(DocumentEvent e) {
             
-            System.out.println("setting data to line item "+e); 
+            
             try {
 //                salesController.calulateLineData();
                 
@@ -234,12 +240,28 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
     }  
     
 
+     public CTextField getQty(){
+     return tQty;
+     }
+     
+     public CTextField getPrice(){
+     return tPrice;
+     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
+    private org.components.controls.CButton cButton2;
     private org.components.containers.CPanel mypanel;
     private research.prototype.transaction.ItemPopup tItemSearchTextComp;
     private org.components.controls.CTextField tPrice;
     private org.components.controls.CTextField tQty;
     private org.components.controls.CTextField tTotal;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public String toString() {
+        return "sales";
+    }
+
+    
+
 }

@@ -5,19 +5,19 @@
 package invoicingsystem;
 
 import app.AppMainWindow;
-import app.utils.SystemUtil;
-import org.biz.util.ReflectionUtility;
-import org.biz.app.ui.util.Tracer;
-import org.biz.dao.service.Service;
 import app.utils.SystemStatic;
+import app.utils.SystemUtil;
+import java.awt.AWTKeyStroke;
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,10 +25,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.biz.DropMainMenu;
+import org.biz.app.ui.util.Tracer;
+import org.biz.dao.service.Service;
 import org.biz.invoicesystem.ui.list.master.CategoryController;
+import org.biz.invoicesystem.ui.list.master.CustomerController;
 import org.biz.invoicesystem.ui.list.master.ItemController;
 import org.biz.invoicesystem.ui.transactions.ItemMasterFrame;
 import org.biz.invoicesystem.ui.transactions.WareHouseFrame;
+import org.biz.ui.prototype.SalesInvoiceControler;
+import org.biz.util.ReflectionUtility;
 import org.components.controls.CButton;
 import org.components.controls.Menu;
 import org.components.controls.MenuItem;
@@ -72,8 +77,11 @@ public class ApplicationManager {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Sessions.create();
+                setFocusTraversialPolicy();
+                
                 System.out.println("============Application is starting..........===================");
                 AppMainWindow app = new AppMainWindow();
+                
                 addSystemToolsToToolbar();
                 app.setExtendedState(Frame.MAXIMIZED_BOTH);
                 app.setVisible(true);
@@ -86,7 +94,18 @@ public class ApplicationManager {
   
 }
     
-    
+   private static void setFocusTraversialPolicy(){
+       
+       HashSet set = new HashSet();
+       set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));       
+        final KeyboardFocusManager km = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        km.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, set);
+        
+//       km.setDefaultFocusTraversalPolicy(new MyFocusManager());
+
+   } 
+   
+   
     
     private static void buildMenuBar(){
         
@@ -124,6 +143,16 @@ public class ApplicationManager {
             ItemController it = new ItemController();
             it.initUI();
             addMenu("Master", "Item", "Item Detail", "Item Master", it);
+            
+            SalesInvoiceControler sic = new SalesInvoiceControler();
+            sic.initUI();            
+            addMenu("Transaction", "SalesInvoice", "Sales Invoic Detail", "Sales Invoic  Master", sic);
+
+            
+            CustomerController cust = new CustomerController();
+            cust.initUI();
+            addMenu("Master", "Customer", "Customer Detail", "Customer Master", cust);
+
         }
     
     }

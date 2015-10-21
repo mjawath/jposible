@@ -33,6 +33,7 @@ public class CTextField extends PTextField {
     JComponent previouseFocusedComponent;
     List<ActionTask> actionTasks;
     boolean moveTonextcom = true;
+    
 
     protected void processFocusEvent(FocusEvent e) {
         super.processFocusEvent(e);
@@ -79,6 +80,7 @@ public class CTextField extends PTextField {
     public void init() {
 
 
+        
         actionTasks = new ArrayList<ActionTask>();
 
         addKeyListener(new KeyAdapter() {

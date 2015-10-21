@@ -20,7 +20,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="searchQueryUI" max="32767" attributes="0"/>
-                  <Component id="listUI" pref="369" max="32767" attributes="0"/>
+                  <Component id="listUI" pref="708" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -32,7 +32,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="searchQueryUI" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="listUI" pref="380" max="32767" attributes="0"/>
+              <Component id="listUI" pref="331" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

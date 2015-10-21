@@ -4,7 +4,6 @@
  */
 package com.components.custom;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -30,7 +29,7 @@ public class ActionTask extends AbstractAction{
     }
     
     public ActionTask(Object obj) {
-this.param=obj;
+            this.param=obj;
     }
 
     public boolean validate(){
@@ -41,6 +40,10 @@ this.param=obj;
     return true;
     }
 
+    public JComponent actionFired() {
+        return null;
+    }
+    
     public void actionCall(Object obj){
 
     }

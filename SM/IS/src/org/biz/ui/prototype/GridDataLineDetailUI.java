@@ -6,15 +6,19 @@
 
 package org.biz.ui.prototype;
 
+import org.components.containers.CPanel;
+
 /**
  *
  * @author user
  */
-public class GridDataLineDetailUI extends javax.swing.JPanel implements GridDetailLineUI{
+public class GridDataLineDetailUI extends CPanel implements GridDetailLineUI{
 
     protected GridDataContainerUI containerUI;
     
-    
+    public Object getLineObject(){
+        return null;
+    }
     /**
      * Creates new form GridDataLineDetailUI
      */
@@ -22,6 +26,11 @@ public class GridDataLineDetailUI extends javax.swing.JPanel implements GridDeta
         initComponents();
     }
 
+    
+    public GridDataContainerUI getGridContainer(){
+    return containerUI;
+    }
+            
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

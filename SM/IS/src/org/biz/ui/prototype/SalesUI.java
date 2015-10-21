@@ -6,11 +6,13 @@
 
 package org.biz.ui.prototype;
 
+import org.components.windows.UIFrame;
+
 /**
  *
  * @author user
  */
-public class SalesUI extends javax.swing.JPanel {
+public class SalesUI extends UIFrame {
 
     /**
      * Creates new form SalesUI
@@ -18,8 +20,8 @@ public class SalesUI extends javax.swing.JPanel {
     public SalesUI() {
         initComponents();
         SalesInvoiceControler sic = new SalesInvoiceControler();
-        sic.setDetail(salesInvoiceUI1);
-        sic.setOverview(salesOverviewPanel1);
+        sic.setDetailView(salesInvoiceUI1);
+        sic.setListView(salesOverviewPanel1,sic.getQueryForPage());
         salesInvoiceUI1.config();
         salesOverviewPanel1.config();
     }
