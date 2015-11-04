@@ -47,12 +47,12 @@ public class TestMain {
         ItemDAO dao = new ItemDAO();
 
         Item item = new Item();
-        item.setId("123idxx");
+//        item.setId("123idxx");
         for (int i = 0; i < 10; i++) {
 
 //            ItemVariation va = (ItemVariation)dao.findGeneric("1234sx" + i,ItemVariation.class);//new ItemVariation();
             ItemVariation va = new ItemVariation();//)dao.findGeneric("1234sx" + i,ItemVariation.class);//new ItemVariation();
-            va.setId("1234xx" + i);
+//            va.setId("1234xx" + i);
             item.addVarient(va);
 
         }
@@ -63,7 +63,7 @@ public class TestMain {
 
             ItemVariation va = (ItemVariation) dao.findGeneric("1234xx" + i, ItemVariation.class);//new ItemVariation();
 //            ItemVariation va =new  ItemVariation();//)dao.findGeneric("1234sx" + i,ItemVariation.class);//new ItemVariation();
-            va.setId("1234xx" + i);
+//            va.setId("1234xx" + i);
             va.setDescription("1234xxdes" + i);
             item.addVarient(va);
 

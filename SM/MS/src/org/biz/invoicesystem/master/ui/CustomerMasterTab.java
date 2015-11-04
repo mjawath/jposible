@@ -36,7 +36,7 @@ public class CustomerMasterTab extends TabPanelUI {
     }
       public CustomerMasterTab() {
         initComponents();
-   init();
+        init();
       }
 
     @Override

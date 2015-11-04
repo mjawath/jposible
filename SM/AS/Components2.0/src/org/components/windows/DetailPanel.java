@@ -25,7 +25,6 @@ import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
-import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
 import org.components.containers.CPanel;
 import org.components.parent.controls.PxTable;
@@ -236,7 +235,7 @@ public class DetailPanel<T> extends TabPanelUI {
         Date cDate = GenericDAOUtil.currentTime();
         
         for (BusObj bus : objs) {            
-            bus.setId( EntityService.getKey(""));
+//            bus.setId( EntityService.getKey(""));
             bus.setSavedDate(cDate);
             bus.setEditedDate(cDate);
             bus.setDepententEntitiesIDs();

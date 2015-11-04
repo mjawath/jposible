@@ -43,14 +43,13 @@ public class Supplier extends Persons {
         Comparator<Supplier> com = new Comparator<Supplier>() {
 
             public int compare(Supplier o1, Supplier o2) {
-                return o1.getId().compareTo(o2.getId());
+                return o1.getId().toString().compareTo(o2.getId().toString());
             }
         };
 
         Collections.sort(lst, com);
 
         Supplier s = new Supplier();
-        s.setId(code);
         int num = Collections.binarySearch(lst, s, com);
 
         if (num > -1) {
@@ -60,9 +59,6 @@ public class Supplier extends Persons {
         }
     }
 
-    public String getId() {
-        return id;
-    }
 
     public String getCode() {
         return code;
@@ -78,10 +74,6 @@ public class Supplier extends Persons {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Override

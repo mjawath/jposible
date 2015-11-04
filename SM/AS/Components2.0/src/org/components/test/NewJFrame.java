@@ -6,8 +6,12 @@
 
 package org.components.test;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.biz.app.ui.util.PropertyUtil;
+import java.text.NumberFormat;
+import javax.swing.event.DocumentEvent;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.NumberFormatter;
+import org.components.parent.Documents.DocumentListenerx;
+import org.components.parent.Documents.DoubleDocument;
 
 /**
  *
@@ -20,9 +24,21 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        System.out.println(PropertyUtil.getApplicationmod());
+//        System.out.println(PropertyUtil.getApplicationmod());
         System.out.println("------");
         
+        cFormattedTextField1.setFormate(new NumberFormatter(NumberFormat.getInstance()));
+        AbstractDocument doc= (AbstractDocument)cFormattedTextField1.getDocument();
+        
+        cFormattedTextField1.setDocument(new DoubleDocument());
+        cFormattedTextField1.addDocumentListener(new DocumentListenerx(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                super.insertUpdate(e); //To change body of generated methods, choose Tools | Templates.
+            }
+        
+        });
         
     }
 
@@ -36,27 +52,50 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        cFormattedTextField1 = new org.components.controls.CFormattedTextField();
+        cTextField1 = new org.components.controls.CTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/components/test/1402224188_overview3d.png"))); // NOI18N
         jButton1.setText("jButton1");
 
+        cFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+
+        cTextField1.setText("cTextField1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(197, Short.MAX_VALUE)
+                    .addComponent(cFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(42, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(137, Short.MAX_VALUE)
+                    .addComponent(cFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(138, Short.MAX_VALUE)))
         );
 
         pack();
@@ -98,6 +137,8 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.components.controls.CFormattedTextField cFormattedTextField1;
+    private org.components.controls.CTextField cTextField1;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

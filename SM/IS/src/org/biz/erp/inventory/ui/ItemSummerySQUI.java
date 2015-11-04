@@ -7,7 +7,6 @@ package org.biz.erp.inventory.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.dao.service.CQuery;
@@ -15,7 +14,6 @@ import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
-import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.SearchQueryUIPanel;
 
 /**
@@ -96,7 +94,7 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
                     for (Object strobj : oobjs) {
                         Object[] xd = (Object[]) strobj;
                         Item it = (Item) xd[0];
-                        str.add(it.getId());
+//                        str.add(it.getId());
                         if (v == 5) {
                             break;
                         }

@@ -6,8 +6,10 @@
 
 package org.biz.ui.prototype;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
-import org.components.controls.CxTable;
+import org.components.parent.controls.PTableColumn;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewUI;
 
@@ -16,25 +18,23 @@ import org.components.windows.ListViewUI;
  * @author jawa
  */
 public class SalesInvoiceListUI extends ListViewUI {
-
-  
     
-        private SalesInvoiceControler sc = new SalesInvoiceControler();    
-/**
+    /**
      * Creates new form SalesInvoiceListUI
      */
     public SalesInvoiceListUI() {
-        initComponents();
-        
-         getTable().setTableInteractionListner(tableInteractionListner);
-        getTable().init(SalesInvoice.class, new Class[]{String.class, String.class},
-                new String[]{"ID", "Code"});
+        super();
+
+        getTable().setTableInteractionListner(tableInteractionListner);
+        List<PTableColumn> tblCols = new ArrayList();
+        tblCols.add(new PTableColumn(String.class, "ID"));
+        tblCols.add(new PTableColumn(String.class, "Code"));
+        tblCols.add(new PTableColumn(String.class, "Customer Name"));
+
+        getTable().init(SalesInvoice.class, tblCols);
     }
-    
-    public CxTable getTable(){
-    return tbl;
-    }
-    
+
+   
         
     
     private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
@@ -42,14 +42,18 @@ public class SalesInvoiceListUI extends ListViewUI {
         @Override
         public Object[] getTableData(Object row) {
             SalesInvoice item = (SalesInvoice) row;
-            return new Object[]{item, item.getId(), item.getCode()};
+            String custName =  null;
+            try {                
+                custName = item.getCustomer().getCustomerName()  +item.getCustomer().getCompanyName();
+            } catch (Exception e) {
+                custName = "";
+            }
+            return new Object[]{item, item.getId(), item.getCode(),custName};
         }
 
         @Override
         public void selectionChanged(Object newRowObject) {
-            System.out.println("set data to detail view"+newRowObject);
-            //
-            sc.showDetailView(newRowObject);
+//            showDetailView(newRowObject);
         }
         
         
@@ -65,36 +69,19 @@ public class SalesInvoiceListUI extends ListViewUI {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        cTableMaster1 = new org.components.controls.CTableMaster();
-
-        jScrollPane1.setViewportView(cTableMaster1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGap(0, 685, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGap(0, 187, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.controls.CTableMaster cTableMaster1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

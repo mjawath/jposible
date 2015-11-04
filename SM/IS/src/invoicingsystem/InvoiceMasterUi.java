@@ -10,12 +10,10 @@ import com.components.custom.PagedPopUpPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import org.components.parent.controls.editors.TablePopUpCellEditor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.AbstractAction;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -23,11 +21,9 @@ import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.GenericDAO;
-import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Staff;
-import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.master.CustomerService;
@@ -35,9 +31,8 @@ import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.StaffService;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.components.parent.controls.editors.ComboBoxCellEditor;
-import org.components.parent.controls.editors.DoubleCellEditor;
-import org.components.parent.controls.editors.StringCellEditor;
 import org.components.parent.controls.editors.TableActions;
+import org.components.parent.controls.editors.TablePopUpCellEditor;
 import org.components.windows.TabPanelUI;
 
 /*
@@ -95,7 +90,7 @@ public class InvoiceMasterUi extends TabPanelUI {
         List lst = new ArrayList();
         for (int i = 0; i < 1500; i++) {
             Staff cus = new Staff();
-            cus.setId("" + i + "" + System.currentTimeMillis());
+//            cus.setId("" + i + "" + System.currentTimeMillis());
             cus.setCode("" + i + "" + System.currentTimeMillis() + "" + i);
             cus.setName("" + i + "" + System.currentTimeMillis() + "" + i);
             lst.add(cus);
@@ -154,7 +149,7 @@ public class InvoiceMasterUi extends TabPanelUI {
             public void newRowAdded() {
                 System.out.println("new row added");
                 SalesInvoiceLineItem si = new SalesInvoiceLineItem();
-                si.setId(TableUtil.newRowID);
+//                si.setId(TableUtil.newRowID);
                 lineItems.add(si);
             }
 //            
@@ -386,7 +381,7 @@ public class InvoiceMasterUi extends TabPanelUI {
         if (seil != null && TableUtil.newRowID.equals(seil.getId())) {
             String va = TableUtil.getNewRowId();
             tblInvoice.setValueAt(va, sr, 0);
-            seil.setId(va);
+//            seil.setId(va);
         }
         Double qty=seil.getQty()==null?0:seil.getQty();
         Double price=seil.getPrice()==null? 0:seil.getPrice();
@@ -423,7 +418,7 @@ public class InvoiceMasterUi extends TabPanelUI {
 
         String bt = UIEty.colToStrE(tblInvoice, 0);
         SalesInvoiceLineItem lineItem = new SalesInvoiceLineItem();
-        lineItem.setId(UIEty.colToStrE(tblInvoice, 0));
+//        lineItem.setId(UIEty.colToStrE(tblInvoice, 0));
 //        lineItem.setItem(currentItem);
         lineItem.setDescription(UIEty.colToStrE(tblInvoice, 2));
         lineItem.setUnit(UIEty.colToStr(tblInvoice, 4));
@@ -460,7 +455,7 @@ public class InvoiceMasterUi extends TabPanelUI {
         TableUtil.addrow(tblInvoice, new Object[]{TableUtil.newRowID});
         System.out.println("new row added");
         SalesInvoiceLineItem si = new SalesInvoiceLineItem();
-        si.setId(TableUtil.newRowID);
+//        si.setId(TableUtil.newRowID);
         lineItems.add(si);
     }
 
@@ -765,7 +760,7 @@ public class InvoiceMasterUi extends TabPanelUI {
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
 
-        invoice.setId(EntityService.getKeys());
+//        invoice.setId(EntityService.getKeys());
         for (Iterator<SalesInvoiceLineItem> it = lineItems.iterator(); it.hasNext();) {
             SalesInvoiceLineItem si = it.next();
             if(si.getId().equals(TableUtil.newRowID)){

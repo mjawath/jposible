@@ -24,7 +24,7 @@ public class CategoryDAO extends GenericDAO<Category>{
         
         for(int x=0;x<50;x++){
         Category cat= new Category();
-        cat.setId(x+"ID");
+//        cat.setId(x+"ID");
         cat.setCode(x+"Code");
         cat.setDescription(x+"de");
         cat.setSavedDate(new Date());

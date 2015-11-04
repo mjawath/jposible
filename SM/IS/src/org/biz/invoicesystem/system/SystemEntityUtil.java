@@ -15,7 +15,7 @@ import org.biz.invoicesystem.entity.master.Shop;
 public class SystemEntityUtil {
     public static Shop getShop(){
         Shop s=new Shop();
-        s.setId("1");
+//        s.setId("1");
         return s;
     }
     

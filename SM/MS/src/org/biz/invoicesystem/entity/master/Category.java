@@ -38,14 +38,13 @@ public static Category find(String code, List<Category> lst) {
         Comparator<Category> com = new Comparator<Category>() {
 
             public int compare(Category o1, Category o2) {
-                return o1.getId().compareTo(o2.getId());
+                return o1.getId().toString().compareTo(o2.getId().toString());
             }
         };
 
         Collections.sort(lst, com);
 
         Category s = new Category();
-        s.setId(code);
         int num = Collections.binarySearch(lst, s, com);
 
         if (num > -1) {
@@ -55,9 +54,6 @@ public static Category find(String code, List<Category> lst) {
         }
     }
  
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void setCode(String code) {
         this.code = code;

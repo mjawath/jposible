@@ -152,7 +152,7 @@ public class AccountsCreationUI extends TabPanelUI {
 
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
 
-        accounts.setId(es.getKey());
+//        accounts.setId(es.getKey());
         accounts.setAccountsNo(UIEty.tcToStr(taccno));
         accounts.setAccountsName(UIEty.tcToStr(taccname));
         accounts.setSubAccounts(UIEty.cmbtostr(tacctype));

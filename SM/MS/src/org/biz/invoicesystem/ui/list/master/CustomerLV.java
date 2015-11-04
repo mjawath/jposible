@@ -9,7 +9,6 @@ package org.biz.invoicesystem.ui.list.master;
 import java.util.ArrayList;
 import java.util.List;
 import org.biz.invoicesystem.entity.master.Customer;
-import org.biz.invoicesystem.entity.master.Item;
 import org.components.parent.controls.PTableColumn;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewUI;
@@ -27,11 +26,11 @@ public class CustomerLV extends ListViewUI  {
         super();
         getTable().setTableInteractionListner(tableInteractionListner);
         List<PTableColumn> tblCols = new ArrayList();
-          tblCols.add( new PTableColumn(String.class, "ID"));
-          tblCols.add( new PTableColumn(String.class, "Code"));
-          tblCols.add( new PTableColumn(String.class, "Name"));
-        
-        getTable().init(Item.class, tblCols);
+        tblCols.add(new PTableColumn(String.class, "ID"));
+        tblCols.add(new PTableColumn(String.class, "Code"));
+        tblCols.add(new PTableColumn(String.class, "Name"));
+
+        getTable().init(Customer.class, tblCols);
     }
 
     /**
@@ -47,11 +46,11 @@ public class CustomerLV extends ListViewUI  {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 790, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 494, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

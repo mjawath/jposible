@@ -37,7 +37,7 @@ public class SalesInvoiceDAO extends GenericDAO<SalesInvoice>{
         try {
         String doc=SalesInvoice.class.getSimpleName();
         SalesInvoice invoice = new SalesInvoice();
-        invoice.setId(id);
+//        invoice.setId(id);
 //        em= createEmNew();
         String qry="select c    from InventoryJournal c  where c.refCode='"+id+"' and c.documentType='"+doc+"' ";
         em.getTransaction().begin();

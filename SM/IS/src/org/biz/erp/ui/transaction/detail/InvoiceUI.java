@@ -7,7 +7,6 @@ package org.biz.erp.ui.transaction.detail;
 import com.components.custom.PopupListner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -455,10 +454,10 @@ import org.components.windows.DetailPanel;
         si.setLineItems(salesInvoiceLineItems);
         //set id for bus obj
         String uk= service.getUniqueKey();
-        si.setId(uk);
+//        si.setId(uk);
         int x=1000;// resonable number to iterate 
         for (SalesInvoiceLineItem sl : salesInvoiceLineItems) {
-            sl.setId(uk+ x++);
+//            sl.setId(uk+ x++);
         }
         return si;
     }

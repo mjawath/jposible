@@ -9,9 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Item;
+import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.biz.invoicesystem.entity.master.Shop;
 
 /**
  *
@@ -37,13 +37,7 @@ public class InventoryJournalLine  extends BusObj implements Serializable {
     private Double price;
     private Double lineAmount;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+   
 
     public String getDescription() {
         return description;

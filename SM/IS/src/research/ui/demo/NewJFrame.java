@@ -79,6 +79,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        cButton1 = new org.components.controls.CButton();
+        cButton4 = new org.components.controls.CButton();
+        cButton3 = new org.components.controls.CButton();
+        cButton2 = new org.components.controls.CButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -106,13 +111,42 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
         jPanel1.add(jButton1);
-        jButton1.setBounds(95, 33, 73, 23);
+        jButton1.setBounds(95, 33, 73, 28);
 
         jLayeredPane1.add(jPanel1);
         jPanel1.setBounds(100, 100, 340, 90);
 
         getContentPane().add(jLayeredPane1);
-        jLayeredPane1.setBounds(40, 30, 520, 310);
+        jLayeredPane1.setBounds(40, 180, 520, 220);
+
+        jToolBar1.setRollover(true);
+
+        cButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/go-first-view.png"))); // NOI18N
+        cButton1.setText("");
+        cButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(cButton1);
+
+        cButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/research/ui/demo/go-previous-view.png"))); // NOI18N
+        cButton4.setText("");
+        cButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(cButton4);
+
+        cButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/research/ui/demo/go-next-view.png"))); // NOI18N
+        cButton3.setText("");
+        cButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(cButton3);
+
+        cButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/research/ui/demo/go-last-view.png"))); // NOI18N
+        cButton2.setText("");
+        cButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(cButton2);
+
+        getContentPane().add(jToolBar1);
+        jToolBar1.setBounds(140, 20, 310, 60);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -129,10 +163,15 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.components.controls.CButton cButton1;
+    private org.components.controls.CButton cButton2;
+    private org.components.controls.CButton cButton3;
+    private org.components.controls.CButton cButton4;
     private javax.swing.JButton jButton1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

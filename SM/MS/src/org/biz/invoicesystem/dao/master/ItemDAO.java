@@ -1,5 +1,6 @@
 package org.biz.invoicesystem.dao.master;
 
+import app.utils.SystemStatic;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.biz.dao.service.GenericDAO;
 import org.biz.invoicesystem.entity.master.Item;
-import app.utils.SystemStatic;
 import org.dao.util.JPAUtil;
 
 /**
@@ -155,7 +155,7 @@ public class ItemDAO extends GenericDAO<Item> {
         for (int x = 0; x < 150; x++) {
             Item ii = new Item();
 
-            ii.setId("" + x);
+
             ii.setCode("" + x);
             ii.setCommission(1000d);
             ii.setCost(3200d);

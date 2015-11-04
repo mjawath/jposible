@@ -31,8 +31,7 @@ public class Shop extends BusObj{
     
     public static Shop getDefaultShop(){
     Shop s= new Shop();
-    s.setId("123");            
-    s.setCode("123");            
+    
     return s;
     }
 }

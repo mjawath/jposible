@@ -1,21 +1,22 @@
 package org.biz.invoicesystem.master.ui;
 
 import app.utils.SystemStatic;
-import java.awt.AWTKeyStroke;
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -23,13 +24,19 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.TableUtil;
-import org.biz.app.ui.util.Validator;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.SupplierDAO;
@@ -42,8 +49,8 @@ import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.service.master.CategoryService;
 import org.biz.invoicesystem.service.master.ItemService;
-import org.components.windows.TabPanelUI;
 import org.biz.invoicesystem.ui.list.master.ItemListUix;
+import org.components.windows.TabPanelUI;
 
 public class ItemMasterUIxxxxx extends TabPanelUI { 
 
@@ -217,7 +224,7 @@ public class ItemMasterUIxxxxx extends TabPanelUI {
                             //update table
                             UOM uom = new UOM();
                             Object id = TableUtil.getSelectedValue(tblunitprices, 0);
-                            uom.setId(id != null ? id.toString() : null);
+
                             uom.setCode(tunitsymbot.getText());
 
                             //check this with id and symbol if same skip
@@ -850,7 +857,7 @@ public class ItemMasterUIxxxxx extends TabPanelUI {
 
     public Item uiToEty(Item i) throws Exception {
         try {
-            i.setId(EntityService.getEntityService().getKey(""));
+
             i.setCode(UIEty.tcToStr(tItemcode));
             i.setDescription(UIEty.tcToStr(tItemDescription));
 //            i.setCategory(UIEty.cmbtostr(tItemCategory)); //    combo
@@ -901,7 +908,7 @@ public class ItemMasterUIxxxxx extends TabPanelUI {
 
                 Vector row = it.next();
                 ItemVariation var = new ItemVariation();
-                var.setId(EntityService.getEntityService().getKey(""));
+                
                 var.setDescription(row.get(0) == null ? "" : row.get(0).toString());
                 var.setsPrice1(row.get(1) == null ? 0.0 : Double.parseDouble(row.get(1).toString()));
                 var.setsPrice2(row.get(2) == null ? 0.0 : Double.parseDouble(row.get(2).toString()));
@@ -916,7 +923,7 @@ public class ItemMasterUIxxxxx extends TabPanelUI {
         return lstOfVariation;
     }
 
-    public List<ExtraSalesPrice> ui2ExtraSalesPrice(JTable tbl, String itemid) {
+    public List<ExtraSalesPrice> ui2ExtraSalesPrice(JTable tbl, Object itemid) {
         List<ExtraSalesPrice> lstOfExSalePrice = new ArrayList<ExtraSalesPrice>();
         try {
             Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
@@ -944,8 +951,7 @@ public class ItemMasterUIxxxxx extends TabPanelUI {
             Vector<Vector> vecOfVec = TableUtil.getDataVector(tbl);
             for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
                 Vector row = it.next();
-                ItemBarcode bCode = new ItemBarcode();
-                bCode.setId(EntityService.getEntityService().getKey(""));
+                ItemBarcode bCode = new ItemBarcode();                
                 bCode.setType(row.get(0) == null ? "" : row.get(0).toString());
                 bCode.setBarcode(row.get(1) == null ? "" : row.get(1).toString());
                 lstFBarcodes.add(bCode);
@@ -1079,7 +1085,7 @@ public class ItemMasterUIxxxxx extends TabPanelUI {
 //            setuoms();
 
             Item exist = itemService.getDao().findItemByCode(selectedItem.getCode());
-            if (exist == null || Validator.isEmptyOrNull(selectedItem.getId())) {
+            if (exist == null || selectedItem.getId()!=null) {
                 itemService.getDao().save(selectedItem);
                 saveImages(selectedItem.getCode(), images);
             } else {
@@ -1218,7 +1224,7 @@ public class ItemMasterUIxxxxx extends TabPanelUI {
     public boolean pasteItem(Item i, String itemid) throws Exception {
         boolean b = false;
         try {
-            i.setId(itemid);
+
             itemService.getDao().update(i);
             b = true;
         } catch (Exception e) {

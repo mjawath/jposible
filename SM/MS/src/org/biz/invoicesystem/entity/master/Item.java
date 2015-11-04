@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -16,14 +15,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import org.biz.app.ui.util.StringUtility;
 import org.biz.entity.BusObj;
-import org.biz.invoicesystem.system.SystemUtil;
 
 @Entity
 public class Item extends BusObj{
     //   private static final long serialVersionUID = 1L;
 
-    @Id
-    private String id; //default table id...for 
+    
+    
     private String code;//unique item code...
     //   private String name;
 //    @OneToOne
@@ -133,12 +131,10 @@ public class Item extends BusObj{
         this.uoms = uoms;
     }
 
-    public String getId() {
-        return id;
-    }
+    
 
     public void setId(String id) {
-        this.id = id;
+      
     }
     @Temporal(javax.persistence.TemporalType.DATE)
     Date crDate;
@@ -499,8 +495,7 @@ public class Item extends BusObj{
         return null;
     }
     public static List<UOM> getDefaultUOM(){
-    UOM def=new UOM();
-    def.setId("1");
+    UOM def=new UOM();    
     def.setCode("CTN");
 //    def.setSimbol("pcs");
     def.setMulti(1d);
@@ -525,13 +520,13 @@ public class Item extends BusObj{
 
         if (uoms == null) {
             uoms = new ArrayList<UOM>();
-            uom.setId(SystemUtil.timeStampKey());
+            
             uom.setIsPrimary(true);
             uoms.add(uom);
             return;
         }
         if (uom.getId() == null) {
-            uom.setId(SystemUtil.timeStampKey());
+            
             uoms.add(uom);
             return;
         }
@@ -568,7 +563,7 @@ public class Item extends BusObj{
 
         for (UOM uom : uoms) {
 
-            if (!StringUtility.isSameString(x.getId(), uom.getId())) {
+            if (x.getId()!= uom.getId()) {
                 if (StringUtility.isSameString(uom.getCode(), x.getCode())) {
                     return false;
                 } else if (x.getType() == UOM.UOMType.Primary.getValue() && x.getType() == uom.getType() || 
@@ -618,12 +613,10 @@ public class Item extends BusObj{
     public void addItemBarCode(ItemBarcode bar) {
         if (barcodes == null) {
             barcodes = new ArrayList<ItemBarcode>();
-            bar.setId(SystemUtil.timeStampKey());
             barcodes.add(bar);
             return;
         }
         if (bar.getId() == null) {
-            bar.setId(SystemUtil.timeStampKey());
             barcodes.add(bar);
             return;
         }

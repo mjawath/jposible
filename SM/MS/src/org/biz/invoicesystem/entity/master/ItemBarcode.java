@@ -36,13 +36,6 @@ public class ItemBarcode extends BusObj implements Serializable {
         this.barcode = barcode;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getType() {
         return type;

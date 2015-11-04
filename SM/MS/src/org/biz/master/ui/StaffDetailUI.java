@@ -1,7 +1,6 @@
  
 package org.biz.master.ui;
 
-import org.biz.invoicesystem.master.ui.*;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,11 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.UIEty;
-import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.service.master.StaffService;
 import org.components.windows.DetailPanel;
-import org.components.windows.TabPanelUI;
 
  
 public class StaffDetailUI extends DetailPanel<Staff>  {
@@ -88,7 +85,7 @@ public class StaffDetailUI extends DetailPanel<Staff>  {
    public Staff uiToEntity(Staff s){
    
        try {
-    s.setId(EntityService.getEntityService().getKey());             
+//    s.setId(EntityService.getEntityService().getKey());             
     s.setCode(UIEty.tcToStr(tCode));
     s.setName(UIEty.tcToStr(tName));
     s.setGender(tGender.getSelectedItem()==null?"":tGender.getSelectedItem().toString());                  

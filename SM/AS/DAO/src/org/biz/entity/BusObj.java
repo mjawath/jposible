@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
  *
  * @author Jawath
  */
+//@IdClass(value = PrimaryKey.class)
 @MappedSuperclass
 public class BusObj implements Serializable {
 
@@ -25,25 +26,34 @@ public class BusObj implements Serializable {
     public BusObj() {
     }
 
-    public BusObj(String id) {
-        this.id = id;
+    public BusObj(PrimaryKey id) {
+//        this.id = id;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected String id;
+    protected Long id;
+//    @Id    
+//    private Long genClass;
+
+    
+    
 //    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
 //    private Date saveddate;
 //    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
 //    Date editeddate;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public void setId(PrimaryKey id) {
+//        this.id = id;
+    }
+    
     public Date getEditedDate() {
         return editedDate;
     }
@@ -59,17 +69,16 @@ public class BusObj implements Serializable {
     public void setSavedDate(Date saveddate) {
         this.savedDate = saveddate;
     }
-    
-    public void setDepententEntitiesIDs(){
+
+    public void setDepententEntitiesIDs() {
     //sets the ids to the onetomany, manyto many
-        
-        
+
     }
-    
-    public void  setLineID(List< ? extends BusObj> obj){
-        int x=100;
+
+    public void setLineID(List< ? extends BusObj> obj) {
+        int x = 100;
         for (BusObj busObj : obj) {
-            busObj.setId(getId()+ x++);
+//            busObj.setId(getId()+ x++);
         }
     }
 }

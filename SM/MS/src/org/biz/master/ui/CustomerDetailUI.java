@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
-import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.service.master.CustomerService;
 import org.components.windows.DetailPanel;
@@ -101,7 +100,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
 
    public Customer uiToEntity(Customer c) throws Exception {
         try {
-            c.setId(EntityService.getEntityService().getKey(""));
+//            c.setId(EntityService.getEntityService().getKey(""));
 
             c.setCode(UIEty.tcToStr(tCusCode));
             c.setTitle(UIEty.cmbtostr(tCusTitle));
@@ -166,7 +165,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     public Customer uiToData(){
             Customer c=new Customer();
             try {
-            c.setId(EntityService.getEntityService().getKey(""));
+//            c.setId(EntityService.getEntityService().getKey(""));
 
             c.setCode(UIEty.tcToStr(tCusCode));
             c.setTitle(UIEty.cmbtostr(tCusTitle));

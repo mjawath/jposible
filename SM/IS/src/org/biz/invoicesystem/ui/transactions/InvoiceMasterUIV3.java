@@ -30,9 +30,7 @@ import org.biz.invoicesystem.service.master.CustomerService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.StaffService;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
-import org.biz.invoicesystem.system.SystemEntityUtil;
 import org.biz.invoicesystem.ui.transactions.components.SalesLineItemPanelV3;
-import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 
 /*
@@ -140,7 +138,7 @@ public class InvoiceMasterUIV3 extends TabPanelUI {
                 panelToEty(salesline);
                 Object id = salesline.getId();
                 if (id == null) {
-                    salesline.setId(System.currentTimeMillis() + "tt");
+//                    salesline.setId(System.currentTimeMillis() + "tt");
                 }
 
                 etyToRow(salesline);

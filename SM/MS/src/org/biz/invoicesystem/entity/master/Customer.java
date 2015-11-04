@@ -45,13 +45,6 @@ public class Customer extends Persons {
     private String picLocation;
     private String loyaltyCardNo;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getAddress() {
         return address;
@@ -154,14 +147,14 @@ public class Customer extends Persons {
 
         Comparator<Customer> com = new Comparator<Customer>() {
             public int compare(Customer o1, Customer o2) {
-                return o1.getId().compareTo(o2.getId());
+                return o1.getId().toString().compareTo(o2.getId().toString());
             }
         };
 
         Collections.sort(lst, com);
 
         Customer s = new Customer();
-        s.setId(code);
+
         int num = Collections.binarySearch(lst, s, com);
 
         if (num > -1) {

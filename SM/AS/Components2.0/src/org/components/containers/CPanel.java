@@ -143,6 +143,27 @@ public class CPanel extends PPanel implements IContainer ,IComponent {
         }
     }
     
+    public Component gotoPreComponentInThisPanel(Component com) {
+        if (focus == null || focus.isEmpty()) {
+            return null;
+        } else {
+            int x = focus.indexOf(com);
+
+            if (x > 0 && x  < focus.size()) {
+                final Component current = (Component) focus.get(x - 1);
+                if (current instanceof CPanel) {
+                    return ((CPanel) current).gotoFirstComponent();
+                } else {
+                    return ((Component) current);
+                }
+            } else {
+
+                return null;
+
+            }
+
+        }
+    }
 //    public void gotToNextComponent(Component aComponent) {
 //        final Object parent = aComponent.getParent();
 //        if (parent != null && parent instanceof CPanel) {

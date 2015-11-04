@@ -4,10 +4,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/jposible/jposible/SM/AS/Components2.0/src/org/components/windows/UIController.java</file>
-            <file>file:/D:/jposible/jposible/SM/AS/Components2.0/src/org/components/windows/SearchQueryUIPanel.java</file>
-            <file>file:/D:/jposible/jposible/SM/AS/Components2.0/src/org/biz/app/ui/util/UIListener.java</file>
-            <file>file:/D:/jposible/jposible/SM/AS/Components2.0/src/org/biz/app/ui/util/QueryManager.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/app/AppMainWindow.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/biz/app/ui/util/QueryManager.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/components/windows/UIController.java</file>
         </group>
     </open-files>
 </project-private>

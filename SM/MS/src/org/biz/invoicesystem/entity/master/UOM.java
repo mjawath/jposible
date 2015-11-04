@@ -34,8 +34,7 @@ public class UOM extends BusObj {
 
     
     public UOM(String ID ,String code,double mult,byte type){
-    super();
-    setId(ID);
+    super();    
     setCode(code);    
     setMulti(mult);
     setType(type);
@@ -153,14 +152,13 @@ public class UOM extends BusObj {
 
         Comparator<UOM> com = new Comparator<UOM>() {
             public int compare(UOM o1, UOM o2) {
-                return o1.getId().compareTo(o2.getId());
+                return o1.getId().toString().compareTo(o2.getId().toString());
             }
         };
 
         Collections.sort(lst, com);
 
-        UOM s = new UOM();
-        s.setId(code);
+        UOM s = new UOM();        
         int num = Collections.binarySearch(lst, s, com);
 
         if (num > -1) {
@@ -170,13 +168,6 @@ public class UOM extends BusObj {
         }
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getDescriptiom() {
         return descriptiom;

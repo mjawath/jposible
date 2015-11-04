@@ -98,8 +98,15 @@ public class ApplicationManager {
        
        HashSet set = new HashSet();
        set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));       
-        final KeyboardFocusManager km = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        km.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, set);
+       set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));       
+       KeyboardFocusManager km = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+       km.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, set);
+       
+       
+       HashSet setu = new HashSet();
+       setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, KeyEvent.SHIFT_DOWN_MASK));
+       setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_UP, 0));       
+       km.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, setu);
         
 //       km.setDefaultFocusTraversalPolicy(new MyFocusManager());
 

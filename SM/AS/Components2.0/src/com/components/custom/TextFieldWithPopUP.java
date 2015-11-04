@@ -16,7 +16,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -25,7 +24,6 @@ import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.ComponentFactory;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.TableUtil;
-import org.biz.app.ui.util.Tracer;
 import org.biz.app.ui.util.UIEty;
 import org.biz.app.ui.util.UIListener;
 import org.biz.entity.BusObj;
@@ -34,8 +32,8 @@ import org.components.containers.CPanel;
 import org.components.controls.CPopupMenu;
 import org.components.controls.CTextField;
 import org.components.test.ResultPage;
-import org.components.windows.MasterViewUI;
 import org.components.windows.ListViewUI;
+import org.components.windows.MasterViewUI;
 
 /**
  *
@@ -55,6 +53,10 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
     private String pageKey;
     private Boolean popupDisabled = false;
     private QueryManager qm;
+    
+    public JTextField getTextField(){
+    return textField;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,6 +123,12 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
         textField.addaction(0, new ActionTask() {
             @Override
             public void actionCall(Object obj) {
+               
+            }
+        });
+        textField.setActionTask(new ActionTask(){
+        
+            public void actionCall() {
                 selectItem();
             }
         });
@@ -461,6 +469,10 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
     public boolean hasFocus() {
 
         return fieldWithPopUP.hasFocus();
+    }
+    public boolean requestFocusInWindow() {
+
+        return fieldWithPopUP.requestFocusInWindow();
     }
 
     public void setEditable(boolean isEditable) {

@@ -28,9 +28,6 @@ public class Address  extends BusObj  implements Serializable {
         this.homeNo = homeNo;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void setStreet1(String street1) {
         this.street1 = street1;

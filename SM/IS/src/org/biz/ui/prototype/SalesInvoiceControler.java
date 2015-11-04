@@ -6,7 +6,6 @@
 package org.biz.ui.prototype;
 
 import java.util.List;
-import org.biz.app.ui.util.QueryManager;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
@@ -21,37 +20,24 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
 
     private SalesInvoiceService salesService;
 
-    private QueryManager qmForSearch = new QueryManager();
-        
+            
     public SalesInvoiceControler() {
+        super();
         salesService = new SalesInvoiceService();
         currentBusObject = new SalesInvoice();
+        setService(salesService);
     }
 
     public void initUI(){
-        SalesInvoiceDetailUI salesUI = new SalesInvoiceDetailUI();
-        detailView = salesUI;
-        setDetailView(detailView);
-        SalesOverviewPanel ov = new SalesOverviewPanel();
-        setListView(ov,getQueryForPage());
+        SalesInvoiceDetailUI salesUI = new SalesInvoiceDetailUI();        
+        setDetailView(salesUI);
         salesUI.config();
-        ov.config();
-        
+
+        SalesInvoiceMasterUI ov = new SalesInvoiceMasterUI();
+        setListView(ov,mmm); 
     }
     
-    /**
-     * @return the salesService
-     */
-    public SalesInvoiceService getSalesService() {
-        return salesService;
-    }
 
-    /**
-     * @param salesService the salesService to set
-     */
-    public void setSalesService(SalesInvoiceService salesService) {
-        this.salesService = salesService;
-    }
 
     public void findItem(String myQuery) {
     
@@ -100,5 +86,10 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         detailView.setDataToUI(currentBusObject);
         salesLineUI.getPrice().requestFocus();
     }
+     
+     
+     
 
+     
+     
 }

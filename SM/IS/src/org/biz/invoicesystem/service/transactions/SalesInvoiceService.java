@@ -5,9 +5,7 @@
 
 package org.biz.invoicesystem.service.transactions;
 
-import app.utils.SystemUtil;
 import org.biz.dao.service.Service;
-import org.biz.dao.util.EntityService;
 import org.biz.erp.ui.transaction.detail.InvoiceUI;
 import org.biz.erp.ui.transactions.posted.PostedInvoicesListUI;
 import org.biz.invoicesystem.dao.transactions.SalesInvoiceDAO;
@@ -44,14 +42,14 @@ public class SalesInvoiceService extends Service{
     }
     
     public void createInventoryJournal(SalesInvoice invoice){
-       invoice.setId(EntityService.getKeys());
+//       invoice.setId(EntityService.getKeys());
         //inventory journal 
         InventoryJournal ij=new InventoryJournal();
-        ij.setId(   EntityService.getKeys()) ;
+//        ij.setId(   EntityService.getKeys()) ;
         for (SalesInvoiceLineItem sl : invoice.getLineItems()) {
             InventoryJournalLine ijl=new InventoryJournalLine();
             ijl.setId(sl.getId());
-            ijl.setDescription(sl.getId());
+//            ijl.setDescription(sl.getId());
             ijl.setItem(sl.getItem());
             ijl.setQty(sl.getQty());
             ijl.setShop(sl.getShop());
@@ -68,10 +66,10 @@ public class SalesInvoiceService extends Service{
     }
 
     public void createInventoryJournalForPos(SalesInvoice invoice){
-       invoice.setId(EntityService.getKeys());
+//       invoice.setId(EntityService.getKeys());
         //inventory journal
         InventoryJournal ij=new InventoryJournal();
-        ij.setId(   EntityService.getKeys()) ;
+//        ij.setId(   EntityService.getKeys()) ;
         ij.setDocumentType(InventoryJournal.pos_Invoice);
         ij.setInOrOut(InventoryJournal.Item_In);
         for (SalesInvoiceLineItem sl : invoice.getLineItems()) {

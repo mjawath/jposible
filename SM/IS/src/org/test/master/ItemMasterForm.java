@@ -150,7 +150,7 @@ public class ItemMasterForm extends javax.swing.JPanel {
         System.out.println("table elements");
         for (int i = 0; i < modelEditableTable1.getModelCollection().size(); i++) {
             SalesInvoiceLineItem salesInvoiceLineItem = (SalesInvoiceLineItem) modelEditableTable1.getModelCollection().get(i);
-            System.out.println(salesInvoiceLineItem.getId()+salesInvoiceLineItem.getItem());
+//            System.out.println(salesInvoiceLineItem.getId()+salesInvoiceLineItem.getItem());
         }
         
     }//GEN-LAST:event_btnCopyActionPerformed

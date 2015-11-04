@@ -9,7 +9,6 @@ import com.components.custom.ActionTask;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.DefaultFocusTraversalPolicy;
-import javax.swing.JComponent;
 import org.components.containers.CPanel;
 import org.components.controls.CTextField;
 
@@ -30,14 +29,13 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
         //if container cpanel 
         //then if it has next component then move to that 
         // or else goto parent
-        // and try focusing to next
-        System.out.println("Fous" + aComponent.getName());
+        // and try focusing to next        
         
         if(aComponent instanceof CTextField){
             
             ActionTask at = ((CTextField)aComponent).getActionTask();
             if(at!=null){
-                JComponent com = at.actionFired();
+                Component com = at.actionFired(aComponent);
                 if(com!=null){
                     return com;
                 }
@@ -51,6 +49,37 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
         
 //         super.getComponentAfter(aContainer, aComponent); //To change body of generated methods, choose Tools | Templates.
     } 
+    
+    
+    
+    @Override
+    public Component getComponentBefore(Container aContainer, Component aComponent) {
+
+        //if component has its action listener 
+        // then fire that
+        // get the result from that and got to that
+        // other vise 
+        //if container cpanel 
+        //then if it has next component then move to that 
+        // or else goto parent
+        // and try focusing to next        
+        if (aComponent instanceof CTextField) {
+
+            ActionTask at = ((CTextField) aComponent).getActionTask();
+            if (at != null) {
+                Component com = at.actionFired(aComponent);
+                if (com != null) {
+                    return com;
+                }
+            }
+
+        }
+
+        return gotToPreComponent(aComponent);
+
+//         super.getComponentAfter(aContainer, aComponent); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     public void goToNextFocusableComponent(Component aComponent){
         Component parent = aComponent.getParent();
@@ -117,6 +146,36 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
  
     
     
+    public Component gotToPreComponent(Component aComponent) {
+        CPanel parent = getFocusableParent(aComponent);
+        if (parent == null) {
+            //frame first
+            if (aComponent instanceof CPanel) {
+                return ((CPanel) aComponent).gotoFirstComponent();
+            }
+            return null;
+        }
+
+        if (parent != null) {
+
+            final Component gotoNextComponentNew = ((CPanel) parent).gotoPreComponentInThisPanel(aComponent);
+            if (gotoNextComponentNew != null) {
+                if (gotoNextComponentNew instanceof CPanel) {
+                    return ((CPanel) gotoNextComponentNew).gotoFirstComponent();
+                } else {
+                    return gotoNextComponentNew;
+
+                }
+            } else {
+                return gotToPreComponent(parent);
+
+            }
+
+        }
+
+        return null;
+
+    }
    
 
 }

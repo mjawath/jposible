@@ -11,20 +11,17 @@
 package org.components.controls;
 
 import com.components.custom.ActionTask;
-import com.components.custom.CInputVerifier;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import org.biz.app.ui.util.UIEty;
-import org.components.parent.controls.PTextField;
+import org.components.parent.controls.PFormatedTextField;
 
 /**
  *
  * @author nano
  */
-public class CTextField extends PTextField {
+public class CFormattedTextField extends PFormatedTextField {
 
     JComponent nextFocusableComponent;
     JComponent previouseFocusedComponent;
@@ -33,46 +30,21 @@ public class CTextField extends PTextField {
     
 
 
+
     /**
      * Creates new form BeanForm
      */
-    public CTextField() {
-        initComponents();
+    public CFormattedTextField() {
+        super();        
         init();
 //        setInputVerifier(new CInputVerifier());
     }
 
     public void init() {
-
-
+        
+        
         
         actionTasks = new ArrayList<ActionTask>();
-
-        addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    //in the level of listner we add only one global 
-                    // event handler which is used to capture all the events
-                    // programmer who wish to implement an action 
-                    // may have the freedom to use the super actions
-                    //or he can just skip it by not calling it
-                    //he can use call his method implementations and then call tthe super
-                    // call the super then implement
-                    // or dont call supp-override
-                    // but ?? enable to implement such df????????
-                    //?????????????????todo
-                    if (actionTasks != null || !actionTasks.isEmpty()) {
-
-                        for (ActionTask actionTask : actionTasks) {
-                            actionTask.actionCall(e);
-                        }
-                    }
-                    if (getContainer() != null) {
-                        getContainer().gotoNextComponent(CTextField.this);
-                    }
-                }
-            }
-        });
 
 
 
@@ -95,20 +67,7 @@ public class CTextField extends PTextField {
         setPreferredSize(new java.awt.Dimension(6, 25));
     }// </editor-fold>//GEN-END:initComponents
 
-      
-      @Override
-      protected void processKeyEvent(KeyEvent e) {
-//        if(e.getKeyCode()==KeyEvent.VK_ENTER){
-//            postActionEvent();
-//            return;
-//        }
-          super.processKeyEvent(e);
-      }
 
-      public void setInputVerifier(CInputVerifier inputVerifier) {
-//        addActionListener(inputVerifier);
-          super.setInputVerifier(inputVerifier);
-      }
 
       public double getDoubleValue0() {
 

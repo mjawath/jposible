@@ -35,7 +35,7 @@ public class SalesUI extends UIFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        salesOverviewPanel1 = new org.biz.ui.prototype.SalesOverviewPanel();
+        salesOverviewPanel1 = new org.biz.ui.prototype.SalesInvoiceMasterUI();
         salesInvoiceUI1 = new org.biz.ui.prototype.SalesInvoiceDetailUI();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -64,6 +64,6 @@ public class SalesUI extends UIFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.biz.ui.prototype.SalesInvoiceDetailUI salesInvoiceUI1;
-    private org.biz.ui.prototype.SalesOverviewPanel salesOverviewPanel1;
+    private org.biz.ui.prototype.SalesInvoiceMasterUI salesOverviewPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  */
 package com.components.custom;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -31,6 +32,9 @@ public class ActionTask extends AbstractAction{
     public ActionTask(Object obj) {
             this.param=obj;
     }
+    public ActionTask(Object[] obj) {
+        this.param = obj;
+    }
 
     public boolean validate(){
     return true;
@@ -39,17 +43,19 @@ public class ActionTask extends AbstractAction{
     
     return true;
     }
-
-    public JComponent actionFired() {
+    
+    public Component  actionFired(Object com) {
+        actionCall(com);
         return null;
     }
+  
     
     public void actionCall(Object obj){
-
+        actionCall();
     }
     
     public void actionCall(){
-        actionCall(null);
+        
     }
     
     public void actionPerformed(ActionEvent e) {

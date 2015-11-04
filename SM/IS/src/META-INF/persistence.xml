@@ -55,15 +55,16 @@
     <class>org.biz.books.entity.accounts.payments.SupplierPayments</class>
     <class>org.biz.invoicesystem.entity.transactions.ChequeRegistry</class>
     <class>org.biz.chequeChequing.entity.accounts.bank.Cheques</class>
-    <class>org.biz.books.entity.accounts.bank.Bank</class>    
+    <class>org.biz.books.entity.accounts.bank.Bank</class>
     <class>org.biz.books.entity.accounts.bank.BankBranch</class>
     <class>org.biz.invoicesystem.entity.transactions.SalesInvoice</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/invoicesystem"/>
-      <property name="javax.persistence.jdbc.password" value="123"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="postgres"/>
       <!-- >        <property name="eclipselink.logging.level" value="FINE"/>  <!-->
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/invoicesystem"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="123"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -28,7 +28,6 @@ import org.biz.invoicesystem.service.master.CustomerService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.StaffService;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
-import org.biz.invoicesystem.system.SystemEntityUtil;
 import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 
@@ -189,7 +188,7 @@ public class PosInvoiceUIE extends TabPanelUI {
 
         String bt = UIEty.colToStrE(tblInvoice, 0);
         SalesInvoiceLineItem lineItem = new SalesInvoiceLineItem();
-        lineItem.setId(UIEty.colToStrE(tblInvoice, 0));
+//        lineItem.setId(UIEty.colToStrE(tblInvoice, 0));
 //        lineItem.setItem(currentItem);
         lineItem.setDescription(UIEty.colToStrE(tblInvoice, 2));
         lineItem.setUnit(UIEty.colToStr(tblInvoice, 4));

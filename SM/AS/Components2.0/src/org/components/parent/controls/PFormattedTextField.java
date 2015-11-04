@@ -17,6 +17,8 @@ import com.components.custom.IContainer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.AttributeSet;
@@ -28,7 +30,7 @@ import org.components.parent.Documents.DocumentListenerx;
  *
  * @author nano
  */
-public class PTextField extends javax.swing.JTextField implements IComponent{
+public class PFormattedTextField extends javax.swing.JFormattedTextField implements IComponent{
 
     protected  IContainer container;
     private String id;
@@ -72,7 +74,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
                 });
                 break;
             case FocusEvent.FOCUS_LOST:
-                final PTextField org = (PTextField) e.getComponent();
+                final PFormattedTextField org = (PFormattedTextField) e.getComponent();
 
                 SwingUtilities.invokeLater(new Runnable() {
 
@@ -90,11 +92,11 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     }
 
     /** Creates new form BeanForm */
-    public PTextField() {
-        super();
+    public PFormattedTextField() {
         initComponents();
         id=SystemUtil.getKeyStr();
-//        addDocumentListener(docx);        
+//        addDocumentListener(docx);
+        addKeyListener(keyadapter);
         
         setDocument(new CDocument());
         
@@ -130,6 +132,15 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     }
     
     
+    KeyAdapter keyadapter=new KeyAdapter() {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+//            if(e.getKeyCode()==KeyEvent.VK_CONTROL)
+//                System.out.println("controll pressed");
+        }
+    
+    };
 
     /** This method is called from within the constructor to
      * initialize the form.

@@ -1,7 +1,6 @@
 package org.biz.invoicesystem.service.inventory;
 
 import org.biz.dao.service.Service;
-import org.biz.dao.util.EntityService;
 import org.biz.erp.inventory.dao.TransferOrderDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
@@ -25,14 +24,14 @@ public class TransferOrderService extends Service {
     }
 
     public void createInventoryJournal(TransferOrder invoice) {
-        invoice.setId(EntityService.getKeys());
+//        invoice.setId(EntityService.getKeys());
         //inventory journal for out
         InventoryJournal ijOut = new InventoryJournal();
-        ijOut.setId(EntityService.getKeys());
+//        ijOut.setId(EntityService.getKeys());
         for (TransferOrderLineItem toli : invoice.getLineItemList()) {
             InventoryJournalLine ijl = new InventoryJournalLine();
             ijl.setId(toli.getId());
-            ijl.setDescription(toli.getId());
+//            ijl.setDescription(toli.getId());
             ijl.setItem(toli.getItem());
             ijl.setQty(toli.getQty());
             ijl.setShop(invoice.getShopFrom());
@@ -48,11 +47,11 @@ public class TransferOrderService extends Service {
         }
         //inventory journal for in
         InventoryJournal ijIn = new InventoryJournal();
-        ijOut.setId(EntityService.getKeys());
+//        ijOut.setId(EntityService.getKeys());
         for (TransferOrderLineItem toli : invoice.getLineItemList()) {
             InventoryJournalLine ijl = new InventoryJournalLine();
             ijl.setId(toli.getId());
-            ijl.setDescription(toli.getId());
+//            ijl.setDescription(toli.getId());
             ijl.setItem(toli.getItem());
             ijl.setQty(toli.getQty());
             ijl.setShop(toli.getShopTo());

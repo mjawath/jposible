@@ -5,7 +5,6 @@
 package org.biz.invoicesystem.ui.transactions;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,9 +22,7 @@ import org.biz.invoicesystem.service.master.CustomerService;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.StaffService;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
-import org.biz.invoicesystem.system.SystemEntityUtil;
 import org.biz.invoicesystem.ui.transactions.components.PosSalesInvoiceLineItemV31;
-import org.components.util.ComponentFactory;
 import org.components.windows.TabPanelUI;
 
 /**
@@ -77,7 +74,7 @@ public class PosInvoiceV4 extends TabPanelUI {
                 panelToEty(salesline);//get the object from panel
                 Object id = salesline.getId();
                 if (id == null) {
-                    salesline.setId(System.currentTimeMillis() + "tt");
+//                    salesline.setId(System.currentTimeMillis() + "tt");
                 }
                 //validate before committing the data
                 //then add it to the table 

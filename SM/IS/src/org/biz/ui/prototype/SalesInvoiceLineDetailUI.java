@@ -6,15 +6,12 @@
 
 package org.biz.ui.prototype;
 
+import com.components.custom.ActionTask;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.event.DocumentEvent;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.ui.list.master.ItemController;
 import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
 import org.components.controls.CTextField;
-import org.components.parent.Documents.DocumentListenerx;
 import org.components.windows.UIController;
 
 /**
@@ -82,22 +79,22 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
             .addGroup(mypanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tItemSearchTextComp, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(tQty, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(tPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(tQty, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(tTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         mypanelLayout.setVerticalGroup(
             mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(mypanelLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,7 +114,7 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(mypanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 63, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,24 +169,26 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
         tItemSearchTextComp.setSelectedProperty("code");
 
         
-        tQty.addDocumentListener(new MyCalculator());
+//        tQty.setDocAction(new MyCalculator());
         
-        tPrice.addDocumentListener(new MyCalculator());
+//        tPrice.setDocAction(new MyCalculator());
         
-        tQty.addActionListener(new ActionListener() {
+        tQty.setActionTask(new ActionTask() {
 
             @Override
-            public void actionPerformed(ActionEvent ae) {
+            public Component actionFired(Object source) {
                 sic.onSalesInvoiceLineItemQTYChanged(SalesInvoiceLineDetailUI.this);
+                return null;
             }
         });
 
         
-        tPrice.addActionListener(new ActionListener() {
+        tPrice.setActionTask(new ActionTask() {
 
             @Override
-            public void actionPerformed(ActionEvent ae) {
+            public Component actionFired(Object source) {
                 sic.onSalesInvoiceLineItemPriceChanged(SalesInvoiceLineDetailUI.this);
+                return containerUI.goToNextRowFirstComOrCreateNew();
             }
         });
         
@@ -204,9 +203,9 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
 //            }
 //        });
         
-        addToFocus(tItemSearchTextComp);
-        addToFocus(tPrice);
+        addToFocus(tItemSearchTextComp);        
         addToFocus(tQty);        
+        addToFocus(tPrice);
         
         
         
@@ -221,18 +220,10 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
     }
 
       
-     private class MyCalculator extends DocumentListenerx{
+     private class MyCalculator extends ActionTask{
         
-        public void action(DocumentEvent e) {
-            
-            
-            try {
-//                salesController.calulateLineData();
-                
-            } catch (Exception ex) {
-            
-            }
-            
+        public void actionCall() {            
+            sic.onSalesInvoiceLineItemQTYChanged(SalesInvoiceLineDetailUI.this);
         }
         
         

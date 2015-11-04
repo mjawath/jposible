@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.UIEty;
-import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.service.master.SupplierService;
 import org.components.windows.TabPanelUI;
@@ -69,7 +68,7 @@ public Supplier uiToEntity(Supplier s)throws Exception{
     try { 
 
 
-  s.setId(EntityService.getEntityService().getKey());     
+//  s.setId(EntityService.getEntityService().getKey());     
   s.setCode(UIEty.tcToStr(tSuppId));
   s.setTitle(UIEty.cmbtostr(tSuppTitle));
   s.setName(UIEty.tcToStr(tSuppName));

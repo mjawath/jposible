@@ -47,14 +47,7 @@ public class InventoryMonthlySummery extends BusObj  implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date modifiedDate;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    
     public String getCode() {
         return code;
     }

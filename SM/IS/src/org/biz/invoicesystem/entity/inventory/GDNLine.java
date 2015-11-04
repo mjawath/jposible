@@ -77,13 +77,7 @@ public class GDNLine extends BusObj  implements Serializable {
     private Double price;
     private Double lineAmount;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
     
 
 }

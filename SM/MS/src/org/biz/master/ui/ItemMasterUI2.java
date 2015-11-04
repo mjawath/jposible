@@ -8,7 +8,12 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +24,13 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.filechooser.FileFilter;
 import org.biz.MSResources;
 import org.biz.app.ui.util.Command;
@@ -37,11 +48,11 @@ import org.biz.invoicesystem.entity.master.ItemBarcode;
 import org.biz.invoicesystem.entity.master.ItemVariation;
 import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.entity.master.UOM;
-import org.biz.invoicesystem.master.ui.*;
+import org.biz.invoicesystem.master.ui.ItemMasterTab;
+import org.biz.invoicesystem.master.ui.ItemPopUp;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.ui.list.master.CategoryController;
 import org.biz.invoicesystem.ui.list.master.CategoryLVUI;
-import org.biz.invoicesystem.ui.list.master.ItemController;
 import org.biz.invoicesystem.ui.list.master.ItemListUix;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.DetailPanel;
@@ -824,7 +835,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
     private UOM createUOM() {
         UOM uom = new UOM();
-        uom.setId(tblunitprices.getSelectedModelID());
+//        uom.setId(tblunitprices.getSelectedModelID());
         uom.setCode(tunitsymbot.getText());
         int ty = tunittype.getSelectedIndex();
         uom.setType((byte) ty);
@@ -972,7 +983,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         item.setInactive(tItemTrakInactive.isSelected());      
         item.setWholesalePrice(UIEty.tcToDouble(tWholesalePrice));
         item.setMetaInfo(tMetaInfo.getText());  
-        item.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, item.getId()));
+//        item.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, item.getId()));
         item.setModel(UIEty.tcToStr(tmodel));
         item.setType(UIEty.tcToStr(ttype));
 
@@ -1043,7 +1054,6 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     public boolean pasteItem(Item i, String itemid) throws Exception {
         boolean b = false;
         try {
-            i.setId(itemid);
             itemService.getDao().update(i);
             b = true;
         } catch (Exception e) {
@@ -1237,7 +1247,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
      public Item uiToEty(Item i) throws Exception {
         try {
-            i.setId(EntityService.getEntityService().getKey(""));
+
             i.setCode(UIEty.tcToStr(tItemcode));
             i.setDescription(UIEty.tcToStr(tItemDescription));
 //            i.setCategory(UIEty.cmbtostr(tItemCategory)); //    combo
@@ -1259,7 +1269,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             i.setInactive(tItemTrakInactive.isSelected());//tItemTrakInactive chk      
             i.setWholesalePrice(UIEty.tcToDble0(tWholesalePrice));//tWholesalePrice
             i.setMetaInfo(tMetaInfo.getText());  //tMetaInfo
-            i.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, i.getId()));
+//            i.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, i.getId()));
             i.setModel(UIEty.tcToStr(tmodel));
             i.setType(UIEty.tcToStr(ttype));
 
@@ -1574,7 +1584,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
                 Vector row = it.next();
                 ItemVariation var = new ItemVariation();
-                var.setId(EntityService.getEntityService().getKey(""));
+//                var.setId(EntityService.getEntityService().getKey(""));
                 var.setDescription(row.get(0) == null ? "" : row.get(0).toString());
                 var.setsPrice1(row.get(1) == null ? 0.0 : Double.parseDouble(row.get(1).toString()));
                 var.setsPrice2(row.get(2) == null ? 0.0 : Double.parseDouble(row.get(2).toString()));
@@ -1618,7 +1628,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
             for (Iterator<Vector> it = vecOfVec.iterator(); it.hasNext();) {
                 Vector row = it.next();
                 ItemBarcode bCode = new ItemBarcode();
-                bCode.setId(EntityService.getEntityService().getKey(""));
+//                bCode.setId(EntityService.getEntityService().getKey(""));
                 bCode.setType(row.get(0) == null ? "" : row.get(0).toString());
                 bCode.setBarcode(row.get(1) == null ? "" : row.get(1).toString());
                 lstFBarcodes.add(bCode);

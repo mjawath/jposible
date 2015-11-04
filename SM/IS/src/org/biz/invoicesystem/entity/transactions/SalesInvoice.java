@@ -19,9 +19,9 @@ import javax.persistence.Temporal;
 import org.biz.app.ui.util.Tracer;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Customer;
+import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.biz.invoicesystem.entity.master.Shop;
 
 /**
  *
@@ -126,13 +126,7 @@ public class SalesInvoice extends BusObj {
         lineItems.add(salesInvoiceLineItem);
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getRemarks() {
         return Remarks;

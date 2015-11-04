@@ -6,16 +6,9 @@
 
 package org.biz.ui.prototype;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
-import java.awt.Toolkit;
-import java.awt.event.AWTEventListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -32,6 +25,7 @@ public class GridDataContainerUI extends CPanel implements GridDataContainer{
 
     private LineItemAdder itemAdder;
     private List listBusObject = new ArrayList(); 
+    private List<GridDataLineDetailUI> listLinesUI = new ArrayList(); 
     private GridDataLineDetailUI selectedLine;
     
     static {
@@ -72,20 +66,6 @@ public class GridDataContainerUI extends CPanel implements GridDataContainer{
                 }
             }
         });
-        
-//                KeyEventDispatcher ked = new KeyEventDispatcher() {
-//            KeyboardFocusManager fm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-//
-//            public boolean dispatchKeyEvent(KeyEvent e) {
-//                
-////                if(e.getKeyCode() == )
-//                
-////                e.consume();
-//                return false;
-//            }
-//        };
-
-//        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(ked);
 
     }
     /**
@@ -101,48 +81,44 @@ public class GridDataContainerUI extends CPanel implements GridDataContainer{
         listBusObject.add(obj);
         com.containerUI = this;
         container.add(com);
+        listLinesUI.add(com);
         addToFocus(com);
         repaint();
         revalidate();
-        com.setFocusable(true);
-        com.addMouseListener(new MouseAdapter() {
+    }
+    
+    public Component goToNextRowFirstComOrCreateNew() {
+        Component gld = goToNextRowFirstCom();
+        if(gld==null){
+            addNewToTable();
+            return goToNextRowFirstCom();
+        }else{
+            return gld;
+        }        
+    }
+    
+    public Component goToNextRowFirstCom() {
+        GridDataLineDetailUI gld = getNextRow();
+        if (gld != null) {
+            return gld.gotoFirstComponent();
+        }
+        return null;
+    }
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                
-//                com.requestFocusInWindow();
-               
+    public GridDataLineDetailUI getNextRow() {
+        GridDataLineDetailUI gld = getSelected();
+
+        int x = 0;
+        for (GridDataLineDetailUI com : listLinesUI) {
+
+            if (com == gld) {
+                if(x +1 < listLinesUI.size() )
+                return (GridDataLineDetailUI) listLinesUI.get(++x);
+
             }
-
-        });
-      
-        
-        addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                
-                
-                System.out.println(e.getKeyChar());
-            }
-        
-        });
-        
-      
-        
-
-        /**
-         * Adds an event listener which will listen for mouse events generated
-         * from anywhere within the main frame.
-         */
-        final AWTEventListener awtEventListener = new AWTEventListener() {
-            
-            public void eventDispatched(AWTEvent event) {                
-            }
-        };
-
-        Toolkit.getDefaultToolkit().addAWTEventListener(awtEventListener, AWTEvent.MOUSE_EVENT_MASK);
-
+            x++;
+        }
+        return null;
     }
     
     public void onRemovLineItem( GridDataLineDetailUI line){        
@@ -152,6 +128,7 @@ public class GridDataContainerUI extends CPanel implements GridDataContainer{
     public void removLineItem(GridDataLineDetailUI line) {
         container.remove(line);        
         listBusObject.remove(line.getLineObject());
+        listLinesUI.remove(line);
         focus.remove(line);
         revalidate();
         repaint();

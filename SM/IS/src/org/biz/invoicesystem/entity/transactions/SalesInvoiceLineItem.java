@@ -5,10 +5,10 @@
 package org.biz.invoicesystem.entity.transactions;
 
 import app.utils.MathUtil;
-import org.biz.entity.BusObj;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.UOM;
@@ -47,10 +47,6 @@ public class SalesInvoiceLineItem extends BusObj implements Serializable  {
         this.uom = uom;
     }
     
-    public String getId() {
-        return id;
-    }
-
     public Shop getShop() {
         return shop;
     }
@@ -67,9 +63,7 @@ public class SalesInvoiceLineItem extends BusObj implements Serializable  {
         this.warehouse = warehouse;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+   
 
     public void setItem(Item item) {
         this.item = item;

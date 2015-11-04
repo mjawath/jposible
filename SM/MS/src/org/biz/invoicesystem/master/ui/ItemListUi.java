@@ -11,7 +11,6 @@ import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.PagedListUI;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
-import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.ItemService;
@@ -431,7 +430,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
 
 
             if (PromptResult == 0) {
-                exist.setId(EntityService.getEntityService().getKey(""));
+
                 String oldCode = exist.getCode();
                 exist.setCode("Copy " + oldCode);
 

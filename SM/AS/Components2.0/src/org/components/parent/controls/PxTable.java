@@ -16,7 +16,6 @@ import java.awt.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -314,7 +313,7 @@ public class PxTable<T> extends JTable implements IComponent {
     public String getSelectedModelID() {
         Object ob = getSelectedObject();
         if (ob != null && ob instanceof BusObj) {
-            return ((BusObj) ob).getId();
+            return String.valueOf(((BusObj) ob).getId());
         }
         return null;
     }

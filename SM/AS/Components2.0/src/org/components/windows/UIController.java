@@ -10,7 +10,6 @@ import com.components.custom.TextFieldWithPopUP;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.QueryManager;
@@ -18,8 +17,8 @@ import org.biz.app.ui.util.StringUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
-import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
+import org.biz.entity.PrimaryKey;
 import org.components.test.MenuBuilder;
 
 /**
@@ -72,6 +71,10 @@ public class UIController<T> {
     return UIFrame;
     }
     
+    //*** new implementation
+    public void executeToFirstPageTask() {
+        getPopupQueryManger().executeToFirstPageTask();
+    }
     
     public void showFrame(){
         UIFrame.setVisible(true);
@@ -213,7 +216,7 @@ public class UIController<T> {
                 return null;
             }
 
-            ((BusObj) busObject).setId(id.toString());
+            ((BusObj) busObject).setId((PrimaryKey)id);
             toUpdate.add(busObject);
             preUpdate(toSave, toUpdate, toDelete);
             auditPersistenceData(toSave);
@@ -233,7 +236,7 @@ public class UIController<T> {
         return result;
     }
 
-    private void preCreate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+    public void preCreate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
         
     }
 
@@ -242,7 +245,7 @@ public class UIController<T> {
         Date cDate = GenericDAOUtil.currentTime();
         
         for (BusObj bus : objs) {            
-            bus.setId( EntityService.getKey(""));
+//            bus.setId( EntityService.getKey(""));
             bus.setSavedDate(cDate);
             bus.setEditedDate(cDate);
             bus.setDepententEntitiesIDs();
@@ -262,7 +265,7 @@ public class UIController<T> {
     }
 
     
-    private void preSave(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+    public void preSave(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
         
     }
     

@@ -17,10 +17,20 @@ import com.components.custom.IContainer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.NumberFormat;
+import java.util.Date;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.DefaultFormatter;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.InternationalFormatter;
+import javax.swing.text.NumberFormatter;
 import javax.swing.text.PlainDocument;
 import org.components.parent.Documents.DocumentListenerx;
 
@@ -28,11 +38,58 @@ import org.components.parent.Documents.DocumentListenerx;
  *
  * @author nano
  */
-public class PTextField extends javax.swing.JTextField implements IComponent{
+public class PFormatedTextField extends javax.swing.JFormattedTextField  implements IComponent{
 
     protected  IContainer container;
     private String id;
     private ActionTask actionTask;
+    
+    
+    
+    public void setFormate(Object formate){
+        setFormatterFactory(getMyDefaultFormatterFactory(formate));        
+    
+    }
+    
+    public void setFormate(Object formate,Object formateDisplay,Object formateEdit) {
+//        setFormatterFactory(new DefaultFormatterFactory(getMyDefaultFormatterFactory(formate),getMyDefaultFormatterFactory(formateDisplay),getMyDefaultFormatterFactory(formateEdit));
+    }
+    
+
+    
+    /**
+     * Returns an AbstractFormatterFactory suitable for the passed in Object
+     * type.
+     */
+    private AbstractFormatterFactory getMyDefaultFormatterFactory(Object type) {
+        if (type instanceof DateFormat) {
+            return new DefaultFormatterFactory(new DateFormatter((DateFormat) type));
+        }
+        if (type instanceof NumberFormat) {
+            return new DefaultFormatterFactory(new NumberFormatter(
+                    (NumberFormat) type));
+        }
+        if (type instanceof Format) {
+            return new DefaultFormatterFactory(new InternationalFormatter(
+                    (Format) type));
+        }
+        if (type instanceof Date) {
+            return new DefaultFormatterFactory(new DateFormatter());
+        }
+        if (type instanceof Number) {
+            AbstractFormatter displayFormatter = new NumberFormatter();
+            ((NumberFormatter) displayFormatter).setValueClass(type.getClass());
+            AbstractFormatter editFormatter = new NumberFormatter(
+                    new DecimalFormat("#.#"));
+            ((NumberFormatter) editFormatter).setValueClass(type.getClass());
+
+            return new DefaultFormatterFactory(displayFormatter,
+                    displayFormatter, editFormatter);
+        }
+        return new DefaultFormatterFactory(new DefaultFormatter());
+    }
+
+
 
     public ActionTask getActionTask() {
         return actionTask;
@@ -72,7 +129,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
                 });
                 break;
             case FocusEvent.FOCUS_LOST:
-                final PTextField org = (PTextField) e.getComponent();
+                final PFormatedTextField org = (PFormatedTextField) e.getComponent();
 
                 SwingUtilities.invokeLater(new Runnable() {
 
@@ -90,13 +147,14 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     }
 
     /** Creates new form BeanForm */
-    public PTextField() {
+    public PFormatedTextField() {
         super();
-        initComponents();
         id=SystemUtil.getKeyStr();
-//        addDocumentListener(docx);        
+//        addDocumentListener(docx);
+
         
-        setDocument(new CDocument());
+        setDocument(new CDocument());//this Document's  insertString is not used 
+        //i think we should use document filter class to filter out user inputs
         
     }
     
@@ -130,6 +188,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     }
     
     
+
 
     /** This method is called from within the constructor to
      * initialize the form.

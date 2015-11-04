@@ -101,7 +101,7 @@ public class FxInvoice extends TabPanelUI implements Initializable {
         customer.setCode("code");
     
     */ //direct mapping
-        cust.setId("dasf");
+//        cust.setId("dasf");
         cust.setCode("yyy");
         BeanPathAdapter<Customer> adapter = new BeanPathAdapter<>(cust);
         
@@ -128,7 +128,7 @@ public class FxInvoice extends TabPanelUI implements Initializable {
     public void btnAction(){
 //        cust=new Customer();
         System.out.println("id "+cust.getId());
-        cust.setId("xxxxxxxx");
+//        cust.setId("xxxxxxxx");
     }
     
 }

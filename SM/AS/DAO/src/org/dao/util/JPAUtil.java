@@ -10,7 +10,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import org.biz.app.ui.util.Tracer;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
-import org.eclipse.persistence.jpa.JpaHelper;
 
 public class JPAUtil {
 
@@ -110,7 +109,7 @@ public class JPAUtil {
         try {
             //how to start derby database
 
-            entityManagerFactory = Persistence.createEntityManagerFactory("RaheemiyaPU");
+            entityManagerFactory = Persistence.createEntityManagerFactory("");
             entityManager = entityManagerFactory.createEntityManager();
 
         } catch (Throwable e) {
