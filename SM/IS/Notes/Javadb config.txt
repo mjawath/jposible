@@ -1,0 +1,9 @@
+javadb is case sensitive 
+to make it case insensitive 
+we have to do these things
+ we have to create a new database schema which like
+jdbc:derby://localhost:1527/SwedishDB;create=true;collation=TERRITORY_BASED:SECONDARY [root on ROOT]
+
+we cannot drop or modify existing schema of javadb 
+
+http://db.apache.org/derby/docs/10.11/devguide/index.html
