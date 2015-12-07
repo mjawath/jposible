@@ -4,7 +4,6 @@
  */
 package org.components.parent.controls.editors;
 
-import java.util.Date;
 import javax.swing.JTable;
 
 /**
@@ -69,5 +68,15 @@ public class TableInteractionListner {
     }
     */
     public void selectionChanged(Object newRowObject){
+    }
+    
+    
+    /**
+     * same way table can return column definiton and data for each row public
+     * Object[] getTableData(Object row){ return new Object[0];// new
+     * mycolumndefinition("olumnname , column type , column value for specific
+     * row) }
+     */
+    public void onDoubleClicked(Object newRowObject) {
     }
 }

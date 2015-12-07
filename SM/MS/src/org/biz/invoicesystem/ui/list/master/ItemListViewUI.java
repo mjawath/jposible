@@ -6,16 +6,18 @@
 
 package org.biz.invoicesystem.ui.list.master;
 
+import java.util.ArrayList;
 import java.util.Date;
-import org.biz.app.ui.util.QueryManager;
+import java.util.List;
 import org.biz.invoicesystem.entity.master.Item;
-import org.components.parent.controls.editors.TableInteractionListner;
+import org.components.parent.controls.PTableColumn;
 import org.components.windows.ListViewUI;
 
 /**
  *
  * @author Jawad
  */
+@Deprecated
 public class ItemListViewUI extends ListViewUI {
 
     /**
@@ -23,33 +25,24 @@ public class ItemListViewUI extends ListViewUI {
      */
     public ItemListViewUI() {
         super();
-    }
-    
-    
-    @Override
-    public void initPaging(QueryManager qm) {
-   
-       if(qm==null){
-       
-       } 
-//        initComponents();      
-              
-        super.initPaging(qm);    
-//        super.initPaging(qm) ;    
-        tbl.init(Item.class, new Class[]{String.class, String.class, Date.class, Date.class},
-                 new String[]{ "code", "description","savedDate", "editedDate"});
-        tbl.setTableInteractionListner(tableInteractionListner);
         
+        List<PTableColumn> tblCols = new ArrayList();
+        tblCols.add(new PTableColumn(String.class, "ID"));
+        tblCols.add(new PTableColumn(String.class, "Code"));
+        tblCols.add(new PTableColumn(String.class, "Description"));
+        tblCols.add(new PTableColumn(Date.class, "savedDate"));
+        tblCols.add(new PTableColumn(Date.class, "editedDate"));
+        
+
+        getTable().init(Item.class, tblCols);
     }
     
-    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
-
-        @Override
-        public Object[] getTableData(Object row) {
-            Item item = (Item) row;
-            return new Object[]{item, item.getCode(), item.getDescription(), item.getSavedDate(), item.getEditedDate()};
-        }
-    };
+        
+    @Override
+    public Object[] getTableData(Object row) {
+        Item item = (Item) row;
+        return new Object[]{item, item.getCode(), item.getDescription(), item.getSavedDate(), item.getEditedDate()};
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

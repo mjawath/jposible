@@ -18,7 +18,6 @@ import javax.swing.SwingWorker;
 import org.biz.dao.service.Service;
 import org.biz.util.ReflectionUtility;
 import org.components.controls.CButton;
-import org.components.controls.CxTable;
 import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 

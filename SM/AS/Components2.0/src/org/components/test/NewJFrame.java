@@ -6,13 +6,6 @@
 
 package org.components.test;
 
-import java.text.NumberFormat;
-import javax.swing.event.DocumentEvent;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.NumberFormatter;
-import org.components.parent.Documents.DocumentListenerx;
-import org.components.parent.Documents.DoubleDocument;
-
 /**
  *
  * @author Jawad
@@ -26,19 +19,21 @@ public class NewJFrame extends javax.swing.JFrame {
         initComponents();
 //        System.out.println(PropertyUtil.getApplicationmod());
         System.out.println("------");
+//        final NumberFormatter numberFormatter = new NumberFormatter(NumberFormat.getInstance());
+//        numberFormatter.setCommitsOnValidEdit(false );
+//        cFormattedTextField1.setFormate(numberFormatter);
+//        AbstractDocument doc= (AbstractDocument)cFormattedTextField1.getDocument();
         
-        cFormattedTextField1.setFormate(new NumberFormatter(NumberFormat.getInstance()));
-        AbstractDocument doc= (AbstractDocument)cFormattedTextField1.getDocument();
+//        cFormattedTextField1.setDocument(new DoubleDocument());
+//        cFormattedTextField1.addDocumentListener(new DocumentListenerx(){
+//
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                super.insertUpdate(e); //To change body of generated methods, choose Tools | Templates.
+//            }
+//        
+//        });
         
-        cFormattedTextField1.setDocument(new DoubleDocument());
-        cFormattedTextField1.addDocumentListener(new DocumentListenerx(){
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                super.insertUpdate(e); //To change body of generated methods, choose Tools | Templates.
-            }
-        
-        });
         
     }
 
@@ -52,17 +47,17 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        cFormattedTextField1 = new org.components.controls.CFormattedTextField();
         cTextField1 = new org.components.controls.CTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/components/test/1402224188_overview3d.png"))); // NOI18N
         jButton1.setText("jButton1");
 
-        cFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-
         cTextField1.setText("cTextField1");
+
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,27 +70,22 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(179, 179, 179)
-                        .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(197, Short.MAX_VALUE)
-                    .addComponent(cFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(42, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
+                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(cTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(137, Short.MAX_VALUE)
-                    .addComponent(cFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(138, Short.MAX_VALUE)))
         );
 
         pack();
@@ -137,8 +127,8 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.controls.CFormattedTextField cFormattedTextField1;
     private org.components.controls.CTextField cTextField1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     // End of variables declaration//GEN-END:variables
 }

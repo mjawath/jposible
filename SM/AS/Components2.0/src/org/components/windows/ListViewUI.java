@@ -91,6 +91,13 @@ public class ListViewUI extends javax.swing.JPanel {
             ListViewUI.this.selectionChanged(newRowObject); //To change body of generated methods, choose Tools | Templates.
         }
 
+        @Override
+        public void onDoubleClicked(Object newRowObject) {
+            ListViewUI.this.onDoubleClicked(newRowObject);
+        }
+        
+        
+
     };
          
     public Object[] getTableData(Object row) {
@@ -98,10 +105,18 @@ public class ListViewUI extends javax.swing.JPanel {
     }
     
     public void selectionChanged(Object newRowObject) {
+        if(controller==null )return;
         controller.setCurrentBusObject(newRowObject);
     }
 
-
+    public void onDoubleClicked(Object newRowObject) {
+        if (controller == null) {
+            return;
+        }
+        controller.setCurrentBusObject(newRowObject);
+        controller.gotoDetailPanel();
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -149,7 +164,7 @@ public class ListViewUI extends javax.swing.JPanel {
     protected org.components.controls.CxTable tbl;
     // End of variables declaration//GEN-END:variables
 
-    private UIController controller;
+    protected UIController controller;
     
     public void setController(UIController controller) {
         this.controller = controller;

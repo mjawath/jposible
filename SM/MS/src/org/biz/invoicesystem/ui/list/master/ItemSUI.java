@@ -35,11 +35,15 @@ public class ItemSUI extends  SearchQueryUIPanel {
     }
 
     
-      public Map<String, Object> getQueryParameterMap() {
+    public Map<String, Object> getQueryParameterMap() {
 
         Map<String, Object> p = new HashMap<>();
         p.put(QRY, ttSearch.getText());
         return p;
+    }
+    
+    public boolean isOrderByCreationDate(){
+        return tchkCreation.isSelected();
     }
     
     
@@ -48,9 +52,13 @@ public class ItemSUI extends  SearchQueryUIPanel {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        tbtnGroup = new javax.swing.ButtonGroup();
         ttSearch = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         tbtnSearch = new javax.swing.JButton();
+        tchkCreation = new org.components.controls.CCheckBox();
+        rdoCode = new javax.swing.JRadioButton();
+        rdoDesc = new javax.swing.JRadioButton();
 
         jButton1.setText("jButton1");
 
@@ -63,6 +71,15 @@ public class ItemSUI extends  SearchQueryUIPanel {
             }
         });
 
+        tchkCreation.setText("By creation date");
+
+        tbtnGroup.add(rdoCode);
+        rdoCode.setSelected(true);
+        rdoCode.setText("Code");
+
+        tbtnGroup.add(rdoDesc);
+        rdoDesc.setText("Desc");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,26 +88,39 @@ public class ItemSUI extends  SearchQueryUIPanel {
                 .addGap(4, 4, 4)
                 .addComponent(jLabel1)
                 .addGap(26, 26, 26)
-                .addComponent(ttSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tbtnSearch)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rdoCode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdoDesc))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ttSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tbtnSearch)
+                        .addGap(18, 18, 18)
+                        .addComponent(tchkCreation, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ttSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(tbtnSearch))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(tbtnSearch)
+                    .addComponent(tchkCreation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdoCode)
+                    .addComponent(rdoDesc))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
     
-        ((ItemController)controller).executeSearchForCustom();
+        ((ItemController)controller).executeToFirstPageTask();
       
 //      qms.executeToFirstPageTask();
         
@@ -103,7 +133,11 @@ public class ItemSUI extends  SearchQueryUIPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JRadioButton rdoCode;
+    private javax.swing.JRadioButton rdoDesc;
+    private javax.swing.ButtonGroup tbtnGroup;
     private javax.swing.JButton tbtnSearch;
+    private org.components.controls.CCheckBox tchkCreation;
     private javax.swing.JTextField ttSearch;
     // End of variables declaration//GEN-END:variables
 }

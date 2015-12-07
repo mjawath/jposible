@@ -21,7 +21,6 @@ import org.biz.books.entity.accounts.bank.BankBranch;
 import org.biz.chequeChequing.entity.service.bank.BankBranchService;
 import org.biz.chequeChequing.entity.service.bank.BankService;
 import org.biz.dao.util.EntityService;
-import org.biz.invoicesystem.system.SystemUtil;
 import org.components.windows.TabPanelUI;
 
 /**

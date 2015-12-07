@@ -6,6 +6,12 @@
 
 package org.components.windows;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
+import org.biz.app.ui.util.StringUtility;
+
 /**
  *
  * @author jawa
@@ -14,18 +20,57 @@ public class UIFrame extends javax.swing.JFrame {
 
     
     private UIController controller;
+    protected JTabbedPane tabbedPane;
     /**
      * Creates new form UIFrame
      */
     public UIFrame() {
-        initComponents();
-        setFocusTraversalPolicy(new MyFocusPolicy());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        initComponents();
+//        setFocusTraversalPolicy(new MyFocusPolicy());
+        
+        addWindowFocusListener(new WindowAdapter() {
+
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                
+                System.out.println("Widnows"+e);
+            }
+        
+        });
+
     }
 
     
     public void setController( UIController controller ){
         this.controller = controller;
     }
+    
+    public void setTabbedPane(JTabbedPane pane){
+       this.tabbedPane =  pane;    
+    }
+    
+    public void goToDetail(){   
+        Object [] lst =tabbedPane.getComponents();
+        for(Object obj :lst){
+            if(obj instanceof DetailPanel && getDetail() == obj){
+                tabbedPane.setSelectedComponent(getDetail());
+            }
+            
+        }
+    }
+    
+    public void goToList() {
+        Object[] lst = tabbedPane.getComponents();
+        for (Object obj : lst) {
+            if (obj instanceof ListViewUI && StringUtility.containsStringIgnoreCase("List", ((DetailPanel) obj).getTabName())) {
+                tabbedPane.setSelectedComponent((DetailPanel) obj);
+            }
+
+        }
+    }
+    
     
     public MasterViewUI getMaster(){
     return null;

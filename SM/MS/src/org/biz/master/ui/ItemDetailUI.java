@@ -57,7 +57,7 @@ import org.biz.invoicesystem.ui.list.master.ItemListUix;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.DetailPanel;
 
-public class ItemMasterUI2 extends DetailPanel<Item> {
+public class ItemDetailUI extends DetailPanel<Item> {
 
     private List<Item> items;
     private List<Category> categorys;
@@ -70,10 +70,12 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
     private List<File> images = new ArrayList<File>();
     private TableInteractionListner tblInterUnit;    
     
-    public ItemMasterUI2() {
+    public ItemDetailUI() {
 //        initComponents();//pp
 //        keyListeners();
         super();
+        
+        
     }
 
     /////////////////////////////////////
@@ -144,7 +146,9 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         initUnitTable();
         initFileChooser();
         clear();
-
+        addToFocus(tItemcode);
+        addToFocus(tItemDescription);
+        addToFocus(tItemCategory);
 
     }
 
@@ -201,11 +205,11 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
                     if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 
                         try {
-                            Item item = itemService.getDao().findItemByCode(UIEty.tcToStr(tItemcode));
-                            if (item != null) {
-                                setDataToUI(item);
-                            }
-                            tItemDescription.requestFocus();
+//                            Item item = itemService.getDao().findItemByCode(UIEty.tcToStr(tItemcode));
+//                            if (item != null) {
+//                                setDataToUI(item);
+//                            }
+//                            tItemDescription.requestFocus();
 
                         } catch (Exception exx) {
                             exx.printStackTrace();
@@ -866,7 +870,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
 
         List<UOM> uoms = tblunitprices.getModelCollection();
         if (uoms != null && uoms.size() < 2) {
-            MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
+            MessageBoxes.wrnmsg(ItemDetailUI.this, MSResources._10001, MSResources._1000);
             focusManager.setTemCom(tunitsymbot);
             return false;
         }
@@ -887,7 +891,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         }
         
         if(!(isPrim && isCar)){
-            MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
+            MessageBoxes.wrnmsg(ItemDetailUI.this, MSResources._10001, MSResources._1000);
             focusManager.setTemCom(tunitsymbot);
             return false;
         }
@@ -917,7 +921,7 @@ public class ItemMasterUI2 extends DetailPanel<Item> {
         //prime  unit
         //logic changes type is defined 
         if (!item.isUOMValid(uom)) {
-            MessageBoxes.wrnmsg(ItemMasterUI2.this, MSResources._10001, MSResources._1000);
+            MessageBoxes.wrnmsg(ItemDetailUI.this, MSResources._10001, MSResources._1000);
             focusManager.setTemCom(tunitsymbot);
             return;
         }

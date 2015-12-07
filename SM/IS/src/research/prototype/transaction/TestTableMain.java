@@ -6,9 +6,7 @@
 
 package research.prototype.transaction;
 
-import javax.persistence.AccessType;
 import javax.swing.UIManager;
-import org.biz.app.ui.util.PropertyUtil;
 
 /**
  *
@@ -21,7 +19,7 @@ public class TestTableMain extends javax.swing.JFrame {
      */
     public TestTableMain() {
         initComponents();
-        System.out.println("--------------"+PropertyUtil.getApplicationmod()); 
+//        System.out.println("--------------"+PropertyUtil.getApplicationmod()); 
     }
 
     /**

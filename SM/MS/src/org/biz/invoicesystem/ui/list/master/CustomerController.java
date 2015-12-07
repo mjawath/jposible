@@ -7,7 +7,6 @@ package org.biz.invoicesystem.ui.list.master;
 
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.service.master.CustomerService;
-import org.biz.master.ui.CustomerDetailUI;
 import org.components.windows.UIController;
 
 /**
@@ -24,11 +23,9 @@ public class CustomerController extends UIController<Customer>{
     
     public void initUI() {
         
-        CustomerDetailUI detail = new CustomerDetailUI();
-        CustomerListUi list = new CustomerListUi();
-        setDetailView(detail);
-        setListView(list, mmm);
-        detail.config();
+        CustomerFrame cf = new CustomerFrame();
+        setUIFrame(cf);
+//        
     }
     
     public void executeSearchForCustom() {

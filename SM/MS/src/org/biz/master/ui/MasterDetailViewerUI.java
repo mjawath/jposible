@@ -98,7 +98,7 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
 
                 MasterDetailViewerUI it = new MasterDetailViewerUI();
                 SystemUtil.addTabToSessions("main", it);
-                ItemMasterUI2 item = new ItemMasterUI2();
+                ItemDetailUI item = new ItemDetailUI();
 
                 CustomerMasterUI2 customerMasterUI2 = new CustomerMasterUI2();
                 CustomerListUi custList = new CustomerListUi();

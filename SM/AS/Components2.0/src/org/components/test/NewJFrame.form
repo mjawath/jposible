@@ -33,15 +33,12 @@
                       <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
                       <Component id="cTextField1" min="-2" pref="186" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="jFormattedTextField1" min="-2" pref="174" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="35" max="32767" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="197" max="32767" attributes="0"/>
-                  <Component id="cFormattedTextField1" min="-2" pref="161" max="-2" attributes="0"/>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
-              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -50,16 +47,11 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="166" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <Component id="jFormattedTextField1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="83" max="32767" attributes="0"/>
               <Component id="cTextField1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="137" max="32767" attributes="0"/>
-                  <Component id="cFormattedTextField1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="138" max="32767" attributes="0"/>
-              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,16 +65,16 @@
         <Property name="text" type="java.lang.String" value="jButton1"/>
       </Properties>
     </Component>
-    <Component class="org.components.controls.CFormattedTextField" name="cFormattedTextField1">
+    <Component class="org.components.controls.CTextField" name="cTextField1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="cTextField1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
           <Format subtype="0" type="0"/>
         </Property>
-      </Properties>
-    </Component>
-    <Component class="org.components.controls.CTextField" name="cTextField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="cTextField1"/>
       </Properties>
     </Component>
   </SubComponents>

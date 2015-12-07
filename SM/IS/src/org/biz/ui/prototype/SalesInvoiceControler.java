@@ -28,13 +28,9 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         setService(salesService);
     }
 
-    public void initUI(){
-        SalesInvoiceDetailUI salesUI = new SalesInvoiceDetailUI();        
-        setDetailView(salesUI);
-        salesUI.config();
-
-        SalesInvoiceMasterUI ov = new SalesInvoiceMasterUI();
-        setListView(ov,mmm); 
+    public void initUI(){        
+        SalesUI sales = new SalesUI();
+        setUIFrame(sales);
     }
     
 
@@ -72,11 +68,11 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         detailView.uiToData();
         currentBusObject.setTotal();
         detailView.setDataToUI(currentBusObject);
-        salesLineUI.getPrice().requestFocus();
+//        salesLineUI.getPrice().requestFocus();
     }
     
     
-     public void onSalesInvoiceLineItemPriceChanged(GridDataLineDetailUI lineDetailUI) {
+    public void onSalesInvoiceLineItemPriceChanged(GridDataLineDetailUI lineDetailUI) {
         SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;       
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
         salesInvoiceLineItem.calculateLineItem();
@@ -84,12 +80,24 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         detailView.uiToData();
         currentBusObject.setTotal();
         detailView.setDataToUI(currentBusObject);
-        salesLineUI.getPrice().requestFocus();
+//        salesLineUI.getPrice().requestFocus();
     }
+    
+    public void onSalesInvoiceDataChanged() {
+        
+        detailView.uiToData();
+        currentBusObject.setTotal();
+        detailView.setDataToUI(currentBusObject);
+//        salesLineUI.getPrice().requestFocus();
+    }
+    
      
      
-     
-
+    public void showFrame(String screenName) {
+        if ("SalesInvoicex".equals(screenName)) {
+            UIFrame.setVisible(true);
+        }
+    }
      
      
 }

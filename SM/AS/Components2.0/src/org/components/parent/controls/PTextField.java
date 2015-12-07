@@ -17,6 +17,9 @@ import com.components.custom.IContainer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.AttributeSet;
@@ -34,6 +37,16 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     private String id;
     private ActionTask actionTask;
 
+    JComponent nextFocusableComponent;
+    JComponent previouseFocusedComponent;
+    List<ActionTask> actionTasks;
+    
+    
+    boolean moveTonextcom = true;
+
+    
+    
+    
     public ActionTask getActionTask() {
         return actionTask;
     }
@@ -93,6 +106,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     public PTextField() {
         super();
         initComponents();
+        init();
         id=SystemUtil.getKeyStr();
 //        addDocumentListener(docx);        
         
@@ -111,6 +125,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         @Override
         protected void insertUpdate(DefaultDocumentEvent chng, AttributeSet attr) {
             super.insertUpdate(chng, attr);
+           
             fireEventIfNotFromDoc();
             
         }
@@ -130,7 +145,47 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     }
     
     
+    public void init() {
 
+        actionTasks = new ArrayList<ActionTask>();
+//
+//        addKeyListener(new KeyAdapter() {
+//            public void keyPressed(KeyEvent e) {
+//                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+////                    //in the level of listner we add only one global 
+////                    // event handler which is used to capture all the events
+////                    // programmer who wish to implement an action 
+////                    // may have the freedom to use the super actions
+////                    //or he can just skip it by not calling it
+////                    //he can use call his method implementations and then call tthe super
+////                    // call the super then implement
+////                    // or dont call supp-override
+////                    // but ?? enable to implement such df????????
+////                    //?????????????????todo
+//                    if (actionTasks != null || !actionTasks.isEmpty()) {
+//
+//                        for (ActionTask actionTask : actionTasks) {
+//                            actionTask.actionCall(e);
+//                        }
+//                    }
+//                    if (getContainer() != null) {
+//                        container.gotoNextComponent(PTextField.this);
+//                    }
+//                }
+//            }
+//        });
+
+    }
+    
+    public void addaction(int idx, ActionTask action) {
+        int c = actionTasks.size();
+
+        if (c - 1 < idx) {
+            actionTasks.add(action);
+            return;
+        }
+        actionTasks.add(idx, action);
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -231,6 +286,19 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         setText(val == null ? "" : val.toString());
         disableDocumentChangeEvent =false;
     }
+    
+    /**
+     * this will set fire document even change listener
+     *
+     * @param val
+     */
+    public void setValueIfNotFocused(Object val) {
+        if(hasFocus())return;
+        disableDocumentChangeEvent = true;
+        setText(val == null ? "" : val.toString());
+        disableDocumentChangeEvent = false;
+    }
+
     
     public void setValue(String val) {
         disableDocumentChangeEvent = true;

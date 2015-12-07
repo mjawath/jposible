@@ -6,6 +6,14 @@
 
 package org.biz.ui.prototype;
 
+import java.awt.Component;
+import java.awt.KeyboardFocusManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.biz.invoicesystem.ui.list.master.CustomerFrame;
+import org.components.windows.DetailPanel;
+import org.components.windows.MasterViewUI;
+import org.components.windows.MyFocusPolicy;
 import org.components.windows.UIFrame;
 
 /**
@@ -18,13 +26,41 @@ public class SalesUI extends UIFrame {
      * Creates new form SalesUI
      */
     public SalesUI() {
+        super();
         initComponents();
-        SalesInvoiceControler sic = new SalesInvoiceControler();
-        sic.setDetailView(salesInvoiceUI1);
-        sic.setListView(salesOverviewPanel1,sic.getQueryForPage());
-        salesInvoiceUI1.config();
-        salesOverviewPanel1.config();
+        tabbedPane = tabbedPane1;
+        
+        tabbedPane.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                System.out.println("tab changed");
+                if (tabbedPane.getSelectedComponent() instanceof DetailPanel) {
+                    KeyboardFocusManager currentKeyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                    if (currentKeyboardFocusManager.getDefaultFocusTraversalPolicy() instanceof MyFocusPolicy) {
+                        Component com = ((DetailPanel) tabbedPane.getSelectedComponent()).gotoFirstComponent();
+                        com.requestFocusInWindow();
+
+                    }
+
+//                    currentKeyboardFocusManager.downFocusCycle();
+                    System.out.println("detail panel selected");
+                }
+            }
+        });
     }
+
+    @Override
+    public MasterViewUI getMaster() {
+        return salesOverviewPanel1;
+    }
+
+    @Override
+    public DetailPanel getDetail() {
+        return salesInvoiceUI1;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,35 +71,67 @@ public class SalesUI extends UIFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tabbedPane1 = new com.components.custom.TabbedPane();
         salesOverviewPanel1 = new org.biz.ui.prototype.SalesInvoiceMasterUI();
         salesInvoiceUI1 = new org.biz.ui.prototype.SalesInvoiceDetailUI();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        tabbedPane1.addTab("tab1", salesOverviewPanel1);
+        tabbedPane1.addTab("tab2", salesInvoiceUI1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(salesOverviewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(salesInvoiceUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
+                .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1242, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(salesOverviewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+                .addComponent(tabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(salesInvoiceUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CustomerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SalesUI().setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.biz.ui.prototype.SalesInvoiceDetailUI salesInvoiceUI1;
     private org.biz.ui.prototype.SalesInvoiceMasterUI salesOverviewPanel1;
+    private com.components.custom.TabbedPane tabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

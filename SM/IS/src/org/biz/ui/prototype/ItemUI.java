@@ -31,7 +31,7 @@ public class ItemUI extends javax.swing.JPanel {
     private void initComponents() {
 
         itemListUI1 = new org.biz.invoicesystem.ui.list.master.ItemMasterUI();
-        itemMasterUI21 = new org.biz.master.ui.ItemMasterUI2();
+        itemMasterUI21 = new org.biz.master.ui.ItemDetailUI();
 
         javax.swing.GroupLayout itemMasterUI21Layout = new javax.swing.GroupLayout(itemMasterUI21);
         itemMasterUI21.setLayout(itemMasterUI21Layout);
@@ -68,6 +68,6 @@ public class ItemUI extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.biz.invoicesystem.ui.list.master.ItemMasterUI itemListUI1;
-    private org.biz.master.ui.ItemMasterUI2 itemMasterUI21;
+    private org.biz.master.ui.ItemDetailUI itemMasterUI21;
     // End of variables declaration//GEN-END:variables
 }

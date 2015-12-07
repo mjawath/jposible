@@ -7,10 +7,10 @@
 package org.biz.invoicesystem.ui.list.master;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.biz.invoicesystem.entity.master.Item;
 import org.components.parent.controls.PTableColumn;
-import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewUI;
 
 /**
@@ -23,12 +23,15 @@ public class ItemLV extends ListViewUI  {
      * Creates new form ItemLV
      */
     public ItemLV() {
-        super();
-        getTable().setTableInteractionListner(tableInteractionListner);
+        super();    
         List<PTableColumn> tblCols = new ArrayList();
-          tblCols.add( new PTableColumn(String.class, "ID"));
+          tblCols.add( new PTableColumn(Long.class, "ID"));
           tblCols.add( new PTableColumn(String.class, "Code"));
-          tblCols.add( new PTableColumn(String.class, "Desc"));
+          
+          tblCols.add(new PTableColumn(String.class, "Description"));
+        tblCols.add(new PTableColumn(Date.class, "savedDate"));
+        tblCols.add(new PTableColumn(Date.class, "editedDate"));
+
         
         getTable().init(Item.class, tblCols);
     }
@@ -55,20 +58,11 @@ public class ItemLV extends ListViewUI  {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    
-        
-    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
-
-        @Override
-        public Object[] getTableData(Object row) {
-            Item  item = (Item) row;
-            return new Object[]{item, item.getId(), item.getCode()};
-        }
-
-        @Override
-        public void selectionChanged(Object newRowObject) {
-        }  
-    };
+    @Override
+    public Object[] getTableData(Object row) {
+        Item item = (Item) row;
+        return new Object[]{item,item.getId(), item.getCode(), item.getDescription(), item.getSavedDate(), item.getEditedDate()};
+    } 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

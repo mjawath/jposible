@@ -91,12 +91,49 @@ public class DetailPanel<T> extends TabPanelUI {
         }
 
     };
+    
+    private OAction printAction = new OAction("Clear") {
+
+        @Override
+        public Object doBackgroundTask(Object... objs) {
+            System.out.println("doBackgroundTask clear");
+            return null;
+
+        }
+
+        @Override
+        public void doResultTask(Object... objs) {
+            System.out.println("doResultTask clearAction");
+        }
+
+    };
+    
+    private OAction gotoListAction = new OAction("GoToList") {
+
+        @Override
+        public Object doBackgroundTask(Object... objs) {
+            System.out.println("doBackgroundTask clear");
+            return null;
+
+        }
+
+        @Override
+        public void doResultTask(Object... objs) {
+            System.out.println("doResultTask clearAction");
+        }
+
+    };
     /**
      * Creates new form DetailPanel
      */
     public DetailPanel() {
         super();
 
+    }
+    
+    public void requestFocusToFirst(){
+        
+        
     }
 
     @Override
@@ -108,8 +145,8 @@ public class DetailPanel<T> extends TabPanelUI {
                 gotoNextComponent();
             }
         };
-        ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_DOWN);//first component specific key events are handled then event is passed to this
-        ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_ENTER);
+//        ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_DOWN);//first component specific key events are handled then event is passed to this
+//        ComponentFactory.setKeyAction(this, topKeyAction, KeyEvent.VK_ENTER);
 
         //action map ..if component specific events does not call e.consume() on thier level
         Action upKeyAction = new AbstractAction() {
@@ -119,7 +156,7 @@ public class DetailPanel<T> extends TabPanelUI {
                 gotoPreviousComponent();
             }
         };
-        ComponentFactory.setKeyAction(this, upKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
+//        ComponentFactory.setKeyAction(this, upKeyAction, KeyEvent.VK_UP);//first component specific key events are handled then event is passed to this
 //        initComponents();
  
         focusManager = new FocusManager();
@@ -153,7 +190,10 @@ public class DetailPanel<T> extends TabPanelUI {
          crudcontrolPanel.setSaveAction(saveAction);
          crudcontrolPanel.setDeleteAction(delete);
          crudcontrolPanel.setClearAction(clearAction);
-//         crudcontrolPanel.setPrintAction(p);
+         
+         crudcontrolPanel.setPrintAction(printAction);
+         
+         crudcontrolPanel.setGotoAction(gotoListAction);
            this.crudcontrolPanel.setCrudController(this);
          //get all the menues and tool buttons
          // set appropriate action to buttons

@@ -7,17 +7,13 @@ package invoicingsystem;
 import app.AppMainWindow;
 import app.utils.SystemStatic;
 import app.utils.SystemUtil;
-import java.awt.AWTKeyStroke;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.util.HashSet;
+import java.util.HashMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,18 +21,17 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.biz.DropMainMenu;
+import org.biz.MenuBuilder;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.Service;
-import org.biz.invoicesystem.ui.list.master.CategoryController;
-import org.biz.invoicesystem.ui.list.master.CustomerController;
-import org.biz.invoicesystem.ui.list.master.ItemController;
-import org.biz.invoicesystem.ui.transactions.ItemMasterFrame;
+import org.biz.invoicesystem.ui.list.master.ItemMasterFrame;
 import org.biz.invoicesystem.ui.transactions.WareHouseFrame;
-import org.biz.ui.prototype.SalesInvoiceControler;
 import org.biz.util.ReflectionUtility;
 import org.components.controls.CButton;
 import org.components.controls.Menu;
 import org.components.controls.MenuItem;
+import org.components.controls.MenuItemComponent;
+import org.components.util.ComponentFactory;
 import org.components.util.Sessions;
 import org.components.windows.DetailPanel;
 import org.components.windows.MasterViewUI;
@@ -49,6 +44,8 @@ import org.components.windows.UIFrame;
  */
 public class ApplicationManager {
 
+    private HashMap controllers = new HashMap();
+    
     public static void main(String[] args) {
 //         GenericDAOUtil.createEMFWithCustomProperties();
        
@@ -76,91 +73,100 @@ public class ApplicationManager {
     
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Sessions.create();
-                setFocusTraversialPolicy();
                 
+                Sessions.create();             
+                
+//                setFocusTraversialPolicy();
                 System.out.println("============Application is starting..........===================");
                 AppMainWindow app = new AppMainWindow();
-                
+                ComponentFactory.setFocusTraversialPolicy();
                 addSystemToolsToToolbar();
-                app.setExtendedState(Frame.MAXIMIZED_BOTH);
+                app.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 app.setVisible(true);
-
+                
 //                setMenuBar();
-                buildMenuBar();
+                buildMenuBar();                
+                
+                
             }
         });
 
   
 }
     
-   private static void setFocusTraversialPolicy(){
-       
-       HashSet set = new HashSet();
-       set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));       
-       set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));       
-       KeyboardFocusManager km = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-       km.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, set);
-       
-       
-       HashSet setu = new HashSet();
-       setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, KeyEvent.SHIFT_DOWN_MASK));
-       setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_UP, 0));       
-       km.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, setu);
-        
-//       km.setDefaultFocusTraversalPolicy(new MyFocusManager());
-
-   } 
+   
    
    
     
     private static void buildMenuBar(){
-        
+      
         //get Parent menu name
         //get child menu name
         //get controller class
         
+        MenuItem menuItem = new MenuItem();
+        menuItem.setDescription("Customer detail");
+        menuItem.setParentMenu("Master >  Customer ");
+        menuItem.setMenuName("Customer detail");
+        menuItem.setActionClassName("org.biz.invoicesystem.ui.list.master.CustomerController");
+        menuItem.setType(0);
         
+        MenuBuilder menuBuilder = new MenuBuilder();
+        menuBuilder.createMenuItem(menuItem);
+        
+        
+        MenuItem menuItemx = new MenuItem("Master >  Item ","org.biz.invoicesystem.ui.list.master.ItemController",0,"Item detail","Item detail");
+
+
+        menuBuilder.createMenuItem(menuItemx);
+        
+        MenuItem mi = new MenuItem("Transactions >  Sales ", "org.biz.ui.prototype.SalesInvoiceControler", 0, "Sales detail", "Sales detail");
+        menuBuilder.createMenuItem(mi);
+        
+        
+        MenuItem mis = new MenuItem("Transactions >  Sales ", "org.biz.ui.prototype.SalesInvoiceControler","SaleInvoiceUIX" ,0, "Sales detail x", "Sales detailx");
+        menuBuilder.createMenuItem(mis);
+
         JMenuBar mb = SystemUtil.getMenuBar();
         
         
-        Menu myMenuParent = new Menu();
-        myMenuParent.setName("Master");
-        myMenuParent.setText("Master");
+//        Menu myMenuParent = new Menu();
+//        myMenuParent.setName("Master");
+//        myMenuParent.setText("Master");
+//        
+//        mb.add(myMenuParent);
+//        
+//        MenuItemComponent myMenu = new MenuItemComponent();
+//        myMenuParent.add(myMenu);
+//        
+//        myMenu.setName("Category");
+//        myMenu.setText("Category");
         
-        mb.add(myMenuParent);
-        
-        MenuItem myMenu = new MenuItem();
-        myMenuParent.add(myMenu);
-        
-        myMenu.setName("Category");
-        myMenu.setText("Category");
-        
-        final CategoryController itc = new CategoryController();        
-        itc.initUI();
-        if(itc instanceof UIController){            
-//            itc.get
-            myMenu.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    itc.showFrame();
-                }
-            });
-            ItemController it = new ItemController();
-            it.initUI();
-            addMenu("Master", "Item", "Item Detail", "Item Master", it);
+//        final CategoryController itc = new CategoryController();        
+//        itc.initUI();
+//        if(itc instanceof UIController){            
+////            itc.get
+//            myMenu.addActionListener(new ActionListener() {
+//
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    itc.showFrame();
+//                }
+//            });
+//            ItemController it = new ItemController();
+//            it.initUI();
+//            addMenu("Master", "Item", "Item Detail", "Item Master", it);
             
-            SalesInvoiceControler sic = new SalesInvoiceControler();
-            sic.initUI();            
-            addMenu("Transaction", "SalesInvoice", "Sales Invoic Detail", "Sales Invoic  Master", sic);
+//            SalesInvoiceControler sic = new SalesInvoiceControler();
+//            sic.initUI();            
+//            addMenu("Transaction", "SalesInvoice", "Sales Invoic Detail", "Sales Invoic  Master", sic);
 
             
-            CustomerController cust = new CustomerController();
-            cust.initUI();
-            addMenu("Master", "Customer", "Customer Detail", "Customer Master", cust);
+//            CustomerController customerController = new CustomerController();
+//            customerController.initUI();
+//            addMenu("Master", "Customer", "Customer Detail", "Customer Master", customerController);
 
-        }
+//        }
     
     }
     
@@ -188,7 +194,7 @@ public class ApplicationManager {
         }        
         
         if(controller.getUIFrame()!= null ){
-        MenuItem myMenu = new MenuItem();
+        MenuItemComponent myMenu = new MenuItemComponent();
         myMenuParent.add(myMenu);
         
         myMenu.setName("subMenu"+childMenuName);
@@ -208,7 +214,7 @@ public class ApplicationManager {
         myMenuParent.add(myLocalMenuParent);
             
             
-        MenuItem myMenu = new MenuItem();
+        MenuItemComponent myMenu = new MenuItemComponent();
         myLocalMenuParent.add(myMenu);        
         
         myMenu.setName("subMenuDetail"+MenuItemDetail);
@@ -223,7 +229,7 @@ public class ApplicationManager {
         
         
         
-        MenuItem myMenu2 = new MenuItem();
+        MenuItemComponent myMenu2 = new MenuItemComponent();
         myLocalMenuParent.add(myMenu2);        
         myMenu2.setName("subMenuMaster"+MenuItemMaster);
         myMenu2.setText(MenuItemMaster);
@@ -399,7 +405,7 @@ public class ApplicationManager {
         
         setMenuItem(menu, "WareHouse", WareHouseFrame.class);
         setMenuItem(menu, "ItemMaster", ItemMasterFrame.class);
- 
+        
     }
     
     public static void setMenuItem(JMenu menu,String MenuName,Class frameName){

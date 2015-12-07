@@ -35,7 +35,7 @@ public class CustomerSUI extends  SearchQueryUIPanel {
     }
 
     
-      public Map<String, Object> getQueryParameterMap() {
+    public Map<String, Object> getQueryParameterMap() {
 
         Map<String, Object> p = new HashMap<>();
         p.put(QRY, ttSearch.getText());

@@ -13,6 +13,8 @@ package org.components.parent.controls;
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,12 +28,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import org.biz.app.ui.util.MessageBoxes;
-import org.biz.app.ui.util.PropertyUtil;
-import org.biz.util.ReflectionUtility;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.entity.BusObj;
+import org.biz.util.ReflectionUtility;
 import org.components.parent.controls.editors.CustomRenderer;
 import org.components.parent.controls.editors.TableInteractionListner;
+import org.util.PropertyUtil;
 
 /**
  *
@@ -88,8 +90,26 @@ public class PxTable<T> extends JTable implements IComponent {
         this.setDefaultRenderer(Double.class, new CustomRenderer());
         this.setDefaultRenderer(Object.class, new CustomRenderer());
         this.setDefaultRenderer(Date.class, new DateRendererX());
-    }
+        
+        addMouseListener(new MouseAdapter() {
 
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    if (tableInteractionListner != null) {
+                        tableInteractionListner.onDoubleClicked(getSelectedObject());
+                    }
+                }
+            }
+
+        });
+    }
+    
+    
+
+    
+    
+    
     
    public void init(Class tableType, Class [] classType, String[] title){
         modelClass=tableType;

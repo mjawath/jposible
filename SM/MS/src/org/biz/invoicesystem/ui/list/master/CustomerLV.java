@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.components.parent.controls.PTableColumn;
-import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewUI;
 
 /**
@@ -24,7 +23,6 @@ public class CustomerLV extends ListViewUI  {
      */
     public CustomerLV() {
         super();
-        getTable().setTableInteractionListner(tableInteractionListner);
         List<PTableColumn> tblCols = new ArrayList();
         tblCols.add(new PTableColumn(String.class, "ID"));
         tblCols.add(new PTableColumn(String.class, "Code"));
@@ -57,18 +55,12 @@ public class CustomerLV extends ListViewUI  {
 
     
         
-    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
-
-        @Override
-        public Object[] getTableData(Object row) {
-            Customer  item = (Customer) row;
-            return new Object[]{item, item.getId(), item.getCode()};
-        }
-
-        @Override
-        public void selectionChanged(Object newRowObject) {
-        }  
-    };
+   
+    
+    public Object[] getTableData(Object row) {
+        Customer item = (Customer) row;
+        return new Object[]{item, item.getId(), item.getCode()};
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

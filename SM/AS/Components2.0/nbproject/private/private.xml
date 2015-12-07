@@ -4,9 +4,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/app/AppMainWindow.java</file>
-            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/biz/app/ui/util/QueryManager.java</file>
-            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/components/windows/UIController.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/components/containers/CPanel.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/components/util/orgFocusTraversalPolicy.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/components/windows/DetailPanel.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/components/windows/MyFocusPolicy.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/AS/Components2.0/src/org/components/windows/UIFrame.java</file>
         </group>
     </open-files>
 </project-private>

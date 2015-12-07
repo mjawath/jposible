@@ -10,7 +10,7 @@
  */
 package org.biz.invoicesystem.ui.transactions.components;
 
-import app.utils.MathUtil;
+import org.util.MathUtil;
 import com.components.custom.ActionTask;
 import com.components.custom.TextFieldWithPopUP;
 import invoicingsystem.LineItemPanel;

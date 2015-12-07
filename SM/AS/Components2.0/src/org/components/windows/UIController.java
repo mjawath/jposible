@@ -26,6 +26,8 @@ import org.components.test.MenuBuilder;
  * @author user
  */
 public class UIController<T> {
+    
+    
   
     protected T currentBusObject;
     protected Service service;
@@ -65,6 +67,14 @@ public class UIController<T> {
     }
     public void setUIFrame(UIFrame frame){
         UIFrame = frame;
+        detailView = UIFrame.getDetail();
+        listView = UIFrame.getMaster();
+        setDetailView(detailView);
+        setListView(listView, getQueryForPage());
+        detailView.config();        
+        UIFrame.revalidate();
+        UIFrame.repaint();        
+        listView.setDetailPanel(detailView);
         
     }
     public UIFrame getUIFrame(){
@@ -81,6 +91,12 @@ public class UIController<T> {
         
     }
 
+    
+    public void showFrame(String screenName) {
+        UIFrame.setVisible(true);
+
+    }
+    
     public DetailPanel<T> getDetailView() {
         return detailView;
     }
@@ -102,6 +118,13 @@ public class UIController<T> {
     
     public void initUI(){
     
+    }
+
+    public void gotoDetailPanel() {
+        
+        UIFrame.goToDetail();
+        
+        
     }
     
     private class PoupQueryManger extends QueryManager {
@@ -245,7 +268,7 @@ public class UIController<T> {
         Date cDate = GenericDAOUtil.currentTime();
         
         for (BusObj bus : objs) {            
-//            bus.setId( EntityService.getKey(""));
+//            bus.setId( EntityService.getKey(""));      
             bus.setSavedDate(cDate);
             bus.setEditedDate(cDate);
             bus.setDepententEntitiesIDs();

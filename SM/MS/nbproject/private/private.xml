@@ -4,11 +4,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/ui/list/master/CustomerLV.java</file>
-            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/ui/list/master/CustomerSUI.java</file>
-            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/ui/list/master/CustomerListUi.java</file>
-            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/ui/list/master/CustomerController.java</file>
-            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/master/ui/CustomerMasterTab.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/ui/list/master/ItemSUI.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/ui/list/master/ItemMasterFrame.java</file>
+            <file>file:/D:/Development/jposible/jposible/SM/MS/src/org/biz/invoicesystem/ui/list/master/ItemController.java</file>
         </group>
     </open-files>
 </project-private>

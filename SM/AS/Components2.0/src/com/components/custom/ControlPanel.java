@@ -57,7 +57,12 @@ public class ControlPanel extends javax.swing.JPanel {
         tprint.setAction(act);    
     }
     
+    public void setGotoAction(Action act) {
+        btgotoGrid.setAction(act);
+    }
 
+   
+    
     public void setCrudController(CrudControl control) {
         this.control = control;
     }

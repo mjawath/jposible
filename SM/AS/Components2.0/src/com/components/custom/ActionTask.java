@@ -4,7 +4,6 @@
  */
 package com.components.custom;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -44,7 +43,7 @@ public class ActionTask extends AbstractAction{
     return true;
     }
     
-    public Component  actionFired(Object com) {
+    public Object  actionFired(Object com) {
         actionCall(com);
         return null;
     }
@@ -61,12 +60,8 @@ public class ActionTask extends AbstractAction{
     public void actionPerformed(ActionEvent e) {
         if(! validate()){
         return;
-        };
-        
-        if(! action()){
-            
-        return;
-        };
+        }
+        actionFired(e);
                      
     }
     

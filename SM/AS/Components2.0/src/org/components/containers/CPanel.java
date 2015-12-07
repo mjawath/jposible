@@ -44,6 +44,7 @@ public class CPanel extends PPanel implements IContainer ,IComponent {
 //        };
 //        ComponentFactory.setKeyAction(this, downKeyAction, KeyEvent.VK_UP,0,JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);//first component specific key events are handled then event is passed to this
 
+//        setFocusTraversalPolicy(new MyFocusPolicy());
     }
 
 
@@ -225,11 +226,7 @@ public class CPanel extends PPanel implements IContainer ,IComponent {
     }
     
     
-    public void iamInsideThis(Component com) {
-
-    }
-
-    public void setTempFocusComponent(IComponent com) {
+       public void setTempFocusComponent(IComponent com) {
         temCom = com;
     }
     

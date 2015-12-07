@@ -58,6 +58,7 @@
     <class>org.biz.books.entity.accounts.bank.Bank</class>
     <class>org.biz.books.entity.accounts.bank.BankBranch</class>
     <class>org.biz.invoicesystem.entity.transactions.SalesInvoice</class>
+    <class>org.biz.MenuItem</class>
     <properties>
       <!-- >        <property name="eclipselink.logging.level" value="FINE"/>  <!-->
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/invoicesystem"/>

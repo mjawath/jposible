@@ -10,13 +10,8 @@
  */
 package org.components.controls;
 
-import com.components.custom.ActionTask;
 import com.components.custom.CInputVerifier;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JComponent;
 import org.biz.app.ui.util.UIEty;
 import org.components.parent.controls.PTextField;
 
@@ -26,10 +21,6 @@ import org.components.parent.controls.PTextField;
  */
 public class CTextField extends PTextField {
 
-    JComponent nextFocusableComponent;
-    JComponent previouseFocusedComponent;
-    List<ActionTask> actionTasks;
-    boolean moveTonextcom = true;
     
 
 
@@ -37,56 +28,11 @@ public class CTextField extends PTextField {
      * Creates new form BeanForm
      */
     public CTextField() {
-        initComponents();
-        init();
+    super();
 //        setInputVerifier(new CInputVerifier());
     }
 
-    public void init() {
 
-
-        
-        actionTasks = new ArrayList<ActionTask>();
-
-        addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    //in the level of listner we add only one global 
-                    // event handler which is used to capture all the events
-                    // programmer who wish to implement an action 
-                    // may have the freedom to use the super actions
-                    //or he can just skip it by not calling it
-                    //he can use call his method implementations and then call tthe super
-                    // call the super then implement
-                    // or dont call supp-override
-                    // but ?? enable to implement such df????????
-                    //?????????????????todo
-                    if (actionTasks != null || !actionTasks.isEmpty()) {
-
-                        for (ActionTask actionTask : actionTasks) {
-                            actionTask.actionCall(e);
-                        }
-                    }
-                    if (getContainer() != null) {
-                        getContainer().gotoNextComponent(CTextField.this);
-                    }
-                }
-            }
-        });
-
-
-
-    }
-
-    public void addaction(int idx, ActionTask action) {
-        int c = actionTasks.size();
-
-        if (c - 1 < idx) {
-            actionTasks.add(action);
-            return;
-        }
-        actionTasks.add(idx, action);
-    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -40,7 +40,7 @@
   <SubComponents>
     <Component class="org.biz.invoicesystem.ui.list.master.ItemMasterUI" name="itemListUI1">
     </Component>
-    <Container class="org.biz.master.ui.ItemMasterUI2" name="itemMasterUI21">
+    <Container class="org.biz.master.ui.ItemDetailUI" name="itemMasterUI21">
 
       <Layout>
         <DimensionLayout dim="0">

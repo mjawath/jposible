@@ -4,7 +4,7 @@
  */
 package org.biz.invoicesystem.entity.transactions;
 
-import app.utils.MathUtil;
+import org.util.MathUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -10,7 +10,7 @@ import com.components.custom.ActionTask;
 import java.awt.Component;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.ui.list.master.ItemController;
-import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
+import org.biz.invoicesystem.ui.list.master.ItemLV;
 import org.components.controls.CTextField;
 import org.components.windows.UIController;
 
@@ -156,22 +156,22 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
     public void setDataToUI(Object data){
         SalesInvoiceLineItem li  = (SalesInvoiceLineItem)data;
 //        tItemSearch.setObject(item);
-        tQty.setValue(li.getQty());
-        tPrice.setValue(li.getPrice());        
-        tTotal.setValue(li.getLineAmount());        
+        tQty.setValueIfNotFocused(li.getQty());
+        tPrice.setValueIfNotFocused(li.getPrice());        
+        tTotal.setValueIfNotFocused(li.getLineAmount());        
     }
     
     public void initUI() {
         
         ItemController ic = new ItemController();
-        ic.initUI();
-        tItemSearchTextComp.setListViewQueryManger(ic.getPopupQueryManger(),new ItemListViewUI());
+//        ic.initUI();
+        tItemSearchTextComp.setListViewQueryManger(ic.getPopupQueryManger(),new ItemLV());
         tItemSearchTextComp.setSelectedProperty("code");
 
         
-//        tQty.setDocAction(new MyCalculator());
+        tQty.setDocAction(new MyCalculator());
         
-//        tPrice.setDocAction(new MyCalculator());
+        tPrice.setDocAction(new MyCalculator());
         
         tQty.setActionTask(new ActionTask() {
 
@@ -212,14 +212,7 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
 
     }
 
-    public void iamInsideThis(Component com) {
-        if(com ==tQty){
-        
-        }
-        
-    }
-
-      
+    
      private class MyCalculator extends ActionTask{
         
         public void actionCall() {            

@@ -4,35 +4,37 @@
  * and open the template in the editor.
  */
 
-package org.biz.invoicesystem.ui.transactions;
+package org.biz.invoicesystem.ui.list.master;
+
+import org.components.windows.DetailPanel;
+import org.components.windows.MasterViewUI;
+import org.components.windows.UIFrame;
 
 /**
  *
  * @author Jawad
  */
-public class ItemMasterFrame extends javax.swing.JFrame {
+public class ItemMasterFrame extends UIFrame {
 
     
     
-    
-    
-    
-    
-    /**er
-     * Creates new form ItemMasterFrame
+        /**
+     * er Creates new form ItemMasterFrame
      */
     public ItemMasterFrame() {
+        super();
         initComponents();
-        
-        
-//                .config();
-//        wareHouseUI1.setService(whs);
-////        crudcontrolPanel.setCrudController(wareHouseUI1);
-//        wareHouseListUI1.config();
-//        wareHouseListUI1.setService(whs);
-//        wareHouseListUI1.setDetailPanel(wareHouseUI1);
+
+        tabbedPane = tabbedPane1;        
     }
 
+    public MasterViewUI getMaster() {
+        return itemMasterUI1;
+    }
+
+    public DetailPanel getDetail() {
+        return itemMasterUI21;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,17 +44,38 @@ public class ItemMasterFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        tabbedPane1 = new com.components.custom.TabbedPane();
+        itemMasterUI21 = new org.biz.master.ui.ItemDetailUI();
+        itemMasterUI1 = new org.biz.invoicesystem.ui.list.master.ItemMasterUI();
+
+        javax.swing.GroupLayout itemMasterUI21Layout = new javax.swing.GroupLayout(itemMasterUI21);
+        itemMasterUI21.setLayout(itemMasterUI21Layout);
+        itemMasterUI21Layout.setHorizontalGroup(
+            itemMasterUI21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1224, Short.MAX_VALUE)
+        );
+        itemMasterUI21Layout.setVerticalGroup(
+            itemMasterUI21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 499, Short.MAX_VALUE)
+        );
+
+        tabbedPane1.addTab("Item Detail", itemMasterUI21);
+        tabbedPane1.addTab("Item List", itemMasterUI1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1187, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(tabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -88,11 +111,18 @@ public class ItemMasterFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ItemMasterFrame().setVisible(true);
+                
+                ItemController it = new ItemController();
+                it.initUI();
+                it.showFrame();
+//                new ItemMasterFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.biz.invoicesystem.ui.list.master.ItemMasterUI itemMasterUI1;
+    private org.biz.master.ui.ItemDetailUI itemMasterUI21;
+    private com.components.custom.TabbedPane tabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

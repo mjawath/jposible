@@ -11,6 +11,7 @@ import java.awt.Container;
 import java.awt.DefaultFocusTraversalPolicy;
 import org.components.containers.CPanel;
 import org.components.controls.CTextField;
+import org.components.parent.controls.PFormattedTextField;
 
 /**
  *
@@ -31,18 +32,29 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
         // or else goto parent
         // and try focusing to next        
         
-        if(aComponent instanceof CTextField){
+        if(aComponent instanceof CTextField ){
             
             ActionTask at = ((CTextField)aComponent).getActionTask();
             if(at!=null){
-                Component com = at.actionFired(aComponent);
-                if(com!=null){
-                    return com;
+                Object com = at.actionFired(aComponent);
+                if(com!=null && com instanceof Component){
+                    return (Component)com;
                 }
             }            
             
-        }
+        }else
         
+        if (aComponent instanceof PFormattedTextField) {
+
+            ActionTask at = ((PFormattedTextField) aComponent).getActionTask();
+            if (at != null) {
+                Object com = at.actionFired(aComponent);
+                if (com != null && com instanceof Component) {
+                    return (Component) com;
+                }
+            }
+
+        }
         
         
         return gotToNextComponent(aComponent);
@@ -67,9 +79,21 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
 
             ActionTask at = ((CTextField) aComponent).getActionTask();
             if (at != null) {
-                Component com = at.actionFired(aComponent);
-                if (com != null) {
-                    return com;
+                Object com = at.actionFired(aComponent);
+                if (com != null && com instanceof Component) {
+                    return (Component) com;
+                }
+            }
+
+        }
+
+        if (aComponent instanceof PFormattedTextField) {
+
+            ActionTask at = ((PFormattedTextField) aComponent).getActionTask();
+            if (at != null) {
+                Object com = at.actionFired(aComponent);
+                if (com != null && com instanceof Component) {
+                    return (Component) com;
                 }
             }
 
@@ -81,16 +105,18 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
     }
 
     
-    public void goToNextFocusableComponent(Component aComponent){
-        Component parent = aComponent.getParent();
-        while (parent != null) {
-            if ((parent instanceof CPanel) && ((CPanel) parent).hasFocusableComponents()) {
-                break;
-            }
-            parent = parent.getParent();
-        }  
-    }
+//    public void goToNextFocusableComponent(Component aComponent){
+//        Component parent = aComponent.getParent();
+//        while (parent != null) {
+//            if ((parent instanceof CPanel) && ((CPanel) parent).hasFocusableComponents()) {
+//                break;
+//            }
+//            parent = parent.getParent();
+//        }  
+//    }
     
+    
+
     public Component gotToNextComponent(Component aComponent) {
         CPanel parent = getFocusableParent(aComponent);
         if (parent == null) {
@@ -100,8 +126,8 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
             }
             return null;
         }
-
-
+        
+        
         if (parent != null) {
 
             final Component gotoNextComponentNew = ((CPanel) parent).gotoNextComponentInThisPanel(aComponent);
@@ -118,30 +144,32 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
             }
 
         }
-
         
+        
+        return null;
+    }
+    //get the parent
+    //check whther the parent has any  focusable
+
+    public CPanel getFocusableParent(Component com) {
+        //get Focuable parent container
+        Component parent = com.getParent();
+        if (parent == null) {
+            return null;
+        }
+        if (!(parent instanceof CPanel)) {
+            return getFocusableParent(parent);
+        }
+        while (parent instanceof CPanel) {
+            if (((CPanel) parent).hasFocusableComponents()) {
+                return (CPanel) parent;
+            }
+            parent = parent.getParent();
+        }
         return null;
 
     }
-        //get the parent
-        //check whther the parent has any  focusable
-        
-      public CPanel  getFocusableParent(Component com){          
-          //get Focuable parent container
-          Component parent= com.getParent();
-          if(parent ==null)return null;
-          if(!(parent instanceof CPanel))
-              return getFocusableParent(parent);
-          while(parent instanceof CPanel){
-              if(((CPanel)parent).hasFocusableComponents()){
-                  return (CPanel)parent;
-              }
-              parent = parent.getParent();
-          }
-          return null;
-      
-      }  
-        
+
     
  
     

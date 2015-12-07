@@ -5,8 +5,12 @@
 
 package org.components.util;
 
+import java.awt.AWTKeyStroke;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.Random;
 import javax.swing.Action;
 import javax.swing.InputMap;
@@ -16,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import org.components.parent.Documents.DoubleDocument;
 import org.components.parent.Documents.NumberDocument;
+import org.components.windows.MyFocusPolicy;
 
 /**
  *
@@ -23,7 +28,34 @@ import org.components.parent.Documents.NumberDocument;
  */
 public class ComponentFactory {
     
-    
+    public static void setFocusTraversialPolicy() {
+
+        KeyboardFocusManager km = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        HashSet set = new HashSet();
+        set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_TAB, 0));
+        set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
+        set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));
+
+        km.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, set);
+
+        HashSet setu = new HashSet();
+        setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, KeyEvent.SHIFT_DOWN_MASK));
+        setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_UP, 0));
+        km.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, setu);
+
+        km.setDefaultFocusTraversalPolicy(new MyFocusPolicy());
+
+        km.addKeyEventDispatcher(new KeyEventDispatcher() {
+
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {                
+                return false;
+            }
+        });
+        
+
+    }
+
     
 
     public static  void addKeyAction(JComponent com,final JComponent requestFocus){

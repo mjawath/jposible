@@ -18,7 +18,7 @@ public class MenuBuilder {
     public void initMenus(){
         
 //        ItemController ic= new ItemController();
-        MenuItem mi = new MenuItem();
+    
         
     }
     
@@ -27,11 +27,4 @@ public class MenuBuilder {
     }
     
     
-    class MenuItem {
-    
-        private String parentMenu;
-        private String menuItemName;
-        private String menuActionClass;
-        
     }
-}

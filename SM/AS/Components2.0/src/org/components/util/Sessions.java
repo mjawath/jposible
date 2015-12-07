@@ -8,6 +8,8 @@ package org.components.util;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
+import org.biz.util.ReflectionUtility;
+import org.components.windows.UIController;
 
 /**
  *
@@ -15,6 +17,25 @@ import java.util.Set;
  */
 public class Sessions {
 
+    private static HashMap<String, UIController> controllerMap = new HashMap<>();
+    
+    public static void addController(String key, UIController controller) {
+        controllerMap.put(key, controller);
+    }
+
+    public static UIController getController(String key) {
+        return controllerMap.get(key);
+    }
+    
+    public static UIController getControllerOrCreateNew(String key) {
+        UIController cont = controllerMap.get(key);
+        if(cont==null){
+            cont = (UIController)ReflectionUtility.getDynamicInstance(key);
+            cont.initUI();
+            
+        }
+        return cont;
+    }
     static  HashMap<String, Object> hashMap;
     public static  Sessions sessions = new Sessions();
 
