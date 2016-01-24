@@ -12,29 +12,26 @@ import org.components.windows.UIFrame;
 
 /**
  *
- * @author Jawad
+ * @author jawa
  */
-public class ItemMasterFrame extends UIFrame {
+public class SKUFrame extends UIFrame {
 
-    
-    
-        /**
-     * er Creates new form ItemMasterFrame
+    /**
+     * Creates new form CategoryFrame
      */
-    public ItemMasterFrame() {
+    public SKUFrame() {
         super();
         initComponents();
-
-        tabbedPane = tabbedPane1;        
     }
 
     public MasterViewUI getMaster() {
-        return itemMasterUI1;
+        return sKUMasterListUI1;
     }
 
     public DetailPanel getDetail() {
-        return itemMasterUI21;
+        return sKUDetailUI1;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,38 +41,28 @@ public class ItemMasterFrame extends UIFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tabbedPane1 = new com.components.custom.TabbedPane();
-        itemMasterUI21 = new org.biz.master.ui.ItemDetailUI();
-        itemMasterUI1 = new org.biz.invoicesystem.ui.list.master.ItemMasterUI();
-
-        javax.swing.GroupLayout itemMasterUI21Layout = new javax.swing.GroupLayout(itemMasterUI21);
-        itemMasterUI21.setLayout(itemMasterUI21Layout);
-        itemMasterUI21Layout.setHorizontalGroup(
-            itemMasterUI21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1224, Short.MAX_VALUE)
-        );
-        itemMasterUI21Layout.setVerticalGroup(
-            itemMasterUI21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 499, Short.MAX_VALUE)
-        );
-
-        tabbedPane1.addTab("Item Detail", itemMasterUI21);
-        tabbedPane1.addTab("Item List", itemMasterUI1);
+        sKUDetailUI1 = new org.biz.master.ui.SKUDetailUI();
+        sKUMasterListUI1 = new org.biz.invoicesystem.ui.list.master.SKUMasterListUI();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(sKUDetailUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sKUMasterListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 1205, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sKUDetailUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(sKUMasterListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -98,31 +85,27 @@ public class ItemMasterFrame extends UIFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SKUFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SKUFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SKUFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ItemMasterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SKUFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                ItemController it = new ItemController();
-                it.initUI();
-                it.showFrame();
-//                new ItemMasterFrame().setVisible(true);
+                new SKUFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.invoicesystem.ui.list.master.ItemMasterUI itemMasterUI1;
-    private org.biz.master.ui.ItemDetailUI itemMasterUI21;
-    private com.components.custom.TabbedPane tabbedPane1;
+    private org.biz.master.ui.SKUDetailUI sKUDetailUI1;
+    private org.biz.invoicesystem.ui.list.master.SKUMasterListUI sKUMasterListUI1;
     // End of variables declaration//GEN-END:variables
 }

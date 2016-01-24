@@ -4,38 +4,43 @@
  */
 package org.biz.invoicesystem.entity.transactions;
 
-import org.util.MathUtil;
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Item;
+import org.biz.invoicesystem.entity.master.ItemBarcode;
+import org.biz.invoicesystem.entity.master.SKU;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
+import org.util.MathUtil;
 
 /**
  *
  * @author mjawath
  */
 @Entity
-public class SalesInvoiceLineItem extends BusObj implements Serializable  {
+public class SalesInvoiceLineItem extends BusObj  {
     
     private String description;
     @OneToOne
-    private Item item;
+    private Item item;//will be refectored with sku
     private Double qty;
     private String unit;
     private Double price;
     private Double lineAmount;
-    private String itemMark;
+    private String itemMark;//this will be refectored with barcode
     
     @OneToOne
-    Warehouse warehouse;
+    private Warehouse warehouse;
     @OneToOne
-    Shop shop;
+    private Shop shop;
     @OneToOne
-    UOM uom;
+    private UOM uom;
+    @OneToOne
+    private SKU sku;
+    @OneToOne(optional = true)   
+    private ItemBarcode barcode;//
     
     
 
@@ -140,6 +145,22 @@ public class SalesInvoiceLineItem extends BusObj implements Serializable  {
 
     public void calculateLineItem(){    
         setLineAmount(MathUtil.multiply(getQty(), getPrice()));    
+    }
+
+    public SKU getSku() {
+        return sku;
+    }
+
+    public void setSku(SKU sku) {
+        this.sku = sku;
+    }
+
+    public ItemBarcode getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(ItemBarcode barcode) {
+        this.barcode = barcode;
     }
     
 }

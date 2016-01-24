@@ -32,29 +32,29 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
         // or else goto parent
         // and try focusing to next        
         
-        if(aComponent instanceof CTextField ){
-            
-            ActionTask at = ((CTextField)aComponent).getActionTask();
-            if(at!=null){
-                Object com = at.actionFired(aComponent);
-                if(com!=null && com instanceof Component){
-                    return (Component)com;
-                }
-            }            
-            
-        }else
-        
-        if (aComponent instanceof PFormattedTextField) {
-
-            ActionTask at = ((PFormattedTextField) aComponent).getActionTask();
-            if (at != null) {
-                Object com = at.actionFired(aComponent);
-                if (com != null && com instanceof Component) {
-                    return (Component) com;
-                }
-            }
-
-        }
+//        if(aComponent instanceof PTextField ){
+//            
+//            ActionTask at = ((PTextField)aComponent).getActionTask();
+//            if(at!=null){
+//                Object com = at.actionFired(aComponent);
+//                if(com!=null && com instanceof Component){
+//                    return (Component)com;
+//                }
+//            }            
+//            
+//        }else
+//        
+//        if (aComponent instanceof PFormattedTextField) {
+//
+//            ActionTask at = ((PFormattedTextField) aComponent).getActionTask();
+//            if (at != null) {
+//                Object com = at.actionFired(aComponent);
+//                if (com != null && com instanceof Component) {
+//                    return (Component) com;
+//                }
+//            }
+//
+//        }
         
         
         return gotToNextComponent(aComponent);

@@ -77,9 +77,13 @@ public class StaffDAO extends GenericDAO<Staff>{
         try {
      StaffDAO g=new StaffDAO();
      
-    List lst= g.loadComboItems();
+        List<Staff> lst= g.getAll();
+            long start = System.currentTimeMillis();
+            for (Staff lst1 : lst) {
+                System.out.println("printing staff "+ lst1.getCode());
+            }
       
-        
+            System.out.println(System.currentTimeMillis() - start);
         } catch (Exception e) {
         e.printStackTrace();
         }

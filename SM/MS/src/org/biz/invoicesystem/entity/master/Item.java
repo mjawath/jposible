@@ -8,8 +8,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -18,9 +16,6 @@ import org.biz.entity.BusObj;
 
 @Entity
 public class Item extends BusObj{
-    //   private static final long serialVersionUID = 1L;
-
-    
     
     private String code;//unique item code...
     //   private String name;
@@ -32,40 +27,9 @@ public class Item extends BusObj{
     //making category a boject
     @OneToOne
     private Category category;
-
-    
-    
+    @OneToOne
+    private Product product;
     private String model;
-
-    public Item() {
-        super();
-        setDefaultValues();
-        
-    }
-    
-    public void setDefaultValues(){
-    List<UOM> uoms= getDefaultUOM();
-    setUoms(uoms);
-    }
-
-    
-    
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-    
     private String manufacturer;
     private String unitOne; //like bags...dozens...boxes..
     private Integer different; //unit diferents like 50packets=1 bag...
@@ -112,16 +76,35 @@ public class Item extends BusObj{
     @JoinColumn(name = "Item_id")
     @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
     private List<ExtraSalesPrice> extrasalespriceCollection;
-    @OneToMany
-    @JoinTable(name = "ItemItemVariation",joinColumns = @JoinColumn(name = "Item_ID"), inverseJoinColumns = @JoinColumn(name = "ItemVariation_ID"))
-    @ManyToMany(fetch = FetchType.LAZY )
-    private List<ItemVariation> variations;
+
     @JoinColumn(name = "Item_id")
     @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
     private List<ItemBarcode> barcodes;
     @JoinColumn(name = "Item_id")
     @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
     private List<UOM> uoms;
+    
+    @JoinColumn(name = "Item_id")
+    @OneToMany
+    private List<VariationType> variations;
+
+    /**
+     * @param variations the variations to set
+     */
+    public void setVariations(List<VariationType> variations) {
+        this.variations = variations;
+    }
+
+    public List<VariationType> getVariationTypes() {
+        return variations;
+    }
+
+    /**
+     * @param variations the variations to set
+     */
+    public void setVariationTypes(List<VariationType> variations) {
+        this.variations = variations;
+    }
 
     public List<UOM> getUoms() {
         return uoms;
@@ -166,7 +149,33 @@ public class Item extends BusObj{
             return null;
         }
     }
+    public Item() {
+        super();
+        setDefaultValues();
 
+    }
+
+    public void setDefaultValues() {
+        List<UOM> uoms = getDefaultUOM();
+        setUoms(uoms);
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+    
     public void setCode(String code) {
         this.code = code;
     }
@@ -417,14 +426,6 @@ public class Item extends BusObj{
         this.unit1SalesPrice = unit1SalesPrice;
     }
 
-    public List<ItemVariation> getVariations() {
-        return variations;
-    }
-
-    public void setVariations(List<ItemVariation> variations) {
-        this.variations = variations;
-    }
-
     /**
      * @return the discount
      */
@@ -632,10 +633,7 @@ public class Item extends BusObj{
     }
     
     public void addVarient(ItemVariation var){
-    if(variations==null){
-     variations=new ArrayList();   
-    }
-    variations.add(var);
+
     }
     
     
@@ -643,7 +641,12 @@ public class Item extends BusObj{
         setLineID(getUoms());
         //sets the ids to the onetomany, manyto many
     }
-    
+
+    public List<ItemVariation> getVariations() {
+        return null;
+    }
+
+
     
     
 }

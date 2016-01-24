@@ -3,22 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package org.biz.invoicesystem.entity.master;
 
-package config;
-
-import org.components.test.MenuBuilder;
+import javax.persistence.Entity;
+import org.biz.entity.BusObj;
 
 /**
  *
  * @author jawa
  */
-public class MenuStructure {
+@Entity
+public class ProductDetail extends BusObj {
     
-    
-    public static void applyMenuStructure(){
-        
-        MenuBuilder mb = new MenuBuilder();
-        
-        
-    }
+    private String code;//unique item code...    
+
 }

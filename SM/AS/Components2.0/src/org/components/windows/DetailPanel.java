@@ -391,6 +391,11 @@ public class DetailPanel<T> extends TabPanelUI {
         setDataToUI(obj);
         
     }
+    
+    
+    public void setVisualDataToUI(T obj) {
+        
+    }
   
     
     public void clear() {

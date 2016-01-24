@@ -4,7 +4,6 @@
  */
 package org.biz.invoicesystem.entity.transactions;
 
-import org.util.MathUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +21,7 @@ import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Warehouse;
+import org.util.MathUtil;
 
 /**
  *
@@ -60,7 +60,7 @@ public class SalesInvoice extends BusObj {
     private Byte status;
 
     public SalesInvoice() {
-        setLineItems(new ArrayList<SalesInvoiceLineItem>());
+        setLineItems(new ArrayList<SalesInvoiceLineItem>());   
     }
 
     public void setCode(String code) {
@@ -231,6 +231,8 @@ public class SalesInvoice extends BusObj {
     public void setTotal(Double total) {
         this.total = total;
     }
+    
+    
 
     static public SalesInvoice createNewInvoice() {
         SalesInvoice sl = new SalesInvoice();
@@ -244,15 +246,42 @@ public class SalesInvoice extends BusObj {
         return sl;
     }
 
+    
+    public void calculateTotal() {
+        Double db = 0d;
+        for (SalesInvoiceLineItem sl : lineItems) {
+            db = MathUtil.add(db, sl.getLineAmount());
+        }
+        setSubTotal(db);
+        Tracer.printToOut("Invoice sub totel  " + subTotal);
+        setTotal(db);
+        Tracer.printToOut("Invoice totel  " + total);        
+        Tracer.printToOut("Invoice Tax  " +texPer);
+        setSalesTaxDetail();
+        Tracer.printToOut("Invoice Tax  Amount" + texAmount);        
+        setDiscountDetail();
+        Tracer.printToOut("Invoice Discount  " + discountPer + " "+discount);
+        db = MathUtil.sub(db, texAmount);
+        db = MathUtil.sub(db, discount);
+        setTotal(db);
+        Tracer.printToOut("Invoice totel  " + subTotal);
+        Double bal = db;
+        Tracer.printToOut("Recived  " + cashRecieveds);
+        bal = MathUtil.sub(bal, getCashRecieveds());
+        Tracer.printToOut("Invoice final totel  " + total);        
+    }
+    
     public Double setTotal() {
         Double db = 0d;
         for (SalesInvoiceLineItem sl : lineItems) {
             db = MathUtil.add(db, sl.getLineAmount());
         }
         setSubTotal(db);
-
-        db = MathUtil.sub(db, getTexAmount());
-        db = MathUtil.sub(db, getDiscount());
+        setTotal(db);
+        setSalesTaxDetail();
+        setDiscountDetail();
+        db = MathUtil.sub(db, texAmount);
+        db = MathUtil.sub(db, discount);
 
         setTotal(db);
         Double bal = db;
@@ -264,5 +293,21 @@ public class SalesInvoice extends BusObj {
     
     public Double calculateBalance(){
       return MathUtil.sub( total,cashRecieveds);
+    }
+
+    public Double setSalesTaxDetail() {        
+          //calculate the tax amount and set it
+        Double tax = texPer == null ? 0 : texPer;
+        texAmount = MathUtil.multiply(total, (tax / 100));        
+        return texAmount;
+        
+    }
+    
+    public Double setDiscountDetail() {
+        
+        Double disc = discountPer ==null?0:discountPer;
+        discount = MathUtil.multiply(total, (disc / 100));
+        return discount;
+
     }
 }

@@ -10,7 +10,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import org.biz.app.ui.util.StringUtility;
+import org.components.containers.CPanel;
 
 /**
  *
@@ -35,7 +38,12 @@ public class UIFrame extends javax.swing.JFrame {
             @Override
             public void windowGainedFocus(WindowEvent e) {
                 
-                System.out.println("Widnows"+e);
+                //focus to first component
+                 System.out.println("Window focus changed");            
+                 if(tabbedPane.getSelectedComponent() instanceof CPanel){
+                     ((CPanel)tabbedPane.getSelectedComponent()).requestFocus();
+                 } 
+                 
             }
         
         });
@@ -48,7 +56,14 @@ public class UIFrame extends javax.swing.JFrame {
     }
     
     public void setTabbedPane(JTabbedPane pane){
-       this.tabbedPane =  pane;    
+       this.tabbedPane =  pane;
+       tabbedPane.addChangeListener(new ChangeListener() {
+
+           @Override
+           public void stateChanged(ChangeEvent e) {
+               System.out.println("tab state changed");
+           }
+       });
     }
     
     public void goToDetail(){   

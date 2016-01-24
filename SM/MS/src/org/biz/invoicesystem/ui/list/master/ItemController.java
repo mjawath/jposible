@@ -32,27 +32,6 @@ public class ItemController extends UIController<Item>{
         ItemMasterFrame frame = new ItemMasterFrame();                
         setUIFrame(frame);
     }
-    
-    
-         
-     
-     
-
-     
-     
-//         
-//     public List myexecuteQuery(int page) {  
-//        ItemSUI searchUI = (ItemSUI)listView.getSearchUI();
-//        if(searchUI.isOrderByCreationDate()){            
-//        }
-//        String txt =  String.valueOf(searchUI.getQueryParameterMap().get(SearchQueryUIPanel.QRY));        
-//        final List byCodeLike = getService().getByCodeLike(page, txt);        
-//        return byCodeLike;
-//    }
-//     private Long executeList(){
-//        String txt =  String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
-//        return getService().getCountByCodeLike(txt);        
-//     }
-
+   
     
 }

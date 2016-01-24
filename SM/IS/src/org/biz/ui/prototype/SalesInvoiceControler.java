@@ -58,7 +58,16 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
     }
     
 
-      
+     
+    public void onSalesInvoiceLineItemChanged(GridDataLineDetailUI lineDetailUI) {
+        SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
+        SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
+        salesInvoiceLineItem.calculateLineItem();
+        salesLineUI.setDataToUI(salesInvoiceLineItem);
+        detailView.uiToData();
+        currentBusObject.setTotal();
+        ((SalesInvoiceDetailUI) detailView).setVisualDataToUI(currentBusObject);
+    }
     
     public void onSalesInvoiceLineItemQTYChanged(GridDataLineDetailUI lineDetailUI) {
         SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
@@ -67,7 +76,7 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         salesLineUI.setDataToUI(salesInvoiceLineItem);
         detailView.uiToData();
         currentBusObject.setTotal();
-        detailView.setDataToUI(currentBusObject);
+        ((SalesInvoiceDetailUI)detailView).setVisualDataToUI(currentBusObject);
 //        salesLineUI.getPrice().requestFocus();
     }
     
@@ -77,17 +86,17 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
         salesInvoiceLineItem.calculateLineItem();
         salesLineUI.setDataToUI(salesInvoiceLineItem);
-        detailView.uiToData();
+        SalesInvoice currentBusObject = detailView.uiToData();
         currentBusObject.setTotal();
-        detailView.setDataToUI(currentBusObject);
+        ((SalesInvoiceDetailUI) detailView).setVisualDataToUI(currentBusObject);
 //        salesLineUI.getPrice().requestFocus();
     }
+
     
     public void onSalesInvoiceDataChanged() {
-        
-        detailView.uiToData();
-        currentBusObject.setTotal();
-        detailView.setDataToUI(currentBusObject);
+        SalesInvoice currentBusObject = detailView.uiToData();        
+        currentBusObject.calculateTotal(); 
+        ((SalesInvoiceDetailUI) detailView).setVisualDataToUI(currentBusObject);
 //        salesLineUI.getPrice().requestFocus();
     }
     

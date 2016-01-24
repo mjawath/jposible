@@ -116,9 +116,9 @@ public class ApplicationManager {
         
         
         MenuItem menuItemx = new MenuItem("Master >  Item ","org.biz.invoicesystem.ui.list.master.ItemController",0,"Item detail","Item detail");
-
-
         menuBuilder.createMenuItem(menuItemx);
+        MenuItem mii = new MenuItem("Master >  Item ", "org.biz.invoicesystem.ui.list.master.SKUController", 0, "Item SKU detail", "Item SKU detail");
+        menuBuilder.createMenuItem(mii);
         
         MenuItem mi = new MenuItem("Transactions >  Sales ", "org.biz.ui.prototype.SalesInvoiceControler", 0, "Sales detail", "Sales detail");
         menuBuilder.createMenuItem(mi);

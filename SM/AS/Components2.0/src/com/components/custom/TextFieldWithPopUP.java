@@ -402,6 +402,8 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
     }
 
     public void setSelectedObject(T it) {
+        selectedObject = it;
+        setSelectedText();
         if(pagedPopUpPanel==null)return;
         pagedPopUpPanel.setPopDesable(true);
         pagedPopUpPanel.setSelectedObject(it);
@@ -417,7 +419,9 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
     public void clear() {
         fieldWithPopUP.clear();
         setSelectedObject(null);
-        pagedPopUpPanel.setSelectedID(null);
+        if(pagedPopUpPanel!=null){
+            pagedPopUpPanel.setSelectedID(null);
+        }
     }
 
     public void initPopup(Class cls, Class[] columnsType, String[] columns, String selectedProp, PopupListner listner) {

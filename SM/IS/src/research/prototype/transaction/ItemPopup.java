@@ -8,8 +8,7 @@ package research.prototype.transaction;
 
 import com.components.custom.TextFieldWithPopUP;
 import org.biz.invoicesystem.entity.master.Item;
-import org.biz.invoicesystem.service.master.ItemService;
-import org.biz.invoicesystem.ui.list.master.ItemListViewUI;
+import org.biz.invoicesystem.ui.list.master.ItemLV;
 
 /**
  *
@@ -25,7 +24,7 @@ public class ItemPopup extends TextFieldWithPopUP<Item> {
         super(); 
 //        initPopup(Item.class, new Class[]{Item.class,String.class,String.class},new String[]{"Code","Desc"} ,"code",this);
       
-        setListView(new ItemListViewUI());
+        setListView(new ItemLV());
     }
 
 

@@ -26,6 +26,12 @@ public class UOM extends BusObj {
 //    @Enumerated(EnumType.ORDINAL)
     private byte type = UOMType.Other.getValue();// this can be primary ,carton, wholsale ..others
     private boolean isPrimary;
+    private String descriptiom;
+    @OneToOne
+    private UOM guom;
+    private Double multi;
+    private Double salesPrice;
+
 
     public UOM() {
     
@@ -125,11 +131,6 @@ public class UOM extends BusObj {
     public void setType(byte type) {
         this.type = type;
     }
-    private String descriptiom;
-    @OneToOne
-    private UOM guom;
-    private Double multi;
-    private Double salesPrice;
 
     public Double getSalesPrice() {
         return salesPrice;

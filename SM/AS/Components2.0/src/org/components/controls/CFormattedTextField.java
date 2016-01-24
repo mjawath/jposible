@@ -12,7 +12,6 @@ import org.components.parent.controls.PFormattedTextField;
  * @author jawa
  */
 public class CFormattedTextField extends PFormattedTextField {
-
     /**
      * Creates new form CFormattedTextField
      */
@@ -30,6 +29,8 @@ public class CFormattedTextField extends PFormattedTextField {
     private void initComponents() {
     }// </editor-fold>//GEN-END:initComponents
 
+    
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -30,6 +30,18 @@ public class GridDataLineDetailUI extends CPanel implements GridDetailLineUI{
     public GridDataContainerUI getGridContainer(){
     return containerUI;
     }
+    
+    
+    public boolean isLineItemValid(){
+        return true;
+    }
+    
+    public Object UIToData() {
+       return null;
+    }
+
+    public void setDataToUI(Object data) {        
+    }
             
     /**
      * This method is called from within the constructor to initialize the form.

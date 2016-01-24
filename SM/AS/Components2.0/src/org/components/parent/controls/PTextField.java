@@ -14,8 +14,11 @@ import app.utils.SystemUtil;
 import com.components.custom.ActionTask;
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
+import java.awt.Component;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
+import org.biz.app.ui.util.StringUtility;
 import org.components.parent.Documents.DocumentListenerx;
 
 /**
@@ -65,7 +69,6 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         this.id = id;
     }
 
-
     @Override
     protected void processFocusEvent(FocusEvent e) {
         super.processFocusEvent(e);
@@ -97,9 +100,6 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
                 break;
         }
 
-
-
-
     }
 
     /** Creates new form BeanForm */
@@ -111,6 +111,31 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
 //        addDocumentListener(docx);        
         
         setDocument(new CDocument());
+        
+        addFocusListener(new FocusAdapter() {
+
+            String value;
+            @Override
+            public void focusLost(FocusEvent e) {
+                
+                if(!StringUtility.isSameString(value, getText())){
+                if(actionTask!=null){
+                    Object obj = actionTask.actionFired(e);
+                    if(obj instanceof Component){
+                        ((Component)obj).requestFocus();
+                    }
+                }
+                }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                value = getText();
+            }
+            
+            
+           
+        });
         
     }
     
@@ -135,13 +160,85 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
             super.insertString(offs, str, a); 
             fireEventIfNotFromDoc();
         }
+
+        @Override
+        public void remove(int offs, int len) throws BadLocationException {
+            super.remove(offs, len); //To change body of generated methods, choose Tools | Templates.
+            fireEventIfNotFromDoc();
+        }
         
         
     public void fireEventIfNotFromDoc(){
         if(!disableDocumentChangeEvent && docActionTask!=null ){
+            disableDocumentChangeEvent = true;
             docActionTask.actionFired(this);
+            disableDocumentChangeEvent = false;
         }
     }
+    }
+    
+   
+    
+    public class DoubleDocument extends CDocument {
+
+        Double max;
+        Double min;
+        boolean allowZero = true;
+
+        @Override
+        public void insertString(int offs, String str, AttributeSet a)
+                throws BadLocationException {
+            if (str == null) {
+                return;
+            }
+            if (str.equals("d") || str.equals("D")) {
+                return;
+            }
+
+            String oldString = getText(0, getLength());
+            String newString = oldString.substring(0, offs) + str
+                    + oldString.substring(offs);
+
+            try {
+                Double d = Double.parseDouble(newString);
+                if (max != null && d >= max) {
+                    return;
+                }
+
+                if (min != null && d <= min) {
+                    return;
+                }
+
+                if (!allowZero && d == 0) {
+                    return;
+                }
+
+                super.insertString(offs, str, a);
+            } catch (NumberFormatException e) {
+                Toolkit.getDefaultToolkit().beep();
+                //here i should comenting it becas on sound
+            }
+
+        }
+
+        public DoubleDocument(Double min, Double max) {
+            this.max = max;
+            this.min = min;
+        }
+
+        public DoubleDocument(Double min, Double max, boolean zero) {
+            this.max = max;
+            this.min = min;
+            this.allowZero = false;
+        }
+
+        public DoubleDocument() {
+        }
+
+        public DoubleDocument(Double min) {
+            this.min = min;
+        }
+
     }
     
     

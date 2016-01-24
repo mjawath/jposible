@@ -12,10 +12,10 @@ package org.biz.ui.prototype;
  */
 public interface LineItemAdder {
     
-    public GridDataLineDetailUI getLineUI();
+    public GridDataLineDetailUI getLineUI(Object Obj);
     
     public void removeLine(GridDataLineDetailUI line);
     
-
+//    public boolean isThisLineValidLine(GridDataLineDetailUI gld) ;
     
 }

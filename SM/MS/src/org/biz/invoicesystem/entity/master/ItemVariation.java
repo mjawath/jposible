@@ -2,7 +2,7 @@ package org.biz.invoicesystem.entity.master;
 
 import javax.persistence.Entity;
 import org.biz.entity.BusObj;
-
+ 
 /*
  basically this class is for item variation like pendrive ..
  * can be varied by kingston imation...or else by 1gb  or 2gb or 8gb pendrives..
@@ -14,6 +14,9 @@ public class ItemVariation extends BusObj{
   //  private String type;
     Double sPrice1; //saleprice one for variation
     Double sPrice2;//saleprice 2 for variation
+  
+    private String variationKey;
+    private String []values;
     
 //    @OneToMany
 //    List<Variation> ivs;

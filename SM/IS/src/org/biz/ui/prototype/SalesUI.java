@@ -72,26 +72,21 @@ public class SalesUI extends UIFrame {
     private void initComponents() {
 
         tabbedPane1 = new com.components.custom.TabbedPane();
-        salesOverviewPanel1 = new org.biz.ui.prototype.SalesInvoiceMasterUI();
         salesInvoiceUI1 = new org.biz.ui.prototype.SalesInvoiceDetailUI();
+        salesOverviewPanel1 = new org.biz.ui.prototype.SalesInvoiceMasterUI();
 
-        tabbedPane1.addTab("tab1", salesOverviewPanel1);
-        tabbedPane1.addTab("tab2", salesInvoiceUI1);
+        tabbedPane1.addTab("Sales Invoice", salesInvoiceUI1);
+        tabbedPane1.addTab("Sales Invoice List", salesOverviewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1242, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1248, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

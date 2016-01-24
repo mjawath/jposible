@@ -181,4 +181,10 @@ public class CComboBox<E> extends JComboBox implements IComponent{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    public void clear() {
+        ((DefaultComboBoxModel)getModel()).removeAllElements();
+    }
+
+ 
 }

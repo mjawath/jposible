@@ -19,7 +19,6 @@ import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
 import org.biz.entity.PrimaryKey;
-import org.components.test.MenuBuilder;
 
 /**
  *
@@ -348,10 +347,6 @@ public class UIController<T> {
     }
 
    
-   public void setMenuStructure(){
-       MenuBuilder mb = new MenuBuilder();
-//       mb.set
-   } 
-    
+
   
 }

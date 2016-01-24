@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.components.parent.controls.PTableColumn;
-import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.windows.ListViewUI;
 
 /**
@@ -25,7 +24,7 @@ public class SalesInvoiceListUI extends ListViewUI {
     public SalesInvoiceListUI() {
         super();
 
-        getTable().setTableInteractionListner(tableInteractionListner);
+
         List<PTableColumn> tblCols = new ArrayList();
         tblCols.add(new PTableColumn(String.class, "ID"));
         tblCols.add(new PTableColumn(String.class, "Code"));
@@ -37,8 +36,7 @@ public class SalesInvoiceListUI extends ListViewUI {
    
         
     
-    private TableInteractionListner tableInteractionListner = new TableInteractionListner() {
-
+    
         @Override
         public Object[] getTableData(Object row) {
             SalesInvoice item = (SalesInvoice) row;
@@ -50,16 +48,7 @@ public class SalesInvoiceListUI extends ListViewUI {
             }
             return new Object[]{item, item.getId(), item.getCode(),custName};
         }
-
-        @Override
-        public void selectionChanged(Object newRowObject) {
-//            showDetailView(newRowObject);
-        }
-        
-        
-    };
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

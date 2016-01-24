@@ -82,6 +82,7 @@ public class ControlPanel extends javax.swing.JPanel {
         tprint = new org.components.controls.CButton();
         btgotoGrid = new org.components.controls.CButton();
         tdelete = new org.components.controls.CButton();
+        btclear1 = new org.components.controls.CButton();
 
         setLayout(null);
 
@@ -111,7 +112,7 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(btclear);
-        btclear.setBounds(210, 0, 70, 30);
+        btclear.setBounds(280, 0, 70, 30);
 
         tprint.setText("Print");
         tprint.addActionListener(new java.awt.event.ActionListener() {
@@ -120,15 +121,24 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(tprint);
-        tprint.setBounds(280, 0, 70, 30);
+        tprint.setBounds(350, 0, 70, 30);
 
         btgotoGrid.setText("Goto Grid >");
         add(btgotoGrid);
-        btgotoGrid.setBounds(350, 0, 80, 30);
+        btgotoGrid.setBounds(430, 0, 80, 30);
 
         tdelete.setText("Delete");
         add(tdelete);
         tdelete.setBounds(60, 0, 80, 30);
+
+        btclear1.setText("New");
+        btclear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btclear1ActionPerformed(evt);
+            }
+        });
+        add(btclear1);
+        btclear1.setBounds(210, 0, 70, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearActionPerformed
@@ -147,8 +157,13 @@ public class ControlPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btsaveActionPerformed
 
+    private void btclear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclear1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btclear1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton btclear;
+    private org.components.controls.CButton btclear1;
     private org.components.controls.CButton btgotoGrid;
     private org.components.controls.CButton btsave;
     private org.components.controls.CButton tclear;

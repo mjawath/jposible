@@ -6,23 +6,37 @@
 package org.components.parent.controls;
 
 import com.components.custom.ActionTask;
+import com.components.custom.IComponent;
+import com.components.custom.IContainer;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 /**
  *
  * @author jawa
  */
-public class PFormattedTextField extends JFormattedTextField {
+public class PFormattedTextField extends JFormattedTextField implements IComponent{
 
     
     private ActionTask actionTask;
+    private ActionListener docAction;
+    private ActionTask docActionTask;
+    boolean disableDocumentChangeEvent = false;
+    
+    protected IContainer container;
     /**
      * Creates new form PFormattedTextField
      */
     public PFormattedTextField() {
         initComponents();
+        
+        setDocument(new CDocument());
     }
     
     
@@ -66,8 +80,58 @@ public class PFormattedTextField extends JFormattedTextField {
     public void setActionTask(ActionTask actionTask) {
         this.actionTask = actionTask;
     }
+    public void setDocAction(ActionListener action) {
 
+        docAction = action;
+    }
+
+    public void setDocAction(ActionTask action) {
+
+        docActionTask = action;
+    }
     
+    public void clear(){
+        setText("");
+    }
+    
+    
+    private class CDocument extends PlainDocument {
+
+        @Override
+        protected void removeUpdate(AbstractDocument.DefaultDocumentEvent chng) {
+            super.removeUpdate(chng);          
+            fireEventIfNotFromDoc();
+        }
+
+        @Override
+        protected void insertUpdate(AbstractDocument.DefaultDocumentEvent chng, AttributeSet attr) {
+            super.insertUpdate(chng, attr);
+            fireEventIfNotFromDoc();
+
+        }
+
+        @Override
+        public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+            super.insertString(offs, str, a);
+            fireEventIfNotFromDoc();
+        }
+
+        public void fireEventIfNotFromDoc() {
+            if (!disableDocumentChangeEvent && docActionTask != null) {
+                System.out.println("Docuuuuuuuuuuuuuu  "+PFormattedTextField.this.getText());
+                disableDocumentChangeEvent = true;
+                docActionTask.actionFired(this);
+                disableDocumentChangeEvent = false;
+            }
+        }
+}
+    
+    
+    public void setText(String txt){
+        disableDocumentChangeEvent=true;
+        super.setText(txt);
+        disableDocumentChangeEvent = false;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,4 +145,27 @@ public class PFormattedTextField extends JFormattedTextField {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setContainer(IContainer con) {
+        this.container = con;
+    }
+
+    public IContainer getContainer() {
+        return container;
+    }
+    
+    /**
+     * this will set fire document even change listener
+     *
+     * @param val
+     */
+    public void setValueIfNotFocused(Object val) {
+        if (hasFocus()) {
+            return;
+        }
+        disableDocumentChangeEvent = true;
+        setText(val == null ? "" : val.toString());
+        disableDocumentChangeEvent = false;
+    }
 }
