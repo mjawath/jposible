@@ -3,14 +3,13 @@ package org.components.windows;
  
 import java.awt.Component;
 import java.awt.Container;
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
@@ -123,7 +122,14 @@ public class MainWindow extends JFrame {
 //            }
         });
 
-
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .addKeyEventDispatcher(new KeyEventDispatcher() {
+                    @Override
+                    public boolean dispatchKeyEvent(KeyEvent e) {
+//                        System.out.println("Got key event!");
+                        return false;
+                    }
+                });
 
         
     }

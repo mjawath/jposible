@@ -127,6 +127,10 @@ public class ApplicationManager {
         MenuItem mis = new MenuItem("Transactions >  Sales ", "org.biz.ui.prototype.SalesInvoiceControler","SaleInvoiceUIX" ,0, "Sales detail x", "Sales detailx");
         menuBuilder.createMenuItem(mis);
 
+        
+        MenuItem mis2 = new MenuItem("Transactions >  Sales ", "org.biz.ui.prototype.SalesInvoiceControler", "SaleDetailPanelUI", 1, "Sales Detail Table", "menu of Sales detailx");
+        menuBuilder.createMenuItem(mis2);
+        
         JMenuBar mb = SystemUtil.getMenuBar();
         
         

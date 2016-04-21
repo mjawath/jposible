@@ -36,10 +36,12 @@ public class MenuAction extends ActionTask{
                 }
                 
                 if(!StringUtility.isEmptyString(menuItem.getScreenClassName())){
-                cont.showFrame(menuItem.getScreenClassName());
-                return;
+                cont.showFrame(menuItem.getScreenClassName());                
+                }else if (menuItem.getType()>0) {
+                    cont.showFrame(menuItem.getType());
+                }else{
+                    cont.showFrame();
                 }
-                cont.showFrame();
             }
             
                         //check whther object already registered

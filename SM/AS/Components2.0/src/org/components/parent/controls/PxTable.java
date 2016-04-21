@@ -44,8 +44,7 @@ public class PxTable<T> extends JTable implements IComponent {
     protected IContainer container;
     private Class modelClass; 
     private String[] propertiesEL;
-    private List modelCollection;
-    private String newRowId = newRowId_cons;
+    private List modelCollection;    
     public static final String newRowId_cons = "#NewRow#";
     private int newRowId_SEED = -10000001;
     protected TableInteractionListner tableInteractionListner;
@@ -128,6 +127,33 @@ public class PxTable<T> extends JTable implements IComponent {
         
     }
    
+    /**
+     *
+     */
+    public void addNewItemToLast() {
+        Object obj = ReflectionUtility.getDynamicInstance(modelClass);
+        addNewItemToLast(obj);
+    }
+    
+    public void addNewItemToLast(Object obj) {
+        int insertionPoint = getRowCount();        
+        TableUtil.addModelToTable(obj, this);
+        changeSelection(insertionPoint);
+    }    
+    
+    
+   public List getCollection(){
+       List data= new ArrayList();
+       
+       for (int i = 0; i < getRowCount(); i++) {
+           Object rowLine = getValueAt(i, 0);
+           data.add(rowLine);
+       }
+       return data;
+   } 
+    
+    
+    
    
     static class DateRendererX extends DefaultTableCellRenderer.UIResource {
         DateFormat formatter=new SimpleDateFormat("HH:mm:ss dd-MM-yyyy ");
@@ -265,7 +291,10 @@ public class PxTable<T> extends JTable implements IComponent {
         }
 
     }
-
+/**
+ * deprecated
+ * @param obj 
+ */
     public void addModelToTable(Object obj) {
 
         //obj should hv an unique id 
@@ -279,11 +308,17 @@ public class PxTable<T> extends JTable implements IComponent {
     }
     
     
+    /**
+     * deprecated
+     */
     public void setModelCollectionToTableNew(List list) {
         setModelCollectionToTable(list);
         addNewToLast();
     }
     
+    /**
+     * deprecated
+     */
     public void setModelCollectionToTable(List list) {
         clear();
         modelCollection = new ArrayList();
@@ -296,7 +331,9 @@ public class PxTable<T> extends JTable implements IComponent {
         }
     }
     
-    
+     /**
+     * deprecated
+     */ 
     public void setCollectionToTable(List list){
         TableUtil.setCollectionToTable(list, this);
     }
@@ -337,7 +374,10 @@ public class PxTable<T> extends JTable implements IComponent {
         }
         return null;
     }
-
+    
+    /**
+     * deprecated
+     */
     /**
      * if row is not selected adds new model otherwise update the selected row
      * object
@@ -373,7 +413,9 @@ public class PxTable<T> extends JTable implements IComponent {
         modelCollection.set(x, objx);
     }
     
-    
+        /**
+     * deprecated
+     */
     public void addNewToLast(){
         int insertionPoint=getRowCount();
         addModelToTable(ReflectionUtility.getDynamicInstance(modelClass));
@@ -403,8 +445,12 @@ public class PxTable<T> extends JTable implements IComponent {
 //        TableUtil.removerow(this, sr);
 
     }
-    
+        
     public void removeSelectedObject(){
+        int selectedRow = getSelectedRow();
+        if(selectedRow>=0){
+            TableUtil.removerow(this, selectedRow);
+        }
     
     }
 
@@ -546,6 +592,22 @@ public class PxTable<T> extends JTable implements IComponent {
         }
         return objs;
     }
+    
+    
+    public void addItem(Object line) {                
+        TableUtil.addModelToTable(line,this);
+        selectLast();
+    }
+
+    
+    public void updateSelectedRow(Object line) {
+        final int selectedRow = getSelectedRow();
+        if(selectedRow>=0){
+            TableUtil.replaceModel(this, line, selectedRow);            
+        }
+    }
+    
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

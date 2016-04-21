@@ -39,6 +39,7 @@ public class SalesUI extends UIFrame {
                     KeyboardFocusManager currentKeyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
                     if (currentKeyboardFocusManager.getDefaultFocusTraversalPolicy() instanceof MyFocusPolicy) {
                         Component com = ((DetailPanel) tabbedPane.getSelectedComponent()).gotoFirstComponent();
+                        if(com!=null)
                         com.requestFocusInWindow();
 
                     }
@@ -57,7 +58,7 @@ public class SalesUI extends UIFrame {
 
     @Override
     public DetailPanel getDetail() {
-        return salesInvoiceUI1;
+        return salesInvoiceTableDetail1;
     }
     
     
@@ -72,9 +73,11 @@ public class SalesUI extends UIFrame {
     private void initComponents() {
 
         tabbedPane1 = new com.components.custom.TabbedPane();
+        salesInvoiceTableDetail1 = new org.biz.ui.prototype.SalesInvoiceTableDetail();
         salesInvoiceUI1 = new org.biz.ui.prototype.SalesInvoiceDetailUI();
         salesOverviewPanel1 = new org.biz.ui.prototype.SalesInvoiceMasterUI();
 
+        tabbedPane1.addTab("tab3", salesInvoiceTableDetail1);
         tabbedPane1.addTab("Sales Invoice", salesInvoiceUI1);
         tabbedPane1.addTab("Sales Invoice List", salesOverviewPanel1);
 
@@ -86,7 +89,7 @@ public class SalesUI extends UIFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(tabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -125,6 +128,7 @@ public class SalesUI extends UIFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.biz.ui.prototype.SalesInvoiceTableDetail salesInvoiceTableDetail1;
     private org.biz.ui.prototype.SalesInvoiceDetailUI salesInvoiceUI1;
     private org.biz.ui.prototype.SalesInvoiceMasterUI salesOverviewPanel1;
     private com.components.custom.TabbedPane tabbedPane1;

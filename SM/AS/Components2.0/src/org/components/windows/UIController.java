@@ -96,6 +96,10 @@ public class UIController<T> {
 
     }
     
+    public void showFrame(int screenType) {
+        UIFrame.setVisible(true);
+    }
+    
     public DetailPanel<T> getDetailView() {
         return detailView;
     }

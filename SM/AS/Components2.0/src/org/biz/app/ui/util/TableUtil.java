@@ -4,7 +4,6 @@
  */
 package org.biz.app.ui.util;
 
-import org.biz.util.ReflectionUtility;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.Enumeration;
@@ -16,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
+import org.biz.util.ReflectionUtility;
 import org.components.parent.controls.PTableColumn;
 import org.components.parent.controls.PxTable;
 import org.components.parent.controls.editors.BaseCellEditor;
@@ -205,7 +205,7 @@ public class TableUtil {
     }
 
     public static void replacerow(JTable jTable, Object[] row, int point) {
-           DefaultTableModel dtm= getdtm(jTable);
+        DefaultTableModel dtm= getdtm(jTable);
         point = jTable.convertRowIndexToModel(point);
         for (int i = 0; i < row.length; i++) {
             Object object = row[i];

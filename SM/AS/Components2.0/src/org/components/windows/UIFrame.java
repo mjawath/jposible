@@ -38,8 +38,7 @@ public class UIFrame extends javax.swing.JFrame {
             @Override
             public void windowGainedFocus(WindowEvent e) {
                 
-                //focus to first component
-                 System.out.println("Window focus changed");            
+                //focus to first component                 
                  if(tabbedPane.getSelectedComponent() instanceof CPanel){
                      ((CPanel)tabbedPane.getSelectedComponent()).requestFocus();
                  } 
@@ -61,7 +60,7 @@ public class UIFrame extends javax.swing.JFrame {
 
            @Override
            public void stateChanged(ChangeEvent e) {
-               System.out.println("tab state changed");
+               
            }
        });
     }

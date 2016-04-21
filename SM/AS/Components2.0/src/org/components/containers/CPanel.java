@@ -241,5 +241,13 @@ public class CPanel extends PPanel implements IContainer ,IComponent {
     public IContainer getContainer() {
      return null;  
     }   
+    
+    
+    public Object panelToData() {
+        return null;
+    }
+
+    public void setDataToPanel(Object obj) {
+    }
 
 }

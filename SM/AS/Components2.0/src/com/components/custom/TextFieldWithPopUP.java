@@ -71,7 +71,9 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 268, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 40, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,16 +100,28 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
 
         textField.addFocusListener(new FocusAdapter() {
 
+//            JWindow w = new JWindow();
+            @Override
+            public void focusGained(FocusEvent e) {
+//                System.out.println("location "+getLocationOnScreen());
+//                w.setSize(200, 200);
+//                w.setLocation(getLocationOnScreen().x ,getLocationOnScreen().y + getHeight());
+//                w.setVisible(true);
+                super.focusGained(e);
+            }
+
+            
+            
             @Override
             public void focusLost(FocusEvent e) {
-
+//                w.dispose();
                 closePopup();
             }
         });
 
         textField.getDocument().addDocumentListener(new DocumentListener() {
 
-            public void insertUpdate(DocumentEvent e) {
+            public void insertUpdate(DocumentEvent e) {                
                 searchWhenDocumentChange();
             }
 
@@ -170,6 +184,13 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
                         jpm.setVisible(false);
                         e.consume();
                     }
+                }
+                
+                if (e.getKeyCode() == KeyEvent.VK_F2) {
+                    
+                    System.out.println("Creating new ");
+//                    listView.onDoubleClicked();
+                   
                 }
             }
         });
@@ -302,8 +323,9 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
         if (ob != null) {
             if (textField instanceof JTextField) {
                 selectedObject = (T) ob;
-                setSelectedText();
-//                action();
+                setSelectedText();   
+                if(actionTask!=null)
+                actionTask.actionCall();
             }
         }
         closePopup();
@@ -445,8 +467,9 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
         fieldWithPopUP.addActionListener(e);
     }
 
+    private ActionTask actionTask;
     public void setActionTask(ActionTask actionTask) {
-        fieldWithPopUP.addActionListener(actionTask);
+        this.actionTask = actionTask;
     }
 
     public void addaction(int idx, ActionTask action) {

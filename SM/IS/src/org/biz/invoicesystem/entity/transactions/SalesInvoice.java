@@ -120,12 +120,20 @@ public class SalesInvoice extends BusObj {
     }
     
     public void addLine(SalesInvoiceLineItem salesInvoiceLineItem){
-        if(lineItems!=null ){
+        if(lineItems==null ){
             return;
         }
         lineItems.add(salesInvoiceLineItem);
     }
 
+    public void addOrUpdateLine(SalesInvoiceLineItem salesInvoiceLineItem) {
+        if (lineItems == null) {
+            return;
+        }
+        if(!lineItems.contains(salesInvoiceLineItem)){
+            lineItems.add(salesInvoiceLineItem);
+        }
+    }
 
 
     public String getRemarks() {

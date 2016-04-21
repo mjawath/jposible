@@ -81,6 +81,17 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
     }
     
     
+    public void onSalesInvoiceLineItemQTYChanged(SalesInvoiceLineDetailTableUI salesLineUI) {        
+        SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.panelToData();
+        salesInvoiceLineItem.calculateLineItem();
+        salesLineUI.setDataToPanel(salesInvoiceLineItem);                
+        SalesInvoice currentBusObject = detailView.uiToData();
+        currentBusObject.addOrUpdateLine(salesInvoiceLineItem);
+        currentBusObject.setTotal();
+        detailView.setVisualDataToUI(currentBusObject);
+//        salesLineUI.getPrice().requestFocus();
+    }
+    
     public void onSalesInvoiceLineItemPriceChanged(GridDataLineDetailUI lineDetailUI) {
         SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;       
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
@@ -96,14 +107,24 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
     public void onSalesInvoiceDataChanged() {
         SalesInvoice currentBusObject = detailView.uiToData();        
         currentBusObject.calculateTotal(); 
-        ((SalesInvoiceDetailUI) detailView).setVisualDataToUI(currentBusObject);
+        detailView.setVisualDataToUI(currentBusObject);
 //        salesLineUI.getPrice().requestFocus();
+    }
+    
+    
+    public void onRemoveLineItem(SalesInvoiceLineItem sil){
+        SalesInvoice si = detailView.uiToData();
+        si.calculateTotal();
+        detailView.setVisualDataToUI(si);
     }
     
      
      
     public void showFrame(String screenName) {
-        if ("SalesInvoicex".equals(screenName)) {
+        if ("SaleInvoiceUIX".equals(screenName)) {
+            UIFrame.setVisible(true);
+        } else if("SaleDetailPanelUI".equals(screenName)){
+                        
             UIFrame.setVisible(true);
         }
     }
