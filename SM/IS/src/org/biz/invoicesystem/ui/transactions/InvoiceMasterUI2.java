@@ -7,7 +7,6 @@
 package org.biz.invoicesystem.ui.transactions;
 
 import com.components.custom.PagedPopUpPanel;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,7 +53,7 @@ public class InvoiceMasterUI2 extends TabPanelUI {
         initComponents();
 
         init();
-        tblInvoice.setPropertiesEL(new String[]{"id", "item.code", "item.description","qty", "unit", "price", "lineAmount"});
+//        tblInvoice.setPropertiesEL(new String[]{"id", "item.code", "item.description","qty", "unit", "price", "lineAmount"});
     }
     
     public void mm(){
@@ -63,37 +62,7 @@ public class InvoiceMasterUI2 extends TabPanelUI {
 
     public void init() {
         initPopups();
-        invoice = new SalesInvoice();
-        lineItems = new ArrayList<SalesInvoiceLineItem>();
-        invoice.setLineItems(lineItems);
-
-//                //ADD this list to popupd
-
-        listStaff = new ArrayList<Staff>();
-
-
-
-
-//         new Thread(){
-
-//            @Override
-//            public void run() {
-        itemService = new ItemService();
-        listItem = itemService.getDao().getAll();
-
-        servicedao = new SalesInvoiceService();
-        itemService = new ItemService();
-        //press esc to close 
-
-        custService = new CustomerService();
-        listCust = custService.getDao().getAll();
-        staffService = new StaffService();
-
-//            }
-
-//         }.start();
-
-        controlPanel1.setCrudController(this);
+        
         super.init();
 
     }

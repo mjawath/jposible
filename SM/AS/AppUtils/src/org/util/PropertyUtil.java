@@ -20,20 +20,26 @@ import java.util.Properties;
 public class PropertyUtil {
 
     //property file name
-    private static Properties properties;
+    private static Properties properties = new Properties();
     private File configFile; 
     
     public static  Properties loadProperties(String file){
-
-     Properties  properties = new Properties();     
+     
         try {
-            properties.load(new FileInputStream(file));
+            properties.load(new FileInputStream(file));            
         } catch (IOException e) {
             
         }
      return properties;
     }        
 
+    static {
+        if(properties.isEmpty()){
+            PropertyUtil.loadProperties(AppStatic.AppProperties_Path);
+        }
+    }
+
+    
     public PropertyUtil() {
         init(getDefaultConfig());
     }
@@ -65,8 +71,10 @@ public class PropertyUtil {
         return 1;
     }
     
-    public static Object getProperty(String propName) {
-        return properties.get(propName);
+    public static <T> T getProperty(String propName) {
+        Object value = properties.get(propName);        
+        if(value==null)return null;
+        return (T)value;
     }
 
 }

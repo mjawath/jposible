@@ -6,11 +6,14 @@ package org.biz.app.ui.util;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -81,7 +84,31 @@ public class TableUtil {
         };
 
         jTable.setModel(dtm);
+        final NumberRenderer numberRenderer = new NumberRenderer();
+        jTable.setDefaultRenderer(Double.class, numberRenderer);        
+        jTable.setDefaultRenderer(Number.class, numberRenderer);        
 
+    }
+      
+      
+     private static class NumberRenderer extends DefaultTableCellRenderer.UIResource {
+
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+
+        public NumberRenderer() {
+            super();
+            setHorizontalAlignment(SwingConstants.RIGHT);
+            formatter.setGroupingUsed(true);
+            formatter.setMinimumFractionDigits(2);
+        }
+
+        public void setValue(Object value) {
+            if (formatter == null) {
+                formatter = NumberFormat.getNumberInstance();
+            }
+            setText((value == null) ? "" : formatter.format(value));
+            
+        }
     }
 
     public static void createTableModel(JTable jTable, String[] columns) {

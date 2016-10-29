@@ -83,6 +83,7 @@ public class PxTable<T> extends JTable implements IComponent {
                 Object obj = getSelectedObject();
 //                if(tableInteractionListner==null)return;
 //                tableInteractionListner.selectionChanged(obj);
+                System.out.println("selection changes"+row);
             }
         });
         this.setDefaultRenderer(String.class, new CustomRenderer());
@@ -166,6 +167,7 @@ public class PxTable<T> extends JTable implements IComponent {
             setText((value == null) ? "" : formatter.format(value));
         }
     }
+    
     
 
     @Override
@@ -281,6 +283,9 @@ public class PxTable<T> extends JTable implements IComponent {
 //        }
     }
 
+    public void clearUI(){
+       TableUtil.cleardata(this);       
+    }
    
     public void clear() {
         if (modelCollection != null) {
@@ -508,6 +513,8 @@ public class PxTable<T> extends JTable implements IComponent {
         }
         super.changeSelection(rowIndex, columnIndex, toggle, extend);
 //                if(rowIndex>=getRowCount())return;
+
+        
         if(tableInteractionListner!=null)tableInteractionListner.selectionChanged(getSelectedObject());
 
     }

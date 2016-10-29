@@ -21,14 +21,7 @@ public class SearchUI<T> extends  SearchQueryUIPanel {
      * Creates new form ItemSUI
      */
     public SearchUI() {
-//        initComponents();
-//        postInit();
-//        qm = new myQM();
-//        qms = qm;
-//        initSearchTextField();
-        
-//        removeAll();
-//        setLayout(BorderLayout);
+        super();
     }
     
    
@@ -70,25 +63,9 @@ public class SearchUI<T> extends  SearchQueryUIPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
-
-        
-//
-        //        command.start(0);
     }//GEN-LAST:event_tbtnSearchActionPerformed
 
-     
     
-     
-   public void gotoPos(int on){}
-      
-    
-           
-    
-     
-     public void doSearch(){
-     }
-     
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton tbtnSearch;

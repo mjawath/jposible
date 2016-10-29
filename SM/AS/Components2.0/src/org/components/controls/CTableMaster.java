@@ -12,6 +12,7 @@ package org.components.controls;
 
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
+import org.biz.app.ui.util.TableUtil;
 import org.components.parent.controls.PxTable;
 
 /**
@@ -76,8 +77,11 @@ public class CTableMaster extends PxTable implements IComponent{
         return container;
     }
 
- 
-    
+    public void clearUI() {
+        TableUtil.cleardata(this);
+    }
+
+     
     
     
 }

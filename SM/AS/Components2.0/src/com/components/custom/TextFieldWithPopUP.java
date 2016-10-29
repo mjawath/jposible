@@ -23,6 +23,7 @@ import javax.swing.event.DocumentListener;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.ComponentFactory;
 import org.biz.app.ui.util.QueryManager;
+import org.biz.app.ui.util.StringUtility;
 import org.biz.app.ui.util.TableUtil;
 import org.biz.app.ui.util.UIEty;
 import org.biz.app.ui.util.UIListener;
@@ -69,17 +70,13 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 268, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 40, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(textField, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 23, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(textField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE))
+            .addComponent(textField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -278,7 +275,6 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
 
     private void searchWhenDocumentChange() {
         if (textField.isFocusOwner() && !popupDisabled) {
-
             if (qm != null) {
                 qm.executeToFirstPageTask();
             } else if (at != null) {
@@ -317,17 +313,22 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
     }
 
     public void selectItem() {
-        popupDisabled = true;
-
+        popupDisabled = true;        
         Object ob = TableUtil.getSelectedModelsValueAt(listView.getTable(), getSelectedColumn());
-        if (ob != null) {
+        final boolean istextNotEmpty = !StringUtility.isEmptyString(getText());
+        if (istextNotEmpty &&  ob != null) {
             if (textField instanceof JTextField) {
                 selectedObject = (T) ob;
                 setSelectedText();   
                 if(actionTask!=null)
                 actionTask.actionCall();
             }
-        }
+        }else if (istextNotEmpty && selectedObject!=null)
+            selectedObject = null;
+            setSelectedText();
+                if( actionTask != null) {
+                actionTask.actionCall();
+            }
         closePopup();
         popupDisabled = false;
 
@@ -345,7 +346,9 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
                 return;
             }
             if (selectedObject instanceof BusObj) {
-                UIEty.objToUi(textField, ReflectionUtility.getProperty(selectedObject, getSelectedProperty()));
+                Object xx=ReflectionUtility.getProperty(selectedObject, getSelectedProperty());
+                UIEty.objToUi(textField, xx);
+             
             } else if (selectedObject instanceof String) {
                 UIEty.objToUi(textField, selectedObject);
             }
@@ -425,7 +428,9 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
 
     public void setSelectedObject(T it) {
         selectedObject = it;
+        setPopDesable(true);
         setSelectedText();
+        setPopDesable(false);     
         if(pagedPopUpPanel==null)return;
         pagedPopUpPanel.setPopDesable(true);
         pagedPopUpPanel.setSelectedObject(it);
@@ -439,8 +444,10 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
     }
 
     public void clear() {
-        fieldWithPopUP.clear();
+        setPopDesable(true);                
+        fieldWithPopUP.clear();        
         setSelectedObject(null);
+        setPopDesable(false);
         if(pagedPopUpPanel!=null){
             pagedPopUpPanel.setSelectedID(null);
         }
@@ -506,12 +513,12 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
         fieldWithPopUP.setEditable(isEditable);
     }
     
-    public void showPopUp(ResultPage rp){
+    public void showPopUp(ResultPage rp){        
         listView.setResult(rp);        
         showPopUp();
     }
         
-    public void showPopUp() {        
+    public void showPopUp() {   
         if (!jpm.isVisible() && textField.hasFocus()) {
             jpm.setFocusable(false);
             listView.setPreferredSize(new Dimension(600, 400));

@@ -11,7 +11,6 @@ import com.components.custom.IComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -23,7 +22,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.biz.app.ui.event.OAction;
 import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
-import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
 import org.components.containers.CPanel;
@@ -270,29 +268,6 @@ public class DetailPanel<T> extends TabPanelUI {
         return controller.save();        
     }
 
-    private void auditPersistenceData(ArrayList<BusObj> objs) {
-
-        Date cDate = GenericDAOUtil.currentTime();
-        
-        for (BusObj bus : objs) {            
-//            bus.setId( EntityService.getKey(""));
-            bus.setSavedDate(cDate);
-            bus.setEditedDate(cDate);
-            bus.setDepententEntitiesIDs();
-                
-        }
-    }
-
-    private void auditUpdatedData(ArrayList<BusObj> objs, Object key,Date startDate) {
-
-
-        Date mDate = GenericDAOUtil.currentTime();
-        for (BusObj bus : objs) {
-            bus.setSavedDate(startDate);
-            bus.setEditedDate(mDate);
-            bus.setDepententEntitiesIDs();
-        }
-    }
 
     public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {
     }

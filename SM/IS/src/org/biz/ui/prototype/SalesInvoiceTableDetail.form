@@ -29,16 +29,8 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="cPanel2" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                              <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                              <Component id="cDatePicker1" min="-2" pref="181" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="24" max="32767" attributes="0"/>
@@ -51,18 +43,14 @@
               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="cPanel1" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="salesInvoiceLineDetailTableUI1" min="-2" pref="65" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="tableContainer1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cDatePicker1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="cPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -72,6 +60,9 @@
   </Layout>
   <SubComponents>
     <Component class="org.biz.ui.prototype.SalesInvoiceLineDetailTableUI" name="salesInvoiceLineDetailTableUI1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value=" getRowDetail()"/>
+      </AuxValues>
     </Component>
     <Container class="org.components.containers.CPanel" name="cPanel1">
 
@@ -384,9 +375,10 @@
                       <Component id="jLabel2" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cInvNo" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
-                      <Component id="cCode" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="cInvNo" alignment="0" pref="180" max="32767" attributes="0"/>
+                      <Component id="cCode" alignment="0" pref="180" max="32767" attributes="0"/>
+                      <Component id="cDatePicker1" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -407,7 +399,9 @@
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="cInvNo" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="cDatePicker1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -432,10 +426,10 @@
             <Property name="text" type="java.lang.String" value="Code"/>
           </Properties>
         </Component>
+        <Component class="org.components.controls.CDatePicker" name="cDatePicker1">
+        </Component>
       </SubComponents>
     </Container>
-    <Component class="org.components.controls.CDatePicker" name="cDatePicker1">
-    </Component>
     <Component class="org.biz.ui.prototype.TableContainer" name="tableContainer1">
     </Component>
   </SubComponents>

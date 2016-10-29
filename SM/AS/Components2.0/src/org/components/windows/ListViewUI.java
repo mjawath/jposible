@@ -106,14 +106,14 @@ public class ListViewUI extends javax.swing.JPanel {
     
     public void selectionChanged(Object newRowObject) {
         if(controller==null )return;
-        controller.setCurrentBusObject(newRowObject);
+        controller.setSelectedBusObject(newRowObject);
     }
 
     public void onDoubleClicked(Object newRowObject) {
         if (controller == null) {
             return;
         }
-        controller.setCurrentBusObject(newRowObject);
+        controller.setSelectedBusObject(newRowObject);
         controller.gotoDetailPanel();
     }
     

@@ -162,5 +162,10 @@ public class SalesInvoiceLineItem extends BusObj  {
     public void setBarcode(ItemBarcode barcode) {
         this.barcode = barcode;
     }
+
+    public boolean isValid() {
+        if(qty>0 &&  price>0 && lineAmount > 0 && sku!=null)return true;
+        return false;        
+    }
     
 }

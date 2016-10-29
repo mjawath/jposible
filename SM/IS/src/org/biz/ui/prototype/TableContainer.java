@@ -68,9 +68,19 @@ public class TableContainer extends CPanel {
 
         btnClearLine.setText("Clear Line");
         btnClearLine.setFocusable(false);
+        btnClearLine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearLineActionPerformed(evt);
+            }
+        });
 
         btnClearAll.setText("Clear All");
         btnClearAll.setFocusable(false);
+        btnClearAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearAllActionPerformed(evt);
+            }
+        });
 
         btnMoveUp.setText("Move Up");
         btnMoveUp.setFocusable(false);
@@ -183,8 +193,7 @@ public class TableContainer extends CPanel {
     }
     
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-
-//        updateSelectedRow(tbl);
+        addNewLineGotoNewLine();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -193,12 +202,26 @@ public class TableContainer extends CPanel {
         
     }//GEN-LAST:event_btnRemoveActionPerformed
 
+    private void btnClearLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearLineActionPerformed
+
+       
+        tableLineDetail.clearLineUI();        
+        
+    }//GEN-LAST:event_btnClearLineActionPerformed
+
+    private void btnClearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllActionPerformed
+        clearUI();        
+    }//GEN-LAST:event_btnClearAllActionPerformed
+
+    
+    
+    
     public void removeSelected() {
         Object sel = tbl.getSelectedObject();
         if (sel != null) {
             if (tableLineDetail.isValidToRemoveLineItem(sel)) {
                 tbl.removeSelectedObject();
-                tableLineDetail.clearUI();
+                tableLineDetail.clearLineUI();
                 tableLineDetail.onRemoveLineItem(sel);
             }
         }
@@ -217,8 +240,17 @@ public class TableContainer extends CPanel {
                 
         
     }
+    public void setCollection(List list){
+        
+        tbl.setModelCollection(list);
     
+    }
     
+    public void clearUI(){
+        tableLineDetail.clearLineUI();
+        tbl.clearUI();
+        tableLineDetail.clearAll();
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccept;

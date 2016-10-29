@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jtextfield.java
  *
  * Created on May 4, 2010, 7:39:59 PM
@@ -20,6 +20,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
@@ -28,29 +31,25 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-import org.biz.app.ui.util.StringUtility;
 import org.components.parent.Documents.DocumentListenerx;
 
 /**
  *
  * @author nano
  */
-public class PTextField extends javax.swing.JTextField implements IComponent{
+public class PTextField extends javax.swing.JTextField implements IComponent {
 
-    protected  IContainer container;
+    protected IContainer container;
     private String id;
     private ActionTask actionTask;
 
     JComponent nextFocusableComponent;
     JComponent previouseFocusedComponent;
     List<ActionTask> actionTasks;
-    
-    
+    boolean isAlwaysFireEventOnEnter = true;
+
     boolean moveTonextcom = true;
 
-    
-    
-    
     public ActionTask getActionTask() {
         return actionTask;
     }
@@ -58,8 +57,6 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     public void setActionTask(ActionTask actionTask) {
         this.actionTask = actionTask;
     }
-    
-   
 
     public String getId() {
         return id;
@@ -102,62 +99,86 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
 
     }
 
-    /** Creates new form BeanForm */
+    /**
+     * Creates new form BeanForm
+     */
     public PTextField() {
         super();
         initComponents();
         init();
-        id=SystemUtil.getKeyStr();
+        id = SystemUtil.getKeyStr();
 //        addDocumentListener(docx);        
-        
+
         setDocument(new CDocument());
-        
+
         addFocusListener(new FocusAdapter() {
 
             String value;
+
             @Override
             public void focusLost(FocusEvent e) {
-                
-                if(!StringUtility.isSameString(value, getText())){
-                if(actionTask!=null){
-                    Object obj = actionTask.actionFired(e);
-                    if(obj instanceof Component){
-                        ((Component)obj).requestFocus();
-                    }
-                }
-                }
+
+//                if(!StringUtility.isSameString(value, getText())){
+//                if(actionTask!=null){
+//                    Object obj = actionTask.actionFired(e);
+//                    if(obj instanceof Component){
+//                        ((Component)obj).requestFocus();
+//                    }
+//                }
+//                }
             }
 
             @Override
             public void focusGained(FocusEvent e) {
                 value = getText();
             }
-            
-            
-           
+
         });
-        
+
+        addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (isAlwaysFireEventOnEnter) {
+                        if (actionTask != null) {
+                            Object obj = actionTask.actionFired(e);
+                            if (obj instanceof Component) {
+                                ((Component) obj).requestFocus();
+                            } else {
+                                transferFocus();
+                            }
+
+                        }
+                        return;
+                    }
+                }
+            }
+
+        });
+
     }
-    
-    private class CDocument extends PlainDocument{
+
+    private class CDocument extends PlainDocument {
 
         @Override
         protected void removeUpdate(DefaultDocumentEvent chng) {
-            super.removeUpdate(chng); 
+            super.removeUpdate(chng);
             fireEventIfNotFromDoc();
         }
 
         @Override
         protected void insertUpdate(DefaultDocumentEvent chng, AttributeSet attr) {
             super.insertUpdate(chng, attr);
-           
+
             fireEventIfNotFromDoc();
-            
+
         }
 
         @Override
         public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-            super.insertString(offs, str, a); 
+            super.insertString(offs, str, a);
             fireEventIfNotFromDoc();
         }
 
@@ -166,19 +187,16 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
             super.remove(offs, len); //To change body of generated methods, choose Tools | Templates.
             fireEventIfNotFromDoc();
         }
-        
-        
-    public void fireEventIfNotFromDoc(){
-        if(!disableDocumentChangeEvent && docActionTask!=null ){
-            disableDocumentChangeEvent = true;
-            docActionTask.actionFired(this);
-            disableDocumentChangeEvent = false;
+
+        public void fireEventIfNotFromDoc() {
+            if (!disableDocumentChangeEvent && docActionTask != null) {
+                disableDocumentChangeEvent = true;
+                docActionTask.actionFired(this);
+                disableDocumentChangeEvent = false;
+            }
         }
     }
-    }
-    
-   
-    
+
     public class DoubleDocument extends CDocument {
 
         Double max;
@@ -240,8 +258,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         }
 
     }
-    
-    
+
     public void init() {
 
         actionTasks = new ArrayList<ActionTask>();
@@ -273,7 +290,7 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
 //        });
 
     }
-    
+
     public void addaction(int idx, ActionTask action) {
         int c = actionTasks.size();
 
@@ -283,10 +300,11 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
         }
         actionTasks.add(idx, action);
     }
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -318,61 +336,60 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
 
     @Override
     public void setContainer(IContainer con) {
-        this.container =con;
+        this.container = con;
     }
 
     public IContainer getContainer() {
         return container;
     }
-    
-    public void addDocumentListener(DocumentListenerx docx){
+
+    public void addDocumentListener(DocumentListenerx docx) {
         getDocument().addDocumentListener(docx);
     }
-    
+
     DocumentListenerx docx = new DocumentListenerx() {
         @Override
         public void action(DocumentEvent e) {
-            if(docAction!=null && !disableDocumentChangeEvent){
-            ActionEvent actionEvent=new ActionEvent(e,21,"docaction");            
-            docAction.actionPerformed(actionEvent);
-            }else if(docActionTask != null && !disableDocumentChangeEvent) {
+            if (docAction != null && !disableDocumentChangeEvent) {
+                ActionEvent actionEvent = new ActionEvent(e, 21, "docaction");
+                docAction.actionPerformed(actionEvent);
+            } else if (docActionTask != null && !disableDocumentChangeEvent) {
                 SwingUtilities.invokeLater(new Runnable() {
 
                     @Override
                     public void run() {
                     }
                 });
-                
 
             }
         }
     };
     private ActionListener docAction;
     private ActionTask docActionTask;
-    
-    public void setDocAction(ActionListener action){
-        
-        docAction =action;
+
+    public void setDocAction(ActionListener action) {
+
+        docAction = action;
     }
-    
+
     public void setDocAction(ActionTask action) {
 
         docActionTask = action;
     }
-     
-    public void setEnterAction(){
+
+    public void setEnterAction() {
     }
-    
-    ActionListener keyAct=new ActionListener() {
+
+    ActionListener keyAct = new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-       
+
         }
     };
 
-    boolean disableDocumentChangeEvent=false;
-    
+    boolean disableDocumentChangeEvent = false;
+
     /**
      * this will set fire document even change listener
      *
@@ -381,34 +398,41 @@ public class PTextField extends javax.swing.JTextField implements IComponent{
     public void setValue(Object val) {
         disableDocumentChangeEvent = true;
         setText(val == null ? "" : val.toString());
-        disableDocumentChangeEvent =false;
+        disableDocumentChangeEvent = false;
     }
-    
+
     /**
      * this will set fire document even change listener
      *
      * @param val
      */
     public void setValueIfNotFocused(Object val) {
-        if(hasFocus())return;
+        if (hasFocus()) {
+            return;
+        }
         disableDocumentChangeEvent = true;
         setText(val == null ? "" : val.toString());
         disableDocumentChangeEvent = false;
     }
 
-    
     public void setValue(String val) {
         disableDocumentChangeEvent = true;
         setText(val == null ? "" : val);
         disableDocumentChangeEvent = false;
     }
-    
-    public String getValue(){
-     String x = getText();
+
+    public String getValue() {
+        String x = getText();
         if (x.isEmpty()) {
             return null;
         } else {
             return x;
         }
+    }
+
+    public void setToCurrencyFieldType() {
+        setDocument(new DoubleDocument());
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+//        setFormater(formater);
     }
 }

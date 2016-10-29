@@ -56,7 +56,7 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
 //
 //        }
         
-        
+        System.out.println("getComponentAfter"+aComponent.getName() );
         return gotToNextComponent(aComponent);
         
 //         super.getComponentAfter(aContainer, aComponent); //To change body of generated methods, choose Tools | Templates.
@@ -118,6 +118,7 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
     
 
     public Component gotToNextComponent(Component aComponent) {
+        System.out.println("");
         CPanel parent = getFocusableParent(aComponent);
         if (parent == null) {
             //frame first

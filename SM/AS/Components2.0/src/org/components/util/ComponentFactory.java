@@ -33,13 +33,13 @@ public class ComponentFactory {
         KeyboardFocusManager km = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         HashSet set = new HashSet();
         set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_TAB, 0));
-        set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
+//        set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
         set.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_DOWN, 0));
 
         km.setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, set);
 
         HashSet setu = new HashSet();
-        setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, KeyEvent.SHIFT_DOWN_MASK));
+//        setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, KeyEvent.SHIFT_DOWN_MASK));
         setu.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_PAGE_UP, 0));
         km.setDefaultFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, setu);
 

@@ -18,7 +18,6 @@ import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
-import org.biz.entity.PrimaryKey;
 
 /**
  *
@@ -28,15 +27,14 @@ public class UIController<T> {
     
     
   
+    protected T selectedBusObject;
     protected T currentBusObject;
     protected Service service;
     protected MasterViewUI<T> listView;
     protected DetailPanel<T> detailView;
     protected UIFrame UIFrame; 
     
-    public void setBussinesObject(T bussObject){
-        this.currentBusObject = bussObject;                
-    }
+
     public void setService(Service  service){
         this.service = service;
     }
@@ -53,6 +51,12 @@ public class UIController<T> {
         this.currentBusObject = currentBusObject;
         detailView.setSelectedBusObj(currentBusObject);
     }
+    
+    public void setSelectedBusObject(T selectedBusObject) {
+        this.selectedBusObject = selectedBusObject;
+        detailView.setSelectedBusObj(selectedBusObject);
+    }
+
 
     public MasterViewUI<T> getListView() {
         return listView;
@@ -115,7 +119,7 @@ public class UIController<T> {
         return popupQry;
     }
 
-    private boolean isValideEntity() {
+    protected boolean isValideEntity() {
         return true;
     }
     
@@ -187,7 +191,7 @@ public class UIController<T> {
         return byCodeLike;
     }
 
-    private Long executeCount() {
+    public Long executeCount() {
         String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
         if(StringUtility.isEmptyString(txt)){
             return (Long)getService().getDao().getAllCount();
@@ -202,10 +206,11 @@ public class UIController<T> {
         ArrayList toSave = new ArrayList();
         ArrayList toDelete = new ArrayList();
         ArrayList toUpdate = new ArrayList();
-        System.out.println("  saving   " + (System.currentTimeMillis() - x));
-        Object busObject = detailView.uiToData();
+        
+        T busObject = (T)detailView.uiToData();
+        currentBusObject = (T)busObject;
 
-        if (!isValideEntity()) {
+        if (!isValideEntity()) {//check for current business objects validity
             return null;
         }
         preSave(toSave, toUpdate, toDelete);
@@ -218,6 +223,8 @@ public class UIController<T> {
             Tracer.printToOut("Detail panel -> SaveX -> Bus Object is null ,Not saved");
             return null;
         }
+        
+        if (selectedBusObject == null) {            
         Object id = ((BusObj) busObject).getId();//0 is the index of the main object , id is id property
 
         System.out.println("find b" + (System.currentTimeMillis() - x));
@@ -230,27 +237,40 @@ public class UIController<T> {
             toSave.add(busObject);
             preCreate(toSave, toUpdate, toDelete);
             auditPersistenceData(toSave);
-            auditUpdatedData(toUpdate, id, GenericDAOUtil.currentTime());
+            auditUpdatedData(toUpdate,  GenericDAOUtil.currentTime());
             Tracer.printToOut(" Object  is not found  So creation will be called");
             service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
             System.out.println("saved " + (System.currentTimeMillis() - x));
 
             postCreate(toSave, toUpdate, toDelete);
-        } else {
+        }else{
+            Tracer.printToOut("Detail panel -> SaveX -> Bus Object ID logic has problem ,Not saved");            
+        } 
+        
+        }else {
             if (MessageBoxes.yesNo(detailView, "Current record already exist in the DATABASE Are you sure\n"
                     + "You want to update the record", "Update Confirmation") == MessageBoxes.NO_OPTION) {
                 return null;
             }
-
-            ((BusObj) busObject).setId((PrimaryKey)id);
+            final Object id = ((BusObj)selectedBusObject).getId();
+            if(id ==null ){
+                System.out.println("------some thing is wrong --------");
+                return null;
+            }
+               
+            if(id instanceof String){
+//                ((BusObj) busObject).setId((String)id);
+            }else if(id instanceof Long){
+                ((BusObj) busObject).setId((Long)id);
+            }
             toUpdate.add(busObject);
             preUpdate(toSave, toUpdate, toDelete);
             auditPersistenceData(toSave);
-            auditUpdatedData(toUpdate, id, ((BusObj) obj).getSavedDate());
+            auditUpdatedData(toUpdate, ((BusObj) currentBusObject).getSavedDate());
 
             Tracer.printToOut("Updation is called  Object  is  found");
             service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-            postUpdate(toSave, toUpdate, toDelete);
+            postUpdate(toSave, toUpdate, toDelete);            
         }
 
         result.add(toSave);
@@ -279,7 +299,7 @@ public class UIController<T> {
         }
     }
 
-    private void auditUpdatedData(ArrayList<BusObj> objs, Object key,Date startDate) {
+    private void auditUpdatedData(ArrayList<BusObj> objs,Date startDate) {
 
 
         Date mDate = GenericDAOUtil.currentTime();

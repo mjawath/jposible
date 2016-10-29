@@ -8,14 +8,19 @@ package org.components.parent.controls;
 import com.components.custom.ActionTask;
 import com.components.custom.IComponent;
 import com.components.custom.IContainer;
+import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -28,15 +33,72 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
     private ActionListener docAction;
     private ActionTask docActionTask;
     boolean disableDocumentChangeEvent = false;
+    boolean isAlwaysFireEventOnEnter = true;
     
     protected IContainer container;
     /**
      * Creates new form PFormattedTextField
      */
     public PFormattedTextField() {
+       
         initComponents();
         
-        setDocument(new CDocument());
+//        setDocument(new CDocument());
+        
+                addFocusListener(new FocusAdapter() {
+
+            String value;
+
+            @Override
+            public void focusLost(FocusEvent e) {
+//                if(isAlwaysFireEventOnEnter){
+//                    if (actionTask != null) {
+//                        Object obj = actionTask.actionFired(e);
+//                        if (obj instanceof Component) {
+//                            ((Component) obj).requestFocus();
+//                        }
+//                    }
+//                    return;
+//                }
+//                else
+//                if (!StringUtility.isSameString(value, getText())) {
+//                    if (actionTask != null) {
+//                        Object obj = actionTask.actionFired(e);
+//                        if (obj instanceof Component) {
+//                            ((Component) obj).requestFocus();
+//                        }
+//                    }
+//                }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                value = getText();
+            }
+
+        });
+                
+        addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (isAlwaysFireEventOnEnter) {
+                        if (actionTask != null) {
+                            Object obj = actionTask.actionFired(e);
+                            if (obj instanceof Component) {
+                                ((Component) obj).requestFocus();
+                            } else {
+                            transferFocus();
+                        }
+                        }
+                        return;
+                    }
+                }
+            }
+
+        });
     }
     
     
@@ -95,7 +157,7 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
     }
     
     
-    private class CDocument extends PlainDocument {
+   /* private class CDocument extends PlainDocument {
 
         @Override
         protected void removeUpdate(AbstractDocument.DefaultDocumentEvent chng) {
@@ -116,14 +178,60 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
             fireEventIfNotFromDoc();
         }
 
-        public void fireEventIfNotFromDoc() {
-            if (!disableDocumentChangeEvent && docActionTask != null) {
-                System.out.println("Docuuuuuuuuuuuuuu  "+PFormattedTextField.this.getText());
-                disableDocumentChangeEvent = true;
-                docActionTask.actionFired(this);
-                disableDocumentChangeEvent = false;
-            }
+      
+}*/
+    protected void fireEventIfNotFromDoc() {
+        if (!disableDocumentChangeEvent && docActionTask != null) {
+            disableDocumentChangeEvent = true;
+            docActionTask.actionFired(this);
+            disableDocumentChangeEvent = false;
         }
+    }
+    
+    public void setToCurrencyField(){
+    
+        setHorizontalAlignment(RIGHT);
+        
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+        final DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+        decimalFormat.setMinimumFractionDigits(2);
+
+//        NumberFormatter formatter = new NumberFormatter(format);
+//        formatter.setMinimum(5.0);
+//        formatter.setMaximum(10000000.0);
+//        formatter.setAllowsInvalid(false);
+//        formatter.setOverwriteMode(true);
+        
+//        setFormatter(formatter);
+//        
+        
+        NumberFormatter numberFormatter = new NumberFormatter(decimalFormat);
+        numberFormatter.setAllowsInvalid(false);        
+//        numberFormatter.setOverwriteMode(true);
+//        setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
+        getDocument().addDocumentListener(new DocumentListener() {
+
+            public void insertUpdate(DocumentEvent e) {
+//                System.out.println(" docu "+e);
+                fireEventIfNotFromDoc();
+
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+//           System.out.println(" docu "+e);
+                fireEventIfNotFromDoc();
+
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+//           System.out.println(" docu "+e);
+                fireEventIfNotFromDoc();
+
+            }
+        });
+//        new ParseAl
+        
 }
     
     
@@ -146,6 +254,9 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
+    public void setAlwaysEnterEvent(boolean  isAlways){
+        isAlwaysFireEventOnEnter =isAlways;  
+    }
     @Override
     public void setContainer(IContainer con) {
         this.container = con;
@@ -167,5 +278,24 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
         disableDocumentChangeEvent = true;
         setText(val == null ? "" : val.toString());
         disableDocumentChangeEvent = false;
+    }
+    
+    public Double getDoubleValue() {
+
+        try {
+            String s = null;
+            if (this.getText() != null) {
+                s = this.getText().trim();
+
+            }
+            return Double.parseDouble(s);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    
+    public boolean isValidPositiveDoubleValue() {
+        return (getDoubleValue()!=null && getDoubleValue()> 0);
     }
 }

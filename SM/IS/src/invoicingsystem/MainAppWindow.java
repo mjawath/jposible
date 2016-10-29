@@ -11,9 +11,9 @@ package invoicingsystem;
  * Created on Dec 13, 2010, 10:16:22 PM
  */
 import app.AppMainWindow;
-import java.awt.event.ActionEvent;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 import javax.swing.UIManager;
@@ -25,10 +25,10 @@ import org.biz.books.ui.accounts.AccountsCreationUI;
 import org.biz.books.ui.accounts.GeneralLedgerUI;
 import org.biz.erp.inventory.ui.WareHouseUI;
 import org.biz.invoicesystem.master.ui.ItemMasterTab;
+import org.biz.invoicesystem.master.ui.PurchaseMasterUi;
 import org.biz.invoicesystem.master.ui.ShopUI;
 import org.biz.invoicesystem.master.ui.SupplierMasterTab;
 import org.biz.invoicesystem.ui.transactions.*;
-
 import org.components.util.Sessions;
 import org.components.windows.TabPanelUI;
 
@@ -153,10 +153,10 @@ public class MainAppWindow extends AppMainWindow {
         addToTabpanelToUI(new SingleTransferOrderUI(), "transfer order");
         events();
         
-        addToTabpanelToUI(new InvoiceMasterUIV3(),"  * Invoice Master v3 *");
-        addToTabpanelToUI(new PosInvoiceV4(),"  * pos Invoice 4 Master *");
-//        addToTabpanelToUI(new PurchaseMasterUi(),"  * purcas Invoice Master *");
-//        addToTabpanelToUI(new PosInvoiceUIE(),"  * pos E Invoice Master *");
+//      
+//      
+        addToTabpanelToUI(new PurchaseMasterUi(),"  * purcas Invoice Master *");
+        
 //        addToTabpanelToUI(new ContactsUI(),"  * contact Master *");
         addToTabpanelToUI(new GeneralLedgerUI(),"  *  General Ledger *");
         addToTabpanelToUI(new AccountsCreationUI(),"  * accounts Master *");

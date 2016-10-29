@@ -5,22 +5,24 @@
  */
 package org.components.controls;
 
-import java.awt.Toolkit;
+import javax.swing.SwingConstants;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 
 /**
  *
  * @author jawa
  */
-public class CCurrencyField extends CTextField {
+public class CCurrencyField extends CFormattedTextField {
 
     /**
      * Creates new form CCurrencyField
      */
     public CCurrencyField() {
-        initComponents();
+        super();
+//        initComponents();
         
 //        final DefaultFormatterFactory defaultFormatterFactory = new DefaultFormatterFactory(new NumberFormatter());
 //        final DefaultFormatter df = (DefaultFormatter)defaultFormatterFactory.getDefaultFormatter();
@@ -43,11 +45,18 @@ public class CCurrencyField extends CTextField {
 //        
 //        });
         
-        
-        setDocumentFiltering();
+        setToCurrencyField();
+//        setDocumentFiltering();
+        setHorizontalAlignment(SwingConstants.RIGHT);
         
     }
 
+//    public void clear(){
+//       super.clear();
+//        setText("0.00");
+//       
+//    }
+    
     Double max;
     Double min;
     boolean allowZero = true;
@@ -55,10 +64,12 @@ public class CCurrencyField extends CTextField {
     
     
     private void setDocumentFiltering(){
-//        ((PlainDocument)getDocument()).setDocumentFilter(new NumericAndLengthFilter(Integer.MAX_VALUE));
+        ((PlainDocument)getDocument()).setDocumentFilter(new NumericAndLengthFilter(Integer.MAX_VALUE));
        
-        setDocument(new DoubleDocument());
+//        setDocument(new DoubleDocument());
     }
+
+   
     
     private class NumericAndLengthFilter extends DocumentFilter {
 
@@ -80,6 +91,7 @@ public class CCurrencyField extends CTextField {
         public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if (isNumeric(fb.getDocument().getText(0, fb.getDocument().getLength()) + string)) {
                 super.insertString(fb, offset, string, attr);
+                fireEventIfNotFromDoc();
             }
         }
 
@@ -90,13 +102,15 @@ public class CCurrencyField extends CTextField {
 
             if (isNumeric(fb.getDocument().getText(0, fb.getDocument().getLength()) + text)) {
                 super.replace(fb, offset, length, text, attrs);
+                fireEventIfNotFromDoc();
             }
         }
 
         @Override
         public void remove(DocumentFilter.FilterBypass fb, int offset, int length) throws BadLocationException {
             if (isNumeric(fb.getDocument().getText(0, fb.getDocument().getLength()) )) {
-                super.remove(fb, offset, length); //To change body of generated methods, choose Tools | Templates.
+                super.remove(fb, offset, length); 
+                fireEventIfNotFromDoc();
             }
         }
 
@@ -108,7 +122,7 @@ public class CCurrencyField extends CTextField {
                 Double d = Double.parseDouble(text);
                 return true;
             } catch (NumberFormatException e) {
-                Toolkit.getDefaultToolkit().beep();
+//                Toolkit.getDefaultToolkit().beep();
                 //here i should comenting it becas on sound
             }
             return false;

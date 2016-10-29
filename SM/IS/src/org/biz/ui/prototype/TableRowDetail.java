@@ -5,6 +5,7 @@
  */
 package org.biz.ui.prototype;
 
+import javax.swing.JComponent;
 import org.components.containers.CPanel;
 import org.components.parent.controls.editors.TableInteractionListner;
 
@@ -16,6 +17,7 @@ public class TableRowDetail extends CPanel {
 
     
     protected TableContainer tableContainer;
+    protected Object selectedLineObject;
     /**
      * Creates new form TableLineDetail
      */
@@ -33,11 +35,13 @@ public class TableRowDetail extends CPanel {
 
         @Override
         public void selectionChanged(Object newRowObject) {
+            selectedLineObject =  newRowObject;
             onSelectionChanged(newRowObject);
         }
 
         @Override
         public void onDoubleClicked(Object newRowObject) {
+            selectedLineObject = newRowObject;
             onTableDoubleClicked(newRowObject);
             
         }
@@ -72,7 +76,6 @@ public class TableRowDetail extends CPanel {
         this.tableContainer = tableContainer;
         tableContainer.setTableListener(tableInteractionListner);
         tableContainer.setTableLineDetail(this);
-
     }
 
     public void initUI() {
@@ -81,24 +84,29 @@ public class TableRowDetail extends CPanel {
     
     
     public void onSelectionChanged(Object newRowObject) {
-        clearUI();
-        setDataToPanel(newRowObject);        
+        clearLineUI();
+        setDataToPanel(newRowObject);
+        requestFocus();
     }
     
     public void onTableDoubleClicked(Object newRowObject) {
 //            ListViewUI.this.selectionChanged(newRowObject); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void clearUI() {
+    public void clearLineUI() {
         
         
     }
 
+    public void clearAll(){
+        clearLineUI();
+    }
+    
     public void onAcceptLineItem(Object obj){
     
     }
-    public boolean isValidToAccept(){
-    return true;
+    public JComponent getInValidComponent(){
+    return null;
     }
     
     public void onRemoveLineItem(Object selectedObject) {
@@ -110,4 +118,18 @@ public class TableRowDetail extends CPanel {
         return true;
 
     }
+
+    public Object getSelectedLineObject() {
+        return selectedLineObject;
+    }
+
+    public void setSelectedLineObject(Object selectedLineObject) {
+        this.selectedLineObject = selectedLineObject;
+    }
+
+    boolean isValidToAccept() {
+        return true;
+    }
+    
+    
 }

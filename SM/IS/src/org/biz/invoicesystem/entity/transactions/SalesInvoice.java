@@ -135,6 +135,20 @@ public class SalesInvoice extends BusObj {
         }
     }
 
+    
+    public synchronized void addOrUpdateLine(SalesInvoiceLineItem selectedLine,SalesInvoiceLineItem newSalesInvoiceLineItem) {
+        if (lineItems == null) {
+            lineItems = new ArrayList<>();
+            lineItems.add(newSalesInvoiceLineItem);
+            return;
+        }
+        if (!lineItems.contains(selectedLine)) {
+            lineItems.add(newSalesInvoiceLineItem);
+        }else{
+            int index = lineItems.indexOf(selectedLine);
+            lineItems.set(index, newSalesInvoiceLineItem);
+        }
+    }
 
     public String getRemarks() {
         return Remarks;

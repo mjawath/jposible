@@ -74,11 +74,9 @@ public class SalesUI extends UIFrame {
 
         tabbedPane1 = new com.components.custom.TabbedPane();
         salesInvoiceTableDetail1 = new org.biz.ui.prototype.SalesInvoiceTableDetail();
-        salesInvoiceUI1 = new org.biz.ui.prototype.SalesInvoiceDetailUI();
         salesOverviewPanel1 = new org.biz.ui.prototype.SalesInvoiceMasterUI();
 
-        tabbedPane1.addTab("tab3", salesInvoiceTableDetail1);
-        tabbedPane1.addTab("Sales Invoice", salesInvoiceUI1);
+        tabbedPane1.addTab("Sales Invoice", salesInvoiceTableDetail1);
         tabbedPane1.addTab("Sales Invoice List", salesOverviewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,7 +127,6 @@ public class SalesUI extends UIFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.biz.ui.prototype.SalesInvoiceTableDetail salesInvoiceTableDetail1;
-    private org.biz.ui.prototype.SalesInvoiceDetailUI salesInvoiceUI1;
     private org.biz.ui.prototype.SalesInvoiceMasterUI salesOverviewPanel1;
     private com.components.custom.TabbedPane tabbedPane1;
     // End of variables declaration//GEN-END:variables

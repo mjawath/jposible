@@ -5,18 +5,15 @@
  */
 package org.biz.ui.prototype;
 
+import com.biz.system.ISProperties;
 import com.components.custom.ActionTask;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 import org.biz.app.ui.util.UIEty;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
-import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.ui.list.master.CustomerController;
 import org.biz.invoicesystem.ui.list.master.CustomerLV;
-import org.components.parent.controls.PTableColumn;
 import org.components.util.ComponentFactory;
 import org.components.windows.DetailPanel;
 import org.components.windows.UIController;
@@ -71,15 +68,6 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         
         
 
-        List<PTableColumn> tblCols = new ArrayList();
-        tblCols.add(new PTableColumn(Long.class, "ID"));
-        tblCols.add(new PTableColumn(String.class, "Code"));
-        tblCols.add(new PTableColumn(String.class, "Description"));
-        tblCols.add(new PTableColumn(Double.class, "QTY"));
-        tblCols.add(new PTableColumn(Double.class, "Price"));
-        tblCols.add(new PTableColumn(Double.class, "LineAmount"));
-
-        tableContainer1.initTable(SalesInvoiceLineItem.class, tblCols);
         salesInvoiceLineDetailTableUI1.setTableContainer(tableContainer1);        
         tableContainer1.addNewLineGotoNewLine();
 
@@ -88,8 +76,7 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         ActionTask at =new ActionTask(){
 
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("OOPs");
+            public void actionPerformed(ActionEvent e) {                
                 tpopCustomer.requestFocus();
             }
         
@@ -118,6 +105,8 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         tDiscountPer.setValueIfNotFocused(object.getDiscountPer());
         tdiscAmount.setValueIfNotFocused(object.getDiscount());
         UIEty.objToUi(tlblTotal, object.getTotal());
+        tableContainer1.setCollection(object.getLineItems());
+        
 
 //        super.setDataToUI(object);
     }
@@ -153,13 +142,26 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         busObject = controllerSalesInvoice.getCurrentBusObject();
     }
 
+    @Override
+    public void clear() {
+        super.clear();
+        tableContainer1.clearUI();
+        
+    }
 
+
+    public SalesInvoiceLineDetailTableUI getRowDetail(){
+        if(ISProperties.getSalesInvoiceLineDetailUI()==1)
+       return new SalesInvoiceLineDetailTableUI2();
+    return new SalesInvoiceLineDetailTableUI();
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        salesInvoiceLineDetailTableUI1 = new org.biz.ui.prototype.SalesInvoiceLineDetailTableUI();
+        salesInvoiceLineDetailTableUI1 =  getRowDetail();
         cPanel1 = new org.components.containers.CPanel();
         tpayement = new org.components.controls.CTextField();
         cLabel9 = new org.components.controls.CLabel();
@@ -390,9 +392,10 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(cPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cInvNo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cCode, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(cPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cInvNo, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(cCode, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(cDatePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         cPanel3Layout.setVerticalGroup(
@@ -408,6 +411,8 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
                 .addGroup(cPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(cInvNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -426,13 +431,8 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
                         .addComponent(cPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(cPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
-                                .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(75, 75, 75)
+                        .addComponent(cPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -448,10 +448,7 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addComponent(cPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -20,13 +20,13 @@ import org.components.windows.UIController;
  *
  * @author user
  */
-public class SalesInvoiceControler extends UIController<SalesInvoice>{
+public class SalesInvoicePosControler extends UIController<SalesInvoice>{
 
 
     private SalesInvoiceService salesService;
 
             
-    public SalesInvoiceControler() {
+    public SalesInvoicePosControler() {
         super();
         salesService = new SalesInvoiceService();
         currentBusObject = new SalesInvoice();

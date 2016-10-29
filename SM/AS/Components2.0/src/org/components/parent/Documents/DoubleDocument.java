@@ -5,6 +5,7 @@ package org.components.parent.Documents;
  * and open the template in the editor.
  */
 import java.awt.Toolkit;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
@@ -54,6 +55,19 @@ public class DoubleDocument extends PlainDocument {
 
 
     }
+
+//    @Override
+//    public void remove(int offs, int len) throws BadLocationException {
+//        super.remove(offs, len); 
+//        
+//        
+//    }
+    
+    @Override
+    protected void removeUpdate(AbstractDocument.DefaultDocumentEvent chng) {
+        super.removeUpdate(chng);        
+    }
+    
 
     public DoubleDocument(Double min, Double max) {
         this.max = max;

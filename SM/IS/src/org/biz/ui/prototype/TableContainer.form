@@ -120,12 +120,18 @@
             <Property name="text" type="java.lang.String" value="Clear Line"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearLineActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnClearAll">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clear All"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearAllActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnMoveUp">
           <Properties>
