@@ -235,7 +235,25 @@ public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
     public boolean isLineItemValid() {
         
         
-//        if(salesLine.getSku()==null)return false;       
+        if(salesLine.getSku()==null){            
+            tItemSearchTextComp.requestFocus();
+            return false;
+        }       
+        
+        if (salesLine.getQty()== null || salesLine.getQty() <= 0) {
+            tQty.requestFocus();
+            return false;
+        }
+        
+        if (salesLine.getPrice()== null || salesLine.getPrice()<= 0) {
+            tPrice.requestFocus();
+            return false;
+        }
+//        
+//        if (salesLine.getPrice() == null) {
+//            tPrice.requestFocus();
+//            return false;
+//        }
         
         return true; //To change body of generated methods, choose Tools | Templates.
     }

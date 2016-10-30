@@ -7,6 +7,7 @@ package org.biz.invoicesystem.entity.master;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import org.biz.entity.BusObj;
@@ -19,16 +20,16 @@ import org.biz.entity.BusObj;
 public class SKU extends BusObj{//Stock keeping unit
     
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Item item;    
     private String code;//can be a barcode barcode
     private String explainningSearchString;    
     
     private List<ItemAttribute> itemAttributes;
-    
-    private List<UOM> uoms;//normal sinario this referes to the items uoms
+       
     private List<ItemBarcode> barcodes;//as a convention first barcode is the default and that is same as sku code 
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    private UOM uom;
     
 
     public Item getItem() {
@@ -36,7 +37,14 @@ public class SKU extends BusObj{//Stock keeping unit
     }
 
     public void setItem(Item item) {
-        this.item = item;
+        this.item = item;        
+    }
+    
+    public void setUOMDefaults(){
+        if(item!=null && item.getPrimaryUOM()!=null){
+            this.uom = item.getPrimaryUOM();
+        }
+
     }
 
     public String getCode() {
@@ -55,26 +63,26 @@ public class SKU extends BusObj{//Stock keeping unit
         this.explainningSearchString = explainningSearchString;
     }
 
-    public void addSKUorUpdate(ItemAttribute uom) {
+    public void addSKUorUpdate(ItemAttribute attribute) {
         
 
-        if (uoms == null) {
+        if (itemAttributes == null) {
             itemAttributes = new ArrayList<ItemAttribute>();            
-            itemAttributes.add(uom);
+            itemAttributes.add(attribute);
             return;
         }
-        if (uom.getId() == null) {
+        if (attribute.getId() == null) {
 
-            itemAttributes.add(uom);
+            itemAttributes.add(attribute);
             return;
         }
 
         int it = -1;
         for (ItemAttribute item : itemAttributes) {
             it++;
-            if (uom.getId() != null && uom.getId().equals(item.getId())) {
+            if (attribute.getId() != null && attribute.getId().equals(item.getId())) {
 //                 item=uom;//replace item
-                itemAttributes.set(it, uom);
+                itemAttributes.set(it, attribute);
                 if (it == 0) {
                     
                 }

@@ -5,6 +5,8 @@
 package org.util;
 
 import java.math.BigDecimal;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -58,5 +60,17 @@ public class MathUtil {
 //        Double t=d1*d2;
         return t.doubleValue();
     }
-    
+    private static Random random = new Random(0);
+    /**
+     * http://stackoverflow.com/questions/363681/generating-random-integers-in-a-specific-range
+     * @param min inclusive
+     * @param max exclusive , max -1 will be considered
+     * @return 
+     */
+    public static int random(int min,int max){
+//            random.setSeed(min);
+                     
+//        return random.nextInt(max - 1);
+        return ThreadLocalRandom.current().nextInt(min, max );
+    }
 }

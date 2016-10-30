@@ -81,7 +81,7 @@ public class Item extends BusObj{
     @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
     private List<ItemBarcode> barcodes;
     @JoinColumn(name = "Item_id")
-    @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {javax.persistence.CascadeType.ALL,javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.REMOVE}, orphanRemoval = true)
     private List<UOM> uoms;
     
     @JoinColumn(name = "Item_id")

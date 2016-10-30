@@ -131,6 +131,10 @@ public class GenericDAO<T> {
         return pagedData(GenericDAOUtil.getAllQuery(orderby, cls), page);
     }
     
+    public List<T>  select(int numberOfItems){
+        return ExecuteQuery(GenericDAOUtil.createSelectQuery(numberOfItems,orderby, cls));        
+    }
+    
     public CQuery getAllQuery() {
 //        getEm().clear();
 

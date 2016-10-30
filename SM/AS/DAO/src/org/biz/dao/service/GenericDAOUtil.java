@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Parameter;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
 import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
 import org.dao.util.DAOException;
@@ -176,6 +174,15 @@ public class GenericDAOUtil<T> {
         return query.getResultList();
     }
     
+    public static <T> Query createSelectQuery(int numberOfItem,String orderby, Class cls) {
+        Query query = createEmNew().createQuery("select c from " + cls.getSimpleName() + " c   "
+                + getOrderBy(orderby));
+        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        query.setFirstResult(0);
+        query.setMaxResults(numberOfItem);
+        return query;
+    }
+        
       public static <T> Query getAllQuery(String orderby, Class cls) {
 //        getEm().clear();
         

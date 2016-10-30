@@ -2,7 +2,6 @@ package org.dao.util;
 
 import java.sql.Connection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -55,7 +54,12 @@ public class JPAUtil {
     public static EntityManagerFactory getEntityManagerFactory() {
         try {
             if (entityManagerFactory == null) {
-                entityManagerFactory = Persistence.createEntityManagerFactory(PU);
+                if(customPropery){
+                    createEMFWithCustomProperties();
+                    return entityManagerFactory;
+                }else{
+                    entityManagerFactory = Persistence.createEntityManagerFactory(PU);
+                }
                 return entityManagerFactory;
             }
         } catch (Exception e) {
@@ -126,8 +130,7 @@ public class JPAUtil {
      * key  persistence jpa ddl   Schema Generation
      *title  Using EclipseLink JPA Extensions for Schema Generation
      */
-    public static EntityManagerFactory createEMFWithCustomProperties(boolean isProp) {
-
+    public static EntityManagerFactory createEMFWithCustomProperties() {
         Map props = new HashMap();
 //         props.put("eclipselink.jdbc.user","");
 //         props.put("eclipselink.jdbc.password", "");\
@@ -148,20 +151,21 @@ public class JPAUtil {
 
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU, props);
 //        entityManagerFactory = emf;
-        if(isProp){
-        entityManagerFactory=Persistence.createEntityManagerFactory(PU,props);//set map to this
-        }else{
-        entityManagerFactory=Persistence.createEntityManagerFactory(PU);//set map to this
+        
+        entityManagerFactory=Persistence.createEntityManagerFactory(PU,props);//set map to this        
 
-        }//        for (String string : emf.getProperties().keySet()) {
+        //        for (String string : emf.getProperties().keySet()) {
 //            System.out.println(emf.getProperties().get(string));
 //        }
         entityManager=entityManagerFactory.createEntityManager();
         
 //                JpaHelper.getEntityManagerFactory(entityManager).refreshMetadata(props);
 
-     List s=   entityManager.createQuery("select item from Item item").getResultList();
-//        System.out.println(s);
+
         return entityManagerFactory;
+    }
+    
+    public static void setCustomeEMFProperty(){
+        customPropery = true;        
     }
 }

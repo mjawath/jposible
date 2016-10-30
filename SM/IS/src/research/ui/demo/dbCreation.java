@@ -9,14 +9,18 @@ import java.util.Date;
 import java.util.List;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.util.EntityService;
+import org.biz.invoicesystem.dao.master.CategoryDAO;
 import org.biz.invoicesystem.entity.master.Category;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Item;
+import org.biz.invoicesystem.entity.master.SKU;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Supplier;
+import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.dao.util.JPAUtil;
+import org.util.MathUtil;
 
 /**
  *
@@ -26,67 +30,28 @@ public class dbCreation {
 
     public static void main(String[] args) {
 
-//        ItemDAO d=new ItemDAO();
-//        Item x=new Item();
-//        x.setId("nn");
-//        UOM u=new UOM();
-//        u.setId("xx");
-//        u.setSimbol("123");
-//        x.addUOMorUpdate(u);
-//        d.update(x);
-//      Query e=  new SalesInvoiceService().getDao().createQuery("select c from Item c");
-//        System.out.println("exe cuting one........");
-//        e.getResultList();
-//        
-//        System.out.println("exe cuting twoooo22...");
-//        e.getResultList();
-//        System.out.println("don e.................");
-
-//        List s=new SalesInvoiceService().getDao().getAll();
-//        for (Object object : s) {
-//            SalesInvoice sl=(SalesInvoice)object;
-//            Object x=sl.getLineItems();
-//            if(x!=null){
-//                System.out.println(x);
-//            }
-//        }
-        
+      
         dbCreation db = new dbCreation();
-        db.createDataBase();
-        db.createmster();
-//           List lsts = new ArrayList();
-
-//            new dbCreation().createCategory();
-//        new GenericDAO<Customer>().saveList(lsts);
-
-//        SalesInvoice inv=new SalesInvoice();
-//        inv.setId("677fdfd7");
-//        new SalesInvoiceService().getDao().save(inv);
-
-//        ItemDAO idao =new ItemDAO();
-//        idao.setCls(Item.class);
-//        System.out.println("***********"+
-//        idao.pagedData(" c.code like ?1  ", 0,new Object[]{"%k"}));
+//        db.createDataBase();
+        db.createCustomers();
     }
 
     public void createDataBase() {
         //before call this method should not initialis the emf any where perticularly in static initialisers!!!
-        JPAUtil.createEMFWithCustomProperties(true);
+        JPAUtil.setCustomeEMFProperty();
 
     }
 
-    
     public void createmster() {
         System.out.println("Creating master data");
 
         createShops();
         createWarehouses();
         createCategory();
-        createItem();
+        createItemSKU();
         createStaff();
         createSuppliers();
     }
-
 
     public void createShops() {
         List lsts = new ArrayList();
@@ -95,8 +60,6 @@ public class dbCreation {
 //        shz.setId("123");
         shz.setCode("123s");
         lsts.add(shz);
-
-
 
         for (int i = 0; i < 10; i++) {
 
@@ -109,31 +72,63 @@ public class dbCreation {
         }
         System.out.println("Created shop List");
 
-
         new GenericDAO<Shop>().saveList(lsts);
 
     }
 
-     public void createItem() {
+    public void createItemSKU() {
+       
+        List<Category> cates= new CategoryDAO().select(10);
 
-
-        List lst22 = new ArrayList();
+      List lst22 = new ArrayList();
         for (int i = 0; i < 1500; i++) {
-            Item cus = new Item();
+            Item item = new Item();
+            item.setCode(EntityService.getKeyStr());
+            int random = MathUtil.random(0,10);
+            System.out.println("random "+random);
+            item.setCategory(cates.get(random));
+            
+            ArrayList uoms = new ArrayList();
 
-            cus.setCode(EntityService.getKeyStr());
+            UOM uom3 = new UOM();
+            uom3.setCode("PCS");
+            uom3.setMulti(12d);
+            uom3.setIsPrimary(true);
 
-            cus.setDescription(EntityService.getKeyStr());
-            cus.setSavedDate(new Date(System.currentTimeMillis() + i));
-            cus.setEditedDate(new Date(System.currentTimeMillis() + i));
-            lst22.add(cus);
-//            UOM uom = cus.getPrimaryUOM();
-//            uom.setId(cus.getId() + "cat");
-//            cus.addUOM(uom);
-           
-            cus.setDepententEntitiesIDs();
+            uoms.add(uom3);
+
+            UOM uom = new UOM();
+
+            uom.setCode("CTN");
+            uom.setMulti(100d);
+            uom.setIsPrimary(false);
+            uom.setGuom(uom3);
+            uoms.add(uom);
+
+            UOM uom2 = new UOM();
+            uom2.setCode("DZ");
+            uom2.setMulti(12d);
+            uom2.setIsPrimary(false);
+            uoms.add(uom3);
+            item.setUoms(uoms);            
+            
+            for (int j = 0; j < 10; j++) {
+                SKU sku = new SKU();
+                sku.setCode(item.getCode());                         
+                sku.setExplainningSearchString(EntityService.getKeyStr());
+                sku.setItem(item); 
+                sku.setUOMDefaults();
+                sku.setSavedDate(new Date(System.currentTimeMillis() + i));
+                sku.setEditedDate(new Date(System.currentTimeMillis() + i));
+                lst22.add(sku);
+
+            }
+
+            item.setSavedDate(new Date(System.currentTimeMillis() + i));
+            item.setEditedDate(new Date(System.currentTimeMillis() + i));
+
         }
-        new GenericDAO<Item>().saveList(lst22);
+        new GenericDAO<SKU>().saveList(lst22);
         System.out.println("Created Item List");
 
     }
@@ -148,8 +143,8 @@ public class dbCreation {
             cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lstw.add(cus);
         }
-        
-         Date date = new Date();
+
+        Date date = new Date();
         Warehouse shz = new Warehouse();
 //        shz.setId("123");
         shz.setCode("123s");
@@ -157,7 +152,6 @@ public class dbCreation {
         System.out.println("warehouse .......... ");
 
         new GenericDAO<Warehouse>().saveList(lstw);
-
 
     }
 
@@ -209,7 +203,6 @@ public class dbCreation {
         System.out.println("Created supplier List");
 
     }
-
 
     public void createCategory() {
         GenericDAO gd = new GenericDAO<Category>();
