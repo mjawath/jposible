@@ -28,9 +28,7 @@ public class SKU extends BusObj{//Stock keeping unit
     private List<ItemAttribute> itemAttributes;
        
     private List<ItemBarcode> barcodes;//as a convention first barcode is the default and that is same as sku code 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private UOM uom;
-    
+        
 
     public Item getItem() {
         return item;
@@ -40,13 +38,7 @@ public class SKU extends BusObj{//Stock keeping unit
         this.item = item;        
     }
     
-    public void setUOMDefaults(){
-        if(item!=null && item.getPrimaryUOM()!=null){
-            this.uom = item.getPrimaryUOM();
-        }
-
-    }
-
+ 
     public String getCode() {
         return code;
     }

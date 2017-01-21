@@ -177,7 +177,7 @@ public class SalesLineItemPanelV3 extends LineItemPanel {
 
     public void loadUnit(List it) {
 
-        tunit.setModel(it);
+        tunit.setCollection(it);
     }
 
     public void loadUnit(Item it) {

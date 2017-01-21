@@ -43,11 +43,11 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
        
         initComponents();
         
-//        setDocument(new CDocument());
-        
-                addFocusListener(new FocusAdapter() {
 
-            String value;
+        
+        addFocusListener(new FocusAdapter() {
+
+//            String value;
 
             @Override
             public void focusLost(FocusEvent e) {
@@ -73,7 +73,7 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
 
             @Override
             public void focusGained(FocusEvent e) {
-                value = getText();
+//                value = getValue()==null?"":getValue().toString();
             }
 
         });
@@ -99,6 +99,9 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
             }
 
         });
+        
+//        NumberFormatter formatter= (NumberFormatter) getFormatter();
+//        formatter.setAllowsInvalid(false);
     }
     
     
@@ -189,13 +192,13 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
     }
     
     public void setToCurrencyField(){
-    
+        System.out.println("setting currency value");
         setHorizontalAlignment(RIGHT);
         
         NumberFormat format = NumberFormat.getCurrencyInstance();
         format.setMaximumFractionDigits(0);
         final DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
-        decimalFormat.setMinimumFractionDigits(2);
+        decimalFormat.setMinimumFractionDigits(0);
 
 //        NumberFormatter formatter = new NumberFormatter(format);
 //        formatter.setMinimum(5.0);
@@ -233,6 +236,18 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
 //        new ParseAl
         
 }
+       private NumberFormat percentFormat; 
+        //Create and set up number formats. These objects also
+    //parse numbers input by user.
+    private void setUpFormats() {
+//        amountFormat = NumberFormat.getNumberInstance();
+
+        percentFormat = NumberFormat.getNumberInstance();
+        percentFormat.setMinimumFractionDigits(0);
+        
+
+//        paymentFormat = NumberFormat.getCurrencyInstance();
+    }
     
     
     public void setText(String txt){
@@ -248,6 +263,8 @@ public class PFormattedTextField extends JFormattedTextField implements ICompone
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00;(¤#,##0.00)"))));
     }// </editor-fold>//GEN-END:initComponents
 
 

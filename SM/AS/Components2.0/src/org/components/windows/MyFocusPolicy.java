@@ -9,6 +9,8 @@ import com.components.custom.ActionTask;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.DefaultFocusTraversalPolicy;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import org.components.containers.CPanel;
 import org.components.controls.CTextField;
 import org.components.parent.controls.PFormattedTextField;
@@ -55,8 +57,10 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
 //            }
 //
 //        }
-        
-        System.out.println("getComponentAfter"+aComponent.getName() );
+        if (aComponent instanceof JTextField && aComponent.getParent() instanceof JComboBox) {
+            System.out.println("combo box ediotr");
+            return gotToNextComponent(aComponent.getParent());// if this is a combo box editor then consider only combobx
+        }   
         return gotToNextComponent(aComponent);
         
 //         super.getComponentAfter(aContainer, aComponent); //To change body of generated methods, choose Tools | Templates.
@@ -117,8 +121,7 @@ public class MyFocusPolicy extends DefaultFocusTraversalPolicy {
     
     
 
-    public Component gotToNextComponent(Component aComponent) {
-        System.out.println("");
+    public Component gotToNextComponent(Component aComponent) {        
         CPanel parent = getFocusableParent(aComponent);
         if (parent == null) {
             //frame first

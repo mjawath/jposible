@@ -5,6 +5,8 @@
  */
 package org.biz.invoicesystem.ui.list.master;
 
+import java.util.List;
+import org.biz.app.ui.util.StringUtility;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.service.master.CustomerService;
 import org.components.windows.UIController;
@@ -13,24 +15,52 @@ import org.components.windows.UIController;
  *
  * @author jawa
  */
-public class CustomerController extends UIController<Customer>{
-    
+public class CustomerController extends UIController<Customer> {
 
     public CustomerController() {
         super();
         setService(new CustomerService());
     }
-    
+
     public void initUI() {
-        
+
         CustomerFrame cf = new CustomerFrame();
         setUIFrame(cf);
 //        
     }
-    
-    public void executeSearchForCustom() {
 
-        getQueryForPage().executeToFirstPageTask();
+    public List executeQuery(int page) {
+        CustomerSUI searchUI = (CustomerSUI) getListView().getSearchUI();
+        String searchTextFieldValue = searchUI.getSearchTextFieldValue();
+
+        if (StringUtility.isEmptyString(searchTextFieldValue)) {
+            return getService().getDao().getAll();
+        }
+        String where = "";
+        String attribute = searchUI.getAttribute();
+        where = searchTextFieldValue != null ? " c." + attribute + " like '" + searchTextFieldValue + "%' " : "";
+        
+//        String name = qmp.get("name");
+//        where = name != null ? " c.name like " + name +" " : "";
+        return getService().getByWhere(where);        
     }
-    
+
+    public Long executeCount() {
+        CustomerSUI searchUI = (CustomerSUI) getListView().getSearchUI();
+        String searchTextFieldValue = searchUI.getSearchTextFieldValue();
+        
+        if (StringUtility.isEmptyString(searchTextFieldValue)) {
+            return getService().getDao().getAllCount();
+        }
+        String where = "";
+        String attribute = searchUI.getAttribute();        
+        where = searchTextFieldValue != null ? " c."+attribute+" like '" + searchTextFieldValue + "%' " : "";
+
+//        String name = qmp.get("name");
+//        where = name != null ? " c.name like " + name + " " : "";
+        return getService().getCountOfByWhere(where);        
+    }
+
+
+
 }

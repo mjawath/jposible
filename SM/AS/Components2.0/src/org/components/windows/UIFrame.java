@@ -39,7 +39,7 @@ public class UIFrame extends javax.swing.JFrame {
             public void windowGainedFocus(WindowEvent e) {
                 
                 //focus to first component                 
-                 if(tabbedPane.getSelectedComponent() instanceof CPanel){
+                 if(tabbedPane!=null && tabbedPane.getSelectedComponent() instanceof CPanel){
 //                     ((CPanel)tabbedPane.getSelectedComponent()).requestFocus();
                  } 
                  

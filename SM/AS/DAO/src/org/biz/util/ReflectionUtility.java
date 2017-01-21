@@ -725,7 +725,7 @@ public class ReflectionUtility {
         static JexlEngine ex = new JexlEngine();
 
    public static Object getProperty(Object object,String property){
-       return ex.getProperty(object, property);
+       return ex.getProperty(object, property);///note private watchout
        
    }
 

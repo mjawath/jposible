@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
+import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.StringUtility;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
@@ -20,12 +21,10 @@ import org.components.windows.UIController;
  *
  * @author user
  */
-public class SalesInvoiceControler extends UIController<SalesInvoice>{
-
+public class SalesInvoiceControler extends UIController<SalesInvoice> {
 
     private SalesInvoiceService salesService;
 
-            
     public SalesInvoiceControler() {
         super();
         salesService = new SalesInvoiceService();
@@ -33,14 +32,12 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         setService(salesService);
     }
 
-    public void initUI(){        
+    public void initUI() {
         SalesUI sales = new SalesUI();
         setUIFrame(sales);
     }
-    
 
-
-    public List myexecuteQuery(int page) {
+    public List executeQuery(int page) {
 
         String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
         if (StringUtility.isEmptyString(txt)) {
@@ -51,11 +48,9 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
     }
 
     public Long executeCount() {
-        SalesSearchUI ssui =  (SalesSearchUI)listView.getSearchUI();        
+        SalesSearchUI ssui = (SalesSearchUI) listView.getSearchUI();
         Map<String, Object> queryParameterMap = ssui.getQueryParameterMap();
-        
-        
-        
+
         String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
         if (StringUtility.isEmptyString(txt)) {
             return (Long) getService().getDao().getAllCount();
@@ -63,14 +58,11 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         return getService().getCountByCodeLike(txt);
     }
 
-
     public void showDetailView(Object newRowObject) {
-        SalesInvoice si =(SalesInvoice)newRowObject;
+        SalesInvoice si = (SalesInvoice) newRowObject;
 //        detailScreen.setDataToUI(si);
     }
-    
 
-     
     public void onSalesInvoiceLineItemChanged(GridDataLineDetailUI lineDetailUI) {
         SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
@@ -80,7 +72,7 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         currentBusObject.setTotal();
         ((SalesInvoiceDetailUI) detailView).setVisualDataToUI(currentBusObject);
     }
-    
+
     public void onSalesInvoiceLineItemQTYChanged(GridDataLineDetailUI lineDetailUI) {
         SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
@@ -88,63 +80,61 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         salesLineUI.setDataToUI(salesInvoiceLineItem);
         detailView.uiToData();
         currentBusObject.setTotal();
-        ((SalesInvoiceDetailUI)detailView).setVisualDataToUI(currentBusObject);
+        ((SalesInvoiceDetailUI) detailView).setVisualDataToUI(currentBusObject);
 //        salesLineUI.getPrice().requestFocus();
     }
-    
-    
-    public void onSalesInvoiceLineItemQTYChanged(SalesInvoiceLineDetailTableUI salesLineUI) {        
+
+    public void onSalesInvoiceLineItemQTYChanged(SalesInvoiceLineDetailTableUI salesLineUI) {
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.panelToData();
         salesInvoiceLineItem.calculateLineItem();
-        salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);                
+        salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);
         SalesInvoice currentBusObject = detailView.uiToData();
 //        currentBusObject.addOrUpdateLine(salesInvoiceLineItem);
 //        currentBusObject.setTotal();
 //        detailView.setVisualDataToUI(currentBusObject);
 //        salesLineUI.getPrice().requestFocus();
     }
-    
+
     public void onSalesInvoiceLineItemDocChanged(SalesInvoiceLineDetailTableUI salesLineUI) {
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.panelToData();
         salesInvoiceLineItem.calculateLineItem();
-        salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);        
+        salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);
     }
-    
-    public JComponent onSalesInvoiceLineItemPriceChanged(SalesInvoiceLineDetailTableUI salesLineUI) {        
-        
+
+    public JComponent onSalesInvoiceLineItemPriceChanged(SalesInvoiceLineDetailTableUI salesLineUI) {
+
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.panelToData();
         salesInvoiceLineItem.calculateLineItem();
         final JComponent inValidComponent = salesLineUI.getInValidComponent();
-        if (inValidComponent!=null ) {
+        if (inValidComponent != null) {
             return inValidComponent;
         }
-         //validate the line item
+        //validate the line item
         //........
 //        if (!salesInvoiceLineItem.isValid()) {
 //            return ;
 //        }
-       
-        salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);        
-        
+
+        salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);
+
         SalesInvoice currentBusObject = detailView.uiToData();
         ///get the current line and update it        
-        
-        
-        SalesInvoiceLineItem selectedSL= (SalesInvoiceLineItem) salesLineUI.getSelectedLineObject();
-        currentBusObject.addOrUpdateLine(selectedSL,salesInvoiceLineItem);
+
+        SalesInvoiceLineItem selectedSL = (SalesInvoiceLineItem) salesLineUI.getSelectedLineObject();
+        currentBusObject.addOrUpdateLine(selectedSL, salesInvoiceLineItem);
         currentBusObject.setTotal();
         /*if(this is a valid entry )
             then add to table 
         else revert or alert 
-        */
+         */
         detailView.setVisualDataToUI(currentBusObject);
-        salesLineUI.clearLineUI();        
+        salesLineUI.clearLineUI();
 //        salesLineUI.requestFocus();
         return salesLineUI;
     }
-    
+
     public void onSalesInvoiceLineItemPriceChanged(GridDataLineDetailUI lineDetailUI) {
-        SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;       
+        SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
         salesInvoiceLineItem.calculateLineItem();
         salesLineUI.setDataToUI(salesInvoiceLineItem);
@@ -154,28 +144,24 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
 //        salesLineUI.getPrice().requestFocus();
     }
 
-    
     public void onSalesInvoiceDataChanged() {
-        SalesInvoice currentBusObject = detailView.uiToData();        
-        currentBusObject.calculateTotal(); 
+        SalesInvoice currentBusObject = detailView.uiToData();
+        currentBusObject.calculateTotal();
         detailView.setVisualDataToUI(currentBusObject);
 //        salesLineUI.getPrice().requestFocus();
     }
-    
-    
-    public void onRemoveLineItem(SalesInvoiceLineItem sil){
+
+    public void onRemoveLineItem(SalesInvoiceLineItem sil) {
         SalesInvoice si = detailView.uiToData();
         si.calculateTotal();
         detailView.setVisualDataToUI(si);
     }
-    
-     
-     
+
     public void showFrame(String screenName) {
         if ("SaleInvoiceUIX".equals(screenName)) {
             UIFrame.setVisible(true);
-        } else if("SaleDetailPanelUI".equals(screenName)){
-                        
+        } else if ("SaleDetailPanelUI".equals(screenName)) {
+
             UIFrame.setVisible(true);
         }
     }
@@ -185,17 +171,36 @@ public class SalesInvoiceControler extends UIController<SalesInvoice>{
         currentBusObject.calculateTotal();
         detailView.setVisualDataToUI(currentBusObject);
     }
-    
-    
+
     protected boolean isValideEntity() {
+
+        List<SalesInvoiceLineItem> lineItems = currentBusObject.getLineItems();
+
+        if (lineItems == null) {
+            return false;
+        }
+        if (lineItems.size() <= 0 ) {
+            return false;
+        }
         
-        
-        
+        if (lineItems.size() == 0) {            
+            return false;
+        }
+        if(currentBusObject.getCustomer()==null){
+            return false;
+        }
+        MessageBoxes.infomsg(null, "Validation errors", "Validation errors");
         return true;
     }
-    
+
     public void preCreate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-        ((SalesInvoice)currentBusObject).calculateTotal();
-    } 
-     
+        ((SalesInvoice) currentBusObject).calculateTotal();
+        //create customer statement
+        //use the invoice as the reciept othervise print reciept separately
+        //make updates to credit account
+        System.out.println("sales invoice level preCreate");
+
+
+    }
+
 }

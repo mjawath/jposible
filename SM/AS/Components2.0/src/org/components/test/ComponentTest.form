@@ -54,9 +54,6 @@
     <Component class="org.components.controls.CTextField" name="ttxt">
     </Component>
     <Component class="org.components.controls.CCurrencyField" name="cCurrencyField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="cCurrencyField1"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

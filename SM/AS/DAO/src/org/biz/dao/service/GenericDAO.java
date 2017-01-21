@@ -20,11 +20,12 @@ public class GenericDAO<T> {
     protected List list;
 
     public static void main(String[] args) {
+
     }
     private EntityManager em;
     String classname;
     Class<T> cls;
-    protected String orderby  =" c.savedDate  desc  , c.editedDate  desc ";   
+    protected String orderby = " c.savedDate  desc  , c.editedDate  desc ";
     protected Cache cache;
     public static int noofrows = 100;
 
@@ -34,9 +35,9 @@ public class GenericDAO<T> {
 
     public GenericDAO() {
         try {
-        em = JPAUtil.getEntityManager();            
+            em = JPAUtil.getEntityManager();
         } catch (Exception e) {
-            Tracer.printToOut("There was a problem loading the Entity manager   "+e.getMessage());
+            Tracer.printToOut("There was a problem loading the Entity manager   " + e.getMessage());
         }
         cache = new Cache();
 
@@ -78,8 +79,8 @@ public class GenericDAO<T> {
     public T find(Object key) {
         return GenericDAOUtil.findRefresh(cls, key);
     }
-    
-    public static <T> T findGeneric(Object key,Class cls) {
+
+    public static <T> T findGeneric(Object key, Class cls) {
         return GenericDAOUtil.findRefresh(cls, key);
     }
 
@@ -114,7 +115,7 @@ public class GenericDAO<T> {
         return GenericDAOUtil.getByPropertyLike(property, key, cls);
 
     }
-    
+
 //    public T find(Object key ){
 //        em.find(T, key);
 //        return null;
@@ -130,11 +131,11 @@ public class GenericDAO<T> {
 
         return pagedData(GenericDAOUtil.getAllQuery(orderby, cls), page);
     }
-    
-    public List<T>  select(int numberOfItems){
-        return ExecuteQuery(GenericDAOUtil.createSelectQuery(numberOfItems,orderby, cls));        
+
+    public List<T> select(int numberOfItems) {
+        return ExecuteQuery(GenericDAOUtil.createSelectQuery(numberOfItems, orderby, cls));
     }
-    
+
     public CQuery getAllQuery() {
 //        getEm().clear();
 
@@ -143,7 +144,6 @@ public class GenericDAO<T> {
         return cq;
     }
 
-    
     public CQuery getAllCountQuery() {
 //        getEm().clear();
 
@@ -151,7 +151,7 @@ public class GenericDAO<T> {
 
         return cq;
     }
-    
+
     public Long getAllCount() {
 //        getEm().clear();
         try {
@@ -165,8 +165,6 @@ public class GenericDAO<T> {
         }
     }
 
-    
-       
 //    public List<T> getLastModefied() {
 ////        getEm().clear();
 //        
@@ -188,15 +186,16 @@ public class GenericDAO<T> {
     public void saveList(List<T> ob) {
         GenericDAOUtil.saveList(ob);
     }
-    
+
     /**
      * Saves Updates Deletes the entities from specified lists
+     *
      * @param toSave
      * @param toUpdate
-     * @param toDelete 
+     * @param toDelete
      */
-    public void saveUpdateDelete(ArrayList toSave,ArrayList toUpdate,ArrayList toDelete){            
-        GenericDAOUtil.saveUpdateDelete(toSave, toUpdate, toDelete);    
+    public void saveUpdateDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+        GenericDAOUtil.saveUpdateDelete(toSave, toUpdate, toDelete);
     }
 
     //use this to delete a certain object 
@@ -204,9 +203,9 @@ public class GenericDAO<T> {
     public void delete(T ob) {
         GenericDAOUtil.delete(ob);
     }
-    
-    public void deleteAll(Class cls){
-        GenericDAOUtil.deleteAll(cls);   
+
+    public void deleteAll(Class cls) {
+        GenericDAOUtil.deleteAll(cls);
     }
 //may be used to update a database entity
 
@@ -231,19 +230,18 @@ public class GenericDAO<T> {
     public List<T> ExecuteQuery(String qryString) {
         return GenericDAOUtil.ExecuteQuery(qryString, cls);
     }
-    
+
     public List<T> ExecuteQueryWhere(String qryString) {
-        
+
         return GenericDAOUtil.ExecuteQuery(createWhere(qryString), cls);
     }
 
     public List ExecuteQueryOB(String qryString) {
-       Query qry= createQuery(qryString);
-       List list= qry.getResultList();       
-       return list;
+        Query qry = createQuery(qryString);
+        List list = qry.getResultList();
+        return list;
     }
 
-    
     public List<Object[]> ExecuteNativeQuery(String qryString) {
 
         return GenericDAOUtil.ExecuteNativeQuery(qryString);
@@ -258,7 +256,6 @@ public class GenericDAO<T> {
         return GenericDAOUtil.ExecuteQuerySR(qryString, cls);
     }
 
-    
     public Object ExecuteQueryOb(String qryString) {
 
         return GenericDAOUtil.ExecuteQuerySR(qryString, cls);
@@ -284,13 +281,13 @@ public class GenericDAO<T> {
         Query qu = getPagedQuery(qry, pageNo, noofrows);
         return ExecuteQuery(qu);
     }
-    
-    public List pagedData(String qry , int pageNo,Object ...param) {
-        Query qu=getPagedQuery(qry, pageNo, noofrows, param);
+
+    public List pagedData(String qry, int pageNo, Object... param) {
+        Query qu = getPagedQuery(qry, pageNo, noofrows, param);
         return ExecuteQuery(qu);
     }
-    
-    public List pagedData(Query  qu , int pageNo) {
+
+    public List pagedData(Query qu, int pageNo) {
 //        String sq = createWhere(qry);//TODO -take out the create where statement
 //        Query qu = GenericDAOUtil.getQuery(sq,param);
         int fr = pageNo == 0 ? 0 : pageNo * noofrows;
@@ -308,27 +305,35 @@ public class GenericDAO<T> {
         qu.setMaxResults(noOfRows); //max result = noofrows+ 0
         return qu;
     }
-    
-    public List executeQuery(String qry,Object ...param){
-    
+
+    public Query getPagedQuery(String qry, int pageNo, int noOfRows, Map param) {
+
+        String sq = createWhere(qry);//TODO -take out the create where statement
+        Query qu = GenericDAOUtil.getQuery(sq, param);
+        int fr = pageNo == 0 ? 0 : pageNo * noOfRows;
+        qu.setFirstResult(fr);//firstresult
+        qu.setMaxResults(noOfRows); //max result = noofrows+ 0
+        return qu;
+    }
+
+    public List executeQuery(String qry, Object... param) {
+
         List<T> ts = GenericDAOUtil.ExecuteQuery(qry, param);
         return ts;
     }
 
-    public List executeQuery(String qry,Map params){
-    
+    public List executeQuery(String qry, Map params) {
+
         List<T> ts = GenericDAOUtil.ExecuteQuery(qry, params);
         return ts;
     }
 
-
-    public Long getCount(String qry ,Object ...param) {
+    public Long getCount(String qry, Object... param) {
         String sq = createCount(qry);
-        Query qu = GenericDAOUtil.getQuery(sq,param);
-        return (Long)ExecuteQuerySR(qu);
+        Query qu = GenericDAOUtil.getQuery(sq, param);
+        return (Long) ExecuteQuerySR(qu);
     }
-    
-    
+
     public List getPagedData(String qryname, int pageNo) {
 
         String qry = getquery(qryname);
@@ -344,8 +349,6 @@ public class GenericDAO<T> {
 
     }
 
-    
-    
     public List<T> getNextPage(String qryname) {
         String qry = getquery(qryname);
         int cpageno = getCupage(qryname);
@@ -361,10 +364,9 @@ public class GenericDAO<T> {
         ch.setCurrentPage(cpageno);
         ch.list = pagedData(qry, cpageno);
         System.out.println("size " + cpageno);
-    return ch.list;
+        return ch.list;
     }
 
-    
     public List<T> getPreviousPage(String qryname) {
         String qry = getquery(qryname);
         int cpageno = getCupage(qryname);
@@ -426,29 +428,36 @@ public class GenericDAO<T> {
     }
 
     public String createSelect() {
-        return "select c from  " + classname + " c ";
+        return " select c from  " + classname + " c ";
     }
 
     public String createCount() {
-        return "select count(c.id) from  " + classname + " c ";
+        return " select count(c.id) from  " + classname + " c ";
     }
-    
-    public String createCount(String whr,Object ...param) {
-        return createCount() + (StringUtility.isEmptyString(whr)?" ":" where  " + whr +" ");
+
+    public String createCount(String whr) {
+        return createCount() + (StringUtility.isEmptyString(whr) ? " " : " where  " + whr + " ");
+    }
+
+    public String createCountWhereWithOrderby(String whr) {
+        String select = StringUtility.containsStringIgnoreCase(whr, "select") ? "" : createCount();
+        String where = StringUtility.containsStringIgnoreCase(whr, "where") ? select : select + " where  " + whr + " ";
+        return where + GenericDAOUtil.getOrderBy(orderby);
     }
 
     public String createWhere(String whr) {
-        String select= StringUtility.containsStringIgnoreCase(whr, "select")?whr:createSelect();
-        String where= StringUtility.containsStringIgnoreCase(select, "where")?select: select + " where  " + whr +" ";
-        String orderBy= StringUtility.containsStringIgnoreCase(where, "order by")?where: where +  GenericDAOUtil.getOrderBy(orderby);
+        String select = StringUtility.containsStringIgnoreCase(whr, "select") ? whr : createSelect();
+        String where = StringUtility.containsStringIgnoreCase(select, "where") ? select : select + " where  " + whr + " ";
+        String orderBy = StringUtility.containsStringIgnoreCase(where, "order by") ? where : where + GenericDAOUtil.getOrderBy(orderby);
         return orderBy;
     }
-    
-      public String createWhereWithOrderby(String whr,String orderby) {
-        String select= StringUtility.containsStringIgnoreCase(whr, "select")?"":createSelect();
-        String where= StringUtility.containsStringIgnoreCase(whr, "where")?select: select + " where  " + whr +" ";
-        return where+ GenericDAOUtil.getOrderBy(orderby);
+
+    public String createWhereWithOrderby(String whr, String orderby) {
+        String select = StringUtility.containsStringIgnoreCase(whr, "select") ? "" : createSelect();
+        String where = StringUtility.containsStringIgnoreCase(whr, "where") ? select : select + " where  " + whr + " ";
+        return where + GenericDAOUtil.getOrderBy(orderby);
     }
+
     /*
      ///////////////
      //
@@ -458,25 +467,23 @@ public class GenericDAO<T> {
      /////////
      * 
      */
-
     public Query createQuery(String qry) {
         Query qu = GenericDAOUtil.getQuery(qry);
         return qu;
     }
 
-    public CQuery getQuery(String qry,Object ...param){
+    public CQuery getQuery(String qry, Object... param) {
 //        Query qu = GenericDAOUtil.getQuery(qry,param);
-        return   new CQuery(qry,param);
+        return new CQuery(qry, param);
 
     }
-    
 
     public long getcount(String qry) {
 
         qry = createCount() + qry;
         return (Long) ExecuteQueryOb(qry);
     }
-    
+
     public long getCount(Query qry) {
 
 //        qry = createCount() + qry;
@@ -499,74 +506,113 @@ public class GenericDAO<T> {
 //       System.out.println("exe cuting twoooo22..."+sqlString); 
     }
 
-    
-    public int getNoOfRows(){
-        return noofrows; 
+    public int getNoOfRows() {
+        return noofrows;
     }
+
     public T getByCodex(String code) {
 
         String qry = " c.code = '" + code + "'";
-        return (T)getByPropertySR("code",code);
+        return (T) getByPropertySR("code", code);
     }
-    
+
     public List<T> getByCode(String code) {
 
 //        String qry = " c.code = '" + code + "'";
-        return getByProperty("code",code);
+        return getByProperty("code", code);
     }
 
-        public List<T> getByCodeLike(String code) {
+    public List<T> getByCodeLike(String code) {
         String cus = "  LOWER(c.code) like '" + code.toLowerCase() + "%' ";
-        
-        List<T> lst = ExecuteQuery(createWhereWithOrderby(cus," c.code asc "));
+
+        List<T> lst = ExecuteQuery(createWhereWithOrderby(cus, " c.code asc "));
         return lst;
 
     }
 
-    public List<T> getByCodeLike(int page,String code) {
-        String cus = "  LOWER(c.code) like '" + code.toLowerCase()  + "%' ";
-        List<T> lst = pagedData(createWhereWithOrderby(cus, " c.code asc "),page);
+    public List<T> getByWhere(String conditions) {
+        List<T> lst = ExecuteQuery(createWhereWithOrderby(conditions, " c.code asc "));
         return lst;
 
     }
 
+    public long getCountOfByWhere(String conditions) {
+        return (Long) ExecuteQueryOb(createCountWhereWithOrderby(conditions));
+    }
+
+    public List<T> getByCodeLike(int page, String code) {
+        String cus = "  LOWER(c.code) like '" + code.toLowerCase() + "%' ";
+        List<T> lst = pagedData(createWhereWithOrderby(cus, " c.code asc "), page);
+        return lst;
+
+    }
+
+    public List<T> getByMap(int page, Map map) {
+        String where = "";
+        for (Object object : map.entrySet()) {
+
+            where += " c." + ((Map.Entry) object).getKey() + "   ':" + ((Map.Entry) object).getKey() + "' ";
+        }
+
+        List<T> lst = pagedData(createWhereWithOrderby(where, " " + orderby + " asc "), page, map);
+        return lst;
+
+    }
 
     /**
      * code can use '%' wild carts
+     *
      * @param code
-     * @return 
-     */    
+     * @return
+     */
+    public CQuery getCountQueryByMap(Map map) {
+        String where = "";
+        for (Object object : map.entrySet()) {
+
+            where += " c." + ((Map.Entry) object).getKey() + "   :" + ((Map.Entry) object).getKey() + " ";
+        }
+        String select = createCountWhereWithOrderby(where);
+        return getQuery(select);
+
+    }
+
+    /**
+     * code can use '%' wild carts
+     *
+     * @param code
+     * @return
+     */
     public CQuery getQueryByCodeLike(String code) {
-        String cus = " LOWER(c.code) like '" +  code.toLowerCase() + "%' ";
+        String cus = " LOWER(c.code) like '" + code.toLowerCase() + "%' ";
         return getQuery(createWhere(cus));
 //        return lst;
 
     }
-    
-       /**
+
+    /**
      * code can use '%' wild carts
+     *
      * @param code
-     * @return 
-     */    
+     * @return
+     */
     public CQuery getCountQueryByCodeLike(String code) {
-        String cus = "  LOWER(c.code) like '" +  code.toLowerCase() + "%' ";
+        String cus = "  LOWER(c.code) like '" + code.toLowerCase() + "%' ";
         return getQuery(createCount(cus));
-//        return lst;
 
     }
-    
-        
-       /**
+
+    /**
      * code can use '%' wild carts
+     *
      * @param code
-     * @return 
-     */    
-    public long getCountByCodeLike(String code) {        
+     * @return
+     */
+    public long getCountByCodeLike(String code) {
         return getCount(getCountQueryByCodeLike(code).getQuery());
 //        return lst;
 
     }
-    
+
     public List<T> byCodeLikeOrBarcode(String qry) {
         List<T> lst = getByCodeLike(qry);
         if (lst == null || lst.isEmpty()) {
@@ -582,9 +628,7 @@ public class GenericDAO<T> {
  * scnario : multi database or multi connection environment
  * simply create the instens of this class by passing the desired connection parameteres 
  */
-
-
-/*
+ /*
  How to get JPA Query string
  * 
  

@@ -82,8 +82,25 @@ public class TableUtil {
             }            
             
         };
-
+          
         jTable.setModel(dtm);
+        Enumeration<TableColumn> columnenum = jTable.getColumnModel().getColumns();
+        
+        int x=jTable.getColumnCount();
+          
+          
+          for (int i = 0; i < x; i++) {              
+              TableColumn nextElement = jTable.getColumnModel().getColumn(i);
+              PTableColumn get = columntypes.get(i);
+              nextElement.setPreferredWidth(get.getPreferredWidth());
+              nextElement.setMinWidth(get.getMinWidth());
+              nextElement.setWidth(get.getWidth());
+              nextElement.setMaxWidth(get.getMaxWidth());  
+              nextElement.setResizable(get.getResizable());              
+              
+              
+          }        
+        
         final NumberRenderer numberRenderer = new NumberRenderer();
         jTable.setDefaultRenderer(Double.class, numberRenderer);        
         jTable.setDefaultRenderer(Number.class, numberRenderer);        

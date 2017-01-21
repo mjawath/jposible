@@ -7,7 +7,6 @@ package org.components.windows;
 import com.components.custom.TextFieldWithPopUP;
 import com.components.custom.TextFieldWithPopUP.ActionTest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.UIListener;
@@ -23,18 +22,18 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
     protected QueryManager qms;
     protected ListViewUI listView;
     protected UIController<T> controller;
-    private static final int Listview_searchUIType = 0;
-    private static final int POPUP_searchUIType = 1;
+    protected static final int Listview_searchUIType = 0;
+    protected static final int POPUP_searchUIType = 1;
     private int searchUIType = Listview_searchUIType;
     private UISQLParameter uisqlp;
-    private int UIType = POPUP_searchUIType;
+    protected int UIType = POPUP_searchUIType;
     
     public static final String QRY="SEARCH";
     /**
      * Creates new form SearchQueryUIPanel
      */
     public SearchQueryUIPanel() {
-//        config();
+        config();
 //        initComponents();    
     }
    
@@ -47,14 +46,14 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
     
     
     protected void init(){
-      qms = new MYQueryManger();
-        if (POPUP_searchUIType == UIType) {
-            initComponents();
-            initSearchTextField();
-
-        } else if (Listview_searchUIType == UIType) {
-            
-        }
+//      qms = new MYQueryManger();
+//        if (POPUP_searchUIType == UIType) {
+////            initComponents();
+////            initSearchTextField();
+//
+//        } else if (Listview_searchUIType == UIType) {
+//            
+//        }
     }
     
     protected void postInit(){       
@@ -70,12 +69,9 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
                 qms.executeToFirstPageTask();
             }        
         };
-        ttxtsearch.setAt(at);
-        
+        ttxtsearch.setAt(at);        
 
     }
-    
-    
 
     
      simpleSearchListener sl =new simpleSearchListener();
@@ -96,38 +92,6 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
 
     }    
        
-
-    public Long executeCountQuery() {        
-        return controller.getService().getCountByCodeLike(ttxtsearch.getText());
-
-    }
-
-    public List executeQuery(int page) {  
-        String txt =  ttxtsearch.getText();        
-        final List byCodeLike = controller.getService().getByCodeLike(page, txt);        
-        return byCodeLike;
-    }
-
-     
-     private class MYQueryManger extends QueryManager {
-
-
-        public MYQueryManger() {            
-        }
-
-        @Override
-        public Long executeCountQuery() {
-            return SearchQueryUIPanel.this.executeCountQuery(); //To change body of generated methods, choose Tools | Templates.
-        }
-        
-     
-        @Override
-        public List executeQuery(int page) {
-            //what ever we can implement here 
-            return SearchQueryUIPanel.this.executeQuery(page);
-        }      
-
-    }
     
     public void setController(UIController controller){
     this.controller  = controller;    

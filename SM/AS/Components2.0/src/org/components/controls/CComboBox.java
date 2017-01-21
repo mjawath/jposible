@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * CComboBox.java
  *
  * Created on May 6, 2010, 6:56:55 PM
@@ -21,16 +21,17 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import org.biz.app.ui.util.ComponentFactory;
+import org.biz.app.ui.util.StringUtility;
+import org.components.parent.controls.editors.DefaultComboBoxCell;
 import org.components.windows.DetailPanel;
 
 /**
  *
  * @author nano
  */
-public class CComboBox<E> extends JComboBox implements IComponent{
+public class CComboBox<E> extends JComboBox implements IComponent {
 
-
-    protected  IContainer container;
+    protected IContainer container;
     private String id;
 
     public String getId() {
@@ -40,7 +41,6 @@ public class CComboBox<E> extends JComboBox implements IComponent{
     public void setId(String id) {
         this.id = id;
     }
-
 
     List<ActionTask> actionTasks;
     boolean moveTonextcom = true;
@@ -69,7 +69,6 @@ public class CComboBox<E> extends JComboBox implements IComponent{
 ////                fireActionEvent();
 //            }
 //        });
-
 //        getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
 //
 //            public void keyPressed(KeyEvent e) {
@@ -84,7 +83,6 @@ public class CComboBox<E> extends JComboBox implements IComponent{
     }
 
     public void init() {
-        
 
         actionTasks = new ArrayList<ActionTask>();
 
@@ -101,11 +99,11 @@ public class CComboBox<E> extends JComboBox implements IComponent{
                     // just change the focus
                     IContainer cont = getContainer();
                     if (cont != null && cont instanceof DetailPanel) {
-                        DetailPanel dp=(DetailPanel)cont;
+                        DetailPanel dp = (DetailPanel) cont;
                         dp.gotoNextComponent();
                     }
 //                    getContainer().gotoNextComponent(CComboBox.this);
-                        
+
                 }
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
                     IContainer cont = getContainer();
@@ -116,7 +114,6 @@ public class CComboBox<E> extends JComboBox implements IComponent{
                 }
             }
         });
-        
 
         getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
 
@@ -128,13 +125,14 @@ public class CComboBox<E> extends JComboBox implements IComponent{
                             actionTask.action();
                         }
                     }
-                    if(getContainer()!=null)
-                    getContainer().gotoNextComponent(CComboBox.this);
+                    if (getContainer() != null) {
+                        getContainer().gotoNextComponent(CComboBox.this);
+                    }
                     // just change the focus 
                 }
             }
         });
-        
+
         ComponentFactory.removeAction(this, KeyEvent.VK_ENTER);
 
     }
@@ -154,13 +152,36 @@ public class CComboBox<E> extends JComboBox implements IComponent{
 
     }
 
-    public void setModel(List model) {
+    private List collection = new ArrayList();
+    private String attribute;
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+        setRenderer();
+    }
+
+    public void setCollection(List model) {
         if (model != null) {
             this.setModel(new DefaultComboBoxModel(model.toArray()));
+            collection = model;
         } else {
-            this. removeAllItems();
+            this.removeAllItems();
+            collection =new ArrayList();
         }
     }
+
+    public List getCollection() {
+        return collection;
+    }
+
+    private void setRenderer() {
+        if (!StringUtility.isEmptyString(attribute)) {
+            DefaultComboBoxCell cell = new DefaultComboBoxCell(attribute);
+            setRenderer(cell);
+        }
+    }
+
+    
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -168,11 +189,9 @@ public class CComboBox<E> extends JComboBox implements IComponent{
         setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
-    
-
     @Override
     public void setContainer(IContainer con) {
-        this.container =con;
+        this.container = con;
     }
 
     public IContainer getContainer() {
@@ -181,10 +200,8 @@ public class CComboBox<E> extends JComboBox implements IComponent{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
     public void clear() {
-        ((DefaultComboBoxModel)getModel()).removeAllElements();
+        ((DefaultComboBoxModel) getModel()).removeAllElements();
     }
 
- 
 }

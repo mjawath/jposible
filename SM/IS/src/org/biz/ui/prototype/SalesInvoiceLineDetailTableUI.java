@@ -135,7 +135,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
                         .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(tPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cButton1, tTotal});
@@ -224,9 +224,14 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
     public void setTableContainer(TableContainer tableContainer) {
         super.setTableContainer(tableContainer);
         List<PTableColumn> tblCols = new ArrayList();
-        tblCols.add(new PTableColumn(Long.class, "ID"));
-        tblCols.add(new PTableColumn(String.class, "Code"));
-        tblCols.add(new PTableColumn(String.class, "Description"));
+        final PTableColumn ptc1 = new PTableColumn(Long.class, "ID");        
+        tblCols.add(ptc1);        
+        PTableColumn colcode = new PTableColumn(String.class, "Code");
+        colcode.setMinWidth(150);
+        tblCols.add(colcode);
+        final PTableColumn coldesc = new PTableColumn(String.class, "Description");
+        tblCols.add(coldesc);
+        coldesc.setMinWidth(200);
         tblCols.add(new PTableColumn(Double.class, "QTY"));
         tblCols.add(new PTableColumn(Double.class, "Price"));
         tblCols.add(new PTableColumn(Double.class, "LineAmount"));

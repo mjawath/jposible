@@ -5,10 +5,13 @@
  */
 package org.components.controls;
 
+import java.text.DecimalFormat;
 import javax.swing.SwingConstants;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
 import javax.swing.text.PlainDocument;
 
 /**
@@ -22,8 +25,13 @@ public class CCurrencyField extends CFormattedTextField {
      */
     public CCurrencyField() {
         super();
+        final DecimalFormat decimalFormat = new java.text.DecimalFormat("#,##0.00;(#,##0.00)");
+      
+        final NumberFormatter numberFormatter = new javax.swing.text.NumberFormatter(decimalFormat);
+            
 //        initComponents();
-        
+        final DefaultFormatterFactory defaultFormatterFactory = new javax.swing.text.DefaultFormatterFactory(numberFormatter);
+  
 //        final DefaultFormatterFactory defaultFormatterFactory = new DefaultFormatterFactory(new NumberFormatter());
 //        final DefaultFormatter df = (DefaultFormatter)defaultFormatterFactory.getDefaultFormatter();
 //        df.setCommitsOnValidEdit(true);
@@ -45,7 +53,9 @@ public class CCurrencyField extends CFormattedTextField {
 //        
 //        });
         
-        setToCurrencyField();
+    setFormatterFactory(defaultFormatterFactory);
+    ((NumberFormatter)getFormatter()).setAllowsInvalid(false);
+                
 //        setDocumentFiltering();
         setHorizontalAlignment(SwingConstants.RIGHT);
         

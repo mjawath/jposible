@@ -146,12 +146,11 @@ public class PTextField extends javax.swing.JTextField implements IComponent {
                             Object obj = actionTask.actionFired(e);
                             if (obj instanceof Component) {
                                 ((Component) obj).requestFocus();
-                            } else {
-                                transferFocus();
-                            }
-
+                                return;
+                            } 
                         }
-                        return;
+                        transferFocus();
+
                     }
                 }
             }

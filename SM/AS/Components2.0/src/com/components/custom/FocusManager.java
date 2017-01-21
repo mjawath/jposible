@@ -12,6 +12,8 @@ import java.util.Iterator;
  *
  * @author yy
  */
+
+/***deprecated **/
 public class FocusManager {
     
     ArrayList<IComponent> focus=new ArrayList<>();

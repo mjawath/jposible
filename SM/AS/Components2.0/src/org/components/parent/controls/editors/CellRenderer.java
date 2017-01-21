@@ -5,17 +5,20 @@
 package org.components.parent.controls.editors;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import org.biz.app.ui.util.StringUtility;
 import org.biz.util.ReflectionUtility;
 
 /**
  *
  * @author d
  */
-public class CellRenderer implements ListCellRenderer {
+public class CellRenderer extends DefaultListCellRenderer {
 
+    private JLabel lbl;
     String property;
 
     public String getProperty() {
@@ -26,14 +29,23 @@ public class CellRenderer implements ListCellRenderer {
         this.property = property;
     }
 
+    public CellRenderer() {
+        lbl = new JLabel();
+        lbl.setPreferredSize(new Dimension(lbl.getWidth(), lbl.getHeight()));
+    }
+
+
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        JLabel lbl = new JLabel();
+        lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         lbl.setText((String) getText(value));
         return lbl;
     }
-    
+
     public Object getText(Object obj) {
+        if (StringUtility.isEmptyString(property)) {
+            return obj;
+        }
         return ReflectionUtility.getProperty(obj, property);
     }
 }

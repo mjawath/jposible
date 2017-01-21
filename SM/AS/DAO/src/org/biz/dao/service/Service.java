@@ -107,6 +107,13 @@ public class Service {
         return (T) getDao().getByCodex(qry);
     }
     
+    public List getByWhere(String conditions) {
+        return getDao().getByWhere(conditions);
+    }
+    
+    public long getCountOfByWhere(String conditions) {
+        return getDao().getCountOfByWhere(conditions);
+    }
     
     public List getByCodeLike(String qry){
         return getDao().getByCodeLike(qry);

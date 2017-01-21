@@ -181,7 +181,7 @@ public class DetailPanel<T> extends TabPanelUI {
     
     public void setCrudControl(){
         crudcontrolPanel = new ControlPanel();
-        crudcontrolPanel.setBounds(10,10,455,30);
+        crudcontrolPanel.setBounds(10,10,555,30);
         this.add(crudcontrolPanel);
         
         

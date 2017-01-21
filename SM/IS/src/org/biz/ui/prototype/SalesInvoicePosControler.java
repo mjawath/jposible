@@ -40,7 +40,7 @@ public class SalesInvoicePosControler extends UIController<SalesInvoice>{
     
 
 
-    public List myexecuteQuery(int page) {
+    public List executeQuery(int page) {
 
         String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
         if (StringUtility.isEmptyString(txt)) {

@@ -25,10 +25,14 @@ public class CustomerLV extends ListViewUI  {
         super();
         List<PTableColumn> tblCols = new ArrayList();
         tblCols.add(new PTableColumn(String.class, "ID"));
-        tblCols.add(new PTableColumn(String.class, "Code"));
-        tblCols.add(new PTableColumn(String.class, "Name"));
-
+        PTableColumn colcode = new PTableColumn(String.class, "Code");
+        colcode.setMinWidth(80);
+        tblCols.add(colcode);
+        PTableColumn colname = new PTableColumn(String.class, "Name");
+        colname.setWidth(250);
+        tblCols.add(colname);
         getTable().init(Customer.class, tblCols);
+                
     }
 
     /**

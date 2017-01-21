@@ -31,7 +31,7 @@ public class CFormattedTextField extends PFormattedTextField {
 
     
  
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

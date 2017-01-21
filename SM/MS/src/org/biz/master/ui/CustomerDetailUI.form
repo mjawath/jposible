@@ -117,11 +117,13 @@
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="tCusCode" min="-2" max="-2" attributes="0"/>
-                  <Component id="tCusTitle" min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="tCusName" min="-2" max="-2" attributes="0"/>
                   <Component id="tCusDOB" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="tCusTitle" alignment="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="tCusName" alignment="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="cLabel12" min="-2" max="-2" attributes="0"/>
                   <Component id="tCusCompany" min="-2" max="-2" attributes="0"/>

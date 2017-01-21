@@ -1,12 +1,9 @@
 package org.biz.master.ui;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.JPanel;
-import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.entity.master.Customer;
@@ -20,53 +17,22 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     private Customer selectedCus;
 
     public CustomerDetailUI(){
-    super();
+        super();
     }
     
     @Override
     public void init() {
-    initComponents();
-    super.init();
+        initComponents();
+        super.init();
+        addToFocus(tCusCode);
+        addToFocus(tCusTitle);
+        addToFocus(tCusName);
+        addToFocus(tCusCompany);
+        
     }
-
-    /////////////////////////////////////
-    ///////////////////////////////////////////////
-    public void keyListeners() {
-        try {
-            tCusCode.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    try {
-                        if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-                            tCusTitle.getEditor().getEditorComponent().requestFocus();
-                        }
-                    } catch (Exception ee) {
-                        ee.printStackTrace();
-                    }
-                }
-            });
-
-
-            tCusTitle.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    try {
-                        if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-                        }
-                    } catch (Exception ee) {
-                        ee.printStackTrace();
-                    }
-                }
-            });
-
-
-
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    
+    public void events() {
+        super.events();
     }
 
     ///////////////////////////////////////////////  
@@ -128,9 +94,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         return c;
     }
 
-    public void entity2Ui(Customer c) throws Exception {
-        
-    }
+
 
     
     public void setDataToUI(Customer obj) {
@@ -194,15 +158,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
    
     }
     
-    public void clearForm() {
-        try {
-            entity2Ui(new Customer());
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public void  clear(){
         setDataToUI(new Customer());
@@ -457,10 +413,11 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tCusCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tCusTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tCusName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tCusDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                    .addComponent(tCusDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(tCusTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(tCusName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tCusCompany, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -525,38 +482,6 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     private void tCusDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCusDiscountActionPerformed
         // TODO add your handling code here:
 }//GEN-LAST:event_tCusDiscountActionPerformed
-
-   
-    @Override
-    public void delete() {
-            try {
-            if (UIEty.tcToStr(tCusCode) == null || UIEty.tcToStr(tCusCode).equals("")) {
-                MessageBoxes.wrnmsg(null, "Please Type Customer Code", "Empty Customer Code");
-                return;
-            }
-            //delete the selected customer...     
-            Customer c = uiToEntity(new Customer());//from ui....
-            Customer exist = cService.getDao().findCustomerByCode(c.getCode());
-            if (exist != null) {
-
-                cService.getDao().delete(exist);
-
-
-            } else {
-                MessageBoxes.warn(null, "No Customer Found.", getTabName());
-                return;
-            }
-            clearForm();
-
-            tCusCode.requestFocus(); 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            MessageBoxes.errormsg(null, e.getMessage(), "Error");
-        }
-        super.delete();
-    }
-
     
     private void tCusAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCusAdd1ActionPerformed
         // TODO add your handling code here:

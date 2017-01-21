@@ -30,10 +30,26 @@ public class dbCreation {
 
     public static void main(String[] args) {
 
+        
+//        GenericDAO<Customer> dao = new GenericDAO<>();
+//        Map<String,Object> params = new HashMap<>();
+////        params.put("key", ".code");
+//        params.put("code", " c.code  like  c%");
+////        params.put("customerName", "a%");
+//
+//        List list =dao.executeQuery("select c from Customer c where :code ",params );
+//        System.out.println("============"+list.size());
+        
+//        select count(c.id
+//        ) from Customer c where   c.
+//        :code like    a % order by c
+//        .savedDate desc, c
+//        .editedDate desc
+        
       
         dbCreation db = new dbCreation();
-//        db.createDataBase();
-        db.createCustomers();
+        db.createDataBase();
+        db.createmster();
     }
 
     public void createDataBase() {
@@ -114,10 +130,9 @@ public class dbCreation {
             
             for (int j = 0; j < 10; j++) {
                 SKU sku = new SKU();
-                sku.setCode(item.getCode());                         
+                sku.setCode(EntityService.getKeyStr());                         
                 sku.setExplainningSearchString(EntityService.getKeyStr());
                 sku.setItem(item); 
-                sku.setUOMDefaults();
                 sku.setSavedDate(new Date(System.currentTimeMillis() + i));
                 sku.setEditedDate(new Date(System.currentTimeMillis() + i));
                 lst22.add(sku);

@@ -6,6 +6,7 @@
 package org.biz.ui.prototype;
 
 import com.components.custom.SearchUI;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
@@ -23,11 +24,16 @@ public class SalesSearchUI extends SearchUI<SalesInvoice> {
      */
     public SalesSearchUI() {
         super();
+    }
+    
+    protected void init() {
+//        UIType = Listview_searchUIType;
+        super.init();      
         initComponents();
+        tSearchType.setCollection(Arrays.asList(new String[]{"code", "customername"}));
     }
     
     public Map<String, Object> getQueryParameterMap() {
-
         Map<String, Object> p = new HashMap<>();
         p.put(QRY, ttSearch.getText());
         return p;

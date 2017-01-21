@@ -125,7 +125,20 @@ public class ListViewUI extends javax.swing.JPanel {
         tbl = new org.components.controls.CxTable();
         cPaginatedPanel1 = new org.biz.app.ui.util.CPaginatedPanel();
 
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+            }
+        ));
         jScrollPane2.setViewportView(tbl);
+        if (tbl.getColumnModel().getColumnCount() > 0) {
+            tbl.getColumnModel().getColumn(1).setMinWidth(200);
+            tbl.getColumnModel().getColumn(3).setMinWidth(300);
+            tbl.getColumnModel().getColumn(4).setMinWidth(250);
+        }
 
         javax.swing.GroupLayout cPanel1Layout = new javax.swing.GroupLayout(cPanel1);
         cPanel1.setLayout(cPanel1Layout);
