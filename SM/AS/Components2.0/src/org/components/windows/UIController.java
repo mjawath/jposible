@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.QueryManager;
+import org.biz.app.ui.util.StringUtility;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
@@ -172,14 +173,37 @@ public class UIController<T> {
         return mmm;
     }
 
+ 
     public List executeQuery(int page) {
+        SearchQueryUIPanel searchUI = (SearchQueryUIPanel) getListView().getSearchUI();
+        String searchTextFieldValue = searchUI.getSearchTextFieldValue();
+
+        if (StringUtility.isEmptyString(searchTextFieldValue)) {
+            return getService().getDao().getAll();
+        }
+        String where = "";
+        String attribute = searchUI.getAttribute();
+        where = searchTextFieldValue != null ? " c." + attribute + " like '" + searchTextFieldValue + "%' " : "";
         
-        
-        return null;
+//        String name = qmp.get("name");
+//        where = name != null ? " c.name like " + name +" " : "";
+        return getService().getByWhere(where);        
     }
 
     public Long executeCount() {
-        return 0l;
+        SearchQueryUIPanel searchUI = (SearchQueryUIPanel) getListView().getSearchUI();
+        String searchTextFieldValue = searchUI.getSearchTextFieldValue();
+        
+        if (StringUtility.isEmptyString(searchTextFieldValue)) {
+            return getService().getDao().getAllCount();
+        }
+        String where = "";
+        String attribute = searchUI.getAttribute();        
+        where = searchTextFieldValue != null ? " c."+attribute+" like '" + searchTextFieldValue + "%' " : "";
+
+//        String name = qmp.get("name");
+//        where = name != null ? " c.name like " + name + " " : "";
+        return getService().getCountOfByWhere(where);        
     }
 
     public ArrayList save() {

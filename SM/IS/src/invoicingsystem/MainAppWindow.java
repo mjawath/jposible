@@ -147,7 +147,7 @@ public class MainAppWindow extends AppMainWindow {
 //        addToTabpanelToUI(new BankDetailUI(), "bank ");
 //        addToTabpanelToUI(new BankBranchDetailUI(), "bank branch");
 //        addToTabpanelToUI(new ChequeDetailUI(), "cheque");
-        addToTabpanelToUI(new CustomerStatementUI(), "customer statement");
+
         addToTabpanelToUI(new ShopUI(), "shop statement");
         addToTabpanelToUI(new WareHouseUI(), "ware house");
         addToTabpanelToUI(new SingleTransferOrderUI(), "transfer order");

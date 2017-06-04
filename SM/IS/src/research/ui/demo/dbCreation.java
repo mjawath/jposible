@@ -65,6 +65,7 @@ public class dbCreation {
         createWarehouses();
         createCategory();
         createItemSKU();
+        createCustomers();
         createStaff();
         createSuppliers();
     }

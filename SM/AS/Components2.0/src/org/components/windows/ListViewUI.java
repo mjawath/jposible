@@ -25,22 +25,22 @@ public class ListViewUI extends javax.swing.JPanel {
      */
     public ListViewUI() {
         initComponents();
-//        pagePanel=cPaginatedPanel1;
+
          tbl.setTableInteractionListner(tableInteractionListner);
 
     }
     
     public void initPaging(QueryManager qman){
-//        cPaginatedPanel1.postInit(service, searchListener, tbl);
+
         queryManager=qman;
-//        setPaging(pagePanel, tbl);
+
         if(cPaginatedPanel1==null)return;
         cPaginatedPanel1.init(qman, tbl);
     }
     
     public void setResult(ResultPage resp){
         tbl.setModelCollection((List)resp.getResult());
-//        pag
+        tbl.selectFirst();
     }
 
     

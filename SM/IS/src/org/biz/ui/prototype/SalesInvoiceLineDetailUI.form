@@ -25,13 +25,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="tItemSearchTextComp" min="-2" pref="189" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tQty" min="-2" pref="108" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="tQty" min="-2" pref="122" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="tPrice" min="-2" pref="111" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="tTotal" min="-2" pref="84" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="cButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="tTotal" min="-2" pref="96" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="cButton1" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cButton2" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="24" max="32767" attributes="0"/>
@@ -42,15 +42,15 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="cButton2" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="tItemSearchTextComp" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="tItemSearchTextComp" max="32767" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="tTotal" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cButton1" linkSize="2" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="tPrice" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tQty" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="cButton2" alignment="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="9" max="32767" attributes="0"/>
           </Group>

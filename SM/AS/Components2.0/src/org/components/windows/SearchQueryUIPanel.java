@@ -11,6 +11,7 @@ import java.util.Map;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.UIListener;
 import org.biz.dao.service.Service;
+import org.components.parent.controls.editors.SearchAttributeModel;
 import org.components.test.ResultPage;
 
 /**
@@ -160,7 +161,7 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ttxtsearch, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(ttxtsearch, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tbtnSearch)
                 .addContainerGap())
@@ -201,6 +202,14 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
     public void setListViewForPopup(ListViewUI lv){
         ttxtsearch.setListView(lv);
         lv.initPaging(qms);
+    }
+    
+      public String getSearchTextFieldValue(){
+        return ttxtsearch.getText();
+    }
+    
+    public String getAttribute() {
+        return "code";
     }
     
 }

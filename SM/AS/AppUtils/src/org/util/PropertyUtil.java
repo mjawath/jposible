@@ -28,7 +28,7 @@ public class PropertyUtil {
         try {
             properties.load(new FileInputStream(file));            
         } catch (IOException e) {
-            
+           
         }
      return properties;
     }        
@@ -75,6 +75,27 @@ public class PropertyUtil {
         Object value = properties.get(propName);        
         if(value==null)return null;
         return (T)value;
+    }
+    
+    public static  Boolean getPropertyBoolean(String propName) {
+        String value = getProperty(propName);        
+        if(value==null)return null;
+        return Boolean.parseBoolean(value);
+    }
+    
+    private static Object getProperty(Properties props, String name, Class<?> type) {
+        String value = props.getProperty(name);
+        if (value == null)
+            throw new IllegalArgumentException("Missing configuration value: " + name);
+        if (type == String.class)
+            return value;
+        if (type == boolean.class)
+            return Boolean.parseBoolean(value);
+        if (type == int.class)
+            return Integer.parseInt(value);
+        if (type == float.class)
+            return Float.parseFloat(value);
+        throw new IllegalArgumentException("Unknown configuration value type: " + type.getName());
     }
 
 }

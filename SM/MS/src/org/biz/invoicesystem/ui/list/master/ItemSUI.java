@@ -18,9 +18,9 @@ import static org.components.windows.SearchQueryUIPanel.QRY;
 public class ItemSUI extends  SearchQueryUIPanel {
 
     
-    public static final int Listview_searchUIType=0;
-    public static final int POPUP_searchUIType=1;
-    private int searchUIType= Listview_searchUIType;
+//    public static final int Listview_searchUIType=0;
+//    public static final int POPUP_searchUIType=1;
+//    private int searchUIType= Listview_searchUIType;
 //    private ItemQueryManger iqm;
     
     
@@ -31,9 +31,17 @@ public class ItemSUI extends  SearchQueryUIPanel {
      * Creates new form ItemSUI
      */
     public ItemSUI() {
-        initComponents();
+        super();
     }
 
+  
+    @Override
+    protected void init() {        
+//        UIType = Listview_searchUIType;
+        super.init();
+        initComponents();
+    }
+    
     
     public Map<String, Object> getQueryParameterMap() {
 
@@ -114,13 +122,13 @@ public class ItemSUI extends  SearchQueryUIPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdoCode)
                     .addComponent(rdoDesc))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
     
-        ((ItemController)controller).executeToFirstPageTask();
+        ((ItemController)controller).executeSearchForCustom();
       
 //      qms.executeToFirstPageTask();
         

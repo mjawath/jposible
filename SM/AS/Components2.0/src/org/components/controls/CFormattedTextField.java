@@ -5,13 +5,11 @@
  */
 package org.components.controls;
 
-import org.components.parent.controls.PFormattedTextField;
-
 /**
  *
  * @author jawa
  */
-public class CFormattedTextField extends PFormattedTextField {
+public class CFormattedTextField extends CTextField {
     /**
      * Creates new form CFormattedTextField
      */
@@ -30,8 +28,15 @@ public class CFormattedTextField extends PFormattedTextField {
     }// </editor-fold>//GEN-END:initComponents
 
     
- 
- 
+    public void setAlwaysEnterEvent(boolean  isAlways){
+        isAlwaysFireEventOnEnter =isAlways;  
+    }
+    boolean isAlwaysFireEventOnEnter = true;
+     
+    public boolean isValidPositiveDoubleValue() {
+        return (getDoubleValue()!=null && getDoubleValue()> 0);
+    }
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

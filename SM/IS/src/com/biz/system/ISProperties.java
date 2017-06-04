@@ -19,4 +19,10 @@ public class ISProperties {
         return  property;
     }
     
+    public static boolean isCustomerMandotoryForInvoice(){
+        Boolean property = PropertyUtil.getPropertyBoolean("CustomerMandotoryForInvoice");
+        if(property==null)return false;//default is false
+        return  property;
+    }
+    
 }

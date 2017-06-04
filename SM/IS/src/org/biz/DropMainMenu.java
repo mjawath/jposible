@@ -8,7 +8,7 @@ package org.biz;
 
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
-import org.biz.invoicesystem.ui.transactions.CategoryTab;
+
 import org.biz.invoicesystem.ui.transactions.WareHouseTab;
 import test.test.AppStart;
 
@@ -103,7 +103,7 @@ public class DropMainMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton2ActionPerformed
-               app.utils.SystemUtil.addToMainWindow(new CategoryTab(),"category");
+//               app.utils.SystemUtil.addToMainWindow(new CategoryTab(),"category");
         hidePopup();
     }//GEN-LAST:event_cButton2ActionPerformed
 

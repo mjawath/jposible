@@ -5,6 +5,7 @@
  */
 package org.biz.ui.prototype;
 
+import com.biz.system.ISProperties;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +89,7 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.panelToData();
         salesInvoiceLineItem.calculateLineItem();
         salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);
-        SalesInvoice currentBusObject = detailView.uiToData();
+//        SalesInvoice currentBusObject = detailView.uiToData();
 //        currentBusObject.addOrUpdateLine(salesInvoiceLineItem);
 //        currentBusObject.setTotal();
 //        detailView.setVisualDataToUI(currentBusObject);
@@ -176,20 +177,16 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
 
         List<SalesInvoiceLineItem> lineItems = currentBusObject.getLineItems();
 
-        if (lineItems == null) {
+        if (lineItems == null || lineItems.size() <= 0 ) {
             return false;
         }
-        if (lineItems.size() <= 0 ) {
-            return false;
-        }
+        //todo do we have to validate sales line items line by line
         
-        if (lineItems.size() == 0) {            
+        if(ISProperties.isCustomerMandotoryForInvoice() && currentBusObject.getCustomer()==null){
+             MessageBoxes.infomsg(null,"No customer found" , "Validation errors" );
             return false;
         }
-        if(currentBusObject.getCustomer()==null){
-            return false;
-        }
-        MessageBoxes.infomsg(null, "Validation errors", "Validation errors");
+
         return true;
     }
 

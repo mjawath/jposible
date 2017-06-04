@@ -19,9 +19,11 @@ public class DoubleDocument extends PlainDocument {
     @Override
     public void insertString(int offs, String str, AttributeSet a)
             throws BadLocationException {
+        System.out.println("test");
         if (str == null) {
             return;
         }
+        
         if (str.equals("d") || str.equals("D")) {
             return;
         }
@@ -31,7 +33,8 @@ public class DoubleDocument extends PlainDocument {
         String oldString = getText(0, getLength());
         String newString = oldString.substring(0, offs) + str
                 + oldString.substring(offs);
-
+        
+        
 
         try {
             Double d = Double.parseDouble(newString);
@@ -49,8 +52,8 @@ public class DoubleDocument extends PlainDocument {
 
             super.insertString(offs, str, a);
         } catch (NumberFormatException e) {
-            Toolkit.getDefaultToolkit().beep();
-            //here i should comenting it becas on sound
+//            Toolkit.getDefaultToolkit().beep();
+            //here i should comenting it becas of sound
         }
 
 

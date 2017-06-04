@@ -5,14 +5,12 @@
  */
 package org.components.controls;
 
-import java.text.DecimalFormat;
+import com.components.custom.ActionTask;
 import javax.swing.SwingConstants;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.DocumentFilter;
-import javax.swing.text.NumberFormatter;
-import javax.swing.text.PlainDocument;
+import org.components.parent.Documents.DoubleDocument;
 
 /**
  *
@@ -25,13 +23,17 @@ public class CCurrencyField extends CFormattedTextField {
      */
     public CCurrencyField() {
         super();
-        final DecimalFormat decimalFormat = new java.text.DecimalFormat("#,##0.00;(#,##0.00)");
-      
-        final NumberFormatter numberFormatter = new javax.swing.text.NumberFormatter(decimalFormat);
-            
-//        initComponents();
-        final DefaultFormatterFactory defaultFormatterFactory = new javax.swing.text.DefaultFormatterFactory(numberFormatter);
-  
+//        DecimalFormat decimalFormat = new java.text.DecimalFormat("#,##0");
+//        
+//        NumberFormatter numberFormatter = new javax.swing.text.NumberFormatter(decimalFormat);
+//        numberFormatter.setAllowsInvalid(false);
+//        DefaultFormatter defaultFormatter = new DefaultFormatter();  
+//        defaultFormatter.setAllowsInvalid(false);
+////        initComponents();
+//        final DefaultFormatterFactory defaultFormatterFactory = new javax.swing.text.DefaultFormatterFactory(defaultFormatter,numberFormatter,numberFormatter,defaultFormatter);
+        
+        
+//        defaultFormatterFactory.setNullFormatter(defaultFormatter);
 //        final DefaultFormatterFactory defaultFormatterFactory = new DefaultFormatterFactory(new NumberFormatter());
 //        final DefaultFormatter df = (DefaultFormatter)defaultFormatterFactory.getDefaultFormatter();
 //        df.setCommitsOnValidEdit(true);
@@ -42,19 +44,16 @@ public class CCurrencyField extends CFormattedTextField {
 //
 //            @Override
 //            public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-//                System.out.println(string);
-//                
+//                System.out.println(string);                
 //                super.insertString(fb, offset, string, attr); //To change body of generated methods, choose Tools | Templates.
 //            }
-//            
-//            
-//            
-//        
-//        
+////        
 //        });
         
-    setFormatterFactory(defaultFormatterFactory);
-    ((NumberFormatter)getFormatter()).setAllowsInvalid(false);
+        setDocumentFiltering();
+        
+//    setFormatterFactory(defaultFormatterFactory);
+    
                 
 //        setDocumentFiltering();
         setHorizontalAlignment(SwingConstants.RIGHT);
@@ -74,9 +73,9 @@ public class CCurrencyField extends CFormattedTextField {
     
     
     private void setDocumentFiltering(){
-        ((PlainDocument)getDocument()).setDocumentFilter(new NumericAndLengthFilter(Integer.MAX_VALUE));
+//        ((PlainDocument)getDocument()).setDocumentFilter(new NumericAndLengthFilter(Integer.MAX_VALUE));
        
-//        setDocument(new DoubleDocument());
+        setDocument(new DoubleDocument());
     }
 
    
@@ -150,7 +149,16 @@ public class CCurrencyField extends CFormattedTextField {
     private void initComponents() {
     }// </editor-fold>//GEN-END:initComponents
 
-
+    protected void fireEventIfNotFromDoc() {
+        if (!disableDocumentChangeEvent && docActionTask != null) {
+            disableDocumentChangeEvent = true;
+            docActionTask.actionFired(this);
+            disableDocumentChangeEvent = false;
+        }
+    }
+        boolean disableDocumentChangeEvent = false;
+    boolean isAlwaysFireEventOnEnter = true;
+        private ActionTask docActionTask;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
