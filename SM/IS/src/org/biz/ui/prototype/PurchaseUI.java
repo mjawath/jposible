@@ -6,14 +6,9 @@
 
 package org.biz.ui.prototype;
 
-import java.awt.Component;
-import java.awt.KeyboardFocusManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import org.biz.invoicesystem.ui.list.master.CustomerFrame;
 import org.components.windows.DetailPanel;
 import org.components.windows.MasterViewUI;
-import org.components.windows.MyFocusPolicy;
 import org.components.windows.UIFrame;
 
 /**

@@ -12,8 +12,10 @@ import java.awt.event.KeyEvent;
 import org.biz.app.ui.util.UIEty;
 import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoice;
+import org.biz.invoicesystem.master.ui.SupplierListUi;
 import org.biz.invoicesystem.ui.list.master.CustomerController;
 import org.biz.invoicesystem.ui.list.master.CustomerLV;
+import org.biz.invoicesystem.ui.list.master.SupplierController;
 import org.components.util.ComponentFactory;
 import org.components.windows.DetailPanel;
 import org.components.windows.UIController;
@@ -41,8 +43,8 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
         super.init();
         // controller can be set with external references so that later they can be used
 
-        CustomerController cc = new CustomerController();
-        tpopCustomer.setListViewQueryManger(cc.getPopupQueryManger(), new CustomerLV());
+        SupplierController cc = new SupplierController();
+//        tpopCustomer.setListViewQueryManger(cc.getPopupQueryManger(), new SupplierListUi());
         tpopCustomer.setSelectedProperty("code");
         tpopCustomer.setActionTask(new ActionTask() {
 
