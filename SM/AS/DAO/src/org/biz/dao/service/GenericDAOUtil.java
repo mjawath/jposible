@@ -526,6 +526,8 @@ public class GenericDAOUtil<T> {
         }
         query.setHint(QueryHints.REFRESH, HintValues.TRUE);
         List ts = query.getResultList();
+
+        System.out.println("test");
         return ts;
     }
 
