@@ -6,6 +6,8 @@
 
 package org.components.windows;
 
+import java.awt.Component;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -63,6 +65,26 @@ public class UIFrame extends javax.swing.JFrame {
                
            }
        });
+       
+               tabbedPane.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                System.out.println("tab changed");
+                if (tabbedPane.getSelectedComponent() instanceof DetailPanel) {
+                    KeyboardFocusManager currentKeyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                    if (currentKeyboardFocusManager.getDefaultFocusTraversalPolicy() instanceof MyFocusPolicy) {
+                        Component com = ((DetailPanel) tabbedPane.getSelectedComponent()).gotoFirstComponent();
+                        if(com!=null)
+                        com.requestFocusInWindow();
+
+                    }
+
+//                    currentKeyboardFocusManager.downFocusCycle();
+                    System.out.println("detail panel selected");
+                }
+            }
+        });
     }
     
     public void goToDetail(){   

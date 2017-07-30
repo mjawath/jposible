@@ -265,9 +265,9 @@ public class UIController<T> {
             }
 
             if (id instanceof String) {
-//                ((BusObj) busObject).setId((String)id);
+                ((BusObj) busObject).setId((String)id);
             } else if (id instanceof Long) {
-                ((BusObj) busObject).setId((Long) id);
+//                ((BusObj) busObject).setId((Long) id);
             }
             toUpdate.add(busObject);
             preUpdate(toSave, toUpdate, toDelete);
@@ -369,6 +369,12 @@ public class UIController<T> {
 
     private void clear() {
 
+    }
+    
+    
+    public void print(){
+        //
+//        print
     }
     
     
