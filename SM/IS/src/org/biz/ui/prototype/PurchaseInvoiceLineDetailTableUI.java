@@ -13,7 +13,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.invoicesystem.entity.master.SKU;
-import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
+import org.biz.invoicesystem.entity.transactions.PurchaseInvoiceLineItem;
 import org.biz.invoicesystem.ui.list.master.SKUController;
 import org.biz.invoicesystem.ui.list.master.SKULVUI;
 import org.components.parent.controls.PTableColumn;
@@ -23,16 +23,16 @@ import org.components.windows.UIController;
  *
  * @author user
  */
-public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
+public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
         
-    private SalesInvoiceControler sic;
-    private SalesInvoiceLineItem salesLine = new SalesInvoiceLineItem();
+    private PurchaseInvoiceControler sic;
+    private PurchaseInvoiceLineItem salesLine = new PurchaseInvoiceLineItem();
     
 
     /**
      * Creates new form SalesInvoiceLineDetailUI
      */
-    public SalesInvoiceLineDetailTableUI() {
+    public PurchaseInvoiceLineDetailTableUI() {
         initComponents();
 //        setFocusable(true);
         initUI();
@@ -47,7 +47,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
   
     
     public void setSalesInvoiceController(UIController  con ){
-        sic = (SalesInvoiceControler) con;        
+        sic = (PurchaseInvoiceControler) con;        
     }
    
    
@@ -182,7 +182,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
 
             @Override
             public Component actionFired(Object source) {
-                sic.onSalesInvoiceLineItemQTYChanged(SalesInvoiceLineDetailTableUI.this);
+//                sic.onSalesInvoiceLineItemQTYChanged(PurchaseInvoiceLineDetailTableUI.this);
                 return tPrice;
             }
         });
@@ -192,7 +192,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
 
             @Override
             public Component actionFired(Object source) {
-                final JComponent onSalesInvoiceLineItemPriceChanged = sic.onSalesInvoiceLineItemPriceChanged(SalesInvoiceLineDetailTableUI.this);
+                final JComponent onSalesInvoiceLineItemPriceChanged = sic.onSalesInvoiceLineItemPriceChanged(PurchaseInvoiceLineDetailTableUI.this);
                 
                 //create the line item 
                 // is this line item valid ?
@@ -232,13 +232,13 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
         tblCols.add(new PTableColumn(Double.class, "QTY"));
         tblCols.add(new PTableColumn(Double.class, "Price"));
         tblCols.add(new PTableColumn(Double.class, "LineAmount"));
-        tableContainer.initTable(SalesInvoiceLineItem.class, tblCols);
+        tableContainer.initTable(PurchaseInvoiceLineItem.class, tblCols);
 
 
     }
     
-    public SalesInvoiceLineItem panelToData() {
-        SalesInvoiceLineItem sil= new SalesInvoiceLineItem();
+    public PurchaseInvoiceLineItem panelToData() {
+        PurchaseInvoiceLineItem sil= new PurchaseInvoiceLineItem();
         sil.setSku(tItemSearchTextComp.getSelectedObject());
         sil.setQty(tQty.getDoubleValue());
         sil.setPrice(tPrice.getDoubleValue());
@@ -247,7 +247,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
     }
 
     public void setDataToPanel(Object data) {
-        SalesInvoiceLineItem li = (SalesInvoiceLineItem) data;
+        PurchaseInvoiceLineItem li = (PurchaseInvoiceLineItem) data;
         tItemSearchTextComp.setSelectedObject(li.getSku());
         
         tQty.setValue(li.getQty());
@@ -257,7 +257,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
     }
     
     public void setDataToPanelIFNotFocused(Object data) {
-        SalesInvoiceLineItem li = (SalesInvoiceLineItem) data;
+        PurchaseInvoiceLineItem li = (PurchaseInvoiceLineItem) data;
         tItemSearchTextComp.setSelectedObject(li.getSku());
         
         tQty.setValueIfNotFocused(li.getQty());
@@ -269,7 +269,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
      private class MyCalculator extends ActionTask{
         
         public void actionCall() {            
-            sic.onSalesInvoiceLineItemDocChanged(SalesInvoiceLineDetailTableUI.this);
+            sic.onSalesInvoiceLineItemDocChanged(PurchaseInvoiceLineDetailTableUI.this);
         }
         
     } 
@@ -277,11 +277,11 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
    
      
     public void onRemoveLineItem(Object selectedObject) {
-        sic.onRemoveLineItem((SalesInvoiceLineItem)selectedObject);
+        sic.onRemoveLineItem((PurchaseInvoiceLineItem)selectedObject);
     } 
 
     public Object[] getTableData(Object row) {
-        SalesInvoiceLineItem sl = (SalesInvoiceLineItem) row;
+        PurchaseInvoiceLineItem sl = (PurchaseInvoiceLineItem) row;
         SKU selItem = sl.getSku();
         return new Object[]{sl,sl.getId(), selItem != null ? sl.getSku().getCode() : "", selItem != null ? selItem.getExplainningSearchString(): "",
             sl.getQty(), sl.getPrice(), sl.getLineAmount()};
@@ -293,7 +293,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
         tQty.clear();
         tPrice.clear();
         tTotal.clear();
-        salesLine =new SalesInvoiceLineItem();
+        salesLine =new PurchaseInvoiceLineItem();
     
     }
     
@@ -329,7 +329,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
   
     boolean isValidToAccept() {
 
-        SalesInvoiceLineItem sl = panelToData();
+        PurchaseInvoiceLineItem sl = panelToData();
         if(sl.getSku()==null || sl.getLineAmount()<=0 ||                
                 sl.getQty()<=0 || sl.getPrice()<=0){
             return false;

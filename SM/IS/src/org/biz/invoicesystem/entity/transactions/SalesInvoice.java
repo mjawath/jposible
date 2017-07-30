@@ -40,9 +40,9 @@ public class SalesInvoice extends BusObj {
     private List<SalesInvoiceLineItem> lineItems;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date docdate;
-    @OneToOne
+    @ManyToOne
     private Shop shop;
-    @OneToOne
+    @ManyToOne
     private Warehouse warehouse;
     String docRefNo;
     private String code;

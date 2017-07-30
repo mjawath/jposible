@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import org.biz.app.ui.util.Tracer;
+import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Supplier;
@@ -26,15 +28,13 @@ import org.biz.invoicesystem.entity.master.Supplier;
  * @author mjawath
  */
 @Entity
-public class PurchaseInvoice implements Serializable {
+public class PurchaseInvoice extends BusObj {
 
-    @Id
-    private String id;
     private String refNo;
     private String grnNo;
     private static final long serialVersionUID = 1L;
     @ManyToOne
-    Supplier supplier;
+    private Supplier supplier;
     @JoinColumn(name = "purchase_invoice_id")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<PurchaseInvoiceLineItem> lineItems;
@@ -42,10 +42,53 @@ public class PurchaseInvoice implements Serializable {
     Staff staff;
     String salesMan;
     String salesManager;
-    @OneToOne
+    @ManyToOne
     Shop shop;
+    private String code;    
+    private Double total;
+    private Double subTotal;
+    private Double discount;
+    private Double discountPer;
+    private Double texPer;
+    private Double texAmount;
+    private Double cashRecieveds;
     
 
+    Double finalTotal;
+    Double amountRecieved;
+    Double discountpctge;
+    Double tax;
+    Double taxpctge;
+    Byte type;//should hv final decaltration
+    Byte status;//should hv final decaltration
+    String remark;
+ 
+    
+    
+ public void calculateTotal() {
+//        Double db = 0d;
+//        for (SalesInvoiceLineItem sl : lineItems) {
+//            db = MathUtil.add(db, sl.getLineAmount());
+//        }
+//        setSubTotal(db);
+//        Tracer.printToOut("Invoice sub totel  " + subTotal);
+//        setTotal(db);
+//        Tracer.printToOut("Invoice totel  " + total);        
+//        Tracer.printToOut("Invoice Tax  " +texPer);
+//        setSalesTaxDetail();
+//        Tracer.printToOut("Invoice Tax  Amount" + texAmount);        
+//        setDiscountDetail();
+//        Tracer.printToOut("Invoice Discount  " + discountPer + " "+discount);
+//        db = MathUtil.sub(db, texAmount);
+//        db = MathUtil.sub(db, discount);
+//        setTotal(db);
+//        Tracer.printToOut("Invoice totel  " + subTotal);
+//        Double bal = db;
+//        Tracer.printToOut("Recived  " + cashRecieveds);
+//        bal = MathUtil.sub(bal, getCashRecieveds());
+//        Tracer.printToOut("Invoice final totel  " + total);        
+    }
+    
     public Double getAmountRecieved() {
         return amountRecieved;
     }
@@ -78,13 +121,7 @@ public class PurchaseInvoice implements Serializable {
         this.docdate = docdate;
     }
 
-    public Date getEditeddate() {
-        return editeddate;
-    }
 
-    public void setEditeddate(Date editeddate) {
-        this.editeddate = editeddate;
-    }
 
     public Double getFinalTotal() {
         return finalTotal;
@@ -126,13 +163,6 @@ public class PurchaseInvoice implements Serializable {
         this.salesManager = salesManager;
     }
 
-    public Date getSaveddate() {
-        return saveddate;
-    }
-
-    public void setSaveddate(Date saveddate) {
-        this.saveddate = saveddate;
-    }
 
     public Byte getStatus() {
         return status;
@@ -173,23 +203,9 @@ public class PurchaseInvoice implements Serializable {
     public void setType(Byte type) {
         this.type = type;
     }
-    Double subTotal;
-    Double finalTotal;
-    Double amountRecieved;
-    Double discount;
-    Double discountpctge;
-    Double tax;
-    Double taxpctge;
-    Byte type;//should hv final decaltration
-    Byte status;//should hv final decaltration
-    String remark;
- 
+
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date docdate;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    Date saveddate;
-       @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    Date editeddate;
 
     public List<PurchaseInvoiceLineItem> getLineItems() {
         return lineItems;
@@ -207,13 +223,6 @@ public class PurchaseInvoice implements Serializable {
         this.supplier = supplier;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Staff getStaff() {
         return staff;
@@ -229,6 +238,62 @@ public class PurchaseInvoice implements Serializable {
 
     public void setShop(Shop shop) {
         this.shop = shop;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Double getDiscountPer() {
+        return discountPer;
+    }
+
+    public void setDiscountPer(Double discountPer) {
+        this.discountPer = discountPer;
+    }
+
+    public Double getTexPer() {
+        return texPer;
+    }
+
+    public void setTexPer(Double texPer) {
+        this.texPer = texPer;
+    }
+
+    public Double getTexAmount() {
+        return texAmount;
+    }
+
+    public void setTexAmount(Double texAmount) {
+        this.texAmount = texAmount;
+    }
+
+    public Double getCashRecieveds() {
+        return cashRecieveds;
+    }
+
+    public void setCashRecieveds(Double cashRecieveds) {
+        this.cashRecieveds = cashRecieveds;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
     
 
@@ -256,5 +321,28 @@ public class PurchaseInvoice implements Serializable {
         System.out.println("totel  " + bal);
         return bal;
 
+    }
+     
+     public void addOrUpdateLine(PurchaseInvoiceLineItem salesInvoiceLineItem) {
+        if (lineItems == null) {
+            return;
+        }
+        if (!lineItems.contains(salesInvoiceLineItem)) {
+            lineItems.add(salesInvoiceLineItem);
+        }
+    }
+     
+     public synchronized void addOrUpdateLine(PurchaseInvoiceLineItem selectedLine, PurchaseInvoiceLineItem newSalesInvoiceLineItem) {
+        if (lineItems == null) {
+            lineItems = new ArrayList<>();
+            lineItems.add(newSalesInvoiceLineItem);
+            return;
+        }
+        if (!lineItems.contains(selectedLine)) {
+            lineItems.add(newSalesInvoiceLineItem);
+        } else {
+            int index = lineItems.indexOf(selectedLine);
+            lineItems.set(index, newSalesInvoiceLineItem);
+        }
     }
 }

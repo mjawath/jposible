@@ -130,6 +130,9 @@ public class ApplicationManager {
         
         MenuItem mis2 = new MenuItem("Transactions >  Sales ", "org.biz.ui.prototype.SalesInvoiceControler", "SaleDetailPanelUI", 1, "Sales Detail Table", "menu of Sales detailx");
         menuBuilder.createMenuItem(mis2);
+
+        MenuItem menuItemPurchase = new MenuItem("Transactions >  Purchase ", "org.biz.ui.prototype.PurchaseInvoiceControler", "PurchaseInvoiceControler", 1, "Purchase Detail Table", "menu of Purchase detail");
+        menuBuilder.createMenuItem(menuItemPurchase);
         
         JMenuBar mb = SystemUtil.getMenuBar();
         

@@ -7,11 +7,14 @@ package org.biz.invoicesystem.entity.transactions;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.biz.invoicesystem.entity.master.Item;
+import org.biz.invoicesystem.entity.master.SKU;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
+import org.util.MathUtil;
 
 /**
  *
@@ -34,6 +37,22 @@ public class PurchaseInvoiceLineItem implements Serializable  {
     Shop shop;
     @OneToOne
     UOM uom;
+    
+    @ManyToOne
+    private SKU sku;
+
+    public SKU getSku() {
+        return sku;
+    }
+
+    public void setSku(SKU sku) {
+        this.sku = sku;
+    }
+    
+        public void calculateLineItem(){    
+        setLineAmount(MathUtil.multiply(getQty(), getPrice()));    
+    }
+
 
     public UOM getUom() {
         return uom;
