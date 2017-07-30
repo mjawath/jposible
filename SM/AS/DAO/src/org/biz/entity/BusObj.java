@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
+import org.eclipse.persistence.annotations.UuidGenerator;
 
 /**
  *
@@ -30,8 +31,9 @@ public class BusObj implements Serializable {
 //        this.id = id;
     }
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    @UuidGenerator(name="UUID")
+    @GeneratedValue(generator="UUID")
+    protected String id;
 //    @Id    
 //    private Long genClass;
 
@@ -42,11 +44,11 @@ public class BusObj implements Serializable {
 //    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
 //    Date editeddate;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
