@@ -18,7 +18,7 @@ public class SupplierMasterTab extends TabPanelUI {
   
         try {
     supplerMasterUI1.init();
-    supplierListUi1.init();
+//    supplierListUi1.init();
         } catch (Exception e) {
         e.printStackTrace();
         }
@@ -47,10 +47,8 @@ public class SupplierMasterTab extends TabPanelUI {
 
         tItemDescription = new org.components.controls.CTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        supplierListUi1 = new org.biz.invoicesystem.ui.list.master.SupplierListUi();
         supplerMasterUI1 = new org.biz.invoicesystem.master.ui.SupplerMasterUI();
 
-        jTabbedPane1.addTab("List", supplierListUi1);
         jTabbedPane1.addTab("Form", supplerMasterUI1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -68,7 +66,6 @@ public class SupplierMasterTab extends TabPanelUI {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane jTabbedPane1;
     private org.biz.invoicesystem.master.ui.SupplerMasterUI supplerMasterUI1;
-    private org.biz.invoicesystem.ui.list.master.SupplierListUi supplierListUi1;
     private org.components.controls.CTextField tItemDescription;
     // End of variables declaration//GEN-END:variables
 

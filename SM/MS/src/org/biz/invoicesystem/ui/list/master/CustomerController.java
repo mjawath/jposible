@@ -36,6 +36,8 @@ public class CustomerController extends UIController<Customer> {
         if (StringUtility.isEmptyString(searchTextFieldValue)) {
             return getService().getDao().getAll();
         }
+        searchUI.getQueryParameterMap();
+        
         String where = "";
         String attribute = searchUI.getAttribute();
         where = searchTextFieldValue != null ? " c." + attribute + " like '" + searchTextFieldValue + "%' " : "";

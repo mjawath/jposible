@@ -94,70 +94,59 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         return c;
     }
 
-
-
-    
     public void setDataToUI(Customer obj) {
         this.selectedCus = obj;
-        try {
-            UIEty.objToUi(tCusCode, obj.getCode());
-            UIEty.objToUi(tCusTitle, obj.getTitle());
-            UIEty.objToUi(tCusName, obj.getCustomerName());
-            tCusDOB.setDate(obj.getDob());
-            UIEty.objToUi(tCusCompany, obj.getCompanyName());
-            UIEty.objToUi(tCusReligion, obj.getReligion());
-            UIEty.objToUi(tCusType, obj.getType());
-            UIEty.objToUi(tCusDiscount, obj.getDiscount());
-            UIEty.objToUi(tCusCreditLimit, obj.getCreditLimit());
-            UIEty.objToUi(tCusSalesRep, obj.getSalesRep());
-            UIEty.objToUi(tCusLoyalty, obj.getLoyaltyCardNo());
-            UIEty.objToUi(tCusNIC, obj.getNicno());
-            UIEty.objToUi(tCusAdd1, obj.getAddress());
-            UIEty.objToUi(tCusAdd2, obj.getAddress2());
-            UIEty.objToUi(tCusCity, obj.getCity());
-            UIEty.objToUi(tCusPhone, obj.getPicLocation());
-            UIEty.objToUi(tCusMobile, obj.getMobile());
-            UIEty.objToUi(tCusEmail, obj.getEmail());
-
-
-        }
-        catch (Exception e) {
-            throw e;
-        }
+        UIEty.objToUi(tCusCode, obj.getCode());
+        UIEty.objToUi(tCusTitle, obj.getTitle());
+        UIEty.objToUi(tCusName, obj.getCustomerName());
+        tCusDOB.setDate(obj.getDob());
+        UIEty.objToUi(tCusCompany, obj.getCompanyName());
+        UIEty.objToUi(tCusReligion, obj.getReligion());
+        UIEty.objToUi(tCusType, obj.getType());
+        UIEty.objToUi(tCusDiscount, obj.getDiscount());
+        UIEty.objToUi(tCusCreditLimit, obj.getCreditLimit());
+        UIEty.objToUi(tCusSalesRep, obj.getSalesRep());
+        UIEty.objToUi(tCusLoyalty, obj.getLoyaltyCardNo());
+        UIEty.objToUi(tCusNIC, obj.getNicno());
+        UIEty.objToUi(tCusAdd1, obj.getAddress());
+        UIEty.objToUi(tCusAdd2, obj.getAddress2());
+        UIEty.objToUi(tCusCity, obj.getCity());
+        UIEty.objToUi(tCusPhone, obj.getPicLocation());
+        UIEty.objToUi(tCusMobile, obj.getMobile());
+        UIEty.objToUi(tCusEmail, obj.getEmail());
     }
 
     public Customer uiToData(){
-            Customer c=new Customer();
-            try {
-//            c.setId(EntityService.getEntityService().getKey(""));
-
-            c.setCode(UIEty.tcToStr(tCusCode));
-            c.setTitle(UIEty.cmbtostr(tCusTitle));
-            c.setCustomerName(UIEty.tcToStr(tCusName));
-            c.setDob(tCusDOB.getDate());
-            c.setCompanyName(UIEty.tcToStr(tCusCompany));
-            c.setReligion(UIEty.cmbtostr(tCusReligion));
-            c.setType(UIEty.cmbtostr(tCusType));
-            c.setDiscount(UIEty.tcToDble0(tCusDiscount));
-            c.setCreditLimit(UIEty.tcToDble0(tCusCreditLimit));
-            c.setSalesRep(UIEty.cmbtostr(tCusSalesRep));
-            c.setLoyaltyCardNo(UIEty.tcToStr(tCusLoyalty));
-            c.setNicno(UIEty.tcToStr(tCusNIC));
-            c.setAddress(UIEty.tcToStr(tCusAdd1));
-            c.setAddress2(UIEty.tcToStr(tCusAdd2));
-            c.setCity(UIEty.tcToStr(tCusCity));
-            c.setPhone(UIEty.tcToStr(tCusPhone));
-            c.setMobile(UIEty.tcToStr(tCusMobile));
-            c.setEmail(UIEty.tcToStr(tCusEmail));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            Customer c= null;
+        if(selectedObject == null){
+                c=new Customer();
+        }else{
+            c =selectedObject;
         }
+//            c.setId(EntityService.getEntityService().getKey(""));
+        c.setCode(UIEty.tcToStr(tCusCode));
+        c.setTitle(UIEty.cmbtostr(tCusTitle));
+        c.setCustomerName(UIEty.tcToStr(tCusName));
+        c.setDob(tCusDOB.getDate());
+        c.setCompanyName(UIEty.tcToStr(tCusCompany));
+        c.setReligion(UIEty.cmbtostr(tCusReligion));
+        c.setType(UIEty.cmbtostr(tCusType));
+        c.setDiscount(UIEty.tcToDble0(tCusDiscount));
+        c.setCreditLimit(UIEty.tcToDble0(tCusCreditLimit));
+        c.setSalesRep(UIEty.cmbtostr(tCusSalesRep));
+        c.setLoyaltyCardNo(UIEty.tcToStr(tCusLoyalty));
+        c.setNicno(UIEty.tcToStr(tCusNIC));
+        c.setAddress(UIEty.tcToStr(tCusAdd1));
+        c.setAddress2(UIEty.tcToStr(tCusAdd2));
+        c.setCity(UIEty.tcToStr(tCusCity));
+        c.setPhone(UIEty.tcToStr(tCusPhone));
+        c.setMobile(UIEty.tcToStr(tCusMobile));
+        c.setEmail(UIEty.tcToStr(tCusEmail));
+
         return c;
-   
+
     }
-    
+
 
 
     public void  clear(){

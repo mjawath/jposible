@@ -17,12 +17,11 @@ import org.components.windows.SearchQueryUIPanel;
  *
  * @author Jawad
  */
-public class CustomerSUI extends  SearchQueryUIPanel {
+public class SupplierSUI extends  SearchQueryUIPanel {
     /**
      * Creates new form CustomerSUI
      */
-    public CustomerSUI() {
-//        super();
+    public SupplierSUI() {
         initComponents();
     }
 
@@ -40,10 +39,7 @@ public class CustomerSUI extends  SearchQueryUIPanel {
         }));
     }
 
-    
-    
-    
-    
+          
     public Map<String, Object> getQueryParameterMap() {
         Map<String, Object> p = new HashMap<>();
         String text = ttSearch.getText();
@@ -63,7 +59,6 @@ public class CustomerSUI extends  SearchQueryUIPanel {
     }
     
     public String getAttribute() {
-        if(tAttribute==null || tAttribute.getSelectedItem()==null)return "code";
         return ((SearchAttributeModel)tAttribute.getSelectedItem()).getAttribute();
     }
     
@@ -137,7 +132,7 @@ public class CustomerSUI extends  SearchQueryUIPanel {
 
     private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
     
-        ((CustomerController)controller).executeSearchForCustom();      
+        ((SupplierController)controller).executeSearchForCustom();      
         
     }//GEN-LAST:event_tbtnSearchActionPerformed
     

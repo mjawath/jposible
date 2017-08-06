@@ -17,12 +17,12 @@ public class CustomerListUi extends MasterViewUI<Customer> {
 
     
     public CustomerListUi() {
-        initComponents();
-        init();
+//        init();
     }
     
     @Override
     public void init() {
+        initComponents();
         listUI = customerLV1;
         searchQueryUI = customerSUI1;
         super.init();
@@ -44,7 +44,7 @@ public class CustomerListUi extends MasterViewUI<Customer> {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(customerLV1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(customerSUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+            .addComponent(customerSUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 1128, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

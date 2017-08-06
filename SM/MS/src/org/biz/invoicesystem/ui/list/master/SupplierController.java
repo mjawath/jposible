@@ -24,8 +24,9 @@ public class SupplierController extends UIController<Supplier>{
 
     public void initUI() {
 
-        SupplerDetailUI cf = new SupplerDetailUI();
-//        setUIFrame(cf);
+        SupplierFrame cf = new SupplierFrame();
+        cf.init();
+        setUIFrame(cf);
 //        
     }
 }

@@ -3,28 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.biz.invoicesystem.ui.list.master;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import org.biz.app.ui.util.StringUtility;
 import org.components.parent.controls.editors.SearchAttributeModel;
 import org.components.windows.SearchQueryUIPanel;
 
 /**
  *
- * @author Jawad
+ * @author jawa
  */
-public class CustomerSUI extends  SearchQueryUIPanel {
+public class SupplierSEUI extends SearchQueryUIPanel {
+
     /**
-     * Creates new form CustomerSUI
+     * Creates new form SupplierSEUI
      */
-    public CustomerSUI() {
-//        super();
+    public SupplierSEUI() {
         initComponents();
     }
+
 
     @Override
     protected void init() {        
@@ -40,58 +37,15 @@ public class CustomerSUI extends  SearchQueryUIPanel {
         }));
     }
 
-    
-    
-    
-    
-    public Map<String, Object> getQueryParameterMap() {
-        Map<String, Object> p = new HashMap<>();
-        String text = ttSearch.getText();
-        if(StringUtility.isEmptyString(text))return p;
-        Object selectedItem = tAttribute.getSelectedItem();
-        if(selectedItem!=null){
-            p.put(((SearchAttributeModel)selectedItem).getAttribute()," like "+text + "%");
-        }
-        return p;
-    }
-    public boolean getTxtSelectByStart(){
-        return tchkselect.isSelected();
-    }
-    
-    public String getSearchTextFieldValue(){
-        return ttSearch.getText();
-    }
-    
-    public String getAttribute() {
-        if(tAttribute==null || tAttribute.getSelectedItem()==null)return "code";
-        return ((SearchAttributeModel)tAttribute.getSelectedItem()).getAttribute();
-    }
-    
-    
-//    public Long executeCountQuery() {
-//        return controller.getService().getCountByCodeLike(ttSearch.getText());
-//
-//    }
-//
-//    public List executeQuery(int page) {
-//        String txt = ttSearch.getText();
-//        final List byCodeLike = controller.getService().getByCodeLike(page, txt);
-//        return byCodeLike;
-//    }
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         ttSearch = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         tbtnSearch = new javax.swing.JButton();
         tchkselect = new org.components.controls.CCheckBox();
         tAttribute = new org.components.controls.CComboBox();
-
-        jButton1.setText("jButton1");
 
         jLabel1.setText("Search by Customer Code /Name ");
 
@@ -131,22 +85,18 @@ public class CustomerSUI extends  SearchQueryUIPanel {
                     .addComponent(tbtnSearch)
                     .addComponent(tchkselect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tAttribute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
-    
-        ((CustomerController)controller).executeSearchForCustom();      
-        
+
+        ((SupplierController)controller).executeSearchForCustom();
+
     }//GEN-LAST:event_tbtnSearchActionPerformed
-    
-     
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private org.components.controls.CComboBox tAttribute;
     private javax.swing.JButton tbtnSearch;

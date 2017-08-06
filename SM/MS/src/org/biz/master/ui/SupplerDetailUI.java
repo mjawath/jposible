@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
+import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.service.master.SupplierService;
 import org.components.windows.DetailPanel;
@@ -17,21 +18,13 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
 
     SupplierService supplierService;
 
-    public SupplerDetailUI() {
-
-        super();
+    public SupplerDetailUI() {        
 
     }
 
     public void init() {
-        try {
-            super.init();
-            initComponents();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        initComponents();
+        super.init();
     }
 
 ///////////////////////////////////////////////////////
@@ -64,29 +57,9 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
     }
 ///////////////////////////////////////////////////
 
-    public Supplier uiToEntity(Supplier s) throws Exception {
+    public Supplier uiToEntity(Supplier s){
         try {
 
-
-//            s.setId(EntityService.getEntityService().getKey());
-            s.setCode(UIEty.tcToStr(tSuppId));
-            s.setTitle(UIEty.cmbtostr(tSuppTitle));
-            s.setName(UIEty.tcToStr(tSuppName));
-            s.setDob(cSuppDob.getDate());
-            s.setCurDate(new Date());
-            s.setCompany(UIEty.tcToStr(tSuppCompanyName));
-            s.setReligion(tSuppReligion.getSelectedItem() == null ? "" : tSuppReligion.getSelectedItem().toString());
-            s.setType(UIEty.cmbtostr(tSuppType));
-
-            s.setAddress1(UIEty.tcToStr(tSuppAddress1));
-            s.setAddress2(UIEty.tcToStr(tSuppAddress2));
-            s.setCity(UIEty.tcToStr(tSuppCity));
-
-            s.setPhone(UIEty.tcToStr(tSuppPhone));
-            s.setMobilePhone(UIEty.tcToStr(tSuppMobile));
-
-
-            s.setEmail(UIEty.tcToStr(tSuppEmail));
 
 
 
@@ -98,41 +71,61 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
         return s;
     }
 
-    public void entityToUi(Supplier s) throws Exception {
-        try {
-//   s.setId(EntityService.getEntityService().getKey(""));     
-            UIEty.objToUi(tSuppId, s.getCode());//  s.setCode(uiEty.tcToStr(tSuppId));
-            UIEty.objToUi(tSuppTitle, s.getTitle());    //  s.setTitle(uiEty.cmbtostr(tSuppTitle));
-            UIEty.objToUi(tSuppTitle, s.getTitle());//  s.setName(uiEty.tcToStr(tSuppName));
-            cSuppDob.setDate(s.getDob());//  s.setDob(cSuppDob.getDate());
-//  s.setCurDate(new Date());
-            UIEty.objToUi(tSuppCompanyName, s.getCompany());//  s.setCompany(uiEty.tcToStr(tSuppCompanyName));
-            UIEty.objToUi(tSuppReligion, s.getReligion());//  s.setReligion(tSuppReligion.getSelectedItem()==null?"":tSuppReligion.getSelectedItem().toString());
-            UIEty.objToUi(tSuppType, s.getType());//  s.setType(uiEty.cmbtostr(tSuppType));
-//
-            UIEty.objToUi(tSuppAddress1, s.getAddress1());//  s.setAddress1(uiEty.tcToStr(tSuppAddress1));
-            UIEty.objToUi(tSuppAddress2, s.getAddress2());//  s.setAddress2(uiEty.tcToStr(tSuppAddress2));
-            UIEty.objToUi(tSuppCity, s.getCity());//  s.setCity(uiEty.tcToStr(tSuppCity));
-//  
-            UIEty.objToUi(tSuppPhone, s.getPhone());//  s.setPhone(uiEty.tcToStr(tSuppPhone));
-            UIEty.objToUi(tSuppMobile, s.getMobilePhone());//  s.setMobilePhone(uiEty.tcToStr(tSuppMobile));
-//  
-//  
-            UIEty.objToUi(tSuppEmail, s.getEmail());//  s.setEmail(uiEty.tcToStr(tSuppEmail));
-//    
-
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
     public void clear() {
-        try {
-            entityToUi(new Supplier());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setDataToUI(new Supplier());
     }
+
+    @Override
+    public void setDataToUI(Supplier s) {
+        super.setDataToUI(s);
+        UIEty.objToUi(tSuppId, s.getCode());//  s.setCode(uiEty.tcToStr(tSuppId));
+        UIEty.objToUi(tSuppTitle, s.getTitle());    //  s.setTitle(uiEty.cmbtostr(tSuppTitle));
+        UIEty.objToUi(tSuppTitle, s.getTitle());//  s.setName(uiEty.tcToStr(tSuppName));
+        cSuppDob.setDate(s.getDob());//  s.setDob(cSuppDob.getDate());
+//  s.setCurDate(new Date());
+        UIEty.objToUi(tSuppCompanyName, s.getCompany());//  s.setCompany(uiEty.tcToStr(tSuppCompanyName));
+        UIEty.objToUi(tSuppReligion, s.getReligion());//  s.setReligion(tSuppReligion.getSelectedItem()==null?"":tSuppReligion.getSelectedItem().toString());
+        UIEty.objToUi(tSuppType, s.getType());//  s.setType(uiEty.cmbtostr(tSuppType));
+//
+        UIEty.objToUi(tSuppAddress1, s.getAddress1());//  s.setAddress1(uiEty.tcToStr(tSuppAddress1));
+        UIEty.objToUi(tSuppAddress2, s.getAddress2());//  s.setAddress2(uiEty.tcToStr(tSuppAddress2));
+        UIEty.objToUi(tSuppCity, s.getCity());//  s.setCity(uiEty.tcToStr(tSuppCity));
+//  
+        UIEty.objToUi(tSuppPhone, s.getPhone());//  s.setPhone(uiEty.tcToStr(tSuppPhone));
+        UIEty.objToUi(tSuppMobile, s.getMobilePhone());//  s.setMobilePhone(uiEty.tcToStr(tSuppMobile));
+//  
+//  
+        UIEty.objToUi(tSuppEmail, s.getEmail());//  s.setEmail(uiEty.tcToStr(tSuppEmail));
+    }
+
+    @Override
+    public Supplier uiToData() {
+        Supplier s = new Supplier();
+//            s.setId(EntityService.getEntityService().getKey());
+        s.setCode(UIEty.tcToStr(tSuppId));
+        s.setTitle(UIEty.cmbtostr(tSuppTitle));
+        s.setName(UIEty.tcToStr(tSuppName));
+        s.setDob(cSuppDob.getDate());
+        s.setCurDate(new Date());
+        s.setCompany(UIEty.tcToStr(tSuppCompanyName));
+        s.setReligion(tSuppReligion.getSelectedItem() == null ? "" : tSuppReligion.getSelectedItem().toString());
+        s.setType(UIEty.cmbtostr(tSuppType));
+
+        s.setAddress1(UIEty.tcToStr(tSuppAddress1));
+        s.setAddress2(UIEty.tcToStr(tSuppAddress2));
+        s.setCity(UIEty.tcToStr(tSuppCity));
+
+        s.setPhone(UIEty.tcToStr(tSuppPhone));
+        s.setMobilePhone(UIEty.tcToStr(tSuppMobile));
+
+        s.setEmail(UIEty.tcToStr(tSuppEmail));
+        return s;
+    }
+    
+
+    
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -172,27 +165,27 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
 
         cLabel6.setText("Address");
         add(cLabel6);
-        cLabel6.setBounds(360, 80, 63, 25);
+        cLabel6.setBounds(360, 140, 63, 25);
 
         tSuppType.setEditable(true);
         add(tSuppType);
-        tSuppType.setBounds(140, 160, 160, 23);
+        tSuppType.setBounds(140, 220, 160, 35);
 
         cLabel7.setText("City");
         add(cLabel7);
-        cLabel7.setBounds(360, 150, 31, 25);
+        cLabel7.setBounds(360, 210, 31, 25);
 
         cLabel2.setText("Supplier Code");
         add(cLabel2);
-        cLabel2.setBounds(10, 10, 239, 25);
+        cLabel2.setBounds(10, 70, 239, 25);
 
         cLabel8.setText("Phone");
         add(cLabel8);
-        cLabel8.setBounds(360, 190, 48, 25);
+        cLabel8.setBounds(360, 250, 48, 25);
 
         cLabel4.setText("Name ");
         add(cLabel4);
-        cLabel4.setBounds(330, 10, 119, 25);
+        cLabel4.setBounds(330, 70, 119, 25);
 
         tSuppName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,21 +193,21 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppName);
-        tSuppName.setBounds(330, 40, 275, 25);
+        tSuppName.setBounds(330, 100, 275, 27);
 
         cLabel3.setText("Title");
         add(cLabel3);
-        cLabel3.setBounds(260, 10, 40, 25);
+        cLabel3.setBounds(260, 70, 40, 25);
 
         tSuppTitle.setEditable(true);
         add(tSuppTitle);
-        tSuppTitle.setBounds(260, 40, 63, 23);
+        tSuppTitle.setBounds(260, 100, 63, 35);
         add(cSuppDob);
-        cSuppDob.setBounds(610, 40, 112, 22);
+        cSuppDob.setBounds(610, 100, 137, 27);
 
         cLabel5.setText("DOB");
         add(cLabel5);
-        cLabel5.setBounds(610, 10, 110, 25);
+        cLabel5.setBounds(610, 70, 110, 25);
 
         cClose.setText("Go to List");
         cClose.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +216,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(cClose);
-        cClose.setBounds(230, 210, 80, 40);
+        cClose.setBounds(230, 270, 80, 40);
 
         cSave.setText("Save");
         cSave.addActionListener(new java.awt.event.ActionListener() {
@@ -232,7 +225,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(cSave);
-        cSave.setBounds(40, 210, 29, 40);
+        cSave.setBounds(40, 270, 58, 40);
 
         cClear.setText("Clear");
         cClear.addActionListener(new java.awt.event.ActionListener() {
@@ -241,7 +234,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(cClear);
-        cClear.setBounds(100, 210, 29, 40);
+        cClear.setBounds(100, 270, 60, 40);
 
         cDelete.setText("Delete");
         cDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -250,7 +243,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(cDelete);
-        cDelete.setBounds(160, 210, 35, 40);
+        cDelete.setBounds(160, 270, 69, 40);
 
         tSuppAddress1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,7 +251,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppAddress1);
-        tSuppAddress1.setBounds(430, 80, 284, 25);
+        tSuppAddress1.setBounds(430, 140, 284, 27);
 
         tSuppAddress2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,7 +259,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppAddress2);
-        tSuppAddress2.setBounds(430, 110, 284, 25);
+        tSuppAddress2.setBounds(430, 170, 284, 27);
 
         tSuppCity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,7 +267,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppCity);
-        tSuppCity.setBounds(430, 150, 284, 25);
+        tSuppCity.setBounds(430, 210, 284, 27);
 
         tSuppPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -282,11 +275,11 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppPhone);
-        tSuppPhone.setBounds(430, 190, 284, 25);
+        tSuppPhone.setBounds(430, 250, 284, 27);
 
         cLabel9.setText("Mobile");
         add(cLabel9);
-        cLabel9.setBounds(360, 230, 48, 25);
+        cLabel9.setBounds(360, 290, 48, 25);
 
         tSuppMobile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,11 +287,11 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppMobile);
-        tSuppMobile.setBounds(430, 230, 284, 25);
+        tSuppMobile.setBounds(430, 290, 284, 27);
 
         cLabel10.setText("Email");
         add(cLabel10);
-        cLabel10.setBounds(360, 260, 48, 25);
+        cLabel10.setBounds(360, 320, 48, 25);
 
         tSuppEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,11 +299,11 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppEmail);
-        tSuppEmail.setBounds(430, 260, 284, 25);
+        tSuppEmail.setBounds(430, 320, 284, 27);
 
         cLabel12.setText("Company Name");
         add(cLabel12);
-        cLabel12.setBounds(20, 90, 119, 25);
+        cLabel12.setBounds(20, 150, 119, 25);
 
         tSuppCompanyName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,15 +311,15 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppCompanyName);
-        tSuppCompanyName.setBounds(139, 90, 190, 25);
+        tSuppCompanyName.setBounds(140, 150, 190, 27);
 
         cLabel13.setText("Type");
         add(cLabel13);
-        cLabel13.setBounds(20, 160, 119, 25);
+        cLabel13.setBounds(20, 220, 119, 25);
 
         tSuppReligion.setEditable(true);
         add(tSuppReligion);
-        tSuppReligion.setBounds(140, 130, 160, 23);
+        tSuppReligion.setBounds(140, 190, 160, 35);
 
         tSuppId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,11 +327,11 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             }
         });
         add(tSuppId);
-        tSuppId.setBounds(10, 40, 240, 25);
+        tSuppId.setBounds(10, 100, 240, 27);
 
         cLabel14.setText("Religion");
         add(cLabel14);
-        cLabel14.setBounds(20, 130, 119, 25);
+        cLabel14.setBounds(20, 190, 119, 25);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tSuppNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tSuppNameActionPerformed

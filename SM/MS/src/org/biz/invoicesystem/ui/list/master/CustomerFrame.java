@@ -21,7 +21,8 @@ public class CustomerFrame extends UIFrame {
     public CustomerFrame() {
         super();
         initComponents();
-        tabbedPane =  jTabbedPane1;
+        setTabbedPane(jTabbedPane1);
+        init();
     }
 
     public MasterViewUI getMaster() {
