@@ -44,11 +44,18 @@ public class ControlPanel extends javax.swing.JPanel {
     
     
     public void setClearAction(Action act){
-        btclear.setAction(act);
+        btnClear.setAction(act);
     
     }
+    public void setNewAction(Action act){
+        btnNew.setAction(act);
     
-       public void setDeleteAction(Action act){
+    }
+    public void setCopyAction(Action act){
+        btnCopy.setAction(act);    
+    }
+    
+    public void setDeleteAction(Action act){
         tdelete.setAction(act);
     
     }
@@ -77,12 +84,12 @@ public class ControlPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         btsave = new org.components.controls.CButton();
-        tclear = new org.components.controls.CButton();
-        btclear = new org.components.controls.CButton();
+        btnNew = new org.components.controls.CButton();
+        btnCopy = new org.components.controls.CButton();
         tprint = new org.components.controls.CButton();
         btgotoGrid = new org.components.controls.CButton();
         tdelete = new org.components.controls.CButton();
-        btclear1 = new org.components.controls.CButton();
+        btnClear = new org.components.controls.CButton();
 
         setLayout(null);
 
@@ -94,25 +101,25 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(btsave);
-        btsave.setBounds(0, 0, 60, 30);
+        btsave.setBounds(480, 0, 60, 30);
 
-        tclear.setText("Clear");
-        tclear.addActionListener(new java.awt.event.ActionListener() {
+        btnNew.setText("New");
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tclearActionPerformed(evt);
+                btnNewActionPerformed(evt);
             }
         });
-        add(tclear);
-        tclear.setBounds(140, 0, 70, 30);
+        add(btnNew);
+        btnNew.setBounds(410, 0, 70, 30);
 
-        btclear.setText("Copy");
-        btclear.addActionListener(new java.awt.event.ActionListener() {
+        btnCopy.setText("Copy");
+        btnCopy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btclearActionPerformed(evt);
+                btnCopyActionPerformed(evt);
             }
         });
-        add(btclear);
-        btclear.setBounds(280, 0, 70, 30);
+        add(btnCopy);
+        btnCopy.setBounds(10, 0, 70, 30);
 
         tprint.setText("Print");
         tprint.addActionListener(new java.awt.event.ActionListener() {
@@ -121,33 +128,34 @@ public class ControlPanel extends javax.swing.JPanel {
             }
         });
         add(tprint);
-        tprint.setBounds(350, 0, 70, 30);
+        tprint.setBounds(340, 0, 70, 30);
 
         btgotoGrid.setText("Goto Grid >");
         add(btgotoGrid);
-        btgotoGrid.setBounds(430, 0, 80, 30);
+        btgotoGrid.setBounds(240, 0, 100, 30);
 
         tdelete.setText("Delete");
         add(tdelete);
-        tdelete.setBounds(60, 0, 80, 30);
+        tdelete.setBounds(80, 0, 80, 30);
 
-        btclear1.setText("New");
-        btclear1.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btclear1ActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
-        add(btclear1);
-        btclear1.setBounds(210, 0, 70, 30);
+        add(btnClear);
+        btnClear.setBounds(160, 0, 70, 30);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearActionPerformed
-       
-    }//GEN-LAST:event_btclearActionPerformed
+    private void btnCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopyActionPerformed
+        System.out.println("coppy");
+        Thread.dumpStack();
+    }//GEN-LAST:event_btnCopyActionPerformed
 
-    private void tclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tclearActionPerformed
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         control.clear();// TODO add your handling code here:
-    }//GEN-LAST:event_tclearActionPerformed
+    }//GEN-LAST:event_btnNewActionPerformed
 
     private void tprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tprintActionPerformed
         // TODO add your handling code here:
@@ -157,16 +165,16 @@ public class ControlPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btsaveActionPerformed
 
-    private void btclear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclear1ActionPerformed
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btclear1ActionPerformed
+    }//GEN-LAST:event_btnClearActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.components.controls.CButton btclear;
-    private org.components.controls.CButton btclear1;
     private org.components.controls.CButton btgotoGrid;
+    private org.components.controls.CButton btnClear;
+    private org.components.controls.CButton btnCopy;
+    private org.components.controls.CButton btnNew;
     private org.components.controls.CButton btsave;
-    private org.components.controls.CButton tclear;
     private org.components.controls.CButton tdelete;
     private org.components.controls.CButton tprint;
     // End of variables declaration//GEN-END:variables

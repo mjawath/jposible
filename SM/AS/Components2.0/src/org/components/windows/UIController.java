@@ -6,6 +6,7 @@
 package org.components.windows;
 
 import com.components.custom.TextFieldWithPopUP;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
+import org.biz.util.ReflectionUtility;
 
 /**
  *
@@ -30,6 +32,12 @@ public class UIController<T> {
     protected MasterViewUI<T> listView;
     protected DetailPanel<T> detailView;
     protected UIFrame UIFrame;
+    private final Class businessClass;
+
+    public UIController() {
+            businessClass = ((Class)(((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+    }
+    
 
     public void setService(Service service) {
         this.service = service;
@@ -70,7 +78,7 @@ public class UIController<T> {
         listView = UIFrame.getMaster();
         setDetailView(detailView);
         setListView(listView, getQueryForPage());
-        detailView.config();
+//        detailView.config();
         UIFrame.revalidate();
         UIFrame.repaint();
         listView.setDetailPanel(detailView);
@@ -367,10 +375,14 @@ public class UIController<T> {
 
     }
 
-    private void clear() {
-
+    public void clear() {
     }
     
+    public void createNew() {
+        selectedBusObject = null;
+        currentBusObject = null;
+
+    }
     
     public void print(){
         //

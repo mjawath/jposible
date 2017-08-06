@@ -23,9 +23,9 @@ public class DefaultComboBoxCell extends CellRenderer{
     
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        JLabel lbl = new JLabel();//super.getListCellRendererComponent();new defaultce
+        String exvalue = (String) getText(value);
+        JLabel lbl = (JLabel) super.getListCellRendererComponent(list,exvalue,index,isSelected,cellHasFocus);//new defaultce
         
-        lbl.setText((String) getText(value));
         return lbl;
     }
 

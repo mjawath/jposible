@@ -10,6 +10,7 @@ import com.components.custom.FocusManager;
 import com.components.custom.IComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -24,6 +25,7 @@ import org.biz.app.ui.util.Command;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
+import org.biz.util.ReflectionUtility;
 import org.components.containers.CPanel;
 import org.components.parent.controls.PxTable;
 import org.components.util.ComponentFactory;
@@ -38,6 +40,8 @@ public class DetailPanel<T> extends TabPanelUI {
     protected T selectedObject;
     protected FocusManager focusManager;
     private UIController<T> controller;
+    private Class businessClass;
+    
 
     protected OAction delete = new OAction("Delete") {
 
@@ -78,6 +82,22 @@ public class DetailPanel<T> extends TabPanelUI {
 
         @Override
         public Object doBackgroundTask(Object... objs) {
+            
+            return null;
+
+        }
+
+        @Override
+        public void doResultTask(Object... objs) {
+           clearDetail();
+        }
+
+    };
+    
+    private OAction newAction = new OAction("New") {
+
+        @Override
+        public Object doBackgroundTask(Object... objs) {
             System.out.println("doBackgroundTask clear");
             return null;
 
@@ -85,12 +105,12 @@ public class DetailPanel<T> extends TabPanelUI {
 
         @Override
         public void doResultTask(Object... objs) {
-            System.out.println("doResultTask clearAction");
+            createNew();
         }
 
     };
     
-    private OAction printAction = new OAction("Clear") {
+    private OAction printAction = new OAction("Print") {
 
         @Override
         public Object doBackgroundTask(Object... objs) {
@@ -126,7 +146,8 @@ public class DetailPanel<T> extends TabPanelUI {
      */
     public DetailPanel() {
         super();
-
+        businessClass = ((Class)(((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+        System.out.println(businessClass);
     }
     
     public void requestFocusToFirst(){
@@ -188,8 +209,9 @@ public class DetailPanel<T> extends TabPanelUI {
          crudcontrolPanel.setSaveAction(saveAction);
          crudcontrolPanel.setDeleteAction(delete);
          crudcontrolPanel.setClearAction(clearAction);
-         
+         crudcontrolPanel.setNewAction(newAction);         
          crudcontrolPanel.setPrintAction(printAction);
+
          
          crudcontrolPanel.setGotoAction(gotoListAction);
            this.crudcontrolPanel.setCrudController(this);
@@ -362,8 +384,12 @@ public class DetailPanel<T> extends TabPanelUI {
     }
 
     public void setSelectedBusObj(T obj) {
-        this.selectedObject = obj;                
-        setDataToUI(obj);
+        this.selectedObject = obj;   
+        if(selectedObject!=null){
+            setDataToUI(obj);
+        }else{
+//            clear();
+        }
         
     }
     
@@ -372,10 +398,48 @@ public class DetailPanel<T> extends TabPanelUI {
         
     }
   
-    
+  /**
+   * clears the current selected busobjects properties;
+   */  
+    public void clearDetail() {
+        Object id =null;
+        if(selectedObject!=null && selectedObject instanceof BusObj){
+        id =((BusObj)selectedObject).getId();
+        busObject = (T)ReflectionUtility.getDynamicInstance(businessClass);
+        ((BusObj)busObject).setId((String) id);
+        }else{
+         busObject = (T) ReflectionUtility.getDynamicInstance(businessClass);
+      }
+        //        super.clear();
+        controller.currentBusObject =busObject;
+        
+        setDataToUI(busObject);
+    }
+        /**
+   * clears the current selected busobjects properties;
+   */  
     public void clear() {
-        selectedObject = null;
-        super.clear();
+        
+        if(busObject!=null){
+           busObject =  (T) ReflectionUtility.getDynamicInstance(businessClass);
+        }
+        selectedObject =null;
+        setDataToUI(busObject);
+
+        controller.currentBusObject =null;
+        controller.selectedBusObject = null;
+        
+      }
+        
+
+    
+    public void createNew() {
+        busObject =null;
+        selectedObject =null;
+        
+        controller.createNew();
+        T  busObject = (T)ReflectionUtility.getDynamicInstance(businessClass);
+        setDataToUI(busObject);
     }
 
     @Override
@@ -453,9 +517,9 @@ public class DetailPanel<T> extends TabPanelUI {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(750, Short.MAX_VALUE)
+                .addContainerGap(700, Short.MAX_VALUE)
                 .addComponent(crudcontrolPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(56, 56, 56))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

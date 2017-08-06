@@ -41,7 +41,7 @@ public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener
      * Creates new form ListViewPanel
      */
     public MasterViewUI() {
-        super();
+//        super();
 //        initComponents();
     }
 
@@ -55,6 +55,8 @@ public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener
         if (searchQueryUI != null) {
             searchQueryUI.setListView(listUI);
         }
+        searchQueryUI.init();
+        
     }
 
     @Override

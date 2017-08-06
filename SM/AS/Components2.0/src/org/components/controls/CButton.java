@@ -21,6 +21,7 @@ public class CButton extends PButton {
 
     /** Creates new form BeanForm */
     public CButton() {
+//        super();
         initComponents();
     }
 

@@ -30,25 +30,7 @@ public class UIFrame extends javax.swing.JFrame {
      * Creates new form UIFrame
      */
     public UIFrame() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        initComponents();
-//        setFocusTraversalPolicy(new MyFocusPolicy());
         
-        addWindowFocusListener(new WindowAdapter() {
-
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-                
-                //focus to first component                 
-                 if(tabbedPane!=null && tabbedPane.getSelectedComponent() instanceof CPanel){
-//                     ((CPanel)tabbedPane.getSelectedComponent()).requestFocus();
-                 } 
-                 
-            }
-        
-        });
-
     }
 
     
@@ -58,13 +40,7 @@ public class UIFrame extends javax.swing.JFrame {
     
     public void setTabbedPane(JTabbedPane pane){
        this.tabbedPane =  pane;
-       tabbedPane.addChangeListener(new ChangeListener() {
 
-           @Override
-           public void stateChanged(ChangeEvent e) {
-               
-           }
-       });
        
                tabbedPane.addChangeListener(new ChangeListener() {
 
@@ -105,6 +81,29 @@ public class UIFrame extends javax.swing.JFrame {
             }
 
         }
+    }
+    public void init(){
+            getDetail().config();
+            getMaster().config();
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        initComponents();
+//        setFocusTraversalPolicy(new MyFocusPolicy());
+        
+        addWindowFocusListener(new WindowAdapter() {
+
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                
+                //focus to first component                 
+                 if(tabbedPane!=null && tabbedPane.getSelectedComponent() instanceof CPanel){
+//                     ((CPanel)tabbedPane.getSelectedComponent()).requestFocus();
+                 } 
+                 
+            }
+        
+        });
+
     }
     
     
