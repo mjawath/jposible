@@ -120,6 +120,9 @@ public class ApplicationManager {
         MenuItem mii = new MenuItem("Master >  Item ", "org.biz.invoicesystem.ui.list.master.SKUController", 0, "Item SKU detail", "Item SKU detail");
         menuBuilder.createMenuItem(mii);
         
+        MenuItem mic = new MenuItem("Master >  Supplier  ", "org.biz.invoicesystem.ui.list.master.SupplierController", 0, "Supplier ", "Supplier");
+        menuBuilder.createMenuItem(mic);
+    
         MenuItem mi = new MenuItem("Transactions >  Sales ", "org.biz.ui.prototype.SalesInvoiceControler", 0, "Sales detail", "Sales detail");
         menuBuilder.createMenuItem(mi);
         
