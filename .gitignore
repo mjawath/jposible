@@ -21,3 +21,10 @@ nbproject
 /SM/AS/AppUtils/build.xml
 /SM/AS/Components2.0/Components2.0.iml
 encodings.xml
+/SM/IS/derby.properties
+/SM/lib/javaee-api-6.0/javaee-doc-api.jar
+/SM/IS/IS.iml
+/SM/lib/javaee-api-6.0/javaee-api-6.0.jar
+/SM/IS/drop.sql
+/SM/IS/create.sql
+/SM/IS/sampledb.sqlite
