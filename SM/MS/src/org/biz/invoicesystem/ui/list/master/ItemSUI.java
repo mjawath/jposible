@@ -17,29 +17,21 @@ import static org.components.windows.SearchQueryUIPanel.QRY;
  */
 public class ItemSUI extends  SearchQueryUIPanel {
 
-    
-//    public static final int Listview_searchUIType=0;
-//    public static final int POPUP_searchUIType=1;
-//    private int searchUIType= Listview_searchUIType;
-//    private ItemQueryManger iqm;
-    
-    
-      
-//    private ItemQueryManger iqm= new ItemQueryManger(this);
-    
     /**
      * Creates new form ItemSUI
      */
     public ItemSUI() {
-        super();
+//        super();
     }
 
   
     @Override
     protected void init() {        
 //        UIType = Listview_searchUIType;
-        super.init();
         initComponents();
+        super.init();
+        
+        
     }
     
     
@@ -52,6 +44,10 @@ public class ItemSUI extends  SearchQueryUIPanel {
     
     public boolean isOrderByCreationDate(){
         return tchkCreation.isSelected();
+    }
+    
+    public String getSearchTextFieldValue(){
+        return ttSearch.getText();
     }
     
     

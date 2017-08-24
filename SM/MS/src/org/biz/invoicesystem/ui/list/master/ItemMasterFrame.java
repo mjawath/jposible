@@ -23,9 +23,13 @@ public class ItemMasterFrame extends UIFrame {
      */
     public ItemMasterFrame() {
         super();
+        init();      
+    }
+    
+    public void init(){
         initComponents();
-
-        tabbedPane = tabbedPane1;        
+        setTabbedPane(tabbedPane1);
+        super.init();
     }
 
     public MasterViewUI getMaster() {

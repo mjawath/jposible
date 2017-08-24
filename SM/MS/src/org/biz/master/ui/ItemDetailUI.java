@@ -43,6 +43,7 @@ import org.biz.dao.util.EntityService;
 import org.biz.invoicesystem.dao.master.StaffDAO;
 import org.biz.invoicesystem.dao.master.SupplierDAO;
 import org.biz.invoicesystem.entity.master.Category;
+import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.ExtraSalesPrice;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.ItemBarcode;
@@ -1032,7 +1033,14 @@ public class ItemDetailUI extends DetailPanel<Item> {
     @Override
     public Item uiToData() {
         
-        Item item = new Item();//selectedObject;
+        Item item= null;
+        if(selectedObject == null){
+                item=new Item();
+        }else{
+            item =selectedObject;
+        }
+        
+      //selectedObject;
 //        item.setId(EntityService.getEntityService().getKey(""));
         item.setCode(UIEty.tcToStr(tItemcode));
         item.setDescription(UIEty.tcToStr(tItemDescription));
@@ -1091,7 +1099,7 @@ public class ItemDetailUI extends DetailPanel<Item> {
         tItemCategory.setSelectedObject(obj.getCategory());
         addUnitToTable(obj);
         loadImagesToPanel(obj.getCode());
-        selectedObject = obj;
+//        selectedObject = obj;
 
     }
 

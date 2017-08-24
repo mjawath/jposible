@@ -23,15 +23,15 @@ public class CustomerSUI extends  SearchQueryUIPanel {
      */
     public CustomerSUI() {
 //        super();
-        initComponents();
+//        initComponents();
     }
 
     @Override
     protected void init() {        
 //        UIType = Listview_searchUIType;
-        super.init();
         initComponents();
-        
+        super.init();
+      
         tAttribute.setAttribute("description");
         tAttribute.setCollection(Arrays.asList(new SearchAttributeModel[]{
             new SearchAttributeModel("Code", "code"),

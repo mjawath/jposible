@@ -31,9 +31,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         
     }
     
-    public void events() {
-        super.events();
-    }
+
 
     ///////////////////////////////////////////////  
     ///////////////////////////////////////////
@@ -62,36 +60,6 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-   public Customer uiToEntity(Customer c) throws Exception {
-        try {
-//            c.setId(EntityService.getEntityService().getKey(""));
-
-            c.setCode(UIEty.tcToStr(tCusCode));
-            c.setTitle(UIEty.cmbtostr(tCusTitle));
-            c.setCustomerName(UIEty.tcToStr(tCusName));
-            c.setDob(tCusDOB.getDate());
-            c.setCompanyName(UIEty.tcToStr(tCusCompany));
-            c.setReligion(UIEty.cmbtostr(tCusReligion));
-            c.setType(UIEty.cmbtostr(tCusType));
-            c.setDiscount(UIEty.tcToDble0(tCusDiscount));
-            c.setCreditLimit(UIEty.tcToDble0(tCusCreditLimit));
-            c.setSalesRep(UIEty.cmbtostr(tCusSalesRep));
-            c.setLoyaltyCardNo(UIEty.tcToStr(tCusLoyalty));
-            c.setNicno(UIEty.tcToStr(tCusNIC));
-            c.setAddress(UIEty.tcToStr(tCusAdd1));
-            c.setAddress2(UIEty.tcToStr(tCusAdd2));
-            c.setCity(UIEty.tcToStr(tCusCity));
-            c.setPhone(UIEty.tcToStr(tCusPhone));
-            c.setMobile(UIEty.tcToStr(tCusMobile));
-            c.setEmail(UIEty.tcToStr(tCusEmail));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-        return c;
     }
 
     public void setDataToUI(Customer obj) {
@@ -534,21 +502,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
          return this;
      }
      
-    public void setService(Service service) {
-        this.service = service;
-         cService= (CustomerService) service;
-                try {
 
-//            cService = new CustomerService();
-            //customers=new ArrayList<Customer>();
-            // customer=new Customer();
-
-            loadComboItems();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        init(); 
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;
     private org.components.controls.CLabel cLabel10;

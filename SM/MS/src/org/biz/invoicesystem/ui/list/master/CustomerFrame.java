@@ -20,9 +20,13 @@ public class CustomerFrame extends UIFrame {
      */
     public CustomerFrame() {
         super();
+        init();
+    }
+    
+    public void init(){
         initComponents();
         setTabbedPane(jTabbedPane1);
-        init();
+        super.init();
     }
 
     public MasterViewUI getMaster() {

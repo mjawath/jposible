@@ -16,7 +16,8 @@ import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.components.windows.TabPanelUI;
 
-public class ItemListUi extends TabPanelUI implements PagedListUI {
+@Deprecated
+public class ItemDepricatedListview extends TabPanelUI implements PagedListUI {
 
     private ItemService itemService;
     private ItemMasterTab mastertab;
@@ -24,7 +25,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
     int currentPageNo = 0;
     List<Item> items;
 
-    public ItemListUi() {
+    public ItemDepricatedListview() {
 //        
 //    init();
     }
@@ -184,7 +185,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         cPanel1.add(cItmDescription);
-        cItmDescription.setBounds(170, 30, 470, 25);
+        cItmDescription.setBounds(170, 30, 470, 27);
 
         tblItemList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -210,7 +211,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         tblItemList.setColumnSelectionAllowed(true);
-        tblItemList.setFont(new java.awt.Font("Tahoma", 0, 14));
+        tblItemList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblItemList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblItemListMouseClicked(evt);
@@ -223,12 +224,14 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
         });
         jScrollPane1.setViewportView(tblItemList);
         tblItemList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblItemList.getColumnModel().getColumn(0).setMinWidth(85);
-        tblItemList.getColumnModel().getColumn(0).setPreferredWidth(85);
-        tblItemList.getColumnModel().getColumn(0).setMaxWidth(85);
-        tblItemList.getColumnModel().getColumn(1).setMinWidth(200);
-        tblItemList.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tblItemList.getColumnModel().getColumn(1).setMaxWidth(200);
+        if (tblItemList.getColumnModel().getColumnCount() > 0) {
+            tblItemList.getColumnModel().getColumn(0).setMinWidth(85);
+            tblItemList.getColumnModel().getColumn(0).setPreferredWidth(85);
+            tblItemList.getColumnModel().getColumn(0).setMaxWidth(85);
+            tblItemList.getColumnModel().getColumn(1).setMinWidth(200);
+            tblItemList.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblItemList.getColumnModel().getColumn(1).setMaxWidth(200);
+        }
 
         cPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(20, 98, 760, 270);
@@ -276,7 +279,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         cPanel1.add(cButton1);
-        cButton1.setBounds(100, 60, 41, 23);
+        cButton1.setBounds(100, 60, 38, 27);
 
         cButton2.setText("<<");
         cButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -285,7 +288,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         cPanel1.add(cButton2);
-        cButton2.setBounds(40, 60, 49, 23);
+        cButton2.setBounds(40, 60, 48, 27);
 
         cButton3.setText(">>");
         cButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -294,7 +297,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         cPanel1.add(cButton3);
-        cButton3.setBounds(300, 60, 49, 23);
+        cButton3.setBounds(300, 60, 48, 27);
 
         tnextpage.setText(">");
         tnextpage.addActionListener(new java.awt.event.ActionListener() {
@@ -303,9 +306,9 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         cPanel1.add(tnextpage);
-        tnextpage.setBounds(250, 60, 41, 23);
+        tnextpage.setBounds(250, 60, 38, 27);
         cPanel1.add(cPageCount);
-        cPageCount.setBounds(150, 60, 90, 20);
+        cPageCount.setBounds(150, 60, 90, 27);
 
         cCopyItem.setText("Copy");
         cCopyItem.addActionListener(new java.awt.event.ActionListener() {
@@ -323,7 +326,7 @@ public class ItemListUi extends TabPanelUI implements PagedListUI {
             }
         });
         cPanel1.add(cButton5);
-        cButton5.setBounds(650, 30, 53, 23);
+        cButton5.setBounds(650, 30, 54, 27);
         cPanel1.add(cPaginatedPanel1);
         cPaginatedPanel1.setBounds(410, 60, 330, 30);
 

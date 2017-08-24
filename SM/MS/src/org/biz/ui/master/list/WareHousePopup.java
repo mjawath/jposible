@@ -20,22 +20,22 @@ public class WareHousePopup extends TextFieldWithPopUP<Warehouse>{
     
     public WareHousePopup(){
     
-        super();
-        initPopup(Warehouse.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code",
-                new PopupListner() {
-                    @Override
-                    public List searchItem(Object searchQry) {
-                        List items = WareHouseService.getDAO().getAll();
-                        return items;
-                    }
-
-                    @Override
-                    public Object[] getTableData(Object obj) {
-                        Warehouse item = (Warehouse) obj;
-                        return new Object[]{item, item.getId(), item.getCode()};
-                    }
-                });
-        System.out.println( " ");
+//        super();
+//        initPopup(Warehouse.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code",
+//                new PopupListner() {
+//                    @Override
+//                    public List searchItem(Object searchQry) {
+//                        List items = WareHouseService.getDAO().getAll();
+//                        return items;
+//                    }
+//
+//                    @Override
+//                    public Object[] getTableData(Object obj) {
+//                        Warehouse item = (Warehouse) obj;
+//                        return new Object[]{item, item.getId(), item.getCode()};
+//                    }
+//                });
+//        System.out.println( " ");
     }
 
 }

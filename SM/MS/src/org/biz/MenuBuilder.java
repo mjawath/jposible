@@ -38,7 +38,7 @@ public class MenuBuilder {
        
        JComponent parentCom = mb;
        for (int i = 0; i < arra.length; i++) {
-           String menuName = arra[i];
+           String menuName = arra[i].trim();
            parentCom = createMenuIfNot(menuName, parentCom);
        }
        

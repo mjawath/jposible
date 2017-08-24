@@ -19,8 +19,7 @@ public class ItemMasterUI extends MasterViewUI<Item> {
      * Creates new form ItemListUI
      */
     public ItemMasterUI() {
-        initComponents();
-        init();
+        super();
     }
 
     /**
@@ -52,8 +51,8 @@ public class ItemMasterUI extends MasterViewUI<Item> {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(itemSUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
                 .addComponent(itemLV1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -61,6 +60,7 @@ public class ItemMasterUI extends MasterViewUI<Item> {
 
     @Override
     public void init() {
+        initComponents();
         listUI = itemLV1;
         searchQueryUI = itemSUI1;
         super.init();       

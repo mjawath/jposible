@@ -25,7 +25,7 @@ public class ItemLV extends ListViewUI  {
     public ItemLV() {
         super();
         List<PTableColumn> tblCols = new ArrayList();
-        tblCols.add(new PTableColumn(Long.class, "ID"));
+        tblCols.add(new PTableColumn(String.class, "ID"));
         tblCols.add(new PTableColumn(String.class, "Code"));
 
         tblCols.add(new PTableColumn(String.class, "Description"));
