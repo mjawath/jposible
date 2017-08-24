@@ -22,10 +22,13 @@ public class PurchaseUI extends UIFrame {
      */
     public PurchaseUI() {
         super();
+        init();
+    }
+    
+    public void init() {
         initComponents();
-        tabbedPane = tabbedPane1;
-        
-
+        setTabbedPane(tabbedPane1);
+        super.init();
     }
 
     @Override
@@ -60,16 +63,11 @@ public class PurchaseUI extends UIFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1236, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(tabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(tabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

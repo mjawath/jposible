@@ -5,19 +5,15 @@
  */
 package org.biz.ui.prototype;
 
-import com.biz.system.ISProperties;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
-import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.StringUtility;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoice;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoiceLineItem;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
-import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.transactions.PurchaseInvoiceService;
-import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
 import org.components.windows.SearchQueryUIPanel;
 import org.components.windows.UIController;
 
@@ -52,7 +48,7 @@ public class PurchaseInvoiceControler extends UIController<PurchaseInvoice> {
     }
 
     public Long executeCount() {
-        SalesSearchUI ssui = (SalesSearchUI) listView.getSearchUI();
+        PurchaseSearchUI ssui = (PurchaseSearchUI) listView.getSearchUI();
         Map<String, Object> queryParameterMap = ssui.getQueryParameterMap();
 
         String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
@@ -67,36 +63,17 @@ public class PurchaseInvoiceControler extends UIController<PurchaseInvoice> {
 //        detailScreen.setDataToUI(si);
     }
 
-    public void onSalesInvoiceLineItemChanged(GridDataLineDetailUI lineDetailUI) {
-//        PurchaseInvoiceLineDetailTableUI salesLineUI = (PurchaseInvoiceLineDetailTableUI) lineDetailUI;
-//        PurchaseInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
-//        salesInvoiceLineItem.calculateLineItem();
-//        salesLineUI.setDataToUI(salesInvoiceLineItem);
-//        detailView.uiToData();
-//        currentBusObject.setTotal();
-//        ((PurchaseInvoiceUI) detailView).setVisualDataToUI(currentBusObject);
-    }
 
-    public void onSalesInvoiceLineItemQTYChanged(GridDataLineDetailUI lineDetailUI) {
-//        PurchaseInvoiceLineDetailUI salesLineUI = (PurchaseInvoiceLineDetailUI) lineDetailUI;
-//        PurchaseInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
-//        salesInvoiceLineItem.calculateLineItem();
-//        salesLineUI.setDataToUI(salesInvoiceLineItem);
-//        detailView.uiToData();
-//        currentBusObject.setTotal();
-//        ((PurchaseInvoiceUI) detailView).setVisualDataToUI(currentBusObject);
-//        salesLineUI.getPrice().requestFocus();
-    }
 
     public void onSalesInvoiceLineItemQTYChanged(PurchaseInvoiceLineDetailTableUI salesLineUI) {
         PurchaseInvoiceLineItem salesInvoiceLineItem = salesLineUI.panelToData();
         salesInvoiceLineItem.calculateLineItem();
         salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);
-//        SalesInvoice currentBusObject = detailView.uiToData();
+//        PurchaseInvoice currentBusObject = detailView.uiToData();
 //        currentBusObject.addOrUpdateLine(salesInvoiceLineItem);
 //        currentBusObject.setTotal();
 //        detailView.setVisualDataToUI(currentBusObject);
-//        salesLineUI.getPrice().requestFocus();
+//        salesLineUI.setFocusToPrice();
     }
 
     public void onSalesInvoiceLineItemDocChanged(PurchaseInvoiceLineDetailTableUI salesLineUI) {
@@ -137,16 +114,7 @@ public class PurchaseInvoiceControler extends UIController<PurchaseInvoice> {
         return salesLineUI;
     }
 
-    public void onSalesInvoiceLineItemPriceChanged(GridDataLineDetailUI lineDetailUI) {
-//        SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
-//        SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
-//        salesInvoiceLineItem.calculateLineItem();
-//        salesLineUI.setDataToUI(salesInvoiceLineItem);
-//        PurchaseInvoice currentBusObject = detailView.uiToData();
-//        currentBusObject.setTotal();
-//        ((SalesInvoiceDetailUI) detailView).setVisualDataToUI(currentBusObject);
-//        salesLineUI.getPrice().requestFocus();
-    }
+
 
     public void onSalesInvoiceDataChanged() {
         PurchaseInvoice currentBusObject = detailView.uiToData();

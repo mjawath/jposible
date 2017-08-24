@@ -6,10 +6,8 @@ package org.biz.erp.inventory.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.biz.app.ui.util.QueryManager;
-import org.biz.invoicesystem.entity.master.Item;
-import org.biz.invoicesystem.entity.master.UOM;
-import org.components.parent.controls.editors.TableInteractionListner;
+import org.biz.invoicesystem.entity.inventory.InventoryJournal;
+import org.components.parent.controls.PTableColumn;
 import org.components.windows.ListViewUI;
 
 /**
@@ -23,42 +21,13 @@ public class ItemSummeryLVUI extends ListViewUI {
      */
     public ItemSummeryLVUI() {
         super();
-    }
-    
-       @Override
-    public void initPaging(QueryManager qm) {
-//        initComponents();
-        setPaging(cPaginatedPanel1,tbl);        
-        super.initPaging(qm);    
-        tbl.init(Item.class, new Class[]{ String.class, String.class, String.class, Double.class, Double.class},
-                 new String[]{ "Code","Description ","UOM", "QTY", "QTYTest"});
-        tbl.setTableInteractionListner(tableInteractionListner);
+        List<PTableColumn> tblCols = new ArrayList();
+        tblCols.add(new PTableColumn(String.class, "ID"));
+        tblCols.add(new PTableColumn(String.class, "Code"));
+
+        getTable().init(InventoryJournal.class, tblCols);
         
     }
-    
-    
-    public void setValueToTable(List list){
-        for (int i = 0; i < list.size(); i++) {
-            Object object = list.get(i);
-            Double qty = (Double)((Object[]) object)[2];
-            tbl.setValueAt(qty, i, 5);//loop table column number is 5
-        }
-        // set value to table //may pass map of item and check item
-    }
-    
-    
-    private TableInteractionListner tableInteractionListner = new TableInteractionListner(){
-
-        @Override
-        public Object[] getTableData(Object row) {
-            Object [] item= (Object[])row;
-            Item it=(Item)item[0];
-            UOM uom=(UOM)item[1];
-            Double qty=(Double) item[2];
-            return new Object[]{it,it.getCode(),it.getDescription(),uom.getCode(),qty,0};
-        }
-    
-    };
      
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

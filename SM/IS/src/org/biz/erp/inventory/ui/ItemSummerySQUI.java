@@ -28,29 +28,15 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
     public ItemSummerySQUI() {
         super();
     }
+    
+    @Override
+    protected void init() {        
+//        UIType = Listview_searchUIType;
+        initComponents();
+        super.init();      
 
-    public void postInit(){
-        
-        initComponents();      
-        
-        super.postInit();
-        
-        qms=new QueryManagerx();
-        tfind.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                findAction();
-            }
-        });
-        
-        
-        
-        
-        
     }
-    
-    
+
     class QueryManagerx extends QueryManager {
 
         @Override
@@ -102,7 +88,7 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
                     }
 
                     List lst = new InventoryJournalService().getDao().getSummery("", "", str);
-                    ((ItemSummeryLVUI) listView).setValueToTable(lst);
+//                    ((ItemSummeryLVUI) listView).setValueToTable(lst);
                 }
 
             }.start();
@@ -122,20 +108,16 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
 
         titem = new org.components.controls.CTextField();
         jLabel1 = new javax.swing.JLabel();
-        tShop = new com.components.custom.TextFieldWithPopUP<Shop>();
+        tShop = new com.components.custom.TextFieldWithPopUP<>();
         jLabel2 = new javax.swing.JLabel();
         tfind = new org.components.controls.CButton();
         twarehouse = new org.biz.ui.master.list.WareHousePopup();
 
         jLabel1.setText("Warehouse");
 
-        tShop.setText("");
-
         jLabel2.setText("Shop");
 
         tfind.setText("Find");
-
-        twarehouse.setText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -155,8 +137,8 @@ public class ItemSummerySQUI extends SearchQueryUIPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(tShop, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(64, 64, 64)
-                                .addComponent(tfind, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(347, Short.MAX_VALUE))
+                                .addComponent(tfind, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -33,8 +33,8 @@ public class PuchaseInvoiceMasterUI extends MasterViewUI<PurchaseInvoice> implem
        
     @Override
     public void init() {
-        listUI = salesInvoiceListUI1;
-        searchQueryUI = salesSearchUI1;
+        listUI = invoiceListUI1;
+        searchQueryUI = SearchUI1;
         super.init();
 
     }
@@ -42,8 +42,8 @@ public class PuchaseInvoiceMasterUI extends MasterViewUI<PurchaseInvoice> implem
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        salesInvoiceListUI1 = new org.biz.ui.prototype.SalesInvoiceListUI();
-        salesSearchUI1 = new org.biz.ui.prototype.SalesSearchUI();
+        invoiceListUI1 = new org.biz.ui.prototype.PurchaseInvoiceListUI();
+        SearchUI1 = new org.biz.ui.prototype.PurchaseSearchUI();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -52,17 +52,17 @@ public class PuchaseInvoiceMasterUI extends MasterViewUI<PurchaseInvoice> implem
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(salesSearchUI1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(salesInvoiceListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(SearchUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(invoiceListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(salesSearchUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(salesInvoiceListUI1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                .addComponent(SearchUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(invoiceListUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -73,8 +73,8 @@ public class PuchaseInvoiceMasterUI extends MasterViewUI<PurchaseInvoice> implem
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.biz.ui.prototype.SalesInvoiceListUI salesInvoiceListUI1;
-    private org.biz.ui.prototype.SalesSearchUI salesSearchUI1;
+    private org.biz.ui.prototype.PurchaseSearchUI SearchUI1;
+    private org.biz.ui.prototype.PurchaseInvoiceListUI invoiceListUI1;
     // End of variables declaration//GEN-END:variables
     
   

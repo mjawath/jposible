@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -35,7 +36,7 @@ public class SalesInvoice extends BusObj {
     private Customer customer;
     @ManyToOne(fetch = FetchType.LAZY)
     private Staff staff;
-    @JoinColumn(name = "sales_invoice_id")
+    @JoinTable(name = "SALES_INVOICE_LINE_ITEM")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SalesInvoiceLineItem> lineItems;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

@@ -17,7 +17,7 @@ public class InventoryJournalListViewUI extends MasterViewUI<InventoryJournal> {
      * Creates new form InventoryJournalListViewUI
      */
     public InventoryJournalListViewUI() {
-        super();
+//        super();
         
     }
 

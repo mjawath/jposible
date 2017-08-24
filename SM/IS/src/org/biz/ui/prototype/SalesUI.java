@@ -6,14 +6,9 @@
 
 package org.biz.ui.prototype;
 
-import java.awt.Component;
-import java.awt.KeyboardFocusManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import org.biz.invoicesystem.ui.list.master.CustomerFrame;
 import org.components.windows.DetailPanel;
 import org.components.windows.MasterViewUI;
-import org.components.windows.MyFocusPolicy;
 import org.components.windows.UIFrame;
 
 /**
@@ -27,29 +22,17 @@ public class SalesUI extends UIFrame {
      */
     public SalesUI() {
         super();
-        initComponents();
-        tabbedPane = tabbedPane1;
-        
-        tabbedPane.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                System.out.println("tab changed");
-                if (tabbedPane.getSelectedComponent() instanceof DetailPanel) {
-                    KeyboardFocusManager currentKeyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-                    if (currentKeyboardFocusManager.getDefaultFocusTraversalPolicy() instanceof MyFocusPolicy) {
-                        Component com = ((DetailPanel) tabbedPane.getSelectedComponent()).gotoFirstComponent();
-                        if(com!=null)
-                        com.requestFocusInWindow();
-
-                    }
-
-//                    currentKeyboardFocusManager.downFocusCycle();
-                    System.out.println("detail panel selected");
-                }
-            }
-        });
         init();
+        
+    }
+    
+    public void init(){
+        initComponents();
+        
+        setTabbedPane(tabbedPane1);
+        super.init();
+
+
     }
 
     @Override

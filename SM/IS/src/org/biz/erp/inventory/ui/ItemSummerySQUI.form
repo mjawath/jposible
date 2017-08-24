@@ -31,12 +31,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="tShop" min="-2" pref="147" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="tfind" min="-2" pref="52" max="-2" attributes="0"/>
+                              <Component id="tfind" min="-2" pref="122" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="347" max="32767" attributes="0"/>
+              <EmptySpace pref="277" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,9 +75,6 @@
       </Properties>
     </Component>
     <Component class="com.components.custom.TextFieldWithPopUP" name="tShop">
-      <Properties>
-        <Property name="text" type="java.lang.String" value=""/>
-      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Shop&gt;"/>
       </AuxValues>
@@ -93,9 +90,6 @@
       </Properties>
     </Component>
     <Component class="org.biz.ui.master.list.WareHousePopup" name="twarehouse">
-      <Properties>
-        <Property name="text" type="java.lang.String" value=""/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

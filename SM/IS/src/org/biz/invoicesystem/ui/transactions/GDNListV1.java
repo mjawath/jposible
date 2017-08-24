@@ -23,13 +23,17 @@ public class GDNListV1 extends MasterViewUI<InventoryJournal> {
     }
   
     
-    
+
+        @Override
     public void init() {
-        super.init();
-        initComponents();
-        inventoryJournalListViewUI1.config();
-   
+        initComponents();      
+                
+//        listUI = inventoryJournalListViewUI1;
+//        searchQueryUI = inventoryJournalSearchUI1;
+        super.init(); 
+       
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

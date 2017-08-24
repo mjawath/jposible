@@ -64,7 +64,6 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         salesInvoiceLineDetailTableUI1.setTableContainer(tableContainer1);
         tableContainer1.addNewLineGotoNewLine();
 
-        salesInvoiceLineDetailTableUI1.setSalesInvoiceController(controllerSalesInvoice);
 
         ActionTask at = new ActionTask() {
 
@@ -109,9 +108,12 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
     public SalesInvoice uiToData() {
 
         //TODO- 
-//        if (busObject == null) {
-        SalesInvoice busObject = new SalesInvoice();
-//        }
+        SalesInvoice busObject=null;
+        if(selectedObject == null){
+             busObject = new SalesInvoice();
+        }else{
+                busObject =selectedObject;
+        }
 //        busObject.setCode(UIEty.tcToStr(cCode));
         busObject.setInvNo(UIEty.tcToStr(cInvNo));
         busObject.setTexPer(UIEty.tcToDouble(ttaxPercen));
@@ -129,6 +131,8 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         super.setController(controller);
         controllerSalesInvoice = (SalesInvoiceControler) controller;
         busObject = controllerSalesInvoice.getCurrentBusObject();
+        salesInvoiceLineDetailTableUI1.setSalesInvoiceController(controllerSalesInvoice);
+
     }
 
     @Override

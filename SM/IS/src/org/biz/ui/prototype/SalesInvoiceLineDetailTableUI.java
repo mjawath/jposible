@@ -221,7 +221,7 @@ public class SalesInvoiceLineDetailTableUI extends TableRowDetail  {
     public void setTableContainer(TableContainer tableContainer) {
         super.setTableContainer(tableContainer);
         List<PTableColumn> tblCols = new ArrayList();
-        final PTableColumn ptc1 = new PTableColumn(Long.class, "ID");        
+        final PTableColumn ptc1 = new PTableColumn(String.class, "ID");        
         tblCols.add(ptc1);        
         PTableColumn colcode = new PTableColumn(String.class, "Code");
         colcode.setMinWidth(150);

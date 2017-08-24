@@ -25,7 +25,7 @@ import org.components.windows.UIController;
  */
 public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
         
-    private PurchaseInvoiceControler sic;
+    private PurchaseInvoiceControler controller;
     private PurchaseInvoiceLineItem salesLine = new PurchaseInvoiceLineItem();
     
 
@@ -47,7 +47,7 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
   
     
     public void setSalesInvoiceController(UIController  con ){
-        sic = (PurchaseInvoiceControler) con;        
+        controller = (PurchaseInvoiceControler) con;        
     }
    
    
@@ -182,7 +182,7 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
 
             @Override
             public Component actionFired(Object source) {
-//                sic.onSalesInvoiceLineItemQTYChanged(PurchaseInvoiceLineDetailTableUI.this);
+               controller .onSalesInvoiceLineItemQTYChanged(PurchaseInvoiceLineDetailTableUI.this);
                 return tPrice;
             }
         });
@@ -192,7 +192,7 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
 
             @Override
             public Component actionFired(Object source) {
-                final JComponent onSalesInvoiceLineItemPriceChanged = sic.onSalesInvoiceLineItemPriceChanged(PurchaseInvoiceLineDetailTableUI.this);
+                JComponent onSalesInvoiceLineItemPriceChanged = controller.onSalesInvoiceLineItemPriceChanged(PurchaseInvoiceLineDetailTableUI.this);
                 
                 //create the line item 
                 // is this line item valid ?
@@ -221,7 +221,7 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
     public void setTableContainer(TableContainer tableContainer) {
         super.setTableContainer(tableContainer);
         List<PTableColumn> tblCols = new ArrayList();
-        final PTableColumn ptc1 = new PTableColumn(Long.class, "ID");        
+        final PTableColumn ptc1 = new PTableColumn(String.class, "ID");        
         tblCols.add(ptc1);        
         PTableColumn colcode = new PTableColumn(String.class, "Code");
         colcode.setMinWidth(150);
@@ -269,7 +269,7 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
      private class MyCalculator extends ActionTask{
         
         public void actionCall() {            
-            sic.onSalesInvoiceLineItemDocChanged(PurchaseInvoiceLineDetailTableUI.this);
+            controller.onSalesInvoiceLineItemDocChanged(PurchaseInvoiceLineDetailTableUI.this);
         }
         
     } 
@@ -277,7 +277,7 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
    
      
     public void onRemoveLineItem(Object selectedObject) {
-        sic.onRemoveLineItem((PurchaseInvoiceLineItem)selectedObject);
+        controller.onRemoveLineItem((PurchaseInvoiceLineItem)selectedObject);
     } 
 
     public Object[] getTableData(Object row) {
@@ -299,7 +299,7 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
     
     public void clearAll() {
         super.clearAll();
-        sic.clearTableUI();
+        controller.clearTableUI();
         
     }
 
@@ -336,6 +336,10 @@ public class PurchaseInvoiceLineDetailTableUI extends TableRowDetail  {
         }
         
         return true;
+    }
+    
+    public void setFocusToPrice(){
+        tPrice.requestFocus();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

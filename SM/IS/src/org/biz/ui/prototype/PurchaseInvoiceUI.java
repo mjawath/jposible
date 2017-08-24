@@ -10,7 +10,7 @@ import com.components.custom.ActionTask;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import org.biz.app.ui.util.UIEty;
-import org.biz.invoicesystem.entity.master.Customer;
+import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoice;
 import org.biz.invoicesystem.ui.list.master.SupplierController;
 import org.components.util.ComponentFactory;
@@ -29,7 +29,7 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
      * Creates new form PurchaseInvoiceUI
      */
     public PurchaseInvoiceUI() {
-        initComponents();
+//        initComponents();
     }
 
     
@@ -47,9 +47,9 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
 
             @Override
             public void actionCall() {
-                Customer customer = (Customer) tpopCustomer.getSelectedObject();
-                taddress.setText((customer).getAddress());
-                tname.setText(customer.getCustomerName());
+                Supplier customer = (Supplier) tpopCustomer.getSelectedObject();
+                taddress.setText((customer).getAddress1());
+                tname.setText(customer.getName());
             }
 
         });
@@ -64,7 +64,7 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
         purchaseInvoiceLineDetailTableUI1.setTableContainer(tableContainer1);
         tableContainer1.addNewLineGotoNewLine();
 
-        purchaseInvoiceLineDetailTableUI1.setSalesInvoiceController(invoiceControler);
+//        purchaseInvoiceLineDetailTableUI1.setSalesInvoiceController(invoiceControler);
 
         ActionTask at = new ActionTask() {
 
@@ -94,7 +94,7 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
         ttaxPercen.setValueIfNotFocused(object.getTexPer());
         tDiscountPer.setValueIfNotFocused(object.getDiscountPer());
         tdiscAmount.setValueIfNotFocused(object.getDiscount());
-        UIEty.objToUi(tlblTotal, object.getTotal());
+        UIEty.objToUi(tlblTotal, object.getFinalTotal());
         tableContainer1.setCollection(object.getLineItems());
 
 //        super.setDataToUI(object);
@@ -107,11 +107,8 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
     }
 
     public PurchaseInvoice uiToData() {
-
-        //TODO- 
-//        if (busObject == null) {
-        PurchaseInvoice busObject = new PurchaseInvoice();
-//        }
+        busObject =super.uiToData();
+       
 //        busObject.setCode(UIEty.tcToStr(cCode));
         busObject.setRefNo(UIEty.tcToStr(cInvNo));
         busObject.setTexPer(UIEty.tcToDouble(ttaxPercen));
@@ -119,7 +116,7 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
         busObject.setDiscountPer(UIEty.tcToDouble(tDiscountPer));
         busObject.setDiscount(UIEty.tcToDouble(tdiscAmount));
         busObject.setLineItems(tableContainer1.getlistBusObject());
-//        busObject.setTotal();
+        busObject.setTotal();
 //        busObject.calculateBalance();
         return busObject;
     }
@@ -129,6 +126,7 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
         super.setController(controller);
         invoiceControler = (PurchaseInvoiceControler) controller;
         busObject = invoiceControler.getCurrentBusObject();
+        purchaseInvoiceLineDetailTableUI1.setSalesInvoiceController(controller);
     }
 
     @Override
@@ -445,7 +443,7 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -456,7 +454,7 @@ public class PurchaseInvoiceUI extends DetailPanel<PurchaseInvoice> {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(cPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(8, Short.MAX_VALUE))
+                        .addContainerGap(14, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

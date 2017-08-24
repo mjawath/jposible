@@ -46,7 +46,7 @@ import org.components.windows.DetailPanel;
      * Creates new form InventoryJournalUI
      */
     public InventoryJournalUI() {
-        super();
+//        super();
     }
 
     @Override
@@ -55,21 +55,21 @@ import org.components.windows.DetailPanel;
         super.init();
         initLineItemTablePanel();
 
-        twarehouse.initPopup(Warehouse.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code",
-                new PopupListner() {
-            @Override
-            public List searchItem(Object searchQry) {
-                List items = wser.getDao().getAll();
-                return items;
-            }
-
-            @Override
-            public Object[] getTableData(Object obj) {
-                Warehouse item = (Warehouse) obj;
-                return new Object[]{item, item.getId(), item.getCode()};
-            }
-        });
-
+//        twarehouse.initPopup(Warehouse.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code",
+//                new PopupListner() {
+//            @Override
+//            public List searchItem(Object searchQry) {
+//                List items = wser.getDao().getAll();
+//                return items;
+//            }
+//
+//            @Override
+//            public Object[] getTableData(Object obj) {
+//                Warehouse item = (Warehouse) obj;
+//                return new Object[]{item, item.getId(), item.getCode()};
+//            }
+//        });
+//
 
 
         setTabOrder();
@@ -439,7 +439,7 @@ import org.components.windows.DetailPanel;
 
         lineDetailPanel = new org.components.containers.CPanel();
         tqty = new org.components.controls.CTextField();
-        tuom = new com.components.custom.TextFieldWithPopUP<UOM>();
+        tuom = new com.components.custom.TextFieldWithPopUP<>();
         cLabel5 = new org.components.controls.CLabel();
         cLabel6 = new org.components.controls.CLabel();
         cLabel7 = new org.components.controls.CLabel();
@@ -449,7 +449,7 @@ import org.components.windows.DetailPanel;
         gridControllerPanel1 = new com.components.custom.GridControllerPanel();
         tcode = new org.components.controls.CTextField();
         tdocref = new org.components.controls.CTextField();
-        tshop = new com.components.custom.TextFieldWithPopUP<Shop>();
+        tshop = new com.components.custom.TextFieldWithPopUP<>();
         ttransactionType = new org.components.controls.CComboBox();
         cLabel1 = new org.components.controls.CLabel();
         cLabel2 = new org.components.controls.CLabel();
@@ -463,9 +463,9 @@ import org.components.windows.DetailPanel;
         lineDetailPanel.setBackground(new java.awt.Color(153, 255, 0));
         lineDetailPanel.setLayout(null);
         lineDetailPanel.add(tqty);
-        tqty.setBounds(330, 20, 130, 25);
+        tqty.setBounds(320, 20, 130, 27);
         lineDetailPanel.add(tuom);
-        tuom.setBounds(190, 20, 130, 25);
+        tuom.setBounds(450, 20, 130, 25);
 
         cLabel5.setText("Item");
         lineDetailPanel.add(cLabel5);
@@ -479,7 +479,7 @@ import org.components.windows.DetailPanel;
         lineDetailPanel.add(cLabel7);
         cLabel7.setBounds(330, 0, 80, 20);
         lineDetailPanel.add(titem);
-        titem.setBounds(40, 20, 134, 25);
+        titem.setBounds(40, 20, 270, 25);
 
         add(lineDetailPanel);
         lineDetailPanel.setBounds(10, 40, 650, 60);
@@ -499,9 +499,9 @@ import org.components.windows.DetailPanel;
         add(gridControllerPanel1);
         gridControllerPanel1.setBounds(730, 110, 90, 230);
         add(tcode);
-        tcode.setBounds(30, 380, 150, 25);
+        tcode.setBounds(30, 380, 150, 27);
         add(tdocref);
-        tdocref.setBounds(190, 380, 150, 25);
+        tdocref.setBounds(190, 380, 150, 27);
         add(tshop);
         tshop.setBounds(200, 440, 150, 30);
 
@@ -526,9 +526,9 @@ import org.components.windows.DetailPanel;
         add(cLabel4);
         cLabel4.setBounds(10, 350, 104, 25);
         add(tdate);
-        tdate.setBounds(350, 380, 140, 22);
+        tdate.setBounds(350, 380, 140, 27);
         add(twarehouse);
-        twarehouse.setBounds(40, 440, 134, 25);
+        twarehouse.setBounds(40, 440, 270, 25);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

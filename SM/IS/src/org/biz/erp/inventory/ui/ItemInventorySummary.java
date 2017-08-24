@@ -10,6 +10,7 @@
  */
 package org.biz.erp.inventory.ui;
 
+import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.inventory.InventoryMonthlySummeryService;
 import org.components.windows.MasterViewUI;
@@ -18,13 +19,13 @@ import org.components.windows.MasterViewUI;
  *
  * @author Administrator
  */
-public class ItemInventorySummary extends MasterViewUI<Object> {
+public class ItemInventorySummary extends MasterViewUI<InventoryJournal> {
 
     private InventoryJournalService service;
     
     /** Creates new form ItemInventorySummary */
     public ItemInventorySummary() {
-        super();        
+//        super();        
     }
     
     
@@ -35,7 +36,7 @@ public class ItemInventorySummary extends MasterViewUI<Object> {
         searchQueryUI = itemSummerySQUI1;
         super.init();      
      
-      
+        setQueryMananger(controller.getQueryForPage());
         //set query manager for pagination
     }
 

@@ -24,6 +24,7 @@ import org.biz.DropMainMenu;
 import org.biz.MenuBuilder;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.Service;
+import org.biz.erp.inventory.ui.detail.InventoryJournalController;
 import org.biz.invoicesystem.ui.list.master.ItemMasterFrame;
 import org.biz.invoicesystem.ui.transactions.WareHouseFrame;
 import org.biz.util.ReflectionUtility;
@@ -136,6 +137,11 @@ public class ApplicationManager {
 
         MenuItem menuItemPurchase = new MenuItem("Transactions >  Purchase ", "org.biz.ui.prototype.PurchaseInvoiceControler", "PurchaseInvoiceControler", 1, "Purchase Detail Table", "menu of Purchase detail");
         menuBuilder.createMenuItem(menuItemPurchase);
+        
+        
+        
+        MenuItem menuItemItemSummery = new MenuItem("Master >  Item  ", InventoryJournalController.class.getName(), "InventoryJournalController", 1, "item summery Detail Table", "menu of Purchase detail");
+        menuBuilder.createMenuItem(menuItemItemSummery);
         
         JMenuBar mb = SystemUtil.getMenuBar();
         

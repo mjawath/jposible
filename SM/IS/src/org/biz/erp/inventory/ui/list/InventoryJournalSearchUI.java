@@ -4,10 +4,6 @@
  */
 package org.biz.erp.inventory.ui.list;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import org.biz.app.ui.util.QueryManager;
-import org.biz.dao.service.CQuery;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.components.windows.SearchQueryUIPanel;
@@ -22,44 +18,21 @@ public class InventoryJournalSearchUI  extends SearchQueryUIPanel {
      * Creates new form InventoryJournalSearchUI
      */
     public InventoryJournalSearchUI() {
-        super();
- 
+        super(); 
     }
 
-    public void postInit() {
+        @Override
+    protected void init() {        
+//        UIType = Listview_searchUIType;
         initComponents();
+        super.init();      
 
-        super.postInit();
-        qms = new QueryManagerx();
-
-        tfind.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                findAction();
-            }
-        });
     }
     
-    class QueryManagerx extends QueryManager {
-        
-        public CQuery getCQuery() {
-            if (getService() == null) {
-                return null;
-            }
+    public String getSearchTextFieldValue(){
+        return tfind.getText();//sku code
+    }
 
-            //get The date 
-
-
-            return getService().getDao().getAllQuery();
-        }
-
-       
-        public CQuery getCountQuery() {
-
-            return getService().getDao().getAllCountQuery();
-        }
-    };
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

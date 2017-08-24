@@ -5,7 +5,9 @@
 package org.biz.invoicesystem.entity.transactions;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Item;
 import org.biz.invoicesystem.entity.master.ItemBarcode;
@@ -20,10 +22,11 @@ import org.util.MathUtil;
  * @author mjawath
  */
 @Entity
+@Table(name="LINEITEM")
 public class SalesInvoiceLineItem extends BusObj  {
     
     private String description;
-    @OneToOne
+    @ManyToOne
     private Item item;//will be refectored with sku
     private Double qty;
     private String unit;
@@ -31,15 +34,15 @@ public class SalesInvoiceLineItem extends BusObj  {
     private Double lineAmount;
     private String itemMark;//this will be refectored with barcode
     
-    @OneToOne
+    @ManyToOne
     private Warehouse warehouse;
-    @OneToOne
+    @ManyToOne
     private Shop shop;
-    @OneToOne
+    @ManyToOne
     private UOM uom;
-    @OneToOne
+    @ManyToOne
     private SKU sku;
-    @OneToOne(optional = true)   
+    @ManyToOne(optional = true)   
     private ItemBarcode barcode;//
     
     

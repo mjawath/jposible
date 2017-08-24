@@ -6,22 +6,37 @@
 
 package org.biz.invoicesystem.ui.transactions;
 
+import org.components.windows.DetailPanel;
+import org.components.windows.MasterViewUI;
+import org.components.windows.UIFrame;
+
 /**
  *
  * @author Jawad
  */
-public class GRNFrame extends javax.swing.JFrame {
+public class GRNFrame extends UIFrame{
 
     /**
      * Creates new form GRNFrame
      */
     public GRNFrame() {
+      
+         super();
         initComponents();
-        setTitle("Good Dispatch Note");
-        gDNListV11.config();
-        gDNV11.config();
+        setTabbedPane(jTabbedPane1);
         
     }
+    
+    
+        
+    public MasterViewUI getMaster() {
+        return gDNListV11;
+    }
+
+    public DetailPanel getDetail() {
+        return gDNV11;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,40 +99,7 @@ public class GRNFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GRNFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GRNFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GRNFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GRNFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GRNFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.biz.invoicesystem.ui.transactions.GDNListV1 gDNListV11;

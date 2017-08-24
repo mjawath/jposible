@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -35,7 +36,7 @@ public class PurchaseInvoice extends BusObj {
     private static final long serialVersionUID = 1L;
     @ManyToOne
     private Supplier supplier;
-    @JoinColumn(name = "purchase_invoice_id")
+    @JoinTable(name = "PUCHASE_INVOICE_LINE_ITEM")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<PurchaseInvoiceLineItem> lineItems;
     @ManyToOne
