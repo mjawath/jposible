@@ -39,7 +39,7 @@ public class ListViewUI extends javax.swing.JPanel {
     }
     
     public void setResult(ResultPage resp){
-        tbl.setModelCollection((List)resp.getResult());
+        tbl.setModelCollection((List)resp.getResult());        
         tbl.selectFirst();
     }
 

@@ -396,8 +396,24 @@ public class PTextField extends javax.swing.JTextField implements IComponent {
      */
     public void setValue(Object val) {
         disableDocumentChangeEvent = true;
-        setText(val == null ? "" : val.toString());
+        setText(val == null ? "" : setFormat(val));
         disableDocumentChangeEvent = false;
+    }
+    
+    public String setFormat(Object val){
+        if(val instanceof Double){
+            Double dbl =(Double)val;
+            if(dbl%1 ==0){
+                NumberFormat numberFormat = NumberFormat.getNumberInstance();
+                numberFormat.setMinimumFractionDigits(0);
+                return numberFormat.format(dbl);
+            }else{
+            NumberFormat numberFormat = NumberFormat.getNumberInstance();
+                numberFormat.setMinimumFractionDigits(2);
+                return numberFormat.format(dbl);
+            }
+        }
+            return val.toString();
     }
 
     /**
@@ -410,13 +426,13 @@ public class PTextField extends javax.swing.JTextField implements IComponent {
             return;
         }
         disableDocumentChangeEvent = true;
-        setText(val == null ? "" : val.toString());
+        setText(val == null ? "" : setFormat(val));
         disableDocumentChangeEvent = false;
     }
 
     public void setValue(String val) {
         disableDocumentChangeEvent = true;
-        setText(val == null ? "" : val);
+        setText(val == null ? "" : setFormat(val));
         disableDocumentChangeEvent = false;
     }
 

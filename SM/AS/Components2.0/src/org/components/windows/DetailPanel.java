@@ -146,8 +146,6 @@ public class DetailPanel<T> extends TabPanelUI {
      */
     public DetailPanel() {
         super();
-        businessClass = ((Class)(((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
-        System.out.println(businessClass);
     }
     
     public void requestFocusToFirst(){
@@ -199,6 +197,16 @@ public class DetailPanel<T> extends TabPanelUI {
 //        ComponentFactory.setKeyAction(this, delete, KeyEvent.VK_ENTER);
         setCrudControl();
     }
+
+    @Override
+    public void init() {
+        businessClass = ((Class)(((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+        System.out.println(businessClass);
+        super.init();
+        
+    }
+    
+    
     
     public void setCrudControl(){
         crudcontrolPanel = new ControlPanel();
@@ -371,16 +379,19 @@ public class DetailPanel<T> extends TabPanelUI {
     }
 
     public T uiToData() {
-        return null;
+        if (selectedObject == null) {
+            busObject = (T) ReflectionUtility.getDynamicInstance(businessClass);
+        }else{
+            busObject =(T) ReflectionUtility.getClone(selectedObject);
+        }
+        return busObject;
     }
 
     public void setDataToUI(T obj) {
 //        controller.setBussinesObject(obj);                
-        try {
-            busObject = (T) BeanUtils.cloneBean(obj);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        
+        busObject = (T) ReflectionUtility.getClone(obj);
+        
     }
 
     public void setSelectedBusObj(T obj) {

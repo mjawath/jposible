@@ -34,7 +34,7 @@ public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
      * Creates new form SearchQueryUIPanel
      */
     public SearchQueryUIPanel() {
-        config();
+//        config();
 //        initComponents();    
     }
    

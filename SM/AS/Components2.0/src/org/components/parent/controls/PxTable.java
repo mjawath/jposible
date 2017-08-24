@@ -541,7 +541,8 @@ public class PxTable<T> extends JTable implements IComponent {
     
     
     public void selectFirst(){
-    changeSelection(0);
+        if(getRowCount()>0)
+            changeSelection(0);
     } 
 
     @Override

@@ -24,7 +24,7 @@ import org.components.containers.CPanel;
 public class UIFrame extends javax.swing.JFrame {
 
     
-    private UIController controller;
+    protected UIController controller;
     protected JTabbedPane tabbedPane;
     /**
      * Creates new form UIFrame
@@ -82,30 +82,30 @@ public class UIFrame extends javax.swing.JFrame {
 
         }
     }
-    public void init(){
-            getDetail().config();
-            getMaster().config();
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
+    public void init() {
+        getDetail().config();
+        getMaster().config();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        initComponents();
 //        setFocusTraversalPolicy(new MyFocusPolicy());
-        
+
         addWindowFocusListener(new WindowAdapter() {
 
             @Override
             public void windowGainedFocus(WindowEvent e) {
-                
+
                 //focus to first component                 
-                 if(tabbedPane!=null && tabbedPane.getSelectedComponent() instanceof CPanel){
+                if (tabbedPane != null && tabbedPane.getSelectedComponent() instanceof CPanel) {
 //                     ((CPanel)tabbedPane.getSelectedComponent()).requestFocus();
-                 } 
-                 
+                }
+
             }
-        
+
         });
 
     }
-    
+
     
     public MasterViewUI getMaster(){
     return null;

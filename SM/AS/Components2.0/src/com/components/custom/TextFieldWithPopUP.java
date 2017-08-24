@@ -454,6 +454,8 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
     }
 
     public void initPopup(Class cls, Class[] columnsType, String[] columns, String selectedProp, PopupListner listner) {
+        
+        if(pagedPopUpPanel==null)return;
         pagedPopUpPanel.setPoplistener(listner);
         pagedPopUpPanel.setTableType(cls);
         pagedPopUpPanel.setTitle(columnsType, columns);

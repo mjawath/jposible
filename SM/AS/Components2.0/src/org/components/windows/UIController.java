@@ -35,7 +35,7 @@ public class UIController<T> {
     private final Class businessClass;
 
     public UIController() {
-            businessClass = ((Class)(((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+        businessClass = ((Class)(((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
     }
     
 
@@ -74,6 +74,7 @@ public class UIController<T> {
 
     public void setUIFrame(UIFrame frame) {
         UIFrame = frame;
+        UIFrame.setController(this);
         detailView = UIFrame.getDetail();
         listView = UIFrame.getMaster();
         setDetailView(detailView);
