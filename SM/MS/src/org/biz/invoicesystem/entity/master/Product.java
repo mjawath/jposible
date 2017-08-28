@@ -22,7 +22,7 @@ public class Product implements Serializable {
     private String id;
     private String code;
     private String name;
-    @OneToOne
+    @ManyToOne
     private Category category;
 
     private String description;

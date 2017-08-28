@@ -108,7 +108,7 @@ public class UOM extends BusObj {
     }
 
     public boolean isPrimary() {
-        return type == UOMType.Primary.value;
+        return isPrimary;
     }
     
     public boolean isCarton() {
@@ -118,6 +118,7 @@ public class UOM extends BusObj {
     public void setIsPrimary(Boolean isPrimary) {
         this.isPrimary = isPrimary;
     }
+
 
     public byte getType() {
         return type;
