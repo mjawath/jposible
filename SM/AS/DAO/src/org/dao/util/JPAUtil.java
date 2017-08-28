@@ -137,7 +137,7 @@ public class JPAUtil {
         
         props.put(PersistenceUnitProperties.APP_LOCATION, ".");
 //        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_DATABASE_GENERATION);
-        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
+        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_OR_EXTEND);
 
         props.put(PersistenceUnitProperties.DEPLOY_ON_STARTUP, "true");
 

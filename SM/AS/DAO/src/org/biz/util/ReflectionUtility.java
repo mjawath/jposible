@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.lang.reflect.*;
 import java.util.*;
 import javax.swing.SwingWorker;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.jexl2.JexlEngine;
 import org.biz.app.ui.util.BizException;
 import org.biz.app.ui.util.StringUtility;
@@ -87,6 +88,16 @@ public class ReflectionUtility {
 //                     tpui = (TabPanelUI) Class.forName(cls.getName()).newInstance();
      
   }
+ 
+  public static Object getClone(Object obj){
+      try {
+          return BeanUtils.cloneBean(obj);
+      
+      } catch (Exception e) {
+      throw new RuntimeException(e);
+      }
+  }
+  
   /**
    * Invokes the Dynamic method on the Object
    *
