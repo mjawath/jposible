@@ -30,7 +30,7 @@ public class InventoryJournalSearchUI  extends SearchQueryUIPanel {
     }
     
     public String getSearchTextFieldValue(){
-        return tfind.getText();//sku code
+        return cTextField1.getText();//sku code
     }
 
     

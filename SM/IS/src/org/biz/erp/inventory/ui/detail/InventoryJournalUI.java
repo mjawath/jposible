@@ -87,15 +87,11 @@ import org.components.windows.DetailPanel;
     public void initLineItemTablePanel() {
         //Table init
         //table events
-        tblLine.init(InventoryJournalLine.class, new Class[]{Item.class, String.class, String.class, String.class},
-                new String[]{"Item", "Item desc", "UOM", "QTY"});
+//        tblLine.init(InventoryJournalLine.class, new Class[]{Item.class, String.class, String.class, String.class},
+//                new String[]{"Item", "Item desc", "UOM", "QTY"});
 
         tblLine.setTableInteractionListner(new TableInteractionListner() {
-            @Override
-            public boolean onBeforeRowSelectionChange() {
-//                if(tblLine.getSelectedObject()==null)return true;
-                return true;//isValidLine((InventoryJournalLine)tblLine.getSelectedObject());
-            }
+
 
             @Override
             public Object[] getTableData(Object row) {
@@ -116,54 +112,9 @@ import org.components.windows.DetailPanel;
 
 
 
-        //detailpanel init
-        //detail panel events
-        tuom.initPopup(Item.class, new Class[]{String.class, String.class},new String[]{"code", "desc"}, "code",
-                new PopupListner() {
-                    @Override
-                    public List searchItem(Object searchQry) {
-                        return itemser.getItemForPopup(tuom.getText());
-
-                    }
-
-                    @Override
-                    public Object[] getTableData(Object obj) {
-                        Item item = (Item) obj;
-                        return new Object[]{item, item.getCode(), item.getDescription()};
-                    }
-                });
-
-        tuom.initPopup(UOM.class, new Class[]{String.class}, new String[]{"code"}, "code", new PopupListner() {
-            @Override
-            public List searchItem(Object searchQry) {
-                return null;
-
-            }
-
-            @Override
-            public Object[] getTableData(Object obj) {
-                UOM item = (UOM) obj;
-                return new Object[]{item , item.getCode()};
-            }
-        });
-
-        tshop.initPopup(Shop.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code", new PopupListner() {
-            @Override
-            public List searchItem(Object searchQry) {
-
-                return shopservice.getDao().getAll();
-
-            }
-
-            @Override
-            public Object[] getTableData(Object obj) {
-                Shop item = (Shop) obj;
-                return new Object[]{item, item.getId(), item.getCode()};
-            }
-        });
         
         
-        tblLine.addNewToLast();
+//        tblLine.addNewToLast();
 
 
     }

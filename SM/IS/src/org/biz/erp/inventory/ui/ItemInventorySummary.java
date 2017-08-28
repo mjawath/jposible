@@ -10,7 +10,12 @@
  */
 package org.biz.erp.inventory.ui;
 
+import java.util.List;
+import org.biz.app.ui.util.QueryManager;
+import org.biz.erp.inventory.ui.detail.InventoryJournalController;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
+import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.inventory.InventoryMonthlySummeryService;
 import org.components.windows.MasterViewUI;
@@ -36,7 +41,7 @@ public class ItemInventorySummary extends MasterViewUI<InventoryJournal> {
         searchQueryUI = itemSummerySQUI1;
         super.init();      
      
-        setQueryMananger(controller.getQueryForPage());
+        setQueryMananger(((InventoryJournalController) controller).getQuerySummer());
         //set query manager for pagination
     }
 
@@ -59,29 +64,29 @@ public class ItemInventorySummary extends MasterViewUI<InventoryJournal> {
         cPaginatedPanel1.postInit(service, searchListener, tbl);
 
     }
-    
-    private QueryManager searchListener = new QueryManager() {
-//        @Override
-        public String getQuery() {
-
-                    Shop seleShop=tshop.getSelectedObject();
-        Warehouse warehouse=twarehouse.getSelectedObject();
-        List lst = service.getDao().getSummery(
-                seleShop==null?null: seleShop.getId(),warehouse==null?null:warehouse.getId());
-//        tbl.setModelCollection(lst);
-
-
-
-            String qry ="";// "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
-            return qry;
-        }
-
-//        @Override
-        public Object[] getParams() {
-            return new Object[]{ };
-        }
-    };
-    
+    */
+//    private QueryManager searchListener = new QueryManager() {
+////        @Override
+//        public String getQuery() {
+//
+//                    Shop seleShop=tshop.getSelectedObject();
+//            Warehouse warehouse=twarehouse.getSelectedObject();
+//        List lst = service.getDao().getSummery(
+//                seleShop==null?null: seleShop.getId(),warehouse==null?null:warehouse.getId());
+////        tbl.setModelCollection(lst);
+//
+//
+//
+//            String qry ="";// "  c.code " + " like " + " ?1 ";//" where c."+myfield+" "+ myoperator +" ?1 ";
+//            return qry;
+//        }
+//
+////        @Override
+//        public Object[] getParams() {
+//            return new Object[]{ };
+//        }
+//    };
+    /*
     private TableInteractionListner tableInteractionListner = new TableInteractionListner(){
 
         @Override

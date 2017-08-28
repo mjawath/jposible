@@ -7,6 +7,7 @@ package org.biz.erp.inventory.dao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -219,7 +220,43 @@ WHERE it.code LIKE 'xx%'
     
     public static void main(String[] args) {
         InventoryJournalDAO dao = new InventoryJournalDAO();
-        List lst = dao.getSummery("", "", Arrays.asList("09KL6DNYSSKOE3Z", "0DTSE5SPV7W7DCK",
-                "0YYXS1ODFIJQ0J3", "1393687695761-XQ", "1394248512343-U0"));
+
+        List test=dao.getSummeryOfItems(0);
+        long ctest=dao.getCountOfSummeryOfItems();
+        System.out.println("size "+test.size());
+        for (Object x : test) {
+            Object [] object = (Object[]) x;
+            System.out.println("  obj  sku "+object[0] +" uom  "+
+                    object[1]+ " sum " +object[2] );
+        }
+        System.out.println("=============");
+    }
+    
+    public List getSummeryOfItems(int pageNo){
+        
+        
+
+        String sel = " select  sku , uom  , sum(uom.id)  "
+                     + " from InventoryJournalLine  ijls left join ijls.sku as sku "
+                + "  left join ijls.uom as uom  ";
+        String qr = " group by  sku ,uom ,uom.id ";
+        List list = executeQuery(sel+qr);
+
+        return list;
+        
+    }
+    
+    public long getCountOfSummeryOfItems(){       
+        
+
+        String sel = " select   count(i)    "
+                     + " from InventoryJournalLine  ijls left join  ijls.sku.item i   ";
+//        String qr = " group by  i ,ijls.uom ";
+        
+//        String count = " select count(*) from  ( " + sel + " ) " ; 
+
+//        return (long)ExecuteQueryOb(sel);
+        return 1000;
+        
     }
 }

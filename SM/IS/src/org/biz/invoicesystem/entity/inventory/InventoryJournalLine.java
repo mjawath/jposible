@@ -6,9 +6,11 @@ package org.biz.invoicesystem.entity.inventory;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Item;
+import org.biz.invoicesystem.entity.master.SKU;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
@@ -18,7 +20,7 @@ import org.biz.invoicesystem.entity.master.Warehouse;
  * @author mjawath
  */
 @Entity
-public class InventoryJournalLine  extends BusObj implements Serializable {
+public class InventoryJournalLine  extends BusObj {
 
     private static final long serialVersionUID = 1L;
  
@@ -32,10 +34,13 @@ public class InventoryJournalLine  extends BusObj implements Serializable {
     @OneToOne
     private Warehouse warehouse;
     private String itemMark;    
-    @OneToOne
+    @ManyToOne
     private UOM uom;
     private Double price;
     private Double lineAmount;
+    
+    @ManyToOne
+    private SKU sku;
 
    
 
@@ -123,29 +128,15 @@ public class InventoryJournalLine  extends BusObj implements Serializable {
         this.warehouse = warehouse;
     }
 
-
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public SKU getSku() {
+        return sku;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof InventoryJournalLine)) {
-            return false;
-        }
-        InventoryJournalLine other = (InventoryJournalLine) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setSku(SKU sku) {
+        this.sku = sku;
     }
-    
-       
+
+   
     public boolean isValidLine() {
         
         if (getItem() == null || getUom() == null || getQty() == null || getQty()==0) {

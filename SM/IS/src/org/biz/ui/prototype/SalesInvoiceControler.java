@@ -12,6 +12,9 @@ import java.util.Map;
 import javax.swing.JComponent;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.StringUtility;
+import org.biz.invoicesystem.entity.inventory.InventoryJournal;
+import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
+import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.transactions.SalesInvoiceService;
@@ -78,6 +81,9 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
         SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
         salesInvoiceLineItem.calculateLineItem();
+        if(salesInvoiceLineItem.getUom() ==null && salesInvoiceLineItem.getSku()!=null){
+            salesInvoiceLineItem.setUom(salesInvoiceLineItem.getSku().getItem().getPrimaryUOM());
+        }
         salesLineUI.setDataToUI(salesInvoiceLineItem);
         detailView.uiToData();
         currentBusObject.setTotal();
@@ -122,6 +128,9 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
         ///get the current line and update it        
 
         SalesInvoiceLineItem selectedSL = (SalesInvoiceLineItem) salesLineUI.getSelectedLineObject();
+                if(salesInvoiceLineItem.getUom() ==null && salesInvoiceLineItem.getSku()!=null){
+            salesInvoiceLineItem.setUom(salesInvoiceLineItem.getSku().getItem().getPrimaryUOM());
+        }
         currentBusObject.addOrUpdateLine(selectedSL, salesInvoiceLineItem);
         currentBusObject.setTotal();
         /*if(this is a valid entry )
@@ -138,6 +147,9 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
         SalesInvoiceLineDetailUI salesLineUI = (SalesInvoiceLineDetailUI) lineDetailUI;
         SalesInvoiceLineItem salesInvoiceLineItem = salesLineUI.UIToData();
         salesInvoiceLineItem.calculateLineItem();
+           if(salesInvoiceLineItem.getUom() ==null && salesInvoiceLineItem.getSku()!=null){
+            salesInvoiceLineItem.setUom(salesInvoiceLineItem.getSku().getItem().getPrimaryUOM());
+        }
         salesLineUI.setDataToUI(salesInvoiceLineItem);
         SalesInvoice currentBusObject = detailView.uiToData();
         currentBusObject.setTotal();
@@ -197,7 +209,37 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
         //make updates to credit account
         System.out.println("sales invoice level preCreate");
 
+        InventoryJournal  ij = new InventoryJournal();
+        SalesInvoice sales = getCurrentBusObject();
+        ij.setDocRefNo(sales.getDocRefNo());
+        ij.setDocumentClass(sales.getClass().getSimpleName());
+//        ij.setDocumentType(docRefNo);umentClass(getCurrentBusObject().getClass().getSimpleName());
+        for (SalesInvoiceLineItem lineItem : sales.getLineItems()) {
+            InventoryJournalLine line = new InventoryJournalLine();
+            line.setSku(lineItem.getSku());
+            line.setQty(lineItem.getQty());
+            line.setUom(lineItem.getUom());            
+            ij.addIJLine(line);
+
+        }
+        toSave.add(ij);
 
     }
+
+    @Override
+    public void preSave(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+        final SalesInvoice sales = getCurrentBusObject();
+        for (SalesInvoiceLineItem lineItem : sales.getLineItems()) {
+            if(lineItem.getUom() == null && lineItem.getSku()!= null){
+                final UOM primaryUOM = lineItem.getSku().getItem().getPrimaryUOM();
+                lineItem.setUom(primaryUOM);
+                System.out.println("item uom set "+lineItem.getUom());
+            }
+        }
+        
+        super.preSave(toSave, toUpdate, toDelete); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }

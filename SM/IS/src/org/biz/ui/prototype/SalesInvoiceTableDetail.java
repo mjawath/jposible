@@ -112,7 +112,7 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         if(selectedObject == null){
              busObject = new SalesInvoice();
         }else{
-                busObject =selectedObject;
+             busObject =selectedObject;
         }
 //        busObject.setCode(UIEty.tcToStr(cCode));
         busObject.setInvNo(UIEty.tcToStr(cInvNo));

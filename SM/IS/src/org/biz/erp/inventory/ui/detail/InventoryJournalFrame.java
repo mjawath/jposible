@@ -5,8 +5,10 @@
  */
 package org.biz.erp.inventory.ui.detail;
 
+import javax.sound.midi.ControllerEventListener;
 import org.components.windows.DetailPanel;
 import org.components.windows.MasterViewUI;
+import org.components.windows.UIController;
 import org.components.windows.UIFrame;
 
 /**
@@ -31,9 +33,11 @@ public class InventoryJournalFrame extends  UIFrame {
       
     }
     //todo
-    public void initPAging(){
-        itemInventorySummary1.setController(controller);
+    public void initPAging(UIController con){
+        itemInventorySummary1.setController(con);
         itemInventorySummary1.init();
+//        itemInventorySummary1.setQueryMananger(((InventoryJournalController) con).getQuerySummer());
+
     }
     
     public MasterViewUI getMaster() {

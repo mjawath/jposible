@@ -7,6 +7,9 @@ package org.biz.erp.inventory.ui;
 import java.util.ArrayList;
 import java.util.List;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
+import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
+import org.biz.invoicesystem.entity.master.SKU;
+import org.biz.invoicesystem.entity.master.UOM;
 import org.components.parent.controls.PTableColumn;
 import org.components.windows.ListViewUI;
 
@@ -22,12 +25,29 @@ public class ItemSummeryLVUI extends ListViewUI {
     public ItemSummeryLVUI() {
         super();
         List<PTableColumn> tblCols = new ArrayList();
-        tblCols.add(new PTableColumn(String.class, "ID"));
-        tblCols.add(new PTableColumn(String.class, "Code"));
+        tblCols.add(new PTableColumn(String.class, "SKU"));
+        tblCols.add(new PTableColumn(String.class, "Item "));
+        tblCols.add(new PTableColumn(String.class, "UOM"));
+        tblCols.add(new PTableColumn(String.class, "QTY"));
 
-        getTable().init(InventoryJournal.class, tblCols);
+        getTable().init(InventoryJournalLine.class, tblCols);
         
     }
+
+    @Override
+    public Object[] getTableData(Object row) {
+        Object [] sum =(Object[])row;
+        SKU sumx = (SKU) sum[0];
+        UOM uom = (UOM)sum[1];
+        Double qty = (Double)sum[2];
+        String[] arra= new String[sum.length];
+        arra[0] = sumx !=null?sumx.getCode() :"";
+        arra[1] = uom !=null?uom.getCode() :"";
+        arra[2] = qty !=null? String.valueOf(qty) :"0";
+        return arra;
+    }
+    
+    
      
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
