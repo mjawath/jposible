@@ -11,7 +11,7 @@ import org.biz.invoicesystem.entity.master.Item;
 
 
     
-public class ItemService extends Service{
+public class ItemService extends Service<Item>{
     
     public  final static String qryName="item list search ";       
     public static ItemDAO dao=new ItemDAO();

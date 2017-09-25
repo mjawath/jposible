@@ -62,6 +62,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         }
     }
 
+    @Override
     public void setDataToUI(Customer obj) {
         this.selectedCus = obj;
         UIEty.objToUi(tCusCode, obj.getCode());

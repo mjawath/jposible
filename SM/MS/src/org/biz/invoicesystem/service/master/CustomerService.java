@@ -7,12 +7,13 @@ package org.biz.invoicesystem.service.master;
 
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.dao.master.CustomerDAO;
+import org.biz.invoicesystem.entity.master.Customer;
 
 /**
  *
  * @author mjawath
  */
-public class CustomerService extends Service {
+public class CustomerService extends Service<Customer>  {
     CustomerDAO dao;
 
     public CustomerService() {

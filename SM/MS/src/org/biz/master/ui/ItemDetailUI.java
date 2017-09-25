@@ -865,7 +865,7 @@ public class ItemDetailUI extends DetailPanel<Item> {
         return isuomvalid;
         }
         
-        Item item=service.getByCode(tItemcode.getText());
+        Item item=itemService.getByCode(tItemcode.getText());
         if(selectedObject==null && item!=null){
         MessageBoxes.infomsg(null, "Item already exist by this code", "Item already exist!");
             return false;
