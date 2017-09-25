@@ -211,18 +211,20 @@ public class GenericDAOUtil<T> {
         return "";
     } 
 
-    public static <T> void persistob(EntityManager em, Object ob) {
+    public static <T> T persistob(EntityManager em, T ob) {
         em.persist(ob);
+        em.flush();
+        return (T) ob;
     }
 
-    public static <T> void persist(EntityManager em, Object... ob) {
+    public static <T> void persist(EntityManager em, T... ob) {
 
-        for (Object obj : ob) {
+        for (T obj : ob) {
             persistob(em, obj);
         }
     }
 
-    public static <T> void save(Object... ob) {
+    public static <T> void save(T... ob) {
         EntityManager em = null;
         try {
             em = createEmNew();
@@ -251,7 +253,7 @@ public class GenericDAOUtil<T> {
 
     }
 
-    public static <T> void save(T ob) {
+    public static <T> T save(T ob) {
         EntityManager em = null;
         try {
 
@@ -263,10 +265,10 @@ public class GenericDAOUtil<T> {
 //                bb.setEditeddate(null);
 //                bb.setSaveddate(null);//get server date
             }
-            persist(em, ob);
+            T savedobj = persistob(em, ob);
 
             em.getTransaction().commit();
-
+            return savedobj;
         } catch (Exception e) {
             e.printStackTrace();
             if (em != null) {
@@ -282,6 +284,7 @@ public class GenericDAOUtil<T> {
 
             }
         }
+        return null;
     }
 
     public static <T> void saveList(List<T> ob) {
@@ -377,13 +380,14 @@ public class GenericDAOUtil<T> {
     }
     
     
-    public static <T> void update(T ob) {
+    public static <T> T update(T ob) {
         EntityManager em = null;
         try {
             em = createEmNew();
             em.getTransaction().begin();
             merge(em, ob);
             em.getTransaction().commit();
+            return ob;
 
         } catch (Exception e) {
             if (em != null) {
@@ -402,6 +406,8 @@ public class GenericDAOUtil<T> {
 
 
             }
+                    return null;
+
         }
     }
 

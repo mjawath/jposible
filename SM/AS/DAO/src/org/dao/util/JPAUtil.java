@@ -137,9 +137,12 @@ public class JPAUtil {
         
         props.put(PersistenceUnitProperties.APP_LOCATION, ".");
 //        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_DATABASE_GENERATION);
-        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_OR_EXTEND);
+        props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
 
-        props.put(PersistenceUnitProperties.DEPLOY_ON_STARTUP, "true");
+//        props.put(PersistenceUnitProperties.DEPLOY_ON_STARTUP, "true");
+props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
+//props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.BOTH);
+props.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "create.sql");
 
 //        props.put("eclipselink.ddl-generation", "create-or-extend-tables");
 //        props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);

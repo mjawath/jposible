@@ -17,6 +17,7 @@ import org.eclipse.persistence.annotations.UuidGenerator;
  */
 //@IdClass(value = PrimaryKey.class)
 @MappedSuperclass
+@UuidGenerator(name="UUID_GEN")
 public class BusObj implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)//these auditable datas can be put to emeded entity as one one relationship
@@ -31,8 +32,9 @@ public class BusObj implements Serializable {
 //        this.id = id;
     }
     @Id
-    @UuidGenerator(name="UUID")
-    @GeneratedValue(generator="UUID")
+//    @UuidGenerator(name="UUID")
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="UUID_GEN")
     protected String id;
 //    @Id    
 //    private Long genClass;

@@ -178,8 +178,8 @@ public class GenericDAO<T> {
     }
 
 //save a single object 
-    public void save(T ob) {
-        GenericDAOUtil.save(ob);
+    public T save(T ob) {
+        return GenericDAOUtil.save(ob);
     }
 
     //save list of items
@@ -209,8 +209,8 @@ public class GenericDAO<T> {
     }
 //may be used to update a database entity
 
-    public void update(T ob) {
-        GenericDAOUtil.update(ob);
+    public T update(T ob) {
+       return GenericDAOUtil.update(ob);
     }
 //may be used to merge objects
 
