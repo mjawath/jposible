@@ -34,7 +34,7 @@ import org.components.util.ComponentFactory;
  *
  * @author d
  */
-public class DetailPanel<T> extends TabPanelUI {
+public class DetailPanel<T extends BusObj> extends TabPanelUI {
 
     protected T busObject;
     protected T selectedObject;
@@ -383,7 +383,7 @@ public class DetailPanel<T> extends TabPanelUI {
             busObject = (T) ReflectionUtility.getDynamicInstance(businessClass);
         }else{
             busObject =(T) ReflectionUtility.getClone(selectedObject);
-        }
+        } 
         return busObject;
     }
 

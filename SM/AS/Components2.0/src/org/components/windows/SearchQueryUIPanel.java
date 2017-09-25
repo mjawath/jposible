@@ -11,6 +11,7 @@ import java.util.Map;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.UIListener;
 import org.biz.dao.service.Service;
+import org.biz.entity.BusObj;
 import org.components.parent.controls.editors.SearchAttributeModel;
 import org.components.test.ResultPage;
 
@@ -18,7 +19,7 @@ import org.components.test.ResultPage;
  *
  * @author jawath
  */
-public class SearchQueryUIPanel<T> extends javax.swing.JPanel{
+public class SearchQueryUIPanel<T extends BusObj> extends javax.swing.JPanel{
 
     protected QueryManager qms;
     protected ListViewUI listView;

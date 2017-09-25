@@ -18,13 +18,12 @@ import org.biz.app.ui.util.Tracer;
 import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
-import org.biz.util.ReflectionUtility;
 
 /**
  *
  * @author user
  */
-public class UIController<T> {
+public class UIController<T extends BusObj> {
 
     protected T selectedBusObject;
     protected T currentBusObject;
@@ -216,11 +215,7 @@ public class UIController<T> {
     }
 
     public ArrayList save() {
-        long x = System.currentTimeMillis();
-        ArrayList result = new ArrayList();
-        ArrayList toSave = new ArrayList();
-        ArrayList toDelete = new ArrayList();
-        ArrayList toUpdate = new ArrayList();
+        ArrayList resutls = new ArrayList();
 
         T busObject = (T) detailView.uiToData();
         currentBusObject = (T) busObject;
@@ -228,7 +223,7 @@ public class UIController<T> {
         if (!isValideEntity()) {//check for current business objects validity
             return null;
         }
-        preSave(toSave, toUpdate, toDelete);
+//        service.preSave(toSave, toUpdate, toDelete);
 
 //            if (toSave.isEmpty()) {
 //                Tracer.printToOut("no object found to Save");
@@ -240,27 +235,8 @@ public class UIController<T> {
         }
 
         if (selectedBusObject == null) {
-            Object id = ((BusObj) busObject).getId();//0 is the index of the main object , id is id property
 
-            System.out.println("find b" + (System.currentTimeMillis() - x));
-
-            Object obj = id == null ? null : service.getDao().find(id);
-
-            if (obj == null) {
-                //should retrieve new id and set to new objects
-
-                toSave.add(busObject);
-                preCreate(toSave, toUpdate, toDelete);
-                auditPersistenceData(toSave);
-                auditUpdatedData(toUpdate, GenericDAOUtil.currentTime());
-                Tracer.printToOut(" Object  is not found  So creation will be called");
-                service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                System.out.println("saved " + (System.currentTimeMillis() - x));
-
-                postCreate(toSave, toUpdate, toDelete);
-            } else {
-                Tracer.printToOut("Detail panel -> SaveX -> Bus Object ID logic has problem ,Not saved");
-            }
+              resutls.add(  service.save(busObject));
 
         } else {//update mode
             if (MessageBoxes.yesNo(detailView, "Current record already exist in the DATABASE Are you sure\n"
@@ -278,23 +254,14 @@ public class UIController<T> {
             } else if (id instanceof Long) {
 //                ((BusObj) busObject).setId((Long) id);
             }
-            toUpdate.add(busObject);
-            preUpdate(toSave, toUpdate, toDelete);
-            auditPersistenceData(toSave);
-            auditUpdatedData(toUpdate, ((BusObj) currentBusObject).getSavedDate());
-
-            Tracer.printToOut("Updation is called  Object  is  found");
-            service.getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-            postUpdate(toSave, toUpdate, toDelete);
+           
+           resutls.add(service.save(selectedBusObject));
         }
 
-        result.add(toSave);
-        result.add(toUpdate);
-        result.add(toDelete);
 
         //call some observer method
         Tracer.printToOut("Detail panel Save is successfully performed , result is returned, method is called using BT");
-        return result;
+        return resutls;
     }
 
     public void preCreate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
@@ -351,18 +318,15 @@ public class UIController<T> {
             MessageBoxes.infomsg(detailView, "Please select an item to delete ", "Nothing  to delete ");
             return;
         }
-        T exist = (T) service.getDao().find(((BusObj) selectedObject).getId());
-        if (exist == null) {
-            return;
-        }
+
         String[] ObjButtons = {"Yes", "No"};
         int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?",
                 "Delete Record", -1, 2, null, ObjButtons, ObjButtons[1]);
 
         if (PromptResult == 0) {
-            preDelete(toSave, toUpdate, toDelete);
-            service.getDao().delete(exist);
-            postDelete(toSave, toUpdate, toDelete);
+//            preDelete(toSave, toUpdate, toDelete);
+            service.delete(selectedObject);
+//            postDelete(toSave, toUpdate, toDelete);
             clear();
         }
 

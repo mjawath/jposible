@@ -194,7 +194,7 @@ public class TextFieldWithPopUP<T> extends CPanel implements UIListener{
 
     }
 
-    public void setListOverView(MasterViewUI<T> listViewPanel) {
+    public void setListOverView(MasterViewUI listViewPanel) {
         setListView(listViewPanel.getListViewUI());
     }
 

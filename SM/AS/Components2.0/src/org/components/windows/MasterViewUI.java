@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.UIListener;
 import org.biz.dao.service.Service;
+import org.biz.entity.BusObj;
 import org.components.controls.CxTable;
 import org.components.test.ResultPage;
 
@@ -19,7 +20,7 @@ import org.components.test.ResultPage;
  *
  * @author d
  */
-public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener ,UIListener {
+public class MasterViewUI<T extends BusObj> extends TabPanelUI implements ListSelectionListener ,UIListener {
     
     protected UIController controller;
     
@@ -91,8 +92,8 @@ public class MasterViewUI<T> extends TabPanelUI implements ListSelectionListener
                         return;
                     }
                    if(dp!=null){
-                    dp.setSelectedBusObj(obj);
-                    dp.setDataToUI(obj);
+                    dp.setSelectedBusObj((BusObj) obj);
+                    dp.setDataToUI((BusObj) obj);
                     SystemUtil.bringTabToFront(dp);
                 }
                 }

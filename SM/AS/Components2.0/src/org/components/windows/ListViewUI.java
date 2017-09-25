@@ -7,6 +7,7 @@ package org.components.windows;
 import java.util.List;
 import org.biz.app.ui.util.CPaginatedPanel;
 import org.biz.app.ui.util.QueryManager;
+import org.biz.entity.BusObj;
 import org.components.controls.CxTable;
 import org.components.parent.controls.editors.TableInteractionListner;
 import org.components.test.ResultPage;
@@ -106,14 +107,14 @@ public class ListViewUI extends javax.swing.JPanel {
     
     public void selectionChanged(Object newRowObject) {
         if(controller==null )return;
-        controller.setSelectedBusObject(newRowObject);
+        controller.setSelectedBusObject((BusObj) newRowObject);
     }
 
     public void onDoubleClicked(Object newRowObject) {
         if (controller == null) {
             return;
         }
-        controller.setSelectedBusObject(newRowObject);
+        controller.setSelectedBusObject((BusObj) newRowObject);
         controller.gotoDetailPanel();
     }
     
