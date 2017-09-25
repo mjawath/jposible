@@ -53,7 +53,7 @@ public class PurchaseInvoice extends BusObj {
     private Double texPer;
     private Double texAmount;
     private Double cashRecieveds;
-    
+     private String docRefNo;
 
     Double finalTotal;
     Double amountRecieved;
@@ -323,6 +323,15 @@ public class PurchaseInvoice extends BusObj {
         return bal;
 
     }
+
+    public String getDocRefNo() {
+        return docRefNo;
+    }
+
+    public void setDocRefNo(String docRefNo) {
+        this.docRefNo = docRefNo;
+    }
+     
      
      public void addOrUpdateLine(PurchaseInvoiceLineItem salesInvoiceLineItem) {
         if (lineItems == null) {

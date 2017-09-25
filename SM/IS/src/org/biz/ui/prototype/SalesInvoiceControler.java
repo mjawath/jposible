@@ -206,40 +206,29 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
         ((SalesInvoice) currentBusObject).calculateTotal();
         //create customer statement
         //use the invoice as the reciept othervise print reciept separately
-        //make updates to credit account
-        System.out.println("sales invoice level preCreate");
-
-        InventoryJournal  ij = new InventoryJournal();
-        SalesInvoice sales = getCurrentBusObject();
-        ij.setDocRefNo(sales.getDocRefNo());
-        ij.setDocumentClass(sales.getClass().getSimpleName());
-//        ij.setDocumentType(docRefNo);umentClass(getCurrentBusObject().getClass().getSimpleName());
-        for (SalesInvoiceLineItem lineItem : sales.getLineItems()) {
-            InventoryJournalLine line = new InventoryJournalLine();
-            line.setSku(lineItem.getSku());
-            line.setQty(lineItem.getQty());
-            line.setUom(lineItem.getUom());            
-            ij.addIJLine(line);
-
-        }
-        toSave.add(ij);
+//        //make updates to credit account
+//        System.out.println("sales invoice level preCreate");
+//
+//        InventoryJournal  ij = new InventoryJournal();
+//        SalesInvoice sales = getCurrentBusObject();
+//        ij.setCode(sales.getCode());
+//        ij.setDocRefNo(sales.getDocRefNo());
+//        ij.setDocumentClass(sales.getClass().getSimpleName());
+//        for (SalesInvoiceLineItem lineItem : sales.getLineItems()) {
+//            InventoryJournalLine line = new InventoryJournalLine();
+//            line.setSku(lineItem.getSku());
+//            line.setQty(lineItem.getQty());
+//            line.setUom(lineItem.getUom());            
+//            ij.addIJLine(line);
+//
+//        }
+//        toSave.add(ij);
 
     }
+     
 
-    @Override
-    public void preSave(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-        final SalesInvoice sales = getCurrentBusObject();
-        for (SalesInvoiceLineItem lineItem : sales.getLineItems()) {
-            if(lineItem.getUom() == null && lineItem.getSku()!= null){
-                final UOM primaryUOM = lineItem.getSku().getItem().getPrimaryUOM();
-                lineItem.setUom(primaryUOM);
-                System.out.println("item uom set "+lineItem.getUom());
-            }
-        }
-        
-        super.preSave(toSave, toUpdate, toDelete); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+
+
     
 
 }

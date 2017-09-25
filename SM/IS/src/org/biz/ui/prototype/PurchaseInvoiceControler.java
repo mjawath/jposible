@@ -10,9 +10,12 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
 import org.biz.app.ui.util.StringUtility;
+import org.biz.invoicesystem.entity.inventory.InventoryJournal;
+import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoice;
 import org.biz.invoicesystem.entity.transactions.PurchaseInvoiceLineItem;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
+import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.transactions.PurchaseInvoiceService;
 import org.components.windows.SearchQueryUIPanel;
 import org.components.windows.UIController;
@@ -161,14 +164,6 @@ public class PurchaseInvoiceControler extends UIController<PurchaseInvoice> {
         return true;
     }
 
-    public void preCreate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-        ((PurchaseInvoice) currentBusObject).calculateTotal();
-        //create customer statement
-        //use the invoice as the reciept othervise print reciept separately
-        //make updates to credit account
-        System.out.println("sales invoice level preCreate");
 
-
-    }
 
 }
