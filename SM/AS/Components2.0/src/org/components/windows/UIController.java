@@ -236,7 +236,7 @@ public class UIController<T extends BusObj> {
 
         if (selectedBusObject == null) {
 
-              resutls.add(  service.save(busObject));
+         service.save(busObject);
 
         } else {//update mode
             if (MessageBoxes.yesNo(detailView, "Current record already exist in the DATABASE Are you sure\n"
@@ -310,10 +310,6 @@ public class UIController<T extends BusObj> {
         if (service == null) {
             return;
         }
-        ArrayList result = new ArrayList();
-        ArrayList toSave = new ArrayList();
-        ArrayList toDelete = new ArrayList();
-        ArrayList toUpdate = new ArrayList();
         if (selectedObject == null) {
             MessageBoxes.infomsg(detailView, "Please select an item to delete ", "Nothing  to delete ");
             return;
@@ -324,23 +320,14 @@ public class UIController<T extends BusObj> {
                 "Delete Record", -1, 2, null, ObjButtons, ObjButtons[1]);
 
         if (PromptResult == 0) {
-//            preDelete(toSave, toUpdate, toDelete);
-            service.delete(selectedObject);
-//            postDelete(toSave, toUpdate, toDelete);
+            service.delete((BusObj) selectedObject);
             clear();
         }
 
     }
 
-    private void preDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-
-    }
-
-    private void postDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-
-    }
-
     public void clear() {
+        detailView.clear();
     }
     
     public void createNew() {

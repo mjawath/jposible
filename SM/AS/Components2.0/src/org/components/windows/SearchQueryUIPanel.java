@@ -12,7 +12,6 @@ import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.UIListener;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
-import org.components.parent.controls.editors.SearchAttributeModel;
 import org.components.test.ResultPage;
 
 /**

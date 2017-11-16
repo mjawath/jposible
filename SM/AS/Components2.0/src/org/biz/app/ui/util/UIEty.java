@@ -36,7 +36,7 @@ public class UIEty {
         box.setModel(new DefaultComboBoxModel(str));
     }
 
-    public static void cmbModelWithoutNull(String[] str, JComboBox box) {
+    public static void cmbModelWithoutNull( JComboBox box ,String... str) {
 
         ArrayList<String> vec=new ArrayList<String>();
         for (String st : str) {

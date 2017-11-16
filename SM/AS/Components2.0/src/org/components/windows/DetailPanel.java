@@ -64,8 +64,7 @@ public class DetailPanel<T extends BusObj> extends TabPanelUI {
         @Override
         public Object doBackgroundTask(Object... objs) {
             System.out.println("doBackgroundTask saveAction on Detail panel");
-            saveX();
-            return objs;
+            return controller.save();        
 
         }
 
@@ -292,11 +291,6 @@ public class DetailPanel<T extends BusObj> extends TabPanelUI {
 //        cp.setContainer(this);
 //    }
 
-
-    @Override
-    public Object saveX() {        
-        return controller.save();        
-    }
 
 
     public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {
