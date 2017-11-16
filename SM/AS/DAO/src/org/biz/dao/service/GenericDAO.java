@@ -72,6 +72,10 @@ public class GenericDAO<T> {
         return em;
     }
 
+    
+    public EntityManager getNewEm() {
+        return GenericDAOUtil.createEmNew();
+    }
     public void setEm(EntityManager em) {
         this.em = em;
     }
@@ -181,7 +185,13 @@ public class GenericDAO<T> {
     public T save(T ob) {
         return GenericDAOUtil.save(ob);
     }
-
+    
+    public T persist(EntityManager em,T ob){
+        return GenericDAOUtil.persistob(em,ob);
+    }
+   public void commit(EntityManager em){
+       GenericDAOUtil.commit(em);
+    }
     //save list of items
     public void saveList(List<T> ob) {
         GenericDAOUtil.saveList(ob);
@@ -194,10 +204,12 @@ public class GenericDAO<T> {
      * @param toUpdate
      * @param toDelete
      */
-    public void saveUpdateDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-        GenericDAOUtil.saveUpdateDelete(toSave, toUpdate, toDelete);
+    public List saveUpdateDelete(List toSave, List toUpdate, List toDelete) {
+        return GenericDAOUtil.saveUpdateDelete(toSave, toUpdate, toDelete);
     }
-
+    public void delete(EntityManager em,T ob) {
+        GenericDAOUtil.remove(em,ob);
+    }
     //use this to delete a certain object 
     //@param is a rerieved object from database with a valid id
     public void delete(T ob) {

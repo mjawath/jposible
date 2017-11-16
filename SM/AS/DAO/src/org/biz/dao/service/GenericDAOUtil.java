@@ -213,7 +213,8 @@ public class GenericDAOUtil<T> {
 
     public static <T> T persistob(EntityManager em, T ob) {
         em.persist(ob);
-        em.flush();
+//        em.flush();
+        auditPersistenceData((BusObj) ob);
         return (T) ob;
     }
 
@@ -253,6 +254,29 @@ public class GenericDAOUtil<T> {
 
     }
 
+        public static <T> void commit(EntityManager em) {
+
+        try {          
+
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+        } finally {
+            if (em != null) {
+                try {
+                    em.clear();
+                    em.close();
+                } catch (Exception e) {
+                }
+
+            }
+        }
+
+    }
     public static <T> T save(T ob) {
         EntityManager em = null;
         try {
@@ -285,6 +309,29 @@ public class GenericDAOUtil<T> {
             }
         }
         return null;
+    }
+    
+    private static void auditPersistenceData(BusObj bus) {
+
+        Date cDate = GenericDAOUtil.currentTime();
+
+//        for (BusObj bus : objs) {
+//            bus.setId( EntityService.getKey(""));      
+            bus.setSavedDate(cDate);
+            bus.setEditedDate(cDate);
+            bus.setDepententEntitiesIDs();
+
+//        }
+    }
+
+    private static void auditUpdatedData(BusObj bus) {
+
+        Date mDate = GenericDAOUtil.currentTime();
+//        for (BusObj bus : objs) {
+//        bus.setSavedDate(startDate);
+        bus.setEditedDate(mDate);
+        bus.setDepententEntitiesIDs();
+//        }
     }
 
     public static <T> void saveList(List<T> ob) {
@@ -413,9 +460,11 @@ public class GenericDAOUtil<T> {
 
     public static <T> void merge(EntityManager em, T ob) {
         em.merge(ob);
+        auditUpdatedData((BusObj) ob);
+
     }
    
-    public  static void  saveUpdateDelete(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
+    public  static List  saveUpdateDelete(List toSave, List toUpdate, List toDelete) {
 
         EntityManager em = null;
 
@@ -426,12 +475,14 @@ public class GenericDAOUtil<T> {
                 //persistence ..save
                 for (Object e : toSave) {
                     em.persist(e);
+                    auditPersistenceData((BusObj)e);
                 }
                 
             }
             if (toUpdate!=null && !toUpdate.isEmpty()) {
                 for (Object e : toUpdate) {
                     em.merge(e);
+                    auditUpdatedData((BusObj) e);
                 }
             }
             if (toDelete !=null && !toDelete.isEmpty()) {
@@ -441,6 +492,7 @@ public class GenericDAOUtil<T> {
             }
             
             em.getTransaction().commit();
+            return toSave;
         
         }catch (Exception ex) {
             ex.printStackTrace();

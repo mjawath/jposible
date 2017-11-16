@@ -7,8 +7,7 @@ package org.biz.dao.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JOptionPane;
-import org.biz.app.ui.util.MessageBoxes;
+import javax.persistence.EntityManager;
 import org.biz.app.ui.util.Tracer;
 import org.biz.dao.util.EntityService;
 import org.biz.entity.BusObj;
@@ -25,9 +24,9 @@ public class Service<T extends BusObj> {
     int pageSize;
 
     public Service() {
-        
+
     }
-    
+
     /**
      *
      */
@@ -35,11 +34,10 @@ public class Service<T extends BusObj> {
         es = EntityService.getEntityService();
     }
 
-
     public GenericDAO getDao() {
 //        
-        if(es==null){
-        es = EntityService.getEntityService();
+        if (es == null) {
+            es = EntityService.getEntityService();
         }
         if (dao == null) {
             dao = new GenericDAO();
@@ -51,24 +49,24 @@ public class Service<T extends BusObj> {
         return getDao().getCache();
     }
 
-    
     public List moveToPage(CQuery qry, int pageNo) {
-        return getDao().pagedData(qry.getQuery(), pageNo);  
+        return getDao().pagedData(qry.getQuery(), pageNo);
 
     }
-    
-        
-    public Long getCount(CQuery qry){
-        if(qry==null)return 0l;
+
+    public Long getCount(CQuery qry) {
+        if (qry == null) {
+            return 0l;
+        }
         return getDao().getCount(qry.getQuery());
     }
 
     public void getNextPage(String qryname) {
-       //current page ??
-         //get count 1650
+        //current page ??
+        //get count 1650
         //get rowsperpage  100      --> 17 pages
 //        dao.getpagedDetail(qry);
-        
+
         // get query string  by query name == > 
         // get current page from page panel r page object 
         // if can navigate goto  next page 
@@ -82,86 +80,76 @@ public class Service<T extends BusObj> {
 //        int cpageno=getDao().getCupage(qryname);
 //        getDao().getcount(qry);        
 //        getDao().pagedData(qry, cpageno);
-        
-         getDao().getNextPage(qryname);
-    }
-    
-    public Object findByID(String id ){
-        return dao.find(id);
-    }
-    
-    public Object findByCode(String code ){
-        return dao.getByCode(code);
-    }
-    
-       
-    public String getUniqueKey(){
-            return EntityService.getKey("Test");
+        getDao().getNextPage(qryname);
     }
 
-    
-    public void PrintTracer(String msg){
+    public Object findByID(String id) {
+        return dao.find(id);
+    }
+
+    public Object findByCode(String code) {
+        return dao.getByCode(code);
+    }
+
+    public String getUniqueKey() {
+        return EntityService.getKey("Test");
+    }
+
+    public void PrintTracer(String msg) {
 //        Tracer.printToOut("servies are set ");
-        System.out.println("should move print traeer "+msg);
+        System.out.println("should move print traeer " + msg);
     }
-    
-    public int getNoOfRows(){
-    return getDao().getNoOfRows();
+
+    public int getNoOfRows() {
+        return getDao().getNoOfRows();
     }
-    
-    public <T> T getByCode(String qry){
+
+    public <T> T getByCode(String qry) {
         return (T) getDao().getByCodex(qry);
     }
-    
+
     public List getByWhere(String conditions) {
         return getDao().getByWhere(conditions);
     }
-    
+
     public long getCountOfByWhere(String conditions) {
         return getDao().getCountOfByWhere(conditions);
     }
-    
-    public List getByCodeLike(String qry){
+
+    public List getByCodeLike(String qry) {
         return getDao().getByCodeLike(qry);
     }
-    public CQuery getQueryByCodeLike(String qry){
+
+    public CQuery getQueryByCodeLike(String qry) {
         return getDao().getQueryByCodeLike(qry);
     }
-    
-     public CQuery getCountQueryByCodeLike(String qry){
-         
+
+    public CQuery getCountQueryByCodeLike(String qry) {
+
         return getDao().getCountQueryByCodeLike(qry);
     }
-     
-    public long getCountByCodeLike(String qry){
-         
+
+    public long getCountByCodeLike(String qry) {
+
         return getCount(getDao().getCountQueryByCodeLike(qry));
     }
-     
-     public List getByCodeLike(int page,String qry){
-        return getDao().getByCodeLike(page,qry);
-    }
-     
 
-  public T save(T busObject) {
+    public List getByCodeLike(int page, String qry) {
+        return getDao().getByCodeLike(page, qry);
+    }
+
+    public T save(T busObject) {
         long x = System.currentTimeMillis();
 
-
-        if (!isValideEntity()) {//check for current business objects validity
+        if (!isValideEntity(busObject)) {//check for current business objects validity
             return null;
         }
-        preSave(busObject);
-
-//            if (toSave.isEmpty()) {
-//                Tracer.printToOut("no object found to Save");
-//                return;
-//            }
         if (busObject == null) {
             Tracer.printToOut("Detail panel -> SaveX -> Bus Object is null ,Not saved");
             return null;
         }
 
-        if (busObject.getId()  == null) {
+        if (busObject.getId() == null) {
             Object id = ((BusObj) busObject).getId();//0 is the index of the main object , id is id property
 
             System.out.println("find b" + (System.currentTimeMillis() - x));
@@ -171,15 +159,7 @@ public class Service<T extends BusObj> {
             if (obj == null) {
                 //should retrieve new id and set to new objects
 
-//                toSave.add(busObject);
-                preCreate(busObject);
-                auditPersistenceData(busObject);
-//                auditUpdatedData(toUpdate, GenericDAOUtil.currentTime());
-                Tracer.printToOut(" Object  is not found  So creation will be called");
-//                getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-                T saved = (T) getDao().save(busObject);
-                System.out.println("saved " + (System.currentTimeMillis() - x));
-                return saved;
+                return saveData(busObject);
 //                postCreate(busObject);
             } else {
                 Tracer.printToOut("Detail panel -> SaveX -> Bus Object ID logic has problem ,Not saved");
@@ -197,37 +177,86 @@ public class Service<T extends BusObj> {
             }
 
             if (id instanceof String) {
-                ((BusObj) busObject).setId((String)id);
+                ((BusObj) busObject).setId((String) id);
             } else if (id instanceof Long) {
 //                ((BusObj) busObject).setId((Long) id);
             }
-//            toUpdate.add(busObject);
-//            preUpdate(toSave, toUpdate, toDelete);
-            auditPersistenceData(busObject);
-            auditUpdatedData(busObject, ((BusObj) busObject).getSavedDate());
 
             Tracer.printToOut("Updation is called  Object  is  found");
-//            getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
-//            postUpdate(toSave, toUpdate, toDelete);
-               T updated = (T) getDao().update(busObject);
-                return updated;
-                        
+            T updated = updateData(busObject);
+            return updated;
 
         }
 
 //        result.add(toSave);
 //        result.add(toUpdate);
 //        result.add(toDelete);
-
         //call some observer method
         Tracer.printToOut("Detail panel Save is successfully performed , result is returned, method is called using BT");
         return busObject;
     }
+    //this will be a transactional
 
-    protected boolean isValideEntity() {
+    protected T saveData(T busObject) {
+
+        T saved = (T) saveData(busObject, null, null, null);
+
+        return saved;
+    }
+
+    protected T saveData(T busObject, List thingsToCreate, List thingsToUpdate, List thingsToDelete) {
+
+//                toSave.add(busObject);
+        preCreate(busObject);
+//                getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
+
+        if (thingsToCreate == null) {
+            thingsToCreate = new ArrayList();
+            thingsToCreate.add(busObject);
+        }
+        T saved = (T) (getDao().saveUpdateDelete(thingsToCreate, thingsToUpdate, thingsToDelete)).get(0);
+//                auditPersistenceData(busObject);
+//                System.out.println("saved " + (System.currentTimeMillis() - x));  
+        return saved;
+    }
+
+    //this will be a transactional
+    protected T updateData(T busObject) {
+        T saved = (T) updateData(busObject, null, null, null);
+        return saved;
+    }
+
+    protected T updateData(T busObject, List thingsToCreate, List thingsToUpdate, List thingsToDelete) {
+
+        preUpdate(busObject);
+
+
+        if (thingsToUpdate == null) {
+            thingsToUpdate = new ArrayList();
+            }
+         thingsToUpdate.add(busObject); 
+        getDao().saveUpdateDelete(thingsToCreate, thingsToUpdate, thingsToDelete);
+        return busObject;
+    }
+
+    protected EntityManager startTransaction() {
+        final EntityManager em = getDao().getNewEm();
+        em.getTransaction().begin();
+        return em;
+    }
+
+    protected void persist(EntityManager em, BusObj busObject) {
+        getDao().persist(em, busObject);
+    }
+
+    protected void commit(EntityManager em) {
+        getDao().commit(em);
+    }
+
+    protected boolean isValideEntity(T busObject) {
         return true;
     }
-    
+
     public void preCreate(BusObj saveableItem) {
 
     }
@@ -238,20 +267,10 @@ public class Service<T extends BusObj> {
 
 //        for (BusObj bus : objs) {
 //            bus.setId( EntityService.getKey(""));      
-            bus.setSavedDate(cDate);
-            bus.setEditedDate(cDate);
-            bus.setDepententEntitiesIDs();
+        bus.setSavedDate(cDate);
+        bus.setEditedDate(cDate);
+        bus.setDepententEntitiesIDs();
 
-//        }
-    }
-
-    private void auditUpdatedData(BusObj bus, Date startDate) {
-
-        Date mDate = GenericDAOUtil.currentTime();
-//        for (BusObj bus : objs) {
-            bus.setSavedDate(startDate);
-            bus.setEditedDate(mDate);
-            bus.setDepententEntitiesIDs();
 //        }
     }
 
@@ -270,32 +289,13 @@ public class Service<T extends BusObj> {
     private void postUpdate(BusObj saveableItem) {
     }
 
-    public void delete(Object selectedObject) {
+    public void delete(T selectedObject) {
+       
+            getDao().delete(selectedObject);
 
-        ArrayList result = new ArrayList();
-        ArrayList toSave = new ArrayList();
-        ArrayList toDelete = new ArrayList();
-        ArrayList toUpdate = new ArrayList();
-//        if (selectedObject == null) {
-//            MessageBoxes.infomsg(detailView, "Please select an item to delete ", "Nothing  to delete ");
-//            return;
-//        }
-        T exist = (T) getDao().find(((BusObj) selectedObject).getId());
-        if (exist == null) {
-            return;
-        }
-        String[] ObjButtons = {"Yes", "No"};
-        int PromptResult = JOptionPane.showOptionDialog(null, "Are you want to delete ?",
-                "Delete Record", -1, 2, null, ObjButtons, ObjButtons[1]);
-
-        if (PromptResult == 0) {
-//            preDelete(toSave, toUpdate, toDelete);
-            getDao().delete(exist);
-//            postDelete(toSave, toUpdate, toDelete);
-//            clear();
-        }
 
     }
+    
 
     private void preDelete(BusObj saveableItem) {
 
@@ -305,5 +305,4 @@ public class Service<T extends BusObj> {
 
     }
 
-
-   }
+}
