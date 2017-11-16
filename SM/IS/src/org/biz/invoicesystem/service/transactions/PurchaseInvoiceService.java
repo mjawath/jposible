@@ -6,8 +6,12 @@
 package org.biz.invoicesystem.service.transactions;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import org.biz.app.ui.util.BizException;
 import org.biz.dao.service.Service;
 import org.biz.dao.util.EntityService;
+import org.biz.erp.inventory.dao.InventoryJournalDAO;
 import org.biz.invoicesystem.dao.transactions.PurchaseInvoiceDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
@@ -20,82 +24,65 @@ import org.biz.invoicesystem.entity.transactions.PurchaseInvoiceLineItem;
  */
 public class PurchaseInvoiceService extends Service<PurchaseInvoice> {
     PurchaseInvoiceDAO dao;
+    InventoryJournalDAO inventoryJournalDAO;
 
     public PurchaseInvoiceService() {
     dao = new PurchaseInvoiceDAO();
+    inventoryJournalDAO = new InventoryJournalDAO();
     }
 
     public PurchaseInvoiceDAO getDao() {
         return dao;
     }
-    public void createInventoryJournal(PurchaseInvoice invoice){
-       invoice.setId(EntityService.getKeys());
-        //inventory journal 
-        InventoryJournal ij=new InventoryJournal();
-        ij.setDocType("PurchaseInvoice");
-        ij.setDocumentClass(PurchaseInvoice.class.toString());        
-//        ij.setId(   EntityService.getKeys()) ;
-        for (PurchaseInvoiceLineItem sl : invoice.getLineItems()) {
-            InventoryJournalLine ijl=new InventoryJournalLine();
-//            ijl.setId(sl.getId());
-            ijl.setDescription(sl.getId());
-            ijl.setItem(sl.getItem());
-            ijl.setQty(sl.getQty());
-            ijl.setShop(sl.getShop());
-            ijl.setItemMark(sl.getItemMark());
-            ijl.setWarehouse(sl.getWarehouse());
-            
-            ij.addIJLine(ijl);
-//            ijl.setShop(invoice.gets);
-//            jt
-                    //shop ware houses
-//            ijl.setUom(sl.getQty());
+  
+
+      
+    @Override
+    protected PurchaseInvoice saveData(PurchaseInvoice busObject,List thingsToCreate,
+            List thingsToUpdate,List thingsToDelete) {
+        System.out.println("sales invoice level preCreate");
+        final EntityManager em = startTransaction();
+        
+        busObject.calculateTotal();
+        persist(em, busObject);
+        
+        InventoryJournal ij = new InventoryJournal();
+        ij.setRefEntityID(busObject.getId());
+        ij.setCode(busObject.getCode());
+        ij.setDocRefNo(busObject.getDocRefNo());
+        ij.setDocumentClass(busObject.getClass().getSimpleName());
+        for (PurchaseInvoiceLineItem lineItem : busObject.getLineItems()) {
+            InventoryJournalLine line = new InventoryJournalLine();
+            line.setSku(lineItem.getSku());
+            line.setQty(lineItem.getQty());
+            line.setUom(lineItem.getUom());
+            ij.addIJLine(line);
+
         }
-        dao.save(invoice,ij);
+//        toSave.add(ij);
+        
+        thingsToCreate  = new ArrayList();
+        thingsToCreate.add(ij);
+        persist(em,ij);
+        commit(em);
+        
+        return busObject;
     }
     
-        public void preCreate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-        //create customer statement
-        //use the invoice as the reciept othervise print reciept separately
-        //make updates to credit account
-        System.out.println("sales invoice level preCreate");
+        @Override
+    protected PurchaseInvoice updateData(PurchaseInvoice busObject,List thingsToCreate,
+            List thingsToUpdate,List thingsToDelete) {
 
-        PurchaseInvoice sales = (PurchaseInvoice) toSave.get(0);
-        sales.calculateTotal();
-
-        InventoryJournal ij = new InventoryJournal();
-
-        ij.setCode(sales.getCode());
-        ij.setDocRefNo(sales.getDocRefNo());
-        ij.setDocumentClass(sales.getClass().getSimpleName());
-        for (PurchaseInvoiceLineItem lineItem : sales.getLineItems()) {
-            InventoryJournalLine line = new InventoryJournalLine();
-            line.setSku(lineItem.getSku());
-            line.setQty(lineItem.getQty());
-            line.setUom(lineItem.getUom());
-            ij.addIJLine(line);
-
-        }
-        toSave.add(ij);
-
-    }
+        InventoryJournal ij = (InventoryJournal) inventoryJournalDAO.getByPropertySR("refEntityID",busObject.getId());
+        if(ij==null) throw new BizException("PurchaseInvoicesevrice updateData ");
+        busObject.calculateTotal();
 
         
-    public void preUpdate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-        //create customer statement
-        //use the invoice as the reciept othervise print reciept separately
-        //make updates to credit account
-        System.out.println("sales invoice level preCreate");
-
-        PurchaseInvoice sales = (PurchaseInvoice) toUpdate.get(0);
-        sales.calculateTotal();
-
-        InventoryJournal ij = new InventoryJournal();
-
-        ij.setCode(sales.getCode());
-        ij.setDocRefNo(sales.getDocRefNo());
-        ij.setDocumentClass(sales.getClass().getSimpleName());
-        for (PurchaseInvoiceLineItem lineItem : sales.getLineItems()) {
+        ij.setCode(busObject.getCode());
+        ij.setDocRefNo(busObject.getDocRefNo());
+        ij.setDocumentClass(busObject.getClass().getSimpleName());
+        ij.setLines(null);
+        for (PurchaseInvoiceLineItem lineItem : busObject.getLineItems()) {
             InventoryJournalLine line = new InventoryJournalLine();
             line.setSku(lineItem.getSku());
             line.setQty(lineItem.getQty());
@@ -103,8 +90,25 @@ public class PurchaseInvoiceService extends Service<PurchaseInvoice> {
             ij.addIJLine(line);
 
         }
-        toSave.add(ij);
-
+//        toSave.add(ij);
+        
+        thingsToUpdate  = new ArrayList();
+        thingsToUpdate.add(ij);       
+        return super.updateData(busObject,thingsToCreate,thingsToUpdate,thingsToDelete); 
     }
+    
+   public void delete(PurchaseInvoice selectedObject) {
+        final PurchaseInvoice obj = getDao().find(selectedObject.getId());
+        EntityManager em = startTransaction();
+        getDao().delete(em, obj);
+        final InventoryJournal inv =  (InventoryJournal) inventoryJournalDAO.getByPropertySR("refEntityID",obj.getId());
+        if(inv!=null)//throw exception if null ???
+        inventoryJournalDAO.delete(em, inv);
+        commit(em);
+       
+   }
+
+
+    
 
 }

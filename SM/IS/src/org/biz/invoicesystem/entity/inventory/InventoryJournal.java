@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 
 /**
  *
@@ -29,16 +30,29 @@ public class InventoryJournal  extends BusObj  {
     public  static final Byte sales_Invoice = 1;
     public  static final Byte Item_In = 0;
     public  static final Byte Item_Out = 1;
+    
+    public static final String SALES = "SalesInvoice";
+    public static final String PURCHASE = "PurchaseInvoice";
+    public static final String ADJUSTMENT = "InventoryAdjustment";
+//    public static final String SALES = "SalesInvoice";
 
-    private String code;
+    
+
+    
+    
+    private String refEntityID; //this should be turned into id
+
+
+    private String code; //this should be turned into id
     private Byte documentType;//invoice //transferorder//begbalance//adjestments
     private String documentClass;//classs type of document
     private String refCode;//reference document ids
     @JoinColumn(name = "inv_id")    
     @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-    List<InventoryJournalLine> lines;
+    private List<InventoryJournalLine> lines;
     private Byte  inOrOut; // to represent the state of  inventory entry in a top level 
 
+    
     public Byte getInOrOut() {
         return inOrOut;
     }
@@ -236,7 +250,27 @@ public class InventoryJournal  extends BusObj  {
     }
     
     
+        public String getRefEntityID() {
+        return refEntityID;
+    }
+
+    public void setRefEntityID(String refEntityID) {
+        this.refEntityID = refEntityID;
+    }
     
+    public synchronized void addOrUpdateLine(InventoryJournalLine selectedLine, InventoryJournalLine newSalesInvoiceLineItem) {
+        if (lines == null) {
+            lines = new ArrayList<>();
+            lines.add(newSalesInvoiceLineItem);
+            return;
+        }
+        if (!lines.contains(selectedLine)) {
+            lines.add(newSalesInvoiceLineItem);
+        } else {
+            int index = lines.indexOf(selectedLine);
+            lines.set(index, newSalesInvoiceLineItem);
+        }
+    }
     
 }
 /*
@@ -250,3 +284,30 @@ public class InventoryJournal  extends BusObj  {
  */
 
 
+ enum TransactionType{
+    
+    
+    SALESINVOICE(InventoryJournal.SALES),PURCHASEINVOICE(InventoryJournal.PURCHASE),ADJUSTMENT(InventoryJournal.ADJUSTMENT);
+    
+    private String value;
+
+    private TransactionType(String value) {
+        this.value = value;
+    }
+    
+    
+    public boolean isEqual(String pass) {
+         if(pass == null){
+         return false;
+         }// check is not needed because name.equals(null) returns false 
+        return value.equalsIgnoreCase(pass);
+    }
+
+    public String toString() {
+       return this.value;
+    }
+    
+    
+
+    
+}

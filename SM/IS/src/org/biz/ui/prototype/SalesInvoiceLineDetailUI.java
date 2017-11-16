@@ -19,6 +19,7 @@ import org.components.windows.UIController;
  *
  * @author user
  */
+@Deprecated
 public class SalesInvoiceLineDetailUI extends GridDataLineDetailUI{
         
     private SalesInvoiceControler sic;

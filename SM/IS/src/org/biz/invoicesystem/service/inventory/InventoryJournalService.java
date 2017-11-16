@@ -29,8 +29,11 @@ import org.biz.invoicesystem.entity.inventory.InventoryJournal;
     }
     
     public List getInventorySummeryForMonth(){
-    
-        return dao.getForLastMonthsummery(new Date(),"","");        
+        
+        //get last inetorires with adjustments
+        dao.getLastAdjustments();
+        return dao.getAll();
+//        return dao.getForLastMonthsummery(new Date(),"","");        
     }
     public List getSummeryOfItems(int pageNo){
     
@@ -42,5 +45,6 @@ import org.biz.invoicesystem.entity.inventory.InventoryJournal;
         return dao.getCountOfSummeryOfItems();
         
     }
+
 
 }

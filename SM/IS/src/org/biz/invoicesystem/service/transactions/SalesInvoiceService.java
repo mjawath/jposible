@@ -6,8 +6,12 @@
 package org.biz.invoicesystem.service.transactions;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import org.biz.app.ui.util.BizException;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
+import org.biz.erp.inventory.dao.InventoryJournalDAO;
 import org.biz.erp.ui.transaction.detail.InvoiceUI;
 import org.biz.erp.ui.transactions.posted.PostedInvoicesListUI;
 import org.biz.invoicesystem.dao.transactions.SalesInvoiceDAO;
@@ -22,15 +26,17 @@ import org.biz.invoicesystem.service.master.ItemService;
  *
  * @author mjawath
  */
-public class SalesInvoiceService extends Service{
+public class SalesInvoiceService extends Service<SalesInvoice>{
     
     private SalesInvoiceDAO dao;
+    private InventoryJournalDAO inventoryJournalDAO;
     private InvoiceUI invoiceUI;
     private PostedInvoicesListUI invoicesListUI;
 
     public SalesInvoiceService() {
         super();
         dao = new SalesInvoiceDAO();
+        inventoryJournalDAO = new InventoryJournalDAO();
     }
 
     
@@ -99,6 +105,7 @@ public class SalesInvoiceService extends Service{
     
     public void preCreate(BusObj toSave) {
         
+        
         SalesInvoice sales = (SalesInvoice) toSave;
                sales.calculateTotal();
         //create customer statement
@@ -136,5 +143,75 @@ public class SalesInvoiceService extends Service{
         
         super.preSave(toSave); //To change body of generated methods, choose Tools | Templates.
     }
+        @Override
+    protected SalesInvoice saveData(SalesInvoice busObject,List thingsToCreate,
+            List thingsToUpdate,List thingsToDelete) {
+        System.out.println("sales invoice level preCreate");
+        final EntityManager em = startTransaction();
+        
+        busObject.calculateTotal();
+        persist(em, busObject);
+        
+        InventoryJournal ij = new InventoryJournal();
+        ij.setRefEntityID(busObject.getId());
+        ij.setCode(busObject.getCode());
+        ij.setDocRefNo(busObject.getDocRefNo());
+        ij.setDocumentClass(busObject.getClass().getSimpleName());
+        for (SalesInvoiceLineItem lineItem : busObject.getLineItems()) {
+            InventoryJournalLine line = new InventoryJournalLine();
+            line.setSku(lineItem.getSku());
+            line.setQty(-lineItem.getQty());
+            line.setUom(lineItem.getUom());            
+            ij.addIJLine(line);
+
+        }
+        
+        thingsToCreate  = new ArrayList();
+        thingsToCreate.add(ij);
+        persist(em,ij);
+        commit(em);
+        
+        return busObject;
+    }
+    
+    @Override
+    protected SalesInvoice updateData(SalesInvoice busObject,List thingsToCreate,
+            List thingsToUpdate,List thingsToDelete) {
+        InventoryJournal ij = (InventoryJournal) inventoryJournalDAO.getByPropertySR("refEntityID",busObject.getId());
+        if(ij==null) throw new BizException("PurchaseInvoicesevrice updateData ");
+        busObject.calculateTotal();
+
+        
+        ij.setCode(busObject.getCode());
+        ij.setDocRefNo(busObject.getDocRefNo());
+        ij.setDocumentClass(busObject.getClass().getSimpleName());
+        ij.setLines(null);
+        for (SalesInvoiceLineItem lineItem : busObject.getLineItems()) {
+            InventoryJournalLine line = new InventoryJournalLine();
+            line.setSku(lineItem.getSku());
+            line.setQty(-(lineItem.getQty()));
+            line.setUom(lineItem.getUom());
+            ij.addIJLine(line);
+
+        }
+//        toSave.add(ij);
+        
+        thingsToUpdate  = new ArrayList();
+        thingsToUpdate.add(ij);       
+        return super.updateData(busObject,thingsToCreate,thingsToUpdate,thingsToDelete); 
+    }
+        
+   public void delete(SalesInvoice selectedObject) {
+        final SalesInvoice obj = getDao().find(selectedObject.getId());
+        EntityManager em = startTransaction();
+        getDao().delete(em, obj);
+        final InventoryJournal inv = (InventoryJournal) inventoryJournalDAO.getByPropertySR("refEntityID",obj.getId());
+        if(inv!=null)
+        inventoryJournalDAO.delete(em, inv);
+        commit(em);
+       
+   }
+
+    
     
 }

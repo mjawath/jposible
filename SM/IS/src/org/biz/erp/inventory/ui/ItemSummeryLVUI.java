@@ -25,8 +25,8 @@ public class ItemSummeryLVUI extends ListViewUI {
     public ItemSummeryLVUI() {
         super();
         List<PTableColumn> tblCols = new ArrayList();
+//        tblCols.add(new PTableColumn(String.class, "empty"));
         tblCols.add(new PTableColumn(String.class, "SKU"));
-        tblCols.add(new PTableColumn(String.class, "Item "));
         tblCols.add(new PTableColumn(String.class, "UOM"));
         tblCols.add(new PTableColumn(String.class, "QTY"));
 
@@ -40,10 +40,11 @@ public class ItemSummeryLVUI extends ListViewUI {
         SKU sumx = (SKU) sum[0];
         UOM uom = (UOM)sum[1];
         Double qty = (Double)sum[2];
-        String[] arra= new String[sum.length];
-        arra[0] = sumx !=null?sumx.getCode() :"";
-        arra[1] = uom !=null?uom.getCode() :"";
-        arra[2] = qty !=null? String.valueOf(qty) :"0";
+        String[] arra= new String[sum.length+1];
+        arra[0] = "";
+        arra[1] = sumx !=null?sumx.getCode() :"";
+        arra[2] = uom !=null?uom.getCode() :"";
+        arra[3] = qty !=null? String.valueOf(qty) :"0";
         return arra;
     }
     

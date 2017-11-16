@@ -5,7 +5,6 @@
  */
 package org.biz.erp.inventory.ui.detail;
 
-import javax.sound.midi.ControllerEventListener;
 import org.components.windows.DetailPanel;
 import org.components.windows.MasterViewUI;
 import org.components.windows.UIController;

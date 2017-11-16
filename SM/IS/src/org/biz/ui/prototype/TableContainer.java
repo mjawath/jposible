@@ -302,7 +302,7 @@ public class TableContainer extends CPanel {
         tbl.setTableInteractionListner(tableInteractionListner);
     }
 
-    List getlistBusObject() {
+    public List getlistBusObject() {
         return tbl.getCollection();
         
     }

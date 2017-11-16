@@ -5,13 +5,15 @@
  */
 package org.biz.erp.inventory.ui.detail;
 
-import com.components.custom.TextFieldWithPopUP;
+import java.util.Iterator;
 import java.util.List;
+import javax.swing.JComponent;
+import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.StringUtility;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
+import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
-import org.biz.invoicesystem.ui.transactions.GRNFrame;
 import org.components.windows.SearchQueryUIPanel;
 import org.components.windows.UIController;
 
@@ -79,7 +81,62 @@ public class InventoryJournalController extends UIController<InventoryJournal>{
     }
 
     
+    public JComponent onSalesInvoiceLineItemPriceChanged(InventoryJournalLineItemUI salesLineUI) {
+
+        InventoryJournalLine salesInvoiceLineItem = salesLineUI.panelToData();
+        
+            final JComponent inValidComponent = salesLineUI.getInValidComponent();
+        if (inValidComponent != null) {
+            return inValidComponent;
+        }
+        salesLineUI.setDataToPanelIFNotFocused(salesInvoiceLineItem);
+
+        InventoryJournal currentBusObject = detailView.uiToData();
+        ///get the current line and update it        
+
+        InventoryJournalLine selectedSL = (InventoryJournalLine) salesLineUI.getSelectedLineObject();
+                if(salesInvoiceLineItem.getUom() ==null && salesInvoiceLineItem.getSku()!=null){
+            salesInvoiceLineItem.setUom(salesInvoiceLineItem.getSku().getItem().getPrimaryUOM());
+        }
+        currentBusObject.addOrUpdateLine(selectedSL, salesInvoiceLineItem);
+        
+        /*if(this is a valid entry )
+            then add to table 
+        else revert or alert 
+         */
+        detailView.setVisualDataToUI(currentBusObject);
+        salesLineUI.clearLineUI();
+//        salesLineUI.requestFocus();
+        return salesLineUI;
+    }
     
+    
+    protected boolean isValideEntity() {
+    
+        
+
+       InventoryJournal busObject = detailView.uiToData();
+        if (busObject == null) {
+            return false;
+        }
+        if (busObject.getLines() == null || busObject.getLines().isEmpty()) {
+//            tuom.requestFocus();
+            return false;
+        }
+        
+        if (busObject.getWarehouse() == null) {
+            MessageBoxes.errormsg(detailView, "Please provide a valid store room", "Invalid data");
+//            twarehouse.requestFocus();
+            return false;
+        }
+            
+        for (Iterator<InventoryJournalLine> it = busObject.getLines().iterator(); it.hasNext();) {
+            InventoryJournalLine inventoryJournalLine = it.next();
+            if(!inventoryJournalLine.isValidLine())it.remove();
+
+        }
+        return true;
+    }
     
     
 }

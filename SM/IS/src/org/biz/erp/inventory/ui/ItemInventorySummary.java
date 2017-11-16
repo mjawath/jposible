@@ -10,12 +10,8 @@
  */
 package org.biz.erp.inventory.ui;
 
-import java.util.List;
-import org.biz.app.ui.util.QueryManager;
 import org.biz.erp.inventory.ui.detail.InventoryJournalController;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
-import org.biz.invoicesystem.entity.master.Shop;
-import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.service.inventory.InventoryJournalService;
 import org.biz.invoicesystem.service.inventory.InventoryMonthlySummeryService;
 import org.components.windows.MasterViewUI;
@@ -40,6 +36,10 @@ public class ItemInventorySummary extends MasterViewUI<InventoryJournal> {
         listUI = itemSummeryLVUI1;
         searchQueryUI = itemSummerySQUI1;
         super.init();      
+        
+        
+        // get last inventory adjustments
+        
      
         setQueryMananger(((InventoryJournalController) controller).getQuerySummer());
         //set query manager for pagination

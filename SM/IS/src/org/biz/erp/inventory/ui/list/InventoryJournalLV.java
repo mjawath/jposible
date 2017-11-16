@@ -5,6 +5,7 @@
 package org.biz.erp.inventory.ui.list;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
@@ -26,9 +27,10 @@ public class InventoryJournalLV extends ListViewUI {
         List<PTableColumn> tblCols = new ArrayList();
         tblCols.add(new PTableColumn(String.class, "ID"));
         tblCols.add(new PTableColumn(String.class, "Code"));
-        tblCols.add(new PTableColumn(String.class, "Customer Name"));
+        tblCols.add(new PTableColumn(Date.class, "Creation time"));
+        tblCols.add(new PTableColumn(Date.class, "update time"));
 
-        getTable().init(SalesInvoice.class, tblCols);
+        getTable().init(InventoryJournal.class, tblCols);
         
     }
 

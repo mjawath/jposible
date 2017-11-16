@@ -15,6 +15,7 @@ import org.biz.app.ui.util.StringUtility;
 import org.biz.dao.service.GenericDAO;
 import org.biz.dao.service.CQuery;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
+import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 
 /**
  *
@@ -59,15 +60,19 @@ public class InventoryJournalDAO extends GenericDAO<InventoryJournal>{
 //                    + " group by  i ,ijls.uom ";
 //        
         
-        String x= " where   "+ (StringUtility.isEmptyString(wid)?" ":" c.warehouse.id =?1 ") ;
-         x +=  !StringUtility.isEmptyString(sid)?" ": " c.shop.id =?2  ";
-        x+= " c.createdDate between ?3 and ?4 ";
+        StringBuilder x=new StringBuilder();
+        x.append(" WHERE   ") ;
+        x.append((StringUtility.isEmptyString(wid)?" ":" c.warehouse.id =?1 ")) ;
+        x.append(StringUtility.isEmptyString(wid)?" ":" AND ");// can be AND or OR
+        x.append(!StringUtility.isEmptyString(sid)?" ": " c.shop.id =?2  ");
+        x.append(StringUtility.isEmptyString(sid)?" ":" AND ");// can be AND or OR
+        x.append(" c.createdDate between ?3 and ?4 ");
 //        Datea
          
-         String qr = " select   i, ijls.uom, sum(ijls.qty)    "
-                    + " from InventoryJournal  c left join c.lines ijls left join  ijls.item i   "
-                + x
-                    + " group by  i ,ijls.uom ";
+         String qr = " SELECT   i, ijls.uom, SUM(ijls.qty)    "
+                    + " from InventoryJournal  c LEFT JOIN c.lines ijls LEFT JOIN  ijls.item i   "
+                    + x
+                    + " GROUP BY  i ,ijls.uom ";
         //
         List list = executeQuery(qr,new Object[]{date,sid,wid});
        
@@ -236,10 +241,9 @@ WHERE it.code LIKE 'xx%'
         
         
 
-        String sel = " select  sku , uom  , sum(uom.id)  "
-                     + " from InventoryJournalLine  ijls left join ijls.sku as sku "
-                + "  left join ijls.uom as uom  ";
-        String qr = " group by  sku ,uom ,uom.id ";
+        String sel = " select  ijls.sku , ijls.uom  , sum(ijls.qty)  "
+                     + " from InventoryJournalLine  ijls ";
+        String qr = " group by  ijls.sku,  ijls.uom  ";
         List list = executeQuery(sel+qr);
 
         return list;
@@ -258,5 +262,11 @@ WHERE it.code LIKE 'xx%'
 //        return (long)ExecuteQueryOb(sel);
         return 1000;
         
+    }
+
+    public List<InventoryJournal> getLastAdjustments() {
+        String x ="select ij from InventoryJournal ij "
+                + " where ij.createDate is type is adjustment and top 1000" ;
+        return getAll();
     }
 }

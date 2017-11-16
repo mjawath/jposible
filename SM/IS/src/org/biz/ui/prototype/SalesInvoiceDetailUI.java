@@ -22,6 +22,7 @@ import org.components.windows.UIController;
  *
  * @author user
  */
+@Deprecated
 public class SalesInvoiceDetailUI extends DetailPanel<SalesInvoice> implements LineItemAdder{
 
         
