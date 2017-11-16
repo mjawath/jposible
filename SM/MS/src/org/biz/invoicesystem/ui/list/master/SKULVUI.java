@@ -24,17 +24,6 @@ public class SKULVUI extends ListViewUI {
     public SKULVUI() {
         super();
 //        initComponents();
-    }
-    
-    @Override
-    public void initPaging(QueryManager qm) {
-
-//        initComponents();      
-        super.initPaging(qm);
-//        super.initPaging(qm) ;    
-//        tbl.init(Category.class, new Class[]{String.class, String.class, Date.class, Date.class},
-//                 new String[]{ "code", "description","savedDate", "editedDate"});
-
         List<PTableColumn> tblCols = new ArrayList();
         tblCols.add(new PTableColumn(String.class, "ID"));
         tblCols.add(new PTableColumn(String.class, "Code"));
@@ -44,10 +33,7 @@ public class SKULVUI extends ListViewUI {
 
         getTable().init(SKU.class, tblCols);
     }
-
-    
-
-
+   
     @Override
     public Object[] getTableData(Object row) {
         SKU sku = (SKU) row;

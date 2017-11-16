@@ -19,7 +19,7 @@ public class SKUMasterListUI extends MasterViewUI<Category> {
      */
     public SKUMasterListUI() {
          super();
-         init();
+//         init();
     }
 
     @Override

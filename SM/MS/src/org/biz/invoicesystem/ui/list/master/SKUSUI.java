@@ -19,9 +19,15 @@ public class SKUSUI extends SearchQueryUIPanel {
     /**
      * Creates new form CategorySUI
      */
-    public SKUSUI() {
-        super();
-        initComponents();       
+    public SKUSUI() {       
+    }
+    
+      
+    @Override
+    protected void init() {        
+//        UIType = Listview_searchUIType;
+        initComponents();
+        super.init();           
     }
     
 
@@ -31,7 +37,11 @@ public class SKUSUI extends SearchQueryUIPanel {
         p.put(QRY, ttSearch.getText());
         return p;
     }
+
     
+    public String getSearchTextFieldValue(){
+        return ttSearch.getText();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
