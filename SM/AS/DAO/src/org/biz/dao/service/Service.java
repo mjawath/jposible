@@ -274,10 +274,7 @@ public class Service<T extends BusObj> {
 //        }
     }
 
-    public void preSave(BusObj saveableItem) {
-
-    }
-
+   
     private void postCreate(BusObj saveableItem) {
 
     }
