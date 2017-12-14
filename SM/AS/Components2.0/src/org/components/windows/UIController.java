@@ -255,7 +255,7 @@ public class UIController<T extends BusObj> {
 //                ((BusObj) busObject).setId((Long) id);
             }
            
-           resutls.add(service.save(selectedBusObject));
+           resutls.add(service.save(busObject));
         }
 
 

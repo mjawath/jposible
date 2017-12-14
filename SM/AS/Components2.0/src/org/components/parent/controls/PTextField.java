@@ -422,15 +422,16 @@ public class PTextField extends javax.swing.JTextField implements IComponent {
      * @param val
      */
     public void setValueIfNotFocused(Object val) {
-        if (hasFocus()) {
-            return;
-        }
-        disableDocumentChangeEvent = true;
-        setText(val == null ? "" : setFormat(val));
-        disableDocumentChangeEvent = false;
+        setValue(val);
     }
 
     public void setValue(String val) {
+        if (hasFocus()) {
+            final String v = setFormat(val);
+            if (v.equals(getValue())) {
+                return;
+            }
+        }
         disableDocumentChangeEvent = true;
         setText(val == null ? "" : setFormat(val));
         disableDocumentChangeEvent = false;
