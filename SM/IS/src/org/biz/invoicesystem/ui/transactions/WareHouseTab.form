@@ -45,7 +45,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="org.biz.erp.inventory.ui.WareHouseUI" name="wareHouseUI1">
+    <Container class="org.biz.invoicesystem.master.ui.WareHouseUI" name="wareHouseUI1">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -60,7 +60,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="org.biz.erp.inventory.ui.list.WareHouseListUI" name="wareHouseListUI1">
+    <Container class="org.biz.invoicesystem.master.ui.WareHouseListUI" name="wareHouseListUI1">
 
       <Layout>
         <DimensionLayout dim="0">

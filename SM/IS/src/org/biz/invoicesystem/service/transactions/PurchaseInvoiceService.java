@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.biz.app.ui.util.BizException;
 import org.biz.dao.service.Service;
-import org.biz.dao.util.EntityService;
 import org.biz.erp.inventory.dao.InventoryJournalDAO;
 import org.biz.invoicesystem.dao.transactions.PurchaseInvoiceDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
@@ -103,7 +102,7 @@ public class PurchaseInvoiceService extends Service<PurchaseInvoice> {
         getDao().delete(em, obj);
         final InventoryJournal inv =  (InventoryJournal) inventoryJournalDAO.getByPropertySR("refEntityID",obj.getId());
         if(inv!=null)//throw exception if null ???
-        inventoryJournalDAO.delete(em, inv);
+            inventoryJournalDAO.delete(em, inv);
         commit(em);
        
    }

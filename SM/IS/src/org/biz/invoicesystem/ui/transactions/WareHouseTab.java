@@ -38,8 +38,8 @@ public class WareHouseTab extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        wareHouseUI1 = new org.biz.erp.inventory.ui.WareHouseUI();
-        wareHouseListUI1 = new org.biz.erp.inventory.ui.list.WareHouseListUI();
+        wareHouseUI1 = new org.biz.invoicesystem.master.ui.WareHouseUI();
+        wareHouseListUI1 = new org.biz.invoicesystem.master.ui.WareHouseListUI();
         crudcontrolPanel = new com.components.custom.ControlPanel();
 
         javax.swing.GroupLayout wareHouseUI1Layout = new javax.swing.GroupLayout(wareHouseUI1);
@@ -94,7 +94,7 @@ public class WareHouseTab extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected com.components.custom.ControlPanel crudcontrolPanel;
-    private org.biz.erp.inventory.ui.list.WareHouseListUI wareHouseListUI1;
-    private org.biz.erp.inventory.ui.WareHouseUI wareHouseUI1;
+    private org.biz.invoicesystem.master.ui.WareHouseListUI wareHouseListUI1;
+    private org.biz.invoicesystem.master.ui.WareHouseUI wareHouseUI1;
     // End of variables declaration//GEN-END:variables
 }

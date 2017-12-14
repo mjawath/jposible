@@ -16,7 +16,6 @@ import javax.persistence.Temporal;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.entity.master.Shop;
-import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 
 /**
  *

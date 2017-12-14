@@ -130,19 +130,7 @@ public class SalesInvoiceService extends Service<SalesInvoice>{
 
     }
     
-      @Override
-    public void preSave(BusObj toSave) {
-        final SalesInvoice sales = (SalesInvoice) toSave;//CurrentBusObject();
-        for (SalesInvoiceLineItem lineItem : sales.getLineItems()) {
-            if(lineItem.getUom() == null && lineItem.getSku()!= null){
-                final UOM primaryUOM = lineItem.getSku().getItem().getPrimaryUOM();
-                lineItem.setUom(primaryUOM);
-                System.out.println("item uom set "+lineItem.getUom());
-            }
-        }
-        
-        super.preSave(toSave); //To change body of generated methods, choose Tools | Templates.
-    }
+
         @Override
     protected SalesInvoice saveData(SalesInvoice busObject,List thingsToCreate,
             List thingsToUpdate,List thingsToDelete) {
@@ -207,7 +195,7 @@ public class SalesInvoiceService extends Service<SalesInvoice>{
         getDao().delete(em, obj);
         final InventoryJournal inv = (InventoryJournal) inventoryJournalDAO.getByPropertySR("refEntityID",obj.getId());
         if(inv!=null)
-        inventoryJournalDAO.delete(em, inv);
+            inventoryJournalDAO.delete(em, inv);
         commit(em);
        
    }

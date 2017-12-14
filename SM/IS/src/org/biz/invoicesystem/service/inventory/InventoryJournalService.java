@@ -5,7 +5,6 @@
 
 package org.biz.invoicesystem.service.inventory;
 
-import java.util.Date;
 import java.util.List;
 import org.biz.dao.service.Service;
 import org.biz.erp.inventory.dao.InventoryJournalDAO;

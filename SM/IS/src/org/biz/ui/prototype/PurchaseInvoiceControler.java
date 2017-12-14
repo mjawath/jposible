@@ -101,6 +101,9 @@ public class PurchaseInvoiceControler extends UIController<PurchaseInvoice> {
         ///get the current line and update it        
 
         PurchaseInvoiceLineItem selectedSL = (PurchaseInvoiceLineItem) salesLineUI.getSelectedLineObject();
+        if(salesInvoiceLineItem.getUom() ==null && salesInvoiceLineItem.getSku()!=null){
+            salesInvoiceLineItem.setUom(salesInvoiceLineItem.getSku().getItem().getPrimaryUOM());
+        }
         currentBusObject.addOrUpdateLine(selectedSL, salesInvoiceLineItem);
         currentBusObject.setTotal();
         /*if(this is a valid entry )

@@ -23,7 +23,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import org.biz.books.ui.accounts.AccountsCreationUI;
 import org.biz.books.ui.accounts.GeneralLedgerUI;
-import org.biz.erp.inventory.ui.WareHouseUI;
+import org.biz.invoicesystem.master.ui.WareHouseUI;
 import org.biz.invoicesystem.master.ui.ItemMasterTab;
 import org.biz.invoicesystem.master.ui.PurchaseMasterUi;
 import org.biz.invoicesystem.master.ui.ShopUI;

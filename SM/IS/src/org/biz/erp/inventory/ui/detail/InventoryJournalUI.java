@@ -4,13 +4,10 @@
  */
 package org.biz.erp.inventory.ui.detail;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import com.biz.system.ISProperties;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.AbstractAction;
-import org.biz.app.ui.util.Command;
+import org.biz.MS_Static;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.UIEty;
 import org.biz.dao.service.Service;
@@ -18,10 +15,11 @@ import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Warehouse;
+import org.biz.invoicesystem.master.ui.WareHoueLV;
+import org.biz.invoicesystem.master.ui.WareHouseController;
 import org.biz.invoicesystem.service.master.ItemService;
 import org.biz.invoicesystem.service.master.ShopService;
 import org.biz.invoicesystem.service.master.WareHouseService;
-import org.components.util.ComponentFactory;
 import org.components.windows.DetailPanel;
 import org.components.windows.UIController;
 
@@ -35,7 +33,7 @@ import org.components.windows.UIController;
     private WareHouseService wser;
     private ShopService shopservice;
     private InventoryJournalController journalController;
-    
+    private WareHouseController wareHouseController;
     
     /**
      * Creates new form InventoryJournalUI
@@ -48,13 +46,15 @@ import org.components.windows.UIController;
     public void init() {
         initComponents();
         super.init();
-        initLineItemTablePanel();
         inventoryJournalLineItemUI1.setTableContainer(tableContainer1);
         tableContainer1.addNewLineGotoNewLine();
         
-        UIEty.cmbModelWithoutNull(tTransaction,new String[]{InventoryJournal.SALES,
-            InventoryJournal.PURCHASE,InventoryJournal.ADJUSTMENT} );
+        UIEty.cmbModelWithoutNull(tTransaction,new String[]{InventoryJournal.ADJUSTMENT,
+            InventoryJournal.PURCHASE,InventoryJournal.SALES} );
+        wareHouseController = new WareHouseController();
 
+        twarehouse.setListViewQueryManger(wareHouseController.getPopupQueryManger(), new WareHoueLV());
+        twarehouse.setSelectedProperty("code");
         setTabOrder();       
 
     }
@@ -63,9 +63,9 @@ import org.components.windows.UIController;
         tcode.setValueIfNotFocused(object.getCode());
         tdocumentname.setValueOfText(object.getDocumentClass());
         tdoctype.setValueOfText(object.getDocType());
-        twarehouse.setValue(object.getWarehouse());
+        twarehouse.setSelectedObject(object.getWarehouse());
         tshop.setValue(object.getShop());
-        tdate.setDate(object.getEntryDate());
+        tentrydate.setDate(object.getEntryDate());
 //        tDiscountPer.setValueIfNotFocused(object.getDiscountPer());
 //        tdiscAmount.setValueIfNotFocused(object.getDiscount());
 //        UIEty.objToUi(tlblTotal, object.getTotal());
@@ -84,61 +84,16 @@ import org.components.windows.UIController;
     public InventoryJournal uiToData() {
 
         //TODO- 
-        InventoryJournal busObject=null;
-        if(selectedObject == null){
-             busObject = new InventoryJournal();
-        }else{
-             busObject =selectedObject;
-        }
+        InventoryJournal busObject=super.uiToData();
         busObject.setCode(UIEty.tcToStr(tcode));
+        busObject.setWarehouse(twarehouse.getSelectedObject());
         busObject.setRefCode(UIEty.tcToStr(tdocref1));
         busObject.setLines(tableContainer1.getlistBusObject());
+        busObject.setEntryDate(tentrydate.getDate());
         return busObject;
     }
 
      
-    /*
-     Line item entry logic 
-     * Detail panel, Table Panel
-     * 
-     */
-    public void initLineItemTablePanel() {
-        //Table init
-        //table events
-//        tblLine.init(InventoryJournalLine.class, new Class[]{Item.class, String.class, String.class, String.class},
-//                new String[]{"Item", "Item desc", "UOM", "QTY"});
-
-//        tblLine.setTableInteractionListner(new TableInteractionListner() {
-//
-//
-//            @Override
-//            public Object[] getTableData(Object row) {
-//                InventoryJournalLine sil = (InventoryJournalLine) row;
-//                if(sil ==null)return new Object[2];
-//                Item itm = sil.getItem();
-//                UOM uom = sil.getUom();
-//                return new Object[]{sil, itm, itm != null ? itm.getCode() : null,
-//                            uom != null ? uom.getCode() : "", sil.getQty()};
-//            }
-//
-//            @Override
-//            public void selectionChanged(Object newRowObject) {
-//                setLineItemDetail((InventoryJournalLine) newRowObject);
-//            }
-//        });
-//
-//        gridControllerPanel1.setTable(tblLine);
-
-
-
-        
-        
-//        tblLine.addNewToLast();
-
-
-    }
-    
-      
     private void setTabOrder() {
 //        addToFocus(titem);
 //        addToFocus(tuom);
@@ -149,133 +104,7 @@ import org.components.windows.UIController;
         addToFocus(tshop);
     }
 
-    @Override
-    public void events() {
-        super.events();
-        ActionListener act = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
-//        titem.setDocAction(act);
-//        tqty.setDocAction(act);
-//        ComponentFactory.createDoubleTextField(tqty);
-//        titem.setActionActionTask(new ActionTask() {
-//            @Override
-//            public void actionCall(Object e) {
-//                //set the uom of the item
-//                final Item so = titem.getSelectedObject();
-//                List uoms = so != null ? so.getUoms() : new ArrayList();
-//                tuom.getPagedPopUpPanel().setList(uoms);
-//                tuom.setSelectedObject(so.getCartonUOM());
-//            }
-//        });
-//        setLineAction(null);
-
-
-        AbstractAction actx = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                tblLine.selectNextRow();
-            }
-        };
-
-
-        ComponentFactory.setKeyAction(this, actx, KeyEvent.VK_DOWN, KeyEvent.SHIFT_DOWN_MASK);
-
-
-        AbstractAction actpre = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                tblLine.selectPreRow();
-            }
-        };
-        ComponentFactory.setKeyAction(this, actpre, KeyEvent.VK_UP, KeyEvent.SHIFT_DOWN_MASK);
-
-//        tuom.setInputVerifier(new InputVerifier() {
-//
-//            @Override
-//            public boolean verify(JComponent input) {
-//                if(tuom.getSelectedObject()==null){
-//                    Item item= titem.getSelectedObject();
-//                    if(item!=null)
-//                    tuom.setSelectedObject((UOM)item.getPrimaryUOM());
-//                }
-//                return true;
-//            }
-//        });
        
-              
-    }
-    
-    
-
-    private void setLineItemDetail(InventoryJournalLine obj) {
-        if (obj == null) {
-            return;
-        }
-//        titem.setSelectedObject(obj.getItem());
-//        tqty.setValue(obj.getQty());
-//        tuom.setSelectedObject(obj.getUom() );
-//        tuom.setValue(obj.getUOMCode() );
-//        titem.requestFocus();
-
-    }
-
-//    public void setLineAction(ActionListener act) {
-//        tqty.setDocAction(new ActionListener() {
-////            @Override
-//            public void actionPerformed(ActionEvent e) {
-////                addtoLine();
-//            }
-//        });
-//        tqty.addaction(0, new ActionTask() {
-//            @Override
-//            public void actionCall(Object obj) {
-//                addtoLine();
-//            }
-//        });
-//    }
-
-//    private void addtoLine() {
-//        
-//        
-//        InventoryJournalLine li=createLine();
-//        if(li==null)return;
-//        if(li.isValidLine()){
-//        //add this to bus object 
-//            //        // get top bus object / create top bus object
-//            // validate on         // validate line item on  / top bus obj
-//            InventoryJournal ij=uiToData();
-//            ij.addIJLine(li);            
-//            tblLine.addNewOrModifySelectedRow(li);
-//  
-////        }
-//        // add to top bus obj
-//        
-//        }
-//        focusManager.setTemCom(titem);
-//    }
-
-//    public InventoryJournalLine createLine() {
-//        InventoryJournalLine lineItem = new InventoryJournalLine();
-//        lineItem.setItem(titem.getSelectedObject());
-//        lineItem.setQty(tqty.getDoubleValue());
-//        lineItem.setUom(tuom.getSelectedObject());
-//        lineItem.calculateLineItem();
-//        return lineItem;
-//    }
-//
-//    public InventoryJournalLine getSalesLine() {
-//        InventoryJournalLine lineItem = (InventoryJournalLine) tblLine.getSelectedObject();
-//        if (lineItem == null) {
-//            return new InventoryJournalLine();
-//        }
-//        lineItem.setItem(titem.getSelectedObject());
-//        lineItem.setQty(tqty.getDoubleValue());
-//        lineItem.calculateLineItem();
-//        return lineItem;
-//    }
 
     @Override
     public void setController(UIController controller) {
@@ -293,24 +122,15 @@ import org.components.windows.UIController;
 //        tqty.clear();
 //        tuom.clear();
 //        tuom.clear();
-        tdate.setDate(null);
+        tentrydate.setDate(null);
         
-        if (tshop.getSelectedObject() == null) {
-            Shop shop = shopservice.getDAO().find("123");
-            tshop.setSelectedObject(shop);
-        }
-        if (twarehouse.getSelectedObject() == null) {
-            Warehouse wh = wser.getDao().find("123");
-            twarehouse.setSelectedObject(wh);
-        }
+        setDefaultData();
 
 //        tblLine.addNewToLast();
         selectedObject=null;
 //        clearTask.start();
     }
 
-//     Command clearTask=new Command();
-    
     @Override
     public void setService(Service service) {
         itemser = new ItemService();
@@ -363,11 +183,15 @@ import org.components.windows.UIController;
 
     @Override
     public void preCreate(ArrayList objCreates, ArrayList objUpdates, ArrayList objDeletes) {
-        
-       
+               
         if (tInOrOut.getSelectedIndex() == 0) {
             busObject.setTransactionOutType();
         }
+    }
+    
+    private void setDefaultData(){
+        twarehouse.setSelectedObject(MS_Static.getDefaultWareHouse());
+        tshop.setSelectedObject(MS_Static.getDefaultShop());
     }
     
     
@@ -383,7 +207,7 @@ import org.components.windows.UIController;
         cLabel2 = new org.components.controls.CLabel();
         tdoctype = new org.components.controls.CLabel();
         cLabel4 = new org.components.controls.CLabel();
-        tdate = new org.components.controls.CDatePicker();
+        tentrydate = new org.components.controls.CDatePicker();
         twarehouse = new research.prototype.transaction.WareHousePopup();
         tableContainer1 = new org.biz.ui.prototype.TableContainer();
         inventoryJournalLineItemUI1 = new org.biz.erp.inventory.ui.detail.InventoryJournalLineItemUI();
@@ -396,7 +220,7 @@ import org.components.windows.UIController;
 
         setLayout(null);
         add(tcode);
-        tcode.setBounds(40, 530, 150, 23);
+        tcode.setBounds(40, 523, 150, 30);
         add(tshop);
         tshop.setBounds(350, 590, 150, 30);
 
@@ -420,29 +244,29 @@ import org.components.windows.UIController;
         cLabel4.setText("Inventory Transaction");
         add(cLabel4);
         cLabel4.setBounds(840, 190, 190, 25);
-        add(tdate);
-        tdate.setBounds(840, 140, 140, 23);
+        add(tentrydate);
+        tentrydate.setBounds(840, 140, 140, 23);
         add(twarehouse);
         twarehouse.setBounds(50, 590, 270, 25);
         add(tableContainer1);
         tableContainer1.setBounds(40, 190, 750, 302);
         add(inventoryJournalLineItemUI1);
-        inventoryJournalLineItemUI1.setBounds(30, 120, 662, 72);
+        inventoryJournalLineItemUI1.setBounds(40, 120, 720, 70);
 
         tdocref.setText("Ref");
         add(tdocref);
         tdocref.setBounds(210, 500, 104, 25);
         add(tdocref1);
-        tdocref1.setBounds(200, 530, 150, 23);
+        tdocref1.setBounds(200, 523, 150, 30);
 
-        tdocumentname.setText("Date");
+        tdocumentname.setText("Document Name");
         add(tdocumentname);
-        tdocumentname.setBounds(840, 110, 120, 20);
+        tdocumentname.setBounds(800, 340, 230, 20);
 
         tTransaction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Adjustments", "SalesInvoice", "PurchaseInvoice", " " }));
         tTransaction.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         add(tTransaction);
-        tTransaction.setBounds(560, 580, 220, 40);
+        tTransaction.setBounds(560, 580, 250, 40);
 
         tdocumentname1.setText("Ref");
         add(tdocumentname1);
@@ -462,13 +286,13 @@ import org.components.windows.UIController;
     private org.components.controls.CComboBox tTransaction;
     private org.biz.ui.prototype.TableContainer tableContainer1;
     private org.components.controls.CTextField tcode;
-    private org.components.controls.CDatePicker tdate;
     private org.components.controls.CLabel tdocref;
     private org.components.controls.CTextField tdocref1;
     private org.components.controls.CLabel tdocref2;
     private org.components.controls.CLabel tdoctype;
     private org.components.controls.CLabel tdocumentname;
     private org.components.controls.CLabel tdocumentname1;
+    private org.components.controls.CDatePicker tentrydate;
     private com.components.custom.TextFieldWithPopUP<Shop> tshop;
     private research.prototype.transaction.WareHousePopup twarehouse;
     // End of variables declaration//GEN-END:variables

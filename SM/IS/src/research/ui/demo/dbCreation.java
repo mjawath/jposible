@@ -74,8 +74,7 @@ public class dbCreation {
         List lsts = new ArrayList();
         Date date = new Date();
         Shop shz = new Shop();
-//        shz.setId("123");
-        shz.setCode("123s");
+        shz.setId("123");
         lsts.add(shz);
 
         for (int i = 0; i < 10; i++) {
@@ -162,8 +161,7 @@ public class dbCreation {
 
         Date date = new Date();
         Warehouse shz = new Warehouse();
-//        shz.setId("123");
-        shz.setCode("123s");
+        shz.setId("123");
         lstw.add(shz);
         System.out.println("warehouse .......... ");
 

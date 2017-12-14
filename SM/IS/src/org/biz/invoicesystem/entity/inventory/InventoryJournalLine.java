@@ -4,7 +4,6 @@
  */
 package org.biz.invoicesystem.entity.inventory;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -139,7 +138,7 @@ public class InventoryJournalLine  extends BusObj {
    
     public boolean isValidLine() {
         
-        if (getItem() == null || getUom() == null || getQty() == null || getQty()==0) {
+        if (getSku()== null || getUom() == null || getQty() == null || getQty()==0) {
             return false;
         }
         return true;

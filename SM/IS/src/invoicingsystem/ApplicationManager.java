@@ -21,12 +21,17 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.biz.DropMainMenu;
+import org.biz.MS_Static;
 import org.biz.MenuBuilder;
 import org.biz.app.ui.util.Tracer;
+import org.biz.dao.service.GenericDAO;
 import org.biz.dao.service.Service;
 import org.biz.erp.inventory.ui.detail.InventoryJournalController;
+import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.invoicesystem.entity.master.Warehouse;
+import org.biz.invoicesystem.master.ui.WareHouseController;
 import org.biz.invoicesystem.ui.list.master.ItemMasterFrame;
-import org.biz.invoicesystem.ui.transactions.WareHouseFrame;
+import org.biz.invoicesystem.master.ui.WareHouseFrame;
 import org.biz.util.ReflectionUtility;
 import org.components.controls.CButton;
 import org.components.controls.Menu;
@@ -75,7 +80,19 @@ public class ApplicationManager {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                Sessions.create();             
+                Sessions.create();  
+                
+                
+                GenericDAO gd = new GenericDAO();
+                gd.setCls(Warehouse.class);
+                Warehouse w =(Warehouse) gd.find(MS_Static.getDefaultWareHouseCode());
+                MS_Static.setDefaultWareHouse(w);
+                
+                
+                gd.setCls(Shop.class);
+                Shop s =(Shop) gd.find(MS_Static.getDefaultShopCode());
+                MS_Static.setDefaultShop(s);
+                
                 
 //                setFocusTraversialPolicy();
                 System.out.println("============Application is starting..........===================");
