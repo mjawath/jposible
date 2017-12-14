@@ -23,6 +23,10 @@ public class Warehouse extends BusObj {
     public void setCode(String code) {
         this.code = code;
     }
+    
+    public static Warehouse getDefaultWareHouse(){
+        return null;
+    }
 }
 /**
  * defining hirachical structure for the location 

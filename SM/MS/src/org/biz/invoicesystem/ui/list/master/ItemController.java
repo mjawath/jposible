@@ -22,10 +22,7 @@ public class ItemController extends UIController<Item>{
     public ItemController() {
         super();
         setService(new ItemService());      
-    }
-
-
-   
+    }  
    
     
     public void initUI(){
