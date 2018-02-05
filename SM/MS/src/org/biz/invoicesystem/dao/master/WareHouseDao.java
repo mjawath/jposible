@@ -15,14 +15,12 @@ import org.biz.invoicesystem.entity.master.Warehouse;
 public class WareHouseDao extends GenericDAO<Warehouse> {
 
     public WareHouseDao() {
-    setCls(Warehouse.class);
+        setCls(Warehouse.class);
     }
-    
-    public List byCode(String qry){
+
+    public List byCode(String qry) {
         String qryx = " c.code like  '" + qry + "%'";
-    return pagedData(qryx);
+        return pagedData(qryx);
     }
-    
-    
-    
+
 }

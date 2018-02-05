@@ -16,10 +16,10 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     // List<Customer> customers;
     private Customer selectedCus;
 
-    public CustomerDetailUI(){
+    public CustomerDetailUI() {
         super();
     }
-    
+
     @Override
     public void init() {
         initComponents();
@@ -28,10 +28,8 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         addToFocus(tCusTitle);
         addToFocus(tCusName);
         addToFocus(tCusCompany);
-        
-    }
-    
 
+    }
 
     ///////////////////////////////////////////////  
     ///////////////////////////////////////////
@@ -42,17 +40,18 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
 
             //list of array retuns String array  
             //object is String array....
-
             Set<String> types = new TreeSet<String>();
             Set<String> titles = new TreeSet<String>();
             for (Object[] ss : lstOfArray) {
                 String type = (String) ss[0];
-                if (type != null) 
-                    types.add(type);                             
+                if (type != null) {
+                    types.add(type);
+                }
 
                 String title = (String) ss[0];
-                if (title != null) 
+                if (title != null) {
                     titles.add(title);
+                }
             }
             UIEty.loadcombo(tCusType, types);
             UIEty.loadcombo(tCusTitle, titles);
@@ -85,12 +84,12 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         UIEty.objToUi(tCusEmail, obj.getEmail());
     }
 
-    public Customer uiToData(){
-            Customer c= null;
-        if(selectedObject == null){
-                c=new Customer();
-        }else{
-            c =selectedObject;
+    public Customer uiToData() {
+        Customer c = null;
+        if (selectedObject == null) {
+            c = new Customer();
+        } else {
+            c = selectedObject;
         }
 //            c.setId(EntityService.getEntityService().getKey(""));
         c.setCode(UIEty.tcToStr(tCusCode));
@@ -116,12 +115,10 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
 
     }
 
-
-
-    public void  clear(){
+    public void clear() {
         setDataToUI(new Customer());
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -440,7 +437,7 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
     private void tCusDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCusDiscountActionPerformed
         // TODO add your handling code here:
 }//GEN-LAST:event_tCusDiscountActionPerformed
-    
+
     private void tCusAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCusAdd1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tCusAdd1ActionPerformed
@@ -485,24 +482,23 @@ public class CustomerDetailUI extends DetailPanel<Customer> {
         // TODO add your handling code here:
     }//GEN-LAST:event_tCusNICActionPerformed
 
-     /**
-      * @param cService the cService to set
-      */
-     public void setcService(CustomerService cService) {
-         this.cService = cService;
-     }
+    /**
+     * @param cService the cService to set
+     */
+    public void setcService(CustomerService cService) {
+        this.cService = cService;
+    }
 
-     @Override
-     public String getTabName() {
-         return "Customer Form";
-     }
+    @Override
+    public String getTabName() {
+        return "Customer Form";
+    }
 
-     @Override
-     public JPanel getJPanel() {
+    @Override
+    public JPanel getJPanel() {
 
-         return this;
-     }
-     
+        return this;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CLabel cLabel1;

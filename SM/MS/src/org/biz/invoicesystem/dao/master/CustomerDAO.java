@@ -47,7 +47,7 @@ public class CustomerDAO extends GenericDAO<Customer> {
 
     public List<Customer> byCode(String customercode) {
         String cus = "  c.code like '" + customercode + "%' ";
-        List<Customer> lst = pagedData( cus, 0);
+        List<Customer> lst = pagedData(cus, 0);
         return lst;
     }
 

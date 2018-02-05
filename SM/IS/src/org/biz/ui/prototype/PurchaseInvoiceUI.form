@@ -16,22 +16,33 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="purchaseInvoiceLineDetailTableUI1" max="32767" attributes="0"/>
-                  <Component id="tableContainer1" pref="696" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="purchaseInvoiceLineDetailTableUI1" max="32767" attributes="0"/>
+                          <Component id="tableContainer1" pref="719" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="cPanel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="cPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="tlblShop" min="-2" max="-2" attributes="0"/>
+                          <Component id="tlblWarehouse" min="-2" pref="149" max="-2" attributes="0"/>
+                          <Component id="tlblWorkStation" min="-2" max="-2" attributes="0"/>
+                          <Component id="tlblstaff" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="cPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-              <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-              <Component id="cPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,15 +59,29 @@
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="12" max="32767" attributes="0"/>
                       <Component id="cPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="cPanel3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <Component id="tlblWarehouse" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tlblShop" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tlblWorkStation" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="tlblstaff" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -381,18 +406,14 @@
                   <Component id="cLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="tcustNew" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="cLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="tname" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Component id="tpopCustomer" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="cLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="tcustNew" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="tpopCustomer" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="cLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tname" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -416,7 +437,7 @@
         </Component>
         <Component class="org.components.controls.CLabel" name="cLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Customer Info (F7)"/>
+            <Property name="text" type="java.lang.String" value="Supplier Info (F7)"/>
           </Properties>
         </Component>
         <Component class="org.components.controls.CLabel" name="cLabel5">
@@ -456,5 +477,25 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="org.components.controls.CLabel" name="tlblWarehouse">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="WareHouse"/>
+      </Properties>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="tlblShop">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Shop"/>
+      </Properties>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="tlblWorkStation">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Workstation"/>
+      </Properties>
+    </Component>
+    <Component class="org.components.controls.CLabel" name="tlblstaff">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Staff"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

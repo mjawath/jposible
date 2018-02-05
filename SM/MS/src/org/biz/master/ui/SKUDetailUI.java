@@ -22,8 +22,8 @@ import org.components.windows.UIController;
  */
 public class SKUDetailUI extends DetailPanel<SKU> {
 
-    
     private SKUController ic;
+
     /**
      * Creates new form SKUDetailUI
      */
@@ -35,25 +35,23 @@ public class SKUDetailUI extends DetailPanel<SKU> {
     public void init() {
         initComponents();
 
-        super.init();     
-        
+        super.init();
+
         ItemController itc = new ItemController();
         titem.setListViewQueryManger(itc.getPopupQueryManger(), new ItemLV());
         titem.setSelectedProperty("code");
-        
-        
+
         addToFocus(titem);
         addToFocus(tSKUSearchKey);
         addToFocus(tItemAttributes);
         addToFocus(tAttributeValue);
-        
-        
+
     }
 
     @Override
     public void setController(UIController controller) {
         super.setController(controller); //To change body of generated methods, choose Tools | Templates.
-        ic = (SKUController)controller;
+        ic = (SKUController) controller;
     }
 
     @Override
@@ -67,10 +65,10 @@ public class SKUDetailUI extends DetailPanel<SKU> {
 
     @Override
     public SKU uiToData() {
-        if(busObject ==null){
+        if (busObject == null) {
             busObject = new SKU();
         }
-        busObject.setItem((Item)titem.getSelectedObject());
+        busObject.setItem((Item) titem.getSelectedObject());
         busObject.setCode(tSKUSearchKey.getText());
         busObject.setExplainningSearchString(tskuexpl.getText());
         return busObject;
@@ -78,22 +76,18 @@ public class SKUDetailUI extends DetailPanel<SKU> {
 
     @Override
     public void clear() {
-        super.clear(); 
+        super.clear();
         tAttributeValue.clear();
         tSKUSearchKey.clear();
         titem.clear();
         tblItemAttribute.clear();
 //        tblItemAttribute.clear();
         setDataToUI(new SKU());
-        
+
     }
-    
-    
-   
-    
-    
+
     private void addUOM() {
-        
+
         ItemAttribute uom = new ItemAttribute();
         SKU item = uiToData();
         item.addSKUorUpdate(uom);
@@ -110,8 +104,6 @@ public class SKUDetailUI extends DetailPanel<SKU> {
 //        focusManager.setTemCom(tunitsymbot);
 
     }
- 
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,8 +126,6 @@ public class SKUDetailUI extends DetailPanel<SKU> {
         tSKUSearchKey = new org.components.controls.CTextField();
         cLabel3 = new org.components.controls.CLabel();
         cLabel4 = new org.components.controls.CLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        cTableMaster2 = new org.components.controls.CTableMaster();
         titem = new com.components.custom.TextFieldWithPopUP();
         jScrollPane3 = new javax.swing.JScrollPane();
         tskuexpl = new org.components.controls.CTextArea();
@@ -168,16 +158,6 @@ public class SKUDetailUI extends DetailPanel<SKU> {
 
         cLabel4.setText("Unique Code");
 
-        cTableMaster2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Barcode"
-            }
-        ));
-        jScrollPane2.setViewportView(cTableMaster2);
-
         tskuexpl.setColumns(20);
         tskuexpl.setRows(5);
         jScrollPane3.setViewportView(tskuexpl);
@@ -207,7 +187,7 @@ public class SKUDetailUI extends DetailPanel<SKU> {
                                 .addGap(6, 6, 6)
                                 .addComponent(titem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tSKUSearchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
@@ -216,27 +196,25 @@ public class SKUDetailUI extends DetailPanel<SKU> {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jLabel1))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(289, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(titem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
+                        .addComponent(titem, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -247,17 +225,17 @@ public class SKUDetailUI extends DetailPanel<SKU> {
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tSKUSearchKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tSKUSearchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
                                 .addComponent(cButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(cButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(79, 79, 79))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(jScrollPane3)))))
                 .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -265,14 +243,8 @@ public class SKUDetailUI extends DetailPanel<SKU> {
     private void cButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cButton1ActionPerformed
 
         tblItemAttribute.getModelCollection();
-        
-        
-        
-        
-    }//GEN-LAST:event_cButton1ActionPerformed
 
-    
-    
+    }//GEN-LAST:event_cButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
@@ -282,10 +254,8 @@ public class SKUDetailUI extends DetailPanel<SKU> {
     private org.components.controls.CLabel cLabel2;
     private org.components.controls.CLabel cLabel3;
     private org.components.controls.CLabel cLabel4;
-    private org.components.controls.CTableMaster cTableMaster2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private org.components.controls.CComboBox tAttributeValue;
     private org.components.controls.CComboBox tItemAttributes;

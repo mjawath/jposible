@@ -46,6 +46,7 @@ public class PButton extends JButton  implements IComponent{
 
         setText("Button");
         setFocusable(false);
+        setMargin(new java.awt.Insets(0, 0, 0, 0));
     }// </editor-fold>//GEN-END:initComponents
 
 

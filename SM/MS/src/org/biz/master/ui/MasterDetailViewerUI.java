@@ -28,14 +28,14 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
 
     }
 
-    public void init(TabPanelUI tab,String detailMas, TabPanelUI listViewUI) {
+    public void init(TabPanelUI tab, String detailMas, TabPanelUI listViewUI) {
         jTabbedPane1.add(tab, detailMas);
-        tab.setTabName(detailMas+"DETAIL");
+        tab.setTabName(detailMas + "DETAIL");
         jTabbedPane1.add(listViewUI, detailMas);
-        listViewUI.setTabName(detailMas+"LIST");
-        
-        SystemUtil.addTabToSessions(detailMas+"DETAIL", tab);
-        SystemUtil.addTabToSessions(detailMas+"LIST", listViewUI);
+        listViewUI.setTabName(detailMas + "LIST");
+
+        SystemUtil.addTabToSessions(detailMas + "DETAIL", tab);
+        SystemUtil.addTabToSessions(detailMas + "LIST", listViewUI);
         jTabbedPane1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -44,9 +44,9 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
         });
 
     }
-    
-    public static void addTabPane(JTabbedPane tab, TabPanelUI panelUI,String tabName ){
-    
+
+    public static void addTabPane(JTabbedPane tab, TabPanelUI panelUI, String tabName) {
+
         try {
             TabPanelUI tpui = (TabPanelUI) Sessions.getObj(tabName);
             int ix = tab.indexOfTab(tabName);
@@ -61,12 +61,12 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
                 tab.setSelectedIndex(ix);
 //                tpui.setobj(obj);
             }
-        
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,7 +76,7 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
     //<editor-fold defaultstate="collapsed" desc=" main method Look and feel setting code (optional) ">
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+ /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
@@ -102,8 +102,8 @@ public class MasterDetailViewerUI extends javax.swing.JPanel {
 
                 CustomerMasterUI2 customerMasterUI2 = new CustomerMasterUI2();
                 CustomerListUi custList = new CustomerListUi();
-                
-                it.init(customerMasterUI2,"Customer", custList);
+
+                it.init(customerMasterUI2, "Customer", custList);
                 JFrame fram = new JFrame();
                 fram.getContentPane().add(it);
                 fram.setSize(700, 700);

@@ -51,10 +51,10 @@ public class SupplierDAO extends GenericDAO<Supplier> {
         }
         return lst;
     }
-    
+
     public List<Supplier> byCode(String code) {
         String cus = "  c.name like '" + code + "%' ";
-        List<Supplier> lst = pagedData( cus, 0);
+        List<Supplier> lst = pagedData(cus, 0);
         return lst;
     }
 }

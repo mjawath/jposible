@@ -9,8 +9,12 @@ import com.biz.system.ISProperties;
 import com.components.custom.ActionTask;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import org.biz.MS_Static;
 import org.biz.app.ui.util.UIEty;
 import org.biz.invoicesystem.entity.master.Customer;
+import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.invoicesystem.entity.master.Warehouse;
+import org.biz.invoicesystem.entity.master.WorkStation;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.ui.list.master.CustomerController;
 import org.biz.invoicesystem.ui.list.master.CustomerLV;
@@ -123,6 +127,20 @@ public class SalesInvoiceTableDetail extends DetailPanel<SalesInvoice> {
         busObject.setLineItems(tableContainer1.getlistBusObject());
 //        busObject.setTotal();
 //        busObject.calculateBalance();
+        if(busObject.getShop()== null){
+            Shop defaultShop = MS_Static.getDefaultShop();
+            busObject.setShop(defaultShop);
+        } 
+        if(busObject.getWorkStation()== null){
+            WorkStation defaultShop = MS_Static.getDefaultWorkStation();
+            busObject.setWorkStation(defaultShop);
+        }
+        if(busObject.getWarehouse()== null){
+            Warehouse defaultShop = MS_Static.getDefaultWareHouse();
+            busObject.setWarehouse(defaultShop);
+        }
+        
+
         return busObject;
     }
 

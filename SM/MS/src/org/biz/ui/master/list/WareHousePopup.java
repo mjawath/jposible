@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.biz.ui.master.list;
 
 import com.components.custom.PopupListner;
@@ -16,10 +15,10 @@ import org.biz.invoicesystem.service.master.WareHouseService;
  *
  * @author jawath
  */
-public class WareHousePopup extends TextFieldWithPopUP<Warehouse>{
-    
-    public WareHousePopup(){
-    
+public class WareHousePopup extends TextFieldWithPopUP<Warehouse> {
+
+    public WareHousePopup() {
+
 //        super();
 //        initPopup(Warehouse.class, new Class[]{String.class, String.class}, new String[]{"id", "code"}, "code",
 //                new PopupListner() {

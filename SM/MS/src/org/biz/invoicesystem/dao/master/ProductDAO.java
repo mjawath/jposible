@@ -7,11 +7,10 @@ import org.biz.invoicesystem.entity.master.Product;
  *
  * @author mjawath
  */
-public class ProductDAO extends GenericDAO<Product>{
-    
-    public ProductDAO() {
-    setCls(Product.class);
-    }
+public class ProductDAO extends GenericDAO<Product> {
 
+    public ProductDAO() {
+        setCls(Product.class);
+    }
 
 }

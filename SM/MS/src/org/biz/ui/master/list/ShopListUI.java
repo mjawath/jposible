@@ -24,7 +24,7 @@ public class ShopListUI extends MasterViewUI<Shop> {
         super();
     }
 
-  @Override
+    @Override
     public void init() {
         initComponents();
         super.init();
@@ -34,7 +34,7 @@ public class ShopListUI extends MasterViewUI<Shop> {
     public void init(CxTable tbl) {
         super.init(tbl);
         tbl.init(Shop.class, new Class[]{String.class, String.class, Date.class, Date.class},
-                 new String[]{"id", "code", "savedDate", "editedDate"});
+                new String[]{"id", "code", "savedDate", "editedDate"});
         tbl.setTableInteractionListner(tableInteractionListner);
         listUI.getPagePanel().init(service, searchListener, tbl);
     }
@@ -58,8 +58,6 @@ public class ShopListUI extends MasterViewUI<Shop> {
             return new Object[]{"%"};
         }
     };
-  
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

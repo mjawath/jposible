@@ -14,47 +14,44 @@ import org.components.windows.DetailPanel;
 public class CategoryUI extends DetailPanel<Category> {
 
     private Category selected;
+
     /**
      * Creates new form CategoryUI
      */
-    public CategoryUI() {    
-        super();   
+    public CategoryUI() {
+        super();
     }
 
     public void init() {
-        
-      initComponents(); 
-      super.init();
-      clear();
+
+        initComponents();
+        super.init();
+        clear();
     }
-    
+
     public void clear() {
         tcode.clear();
         tdesc.clear();
         super.clear();
     }
-   
-    
 
     public Category uiToData() {
         //do we set id        
-        if(busObject ==null ){
-           busObject  = new Category();
+        if (busObject == null) {
+            busObject = new Category();
         }
-        
+
         busObject.setCode(tcode.getValue());
         busObject.setDescription(tdesc.getValue());
         return busObject;
     }//todo crud control
 
     public void setDataToUI(Category obj) {
-      super.setDataToUI(obj);
+        super.setDataToUI(obj);
         tcode.setValue(obj.getCode());
-        tdesc.setValue(obj.getDescription());       
-    } 
-    
-    
-    
+        tdesc.setValue(obj.getDescription());
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

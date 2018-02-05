@@ -28,3 +28,5 @@ encodings.xml
 /SM/IS/drop.sql
 /SM/IS/create.sql
 /SM/IS/sampledb.sqlite
+/SM/ReportCore/build/
+/SM/ReportCore/dist/

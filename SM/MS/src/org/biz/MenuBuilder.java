@@ -22,75 +22,77 @@ import org.components.controls.MenuItemComponent;
  * @author jawa
  */
 public class MenuBuilder {
-   
-   private  final  HashMap<String,Class<Action>> menu = new HashMap();   
-   
-   
-   public void addMenu(String menuName,Class<Action> menuActionClass){
-       //get the menu hierachi from propfile of db
-       
-       menu.put(menuName, menuActionClass);       
-   }
-   public void createMenuItem(MenuItem menuItem) {
-       JMenuBar mb = SystemUtil.getMenuBar();
-       if(StringUtility.isEmptyString(menuItem.getParentMenu()))return;
-       String []arra =    menuItem.getParentMenu().split(">");
-       
-       JComponent parentCom = mb;
-       for (int i = 0; i < arra.length; i++) {
-           String menuName = arra[i].trim();
-           parentCom = createMenuIfNot(menuName, parentCom);
-       }
-       
-       if(parentCom!=null && parentCom  instanceof Menu){
-           MenuItemComponent mic = new MenuItemComponent();
-           MenuAction ma = new MenuAction(menuItem.getActionClassName());
+
+    private final HashMap<String, Class<Action>> menu = new HashMap();
+
+    public void addMenu(String menuName, Class<Action> menuActionClass) {
+        //get the menu hierachi from propfile of db
+
+        menu.put(menuName, menuActionClass);
+    }
+
+    public void createMenuItem(MenuItem menuItem) {
+        JMenuBar mb = SystemUtil.getMenuBar();
+        if (StringUtility.isEmptyString(menuItem.getParentMenu())) {
+            return;
+        }
+        String[] arra = menuItem.getParentMenu().split(">");
+
+        JComponent parentCom = mb;
+        for (int i = 0; i < arra.length; i++) {
+            String menuName = arra[i].trim();
+            parentCom = createMenuIfNot(menuName, parentCom);
+        }
+
+        if (parentCom != null && parentCom instanceof Menu) {
+            MenuItemComponent mic = new MenuItemComponent();
+            MenuAction ma = new MenuAction(menuItem.getActionClassName());
 //           ma.set
-           mic.addActionListener(ma);
-           mic.setText(menuItem.getMenuName());
-           mic.setBusObj(menuItem);
-           parentCom.add(mic);
-       }
+            mic.addActionListener(ma);
+            mic.setText(menuItem.getMenuName());
+            mic.setBusObj(menuItem);
+            parentCom.add(mic);
+        }
 
     }
-   private JComponent createMenuIfNot(String menuName,JComponent parent){
-       int componentCount =0;
-       if(parent instanceof JMenuBar){
-           componentCount = parent.getComponentCount();
-       }else if (parent instanceof JMenu) {
-           componentCount = ((Menu) parent).getMenuComponentCount();
-       }
-       
-       
 
-       if(componentCount==0){
-           return createNewMenuAddToParent(menuName, parent);
-       }
-       
-       for (int i = 0; i < componentCount; i++) {
-           Object menuObj = null;
-           if (parent instanceof JMenuBar) {
-            menuObj= parent.getComponent(i);
-           }else if (parent instanceof JMenu) {
-               menuObj = ((JMenu)parent).getMenuComponent(i);
-           }
-           if (!(menuObj instanceof Menu)){
-               continue;
-           }
-               if (StringUtility.isSameString(((Menu) menuObj).getText(), menuName)) {
-                   return (Menu) menuObj;
-               }
+    private JComponent createMenuIfNot(String menuName, JComponent parent) {
+        int componentCount = 0;
+        if (parent instanceof JMenuBar) {
+            componentCount = parent.getComponentCount();
+        } else if (parent instanceof JMenu) {
+            componentCount = ((Menu) parent).getMenuComponentCount();
+        }
+
+        if (componentCount == 0) {
+            return createNewMenuAddToParent(menuName, parent);
+        }
+
+        for (int i = 0; i < componentCount; i++) {
+            Object menuObj = null;
+            if (parent instanceof JMenuBar) {
+                menuObj = parent.getComponent(i);
+            } else if (parent instanceof JMenu) {
+                menuObj = ((JMenu) parent).getMenuComponent(i);
+            }
+            if (!(menuObj instanceof Menu)) {
+                continue;
+            }
+            if (StringUtility.isSameString(((Menu) menuObj).getText(), menuName)) {
+                return (Menu) menuObj;
+            }
 //               else {
 //                   return createNewMenuAddToParent(menuName, parent);
 //               }
 
-       }
-       return createNewMenuAddToParent(menuName, parent);
-   }
-   private JComponent createNewMenuAddToParent(String menuName,JComponent parent){
-       Menu menu = new Menu();
-       menu.setText(menuName);
-       parent.add(menu);
-       return menu;
-   }
+        }
+        return createNewMenuAddToParent(menuName, parent);
+    }
+
+    private JComponent createNewMenuAddToParent(String menuName, JComponent parent) {
+        Menu menu = new Menu();
+        menu.setText(menuName);
+        parent.add(menu);
+        return menu;
+    }
 }

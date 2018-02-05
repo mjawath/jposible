@@ -5,24 +5,21 @@
 package org.biz.invoicesystem.entity.transactions;
 
 import org.util.MathUtil;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-import org.biz.app.ui.util.Tracer;
 import org.biz.entity.BusObj;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Supplier;
+import org.biz.invoicesystem.entity.master.Warehouse;
+import org.biz.invoicesystem.entity.master.WorkStation;
 
 /**
  *
@@ -40,11 +37,17 @@ public class PurchaseInvoice extends BusObj {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<PurchaseInvoiceLineItem> lineItems;
     @ManyToOne
-    Staff staff;
+    private Staff staff;
     String salesMan;
     String salesManager;
     @ManyToOne
-    Shop shop;
+    private Shop shop;
+    @ManyToOne
+    private Warehouse warehouse;
+    
+    @ManyToOne
+    private WorkStation workStation;
+    
     private String code;    
     private Double total;
     private Double subTotal;
@@ -355,4 +358,23 @@ public class PurchaseInvoice extends BusObj {
             lineItems.set(index, newSalesInvoiceLineItem);
         }
     }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
+     
+    public WorkStation getWorkStation() {
+        return workStation;
+    }
+
+    public void setWorkStation(WorkStation workStation) {
+        this.workStation = workStation;
+    }
+     
+     
 }

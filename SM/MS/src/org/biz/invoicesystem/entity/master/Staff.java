@@ -6,9 +6,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Staff extends Persons {
+public class Staff extends User {
 
-    String code;
+    private String code;
     private String name;
     private String nic;
     private String department;

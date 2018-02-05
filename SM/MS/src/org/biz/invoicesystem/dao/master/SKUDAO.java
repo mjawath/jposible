@@ -18,5 +18,5 @@ public class SKUDAO extends GenericDAO<SKU> {
         super();
         setCls(SKU.class);
     }
-    
+
 }

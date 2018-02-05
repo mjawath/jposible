@@ -65,21 +65,20 @@ public class ItemDetailUI extends DetailPanel<Item> {
 
     private List<Item> items;
     private List<Category> categorys;
-    private ItemService itemService;    
+    private ItemService itemService;
     private ItemPopUp ipu;
     private ItemMasterTab mastertab;
     private ItemListUix listUi;
     private String copiedItemId;  //this is not item code...keep in mind purpose of updating copied item
     private JFileChooser chooser;
     private List<File> images = new ArrayList<File>();
-    private TableInteractionListner tblInterUnit;    
-    
+    private TableInteractionListner tblInterUnit;
+
     public ItemDetailUI() {
 //        initComponents();//pp
 //        keyListeners();
         super();
-        
-        
+
     }
 
     /////////////////////////////////////
@@ -113,9 +112,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
         super.init();
 
 //        crudcontrolPanel.setCrudController(this);
-
-
-
         //        crudcontrolPanel.set
         tblunitprices.setPropertiesEL(new String[]{"simbol", "salesPrice", "type", "multi"});
         tblunitprices.setColumnHeader(new String[]{"Simbol", "SalesPrice", "Type", "Multi"});
@@ -136,17 +132,13 @@ public class ItemDetailUI extends DetailPanel<Item> {
 //            }
 //        });
         CategoryController cc = new CategoryController();
-        tItemCategory.setListViewQueryManger(cc.getPopupQueryManger(),new CategoryLVUI());        
+        tItemCategory.setListViewQueryManger(cc.getPopupQueryManger(), new CategoryLVUI());
         tItemCategory.setSelectedProperty("code");
-
-
 
 //        cPanel6.addToFocus(tunitsymbot);
 //        cPanel6.addToFocus(tunitprice);
 //        cPanel6.addToFocus(tunittype);
 //        cPanel6.addToFocus(tContainsQty);
-
-
         initUnitTable();
         initFileChooser();
         clear();
@@ -163,12 +155,11 @@ public class ItemDetailUI extends DetailPanel<Item> {
             public Object[] getTableData(Object row) {
                 UOM sil = (UOM) row;
                 return new Object[]{sil, sil.getCode(), sil.getSalesPrice(), sil.getUOMType(), sil.getMulti()
-                        };
+                };
             }
 
             @Override
             public void selectionChanged(Object newRowObject) {
-
 
                 UOM uom = (UOM) newRowObject;
                 if (uom == null) {
@@ -178,7 +169,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
                 tContainsQty.setValue(uom.getMulti());
                 tunitsymbot.setValue(uom.getCode());
                 tunittype.setSelectedItem(UOM.UOMType.getUOMTypeForByte(uom.getType()));
-
 
             }
         };
@@ -199,8 +189,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
     ////////////////////////////
     public void events() {
 
-
-            
         try {
             //item code listener
             tItemcode.addKeyListener(new KeyAdapter() {
@@ -225,13 +213,8 @@ public class ItemDetailUI extends DetailPanel<Item> {
                 }
             });//finished item code listener
 
-
-
             ////////////////////////////////////////////////////////////////////////////
-
             ////////////////////////////////////////////////////////////////////////////
-
-
             tContainsQty.addKeyListener(new KeyAdapter() {
                 public void keyPressed(KeyEvent e) {
                     try {
@@ -264,11 +247,8 @@ public class ItemDetailUI extends DetailPanel<Item> {
                         eee.printStackTrace();
                     }
 
-
                 }
             });
-
-            
 
 //            tunittype.addActionListener(new ActionListener() {
 //                @Override
@@ -285,18 +265,15 @@ public class ItemDetailUI extends DetailPanel<Item> {
 //
 //                }
 //            });
-
-
-
-        setTabOrder();
+            setTabOrder();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    
-    public void setTabOrder(){
+
+    public void setTabOrder() {
         addToFocus(tItemcode);
         addToFocus(tItemDescription);
         addToFocus(tItemCategory);
@@ -311,7 +288,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
 
     }
 
-    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // - barcode -
@@ -322,7 +298,7 @@ public class ItemDetailUI extends DetailPanel<Item> {
         for (UOM um : selectedObject.getUoms()) {
             String u = um.getGuom() != null ? um.getGuom().getCode() : null;
             TableUtil.addrow(tblunitprices, new Object[]{um.getId(), um.getType(), um.getCode(), um.getSalesPrice(),
-                        um.getMulti(), u});
+                um.getMulti(), u});
         }
         TableUtil.addnewrow(tblunitprices);
 
@@ -832,10 +808,9 @@ public class ItemDetailUI extends DetailPanel<Item> {
     }// </editor-fold>//GEN-END:initComponents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  
     //***************persistence logic*************************//
     @Override
-    public void preSave(ArrayList toSave,ArrayList toUpdate,ArrayList toDelete) {
+    public void preSave(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
     }
 
     @Override
@@ -860,14 +835,14 @@ public class ItemDetailUI extends DetailPanel<Item> {
             tItemcode.requestFocus();
             return false;
         }
-        boolean isuomvalid=cleanUOMs();
-        if(!isuomvalid){
-        return isuomvalid;
+        boolean isuomvalid = cleanUOMs();
+        if (!isuomvalid) {
+            return isuomvalid;
         }
-        
-        Item item=itemService.getByCode(tItemcode.getText());
-        if(selectedObject==null && item!=null){
-        MessageBoxes.infomsg(null, "Item already exist by this code", "Item already exist!");
+
+        Item item = itemService.getByCode(tItemcode.getText());
+        if (selectedObject == null && item != null) {
+            MessageBoxes.infomsg(null, "Item already exist by this code", "Item already exist!");
             return false;
         }
         return super.isValideEntity();
@@ -924,8 +899,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
         tblunitprices.setModelCollectionToTableNew(item.getUoms());
     }
 
-    
-
     private void clearUOM() {
         tunitprice.clear();
         tunitsymbot.clear();
@@ -943,28 +916,28 @@ public class ItemDetailUI extends DetailPanel<Item> {
             focusManager.setTemCom(tunitsymbot);
             return false;
         }
-        boolean isPrim=false;
-        boolean isCar=false;
+        boolean isPrim = false;
+        boolean isCar = false;
         for (Iterator<UOM> it = uoms.iterator(); it.hasNext();) {
             UOM uom = it.next();
             if (!isValidUOM(uom)) {
                 it.remove();
             }
-            if(uom.isPrimary()){
-            isPrim=true;
+            if (uom.isPrimary()) {
+                isPrim = true;
             }
-            if(uom.isCarton()){
-            isCar=true;
+            if (uom.isCarton()) {
+                isCar = true;
             }
-                       
+
         }
-        
-        if(!(isPrim && isCar)){
+
+        if (!(isPrim && isCar)) {
             MessageBoxes.wrnmsg(ItemDetailUI.this, MSResources._10001, MSResources._1000);
             focusManager.setTemCom(tunitsymbot);
             return false;
         }
-        
+
         return true;
     }
 
@@ -1015,7 +988,7 @@ public class ItemDetailUI extends DetailPanel<Item> {
         TableUtil.cleardata(tblPriceRanges);
         TableUtil.cleardata(tblBarcode);
         tblunitprices.clear();
-        
+
         clearUOM();
 
         titemmark.setText("");
@@ -1032,37 +1005,37 @@ public class ItemDetailUI extends DetailPanel<Item> {
 
     @Override
     public Item uiToData() {
-        
-        Item item= null;
-        if(selectedObject == null){
-                item=new Item();
-        }else{
-            item =selectedObject;
+
+        Item item = null;
+        if (selectedObject == null) {
+            item = new Item();
+        } else {
+            item = selectedObject;
         }
-        
-      //selectedObject;
+
+        //selectedObject;
 //        item.setId(EntityService.getEntityService().getKey(""));
         item.setCode(UIEty.tcToStr(tItemcode));
         item.setDescription(UIEty.tcToStr(tItemDescription));
-        item.setCategory(tItemCategory.getSelectedObject());     
-        item.setSupplierId(UIEty.cmbtostr(tSupplierItem));    
+        item.setCategory(tItemCategory.getSelectedObject());
+        item.setSupplierId(UIEty.cmbtostr(tSupplierItem));
         item.setCost(UIEty.tcToDouble(tItemCostPrice));
-        item.setLandCost(UIEty.tcToDouble(tItemLandingCost)); 
-        item.setMinSalesPrice(UIEty.tcToDouble(tItemMinimumPrice)); 
+        item.setLandCost(UIEty.tcToDouble(tItemLandingCost));
+        item.setMinSalesPrice(UIEty.tcToDouble(tItemMinimumPrice));
         item.setDiscount(UIEty.tcToDouble(tItemdiscount));
         item.setDiscountValue(UIEty.tcToDouble(tItemdiscValue));
         item.setCommission(UIEty.tcToDouble(tItemCommission));
         item.setCommissionValue(UIEty.tcToDouble(tItemCommissionValue));
-        item.setLocation(UIEty.cmbtostr(tItemLocation));   
+        item.setLocation(UIEty.cmbtostr(tItemLocation));
         item.setMinStock(UIEty.tcToDouble(tItemMinimumStock));
-        item.setReOrder(UIEty.tcToDouble(tItemReOrder)); 
-        item.setTrackSerial(tItemTrakSerial.isSelected());   
-        item.setTrackExpiry(tItemTrakExpiry.isSelected());   
-        item.setNonStockItems(tItemTrakNonStockItem.isSelected()); 
-        item.setManufactItem(tItemTrakManfctringItem.isSelected());       
-        item.setInactive(tItemTrakInactive.isSelected());      
+        item.setReOrder(UIEty.tcToDouble(tItemReOrder));
+        item.setTrackSerial(tItemTrakSerial.isSelected());
+        item.setTrackExpiry(tItemTrakExpiry.isSelected());
+        item.setNonStockItems(tItemTrakNonStockItem.isSelected());
+        item.setManufactItem(tItemTrakManfctringItem.isSelected());
+        item.setInactive(tItemTrakInactive.isSelected());
         item.setWholesalePrice(UIEty.tcToDouble(tWholesalePrice));
-        item.setMetaInfo(tMetaInfo.getText());  
+        item.setMetaInfo(tMetaInfo.getText());
 //        item.setExtrasalespriceCollection(ui2ExtraSalesPrice(tblPriceRanges, item.getId()));
         item.setModel(UIEty.tcToStr(tmodel));
         item.setType(UIEty.tcToStr(ttype));
@@ -1119,12 +1092,12 @@ public class ItemDetailUI extends DetailPanel<Item> {
     }
     Command commandGUI = new Command() {
         @Override
-        public Object doBackgroundTask(Object ...objs) {
+        public Object doBackgroundTask(Object... objs) {
             return loadComboData();
         }
 
         @Override
-        public void doResultTask(Object ...objs) {
+        public void doResultTask(Object... objs) {
             Object[] obs = (Object[]) objs;
             //set values to combos
         }
@@ -1181,7 +1154,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
 
                 //panel.setPreferredSize(new Dimension(300, 200));
                 //ii2.setVisible(true);
-
 //      System.out.println("canonical o]path "+image.getCanonicalPath());
 //      System.out.println("absolute o]path "+image.getAbsolutePath());
                 //     panel.add(new JLabel(new ImageIcon(image.getAbsolutePath())));                             
@@ -1191,11 +1163,8 @@ public class ItemDetailUI extends DetailPanel<Item> {
                 //ImagePanel ii=new ImagePanel(new ImageIcon("C:/Documents and Settings/Administrator/Desktop/mazari.jpg").getImage(),1);
 //   ii.setPreferredSize(new Dimension(200,150));
 //   ii.setVisible(true);
-
                 //jScrollPane3.add(new JLabel(new ImageIcon("C:/Documents and Settings/Administrator/Desktop/mazari.jpg")));                   
 // jScrollPane3.add(panel);                   
-
-
                 final JLabel jl = new JLabel();
 
                 jl.addMouseListener(new MouseAdapter() {
@@ -1215,7 +1184,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
                 });
 
                 cPanel4.add(jl);
-
 
                 cPanel4.add(imagesloadresize(image.getAbsolutePath(), jl));
 
@@ -1249,9 +1217,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
 //        SKU  sku = new SKU();
 //        sku.setIdentifier(tskucode.getText());
 //        sku.setExplainningSearchString(tskuexplaning.getText());
-        
-        
-    
         try {
             StaffDAO g = new StaffDAO();
 
@@ -1260,27 +1225,25 @@ public class ItemDetailUI extends DetailPanel<Item> {
             ArrayList list = new ArrayList();
             for (Staff sta : lst) {
                 list.add(ReflectionUtility.getDynamicValue(sta, "code"));
-                list.add( ReflectionUtility.getDynamicValue(sta, "id") );
+                list.add(ReflectionUtility.getDynamicValue(sta, "id"));
 
 //                list.add(sta.getCode());
 //                list.add(sta.getId());
-                
 //                System.out.println("printing staff " + ReflectionUtility.getDynamicValue(sta, "code"));
             }
 
             System.out.println(System.currentTimeMillis() - start);
-            System.out.println("size "+ list.size());
+            System.out.println("size " + list.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_tadd1ActionPerformed
 
     private void taddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taddActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_taddActionPerformed
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.components.controls.CButton cButton1;
     private org.components.controls.CButton cButton2;
@@ -1374,7 +1337,7 @@ public class ItemDetailUI extends DetailPanel<Item> {
     private org.components.controls.CComboBox tunittype;
     // End of variables declaration//GEN-END:variables
 
-     public Item uiToEty(Item i) throws Exception {
+    public Item uiToEty(Item i) throws Exception {
         try {
 
             i.setCode(UIEty.tcToStr(tItemcode));
@@ -1410,13 +1373,12 @@ public class ItemDetailUI extends DetailPanel<Item> {
         return i;
     }
 /////////////////////////////////////////////
+
     public Supplier getSupplier(String typedName) throws Exception {
         Supplier s = null;
         try {
 
             s = new SupplierDAO().findSupplierByCode(typedName);
-
-
 
         } catch (Exception e) {
 
@@ -1487,7 +1449,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
         List<UOM> uoms = selectedObject.getUoms();
 
 //        if(){}
-
         UOM pu = null;//comply with the preference  ...
 //                            pu.setSimbol(tprimunit.getText());
 //                            uom.setGuom(pu);
@@ -1630,7 +1591,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
                         cPanel4.add(imagesloadresize(image.getAbsolutePath(), jl));
                         cPanel4.revalidate();
 
-
                     }
 
                 }
@@ -1661,7 +1621,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
             p.show(this, Toolkit.getDefaultToolkit().getScreenSize().width / 2, 0);
             p.setVisible(true);
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1674,8 +1633,8 @@ public class ItemDetailUI extends DetailPanel<Item> {
         } else {
             int w = icon.getIconWidth();
             int h = icon.getIconHeight();
-            GraphicsEnvironment ge =
-                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsEnvironment ge
+                    = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice gd = ge.getDefaultScreenDevice();
             GraphicsConfiguration gc = gd.getDefaultConfiguration();
             //      BufferedImage image = gc.createCompatibleImage(w, h);
@@ -1781,7 +1740,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
             for (Iterator<ItemVariation> it = lstOfVariation.iterator(); it.hasNext();) {
                 ItemVariation i = it.next();
 
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1791,7 +1749,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
     /////////////////////////////////////////////////////////////////////////////////////////////////
     public void extraSalesPrice2Ui(List<ExtraSalesPrice> lstOfExtraPrice) {
 
-
         try {
 
             if (lstOfExtraPrice == null) {
@@ -1799,7 +1756,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
             }
             for (Iterator<ExtraSalesPrice> it = lstOfExtraPrice.iterator(); it.hasNext();) {
                 ExtraSalesPrice i = it.next();
-
 
             }
         } catch (Exception e) {
@@ -1810,7 +1766,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
 
     public void barcode2Ui(List<ItemBarcode> lstOfBarcode) {
 
-
         try {
             if (lstOfBarcode == null) {
                 return;
@@ -1818,7 +1773,6 @@ public class ItemDetailUI extends DetailPanel<Item> {
 
             for (Iterator<ItemBarcode> it = lstOfBarcode.iterator(); it.hasNext();) {
                 ItemBarcode i = it.next();
-
 
             }
         } catch (Exception e) {

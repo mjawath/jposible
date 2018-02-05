@@ -18,7 +18,7 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
 
     SupplierService supplierService;
 
-    public SupplerDetailUI() {        
+    public SupplerDetailUI() {
 
     }
 
@@ -35,7 +35,6 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
 
             //list of array retuns String array  
             //object is String array....
-
             Set<String> types = new TreeSet<String>();
             Set<String> titles = new TreeSet<String>();
 
@@ -57,11 +56,8 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
     }
 ///////////////////////////////////////////////////
 
-    public Supplier uiToEntity(Supplier s){
+    public Supplier uiToEntity(Supplier s) {
         try {
-
-
-
 
         } catch (Exception x) {
 
@@ -121,11 +117,6 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
         s.setEmail(UIEty.tcToStr(tSuppEmail));
         return s;
     }
-    
-
-    
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -349,7 +340,6 @@ public class SupplerDetailUI extends DetailPanel<Supplier> {
             if (exist == null) {
 
                 supplierService.getDao().save(s);
-
 
             } else {
 

@@ -8,6 +8,7 @@ package org.biz.invoicesystem.service.transactions;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.biz.MS_Static;
 import org.biz.app.ui.util.BizException;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
@@ -17,7 +18,8 @@ import org.biz.erp.ui.transactions.posted.PostedInvoicesListUI;
 import org.biz.invoicesystem.dao.transactions.SalesInvoiceDAO;
 import org.biz.invoicesystem.entity.inventory.InventoryJournal;
 import org.biz.invoicesystem.entity.inventory.InventoryJournalLine;
-import org.biz.invoicesystem.entity.master.UOM;
+import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.invoicesystem.entity.master.Warehouse;
 import org.biz.invoicesystem.entity.transactions.SalesInvoice;
 import org.biz.invoicesystem.entity.transactions.SalesInvoiceLineItem;
 import org.biz.invoicesystem.service.master.ItemService;
@@ -131,19 +133,33 @@ public class SalesInvoiceService extends Service<SalesInvoice>{
     }
     
 
-        @Override
+    @Override
     protected SalesInvoice saveData(SalesInvoice busObject,List thingsToCreate,
-            List thingsToUpdate,List thingsToDelete) {
+        List thingsToUpdate,List thingsToDelete) {
         System.out.println("sales invoice level preCreate");
         final EntityManager em = startTransaction();
         
         busObject.calculateTotal();
+        if(busObject.getShop()== null){
+            Shop defaultShop = MS_Static.getDefaultShop();
+            busObject.setShop(defaultShop);
+        } 
+        if(busObject.getWarehouse()== null){
+            Warehouse defaultShop = MS_Static.getDefaultWareHouse();
+            busObject.setWarehouse(defaultShop);
+        }
+        if(busObject.getWarehouse()== null){
+            Warehouse defaultShop = MS_Static.getDefaultWareHouse();
+            busObject.setWarehouse(defaultShop);
+        }
         persist(em, busObject);
         
         InventoryJournal ij = new InventoryJournal();
         ij.setRefEntityID(busObject.getId());
         ij.setCode(busObject.getCode());
         ij.setDocRefNo(busObject.getDocRefNo());
+        ij.setShop(busObject.getShop());
+        ij.setWarehouse(busObject.getWarehouse());
         ij.setDocumentClass(busObject.getClass().getSimpleName());
         for (SalesInvoiceLineItem lineItem : busObject.getLineItems()) {
             InventoryJournalLine line = new InventoryJournalLine();
@@ -174,6 +190,15 @@ public class SalesInvoiceService extends Service<SalesInvoice>{
         ij.setDocRefNo(busObject.getDocRefNo());
         ij.setDocumentClass(busObject.getClass().getSimpleName());
         ij.setLines(null);
+        if (busObject.getShop() == null) {
+            Shop defaultShop = MS_Static.getDefaultShop();
+            busObject.setShop(defaultShop);
+        }
+        if (busObject.getWarehouse() == null) {
+            Warehouse defaultShop = MS_Static.getDefaultWareHouse();
+            busObject.setWarehouse(defaultShop);
+        }
+        
         for (SalesInvoiceLineItem lineItem : busObject.getLineItems()) {
             InventoryJournalLine line = new InventoryJournalLine();
             line.setSku(lineItem.getSku());

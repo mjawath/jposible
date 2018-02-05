@@ -18,7 +18,7 @@ import org.components.parent.controls.editors.TableInteractionListner;
 public class TableContainer extends CPanel {
 
     private TableRowDetail tableLineDetail;
-    
+
     /**
      * Creates new form TableContainer
      */
@@ -184,15 +184,14 @@ public class TableContainer extends CPanel {
         acceptLineChanges();
     }//GEN-LAST:event_btnAcceptActionPerformed
 
-    
-    public void acceptLineChanges(){
+    public void acceptLineChanges() {
         Object obj = tableLineDetail.panelToData();
-        if(tableLineDetail.isValidToAccept()){
-        updateSelectedRow(obj);
-        tableLineDetail.onAcceptLineItem(obj);
+        if (tableLineDetail.isValidToAccept()) {
+            updateSelectedRow(obj);
+            tableLineDetail.onAcceptLineItem(obj);
         }
     }
-    
+
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         addNewLineGotoNewLine();
     }//GEN-LAST:event_btnNewActionPerformed
@@ -200,23 +199,19 @@ public class TableContainer extends CPanel {
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
 
         removeSelected();
-        
+
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnClearLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearLineActionPerformed
 
-       
-        tableLineDetail.clearLineUI();        
-        
+        tableLineDetail.clearLineUI();
+
     }//GEN-LAST:event_btnClearLineActionPerformed
 
     private void btnClearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllActionPerformed
-        clearUI();        
+        clearUI();
     }//GEN-LAST:event_btnClearAllActionPerformed
 
-    
-    
-    
     public void removeSelected() {
         Object sel = tbl.getSelectedObject();
         if (sel != null) {
@@ -227,32 +222,32 @@ public class TableContainer extends CPanel {
             }
         }
     }
-    
+
     public void updateSelectedRow(Object obj) {
         int row = tbl.getSelectedRow();
-        if(row>-1){            
+        if (row > -1) {
             tbl.updateSelectedRow(obj);
-        }else{
+        } else {
             addNewItem(obj);
         }
-        if(tbl.getSelectedRow() == tbl.getRowCount()-1){
+        if (tbl.getSelectedRow() == tbl.getRowCount() - 1) {
             addNewLineGotoNewLine();
         }
-                
-        
+
     }
-    public void setCollection(List list){
-        
+
+    public void setCollection(List list) {
+
         tbl.setModelCollection(list);
-    
+
     }
-    
-    public void clearUI(){
+
+    public void clearUI() {
         tableLineDetail.clearLineUI();
         tbl.clearUI();
         tableLineDetail.clearAll();
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccept;
     private javax.swing.JButton btnClearAll;
@@ -267,10 +262,10 @@ public class TableContainer extends CPanel {
     private org.components.controls.CTableMaster tbl;
     // End of variables declaration//GEN-END:variables
 
-    public  void addNewItem(Object line) {
+    public void addNewItem(Object line) {
         tbl.addNewItemToLast(line);
     }
-    
+
     public void removeItem(Object line) {
 
     }
@@ -283,33 +278,30 @@ public class TableContainer extends CPanel {
 //        } else {
 //            return gld;
 //        }
-        
+
         return null;
     }
 
     public void addNewLineGotoNewLine() {
         tbl.addNewItemToLast();
-        
+
     }
-    public void initTable(Class classObj,List<PTableColumn > tblCols){
+
+    public void initTable(Class classObj, List<PTableColumn> tblCols) {
         tbl.init(classObj, tblCols);
     }
 
-   
-    
-  
     public void setTableListener(TableInteractionListner tableInteractionListner) {
         tbl.setTableInteractionListner(tableInteractionListner);
     }
 
     public List getlistBusObject() {
         return tbl.getCollection();
-        
+
     }
 
     public void setTableLineDetail(TableRowDetail tableLineDetail) {
         this.tableLineDetail = tableLineDetail;
     }
-    
-    
+
 }

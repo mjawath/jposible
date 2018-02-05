@@ -211,9 +211,11 @@ public class Service<T extends BusObj> {
 //                getDao().saveUpdateDelete(toSave, toUpdate, toDelete);
 
         if (thingsToCreate == null) {
-            thingsToCreate = new ArrayList();
-            thingsToCreate.add(busObject);
+            thingsToCreate = new ArrayList();            
         }
+   
+        thingsToCreate.add(0, busObject);
+        
         T saved = (T) (getDao().saveUpdateDelete(thingsToCreate, thingsToUpdate, thingsToDelete)).get(0);
 //                auditPersistenceData(busObject);
 //                System.out.println("saved " + (System.currentTimeMillis() - x));  

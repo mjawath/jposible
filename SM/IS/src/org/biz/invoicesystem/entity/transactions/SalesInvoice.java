@@ -10,11 +10,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import org.biz.app.ui.util.Tracer;
 import org.biz.entity.BusObj;
@@ -22,6 +20,7 @@ import org.biz.invoicesystem.entity.master.Customer;
 import org.biz.invoicesystem.entity.master.Shop;
 import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Warehouse;
+import org.biz.invoicesystem.entity.master.WorkStation;
 import org.util.MathUtil;
 
 /**
@@ -59,7 +58,10 @@ public class SalesInvoice extends BusObj {
     private Double texAmount;
     private Double cashRecieveds;
     private Byte status;
-
+        
+    @ManyToOne
+    private WorkStation workStation;
+    
     public SalesInvoice() {
         setLineItems(new ArrayList<SalesInvoiceLineItem>());   
     }
@@ -333,4 +335,14 @@ public class SalesInvoice extends BusObj {
         return discount;
 
     }
+    
+         
+    public WorkStation getWorkStation() {
+        return workStation;
+    }
+
+    public void setWorkStation(WorkStation workStation) {
+        this.workStation = workStation;
+    }
+     
 }

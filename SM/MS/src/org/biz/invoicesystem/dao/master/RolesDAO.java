@@ -1,4 +1,3 @@
- 
 package org.biz.invoicesystem.dao.master;
 
 import java.util.ArrayList;

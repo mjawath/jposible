@@ -16,14 +16,13 @@ import org.dao.util.JPAUtil;
  */
 public class ItemDAO extends GenericDAO<Item> {
 
-    public static  String findItemListByCode="findItemListByCode";
-    
+    public static String findItemListByCode = "findItemListByCode";
+
     public ItemDAO() {
         setCls(Item.class);
-        orderby ="c.editedDate  desc , c.savedDate  desc ";
+        orderby = "c.editedDate  desc , c.savedDate  desc ";
     }
 
-    
     public List<Item> findItemListByCode(String itemcode) {
         String qry = "  c.code like '" + itemcode + "%' ";
         List<Item> lst = pagedData(qry, 0);
@@ -35,13 +34,13 @@ public class ItemDAO extends GenericDAO<Item> {
     public Item findItemByCode(String itemcode) {
         Item i = null;
 //        try { 
-        String qry=" Where c.code='" + itemcode + "'";
+        String qry = " Where c.code='" + itemcode + "'";
         Item lst = ExecuteQuerySR(qry);
 //   //EntityManager em=createEmNew();
 //  
 //    //        em.getTransaction().begin();
 // List<Item> lst=em.createQuery("select i from item Where i.code=?1").setParameter(1,itemcode).getResultList();
-        
+
 // 
 // em.getTransaction().commit();            
 //em.close();
@@ -72,7 +71,6 @@ public class ItemDAO extends GenericDAO<Item> {
             e.printStackTrace();
         } finally {
         }
-
 
     }
 
@@ -111,9 +109,7 @@ public class ItemDAO extends GenericDAO<Item> {
 
             Query query = JPAUtil.getEntityManager().createQuery("SELECT COUNT(i) from Item i");
 
-
             return ((Long) query.getSingleResult()).intValue();
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,15 +142,13 @@ public class ItemDAO extends GenericDAO<Item> {
 
         return lst;
     }
-    
-     //////////////////////////////////////////////////////
 
+    //////////////////////////////////////////////////////
     public void createTestData() {
         System.out.println("persist working.....");
 
         for (int x = 0; x < 150; x++) {
             Item ii = new Item();
-
 
             ii.setCode("" + x);
             ii.setCommission(1000d);
@@ -175,13 +169,13 @@ public class ItemDAO extends GenericDAO<Item> {
         System.out.println("saved....");
 //      
     }
-    
-    public  List getByCodeOrDescriptionLike(String code){
-    
-        String qry ="select DISTINCT c from Item  c where   c.code like '" + code + "%'  or  c.code  like '%" + code + "%' or c.description  like '%"+code+"%'";
+
+    public List getByCodeOrDescriptionLike(String code) {
+
+        String qry = "select DISTINCT c from Item  c where   c.code like '" + code + "%'  or  c.code  like '%" + code + "%' or c.description  like '%" + code + "%'";
         return ExecuteQuery(qry);
     }
-    
+
     public static void main(String[] args) {
 
         ItemDAO i = new ItemDAO();
@@ -191,7 +185,7 @@ public class ItemDAO extends GenericDAO<Item> {
         System.out.println("l size s " + ls.size());
 //   //     i.deleteItemByid("1000");
 //////    
-        
+
         System.out.println("saved....");
 //      List<Item> lst=i.getIndexItems(0,500);
 //      List<Item> lst1=i.getIndexItems(501, 1000);

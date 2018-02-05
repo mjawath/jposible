@@ -19,6 +19,7 @@ import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Supplier;
 import org.biz.invoicesystem.entity.master.UOM;
 import org.biz.invoicesystem.entity.master.Warehouse;
+import org.biz.invoicesystem.entity.master.WorkStation;
 import org.dao.util.JPAUtil;
 import org.util.MathUtil;
 
@@ -49,7 +50,7 @@ public class dbCreation {
       
         dbCreation db = new dbCreation();
         db.createDataBase();
-        db.createmster();
+        db.createmaster();
     }
 
     public void createDataBase() {
@@ -58,9 +59,12 @@ public class dbCreation {
 
     }
 
-    public void createmster() {
+    public void createmaster() {
         System.out.println("Creating master data");
-
+        WorkStation station = new WorkStation();
+        station.setId("123");
+        station.setCode("123");
+        new GenericDAO<WorkStation>().save(station);
         createShops();
         createWarehouses();
         createCategory();
@@ -75,6 +79,7 @@ public class dbCreation {
         Date date = new Date();
         Shop shz = new Shop();
         shz.setId("123");
+        shz.setCode("123");
         lsts.add(shz);
 
         for (int i = 0; i < 10; i++) {
@@ -162,6 +167,7 @@ public class dbCreation {
         Date date = new Date();
         Warehouse shz = new Warehouse();
         shz.setId("123");
+        shz.setCode("123");
         lstw.add(shz);
         System.out.println("warehouse .......... ");
 
@@ -173,13 +179,20 @@ public class dbCreation {
         List lstx = new ArrayList();
         for (int i = 0; i < 1500; i++) {
             Customer cus = new Customer();
-//            cus.setId(EntityService.getKeyStr());
+            cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
             cus.setCustomerName(EntityService.getKeyStr());
             cus.setSavedDate(new Date(System.currentTimeMillis() + i));
             cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lstx.add(cus);
         }
+        Customer sh = new Customer();
+        sh.setId("123");
+        sh.setCode("123");
+        sh.setSavedDate(new Date(System.currentTimeMillis() + 5000));
+        sh.setEditedDate(new Date(System.currentTimeMillis() + 5000));
+        lstx.add(sh);
+            
         new GenericDAO<Customer>().saveList(lstx);
         System.out.println("Created Customer List");
 
@@ -190,13 +203,20 @@ public class dbCreation {
         List lst2 = new ArrayList();
         for (int i = 0; i < 1500; i++) {
             Staff cus = new Staff();
-//            cus.setId(EntityService.getKeyStr());
+            cus.setId(EntityService.getKeyStr());
             cus.setCode(EntityService.getKeyStr());
             cus.setName(EntityService.getKeyStr());
             cus.setSavedDate(new Date(System.currentTimeMillis() + i));
             cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lst2.add(cus);
         }
+        
+        Staff sh = new Staff();
+        sh.setId("123");
+        sh.setCode("123");
+        sh.setSavedDate(new Date(System.currentTimeMillis() + 5000));
+        sh.setEditedDate(new Date(System.currentTimeMillis() + 5000));
+        lst2.add(sh);
         new GenericDAO<Staff>().saveList(lst2);
 
     }
@@ -212,6 +232,13 @@ public class dbCreation {
             cus.setEditedDate(new Date(System.currentTimeMillis() + i));
             lst.add(cus);
         }
+        Supplier sh = new Supplier();
+        sh.setId("123");
+        sh.setCode("123");
+        sh.setSavedDate(new Date(System.currentTimeMillis() + 5000));
+        sh.setEditedDate(new Date(System.currentTimeMillis() + 5000));
+        lst.add(sh);
+        
         new GenericDAO<Supplier>().saveList(lst);
 
         System.out.println("Created supplier List");
@@ -223,11 +250,17 @@ public class dbCreation {
 //        gd.deleteAll(Category.class);
         System.out.println("ready for category");
         List lsts = new ArrayList();
-
+        Category sh = new Category();
+        sh.setId("123");
+        sh.setCode("123");
+        sh.setSavedDate(new Date(System.currentTimeMillis() + 5000));
+        sh.setEditedDate(new Date(System.currentTimeMillis() + 5000));
+//        lsts.add(sh);
+            
         for (int i = 0; i < 1500; i++) {
 
             Category shx = new Category();
-//            shx.setId(EntityService.getKeyStr());
+            shx.setId(EntityService.getKeyStr());
             shx.setCode(EntityService.getKeyStr());
             shx.setSavedDate(new Date(System.currentTimeMillis() + i));
             shx.setEditedDate(new Date(System.currentTimeMillis() + i));

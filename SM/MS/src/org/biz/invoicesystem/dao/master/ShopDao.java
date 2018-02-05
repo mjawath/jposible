@@ -15,7 +15,6 @@ import org.biz.invoicesystem.entity.master.Shop;
 public class ShopDao extends GenericDAO<Shop> {
 
 //    List shops;
-    
     public ShopDao() {
         setCls(Shop.class);
 //        shops = new ArrayList();
@@ -24,7 +23,7 @@ public class ShopDao extends GenericDAO<Shop> {
     public List getItemByCode(String qry) {
         String qryx = " c.code like  '" + qry + "%'";
         return pagedData(qryx, 0);
-        
+
     }
 
     public void setList(List shops) {

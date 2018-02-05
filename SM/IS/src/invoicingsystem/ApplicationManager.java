@@ -28,8 +28,9 @@ import org.biz.dao.service.GenericDAO;
 import org.biz.dao.service.Service;
 import org.biz.erp.inventory.ui.detail.InventoryJournalController;
 import org.biz.invoicesystem.entity.master.Shop;
+import org.biz.invoicesystem.entity.master.Staff;
 import org.biz.invoicesystem.entity.master.Warehouse;
-import org.biz.invoicesystem.master.ui.WareHouseController;
+import org.biz.invoicesystem.entity.master.WorkStation;
 import org.biz.invoicesystem.ui.list.master.ItemMasterFrame;
 import org.biz.invoicesystem.master.ui.WareHouseFrame;
 import org.biz.util.ReflectionUtility;
@@ -93,6 +94,14 @@ public class ApplicationManager {
                 Shop s =(Shop) gd.find(MS_Static.getDefaultShopCode());
                 MS_Static.setDefaultShop(s);
                 
+                gd.setCls(WorkStation.class);
+                WorkStation wo = (WorkStation) gd.find(MS_Static.getDefaultWareHouseCode());
+                MS_Static.setDefaultWorkStation(wo);
+                
+                Staff staff = new Staff();
+                staff.setId("123");
+                staff.setCode("123");
+                MS_Static.setLoggedInStaff(staff);
                 
 //                setFocusTraversialPolicy();
                 System.out.println("============Application is starting..........===================");
