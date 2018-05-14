@@ -38,26 +38,26 @@ public class SalesInvoiceControler extends UIController<SalesInvoice> {
         setUIFrame(sales);
     }
 
-    public List executeQuery(int page) {
+//    public List executeQuery(int page) {
+//
+//        String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
+//        if (StringUtility.isEmptyString(txt)) {
+//            return getService().getDao().getAll(page);
+//        }
+//        final List byCodeLike = getService().getByCodeLike(page, txt);
+//        return byCodeLike;
+//    }
 
-        String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
-        if (StringUtility.isEmptyString(txt)) {
-            return getService().getDao().getAll(page);
-        }
-        final List byCodeLike = getService().getByCodeLike(page, txt);
-        return byCodeLike;
-    }
-
-    public Long executeCount() {
-        SalesSearchUI ssui = (SalesSearchUI) listView.getSearchUI();
-        Map<String, Object> queryParameterMap = ssui.getQueryParameterMap();
-
-        String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
-        if (StringUtility.isEmptyString(txt)) {
-            return (Long) getService().getDao().getAllCount();
-        }
-        return getService().getCountByCodeLike(txt);
-    }
+//    public Long executeCount() {
+//        SalesSearchUI ssui = (SalesSearchUI) listView.getSearchUI();
+//        Map<String, Object> queryParameterMap = ssui.getQueryParameterMap();
+//
+//        String txt = String.valueOf(listView.getSearchUI().getQueryParameterMap().get(SearchQueryUIPanel.QRY));
+//        if (StringUtility.isEmptyString(txt)) {
+//            return (Long) getService().getDao().getAllCount();
+//        }
+//        return getService().getCountByCodeLike(txt);
+//    }
 
     public void showDetailView(Object newRowObject) {
         SalesInvoice si = (SalesInvoice) newRowObject;

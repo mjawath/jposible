@@ -8,14 +8,12 @@ package org.components.windows;
 import com.components.custom.TextFieldWithPopUP;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.biz.app.ui.util.MessageBoxes;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.StringUtility;
 import org.biz.app.ui.util.Tracer;
-import org.biz.dao.service.GenericDAOUtil;
 import org.biz.dao.service.Service;
 import org.biz.entity.BusObj;
 
@@ -268,43 +266,10 @@ public class UIController<T extends BusObj> {
 
     }
 
-    private void auditPersistenceData(ArrayList<BusObj> objs) {
-
-        Date cDate = GenericDAOUtil.currentTime();
-
-        for (BusObj bus : objs) {
-//            bus.setId( EntityService.getKey(""));      
-            bus.setSavedDate(cDate);
-            bus.setEditedDate(cDate);
-            bus.setDepententEntitiesIDs();
-
-        }
-    }
-
-    private void auditUpdatedData(ArrayList<BusObj> objs, Date startDate) {
-
-        Date mDate = GenericDAOUtil.currentTime();
-        for (BusObj bus : objs) {
-            bus.setSavedDate(startDate);
-            bus.setEditedDate(mDate);
-            bus.setDepententEntitiesIDs();
-        }
-    }
-
     public void preSave(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
 
     }
 
-    private void postCreate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-
-    }
-
-    private void preUpdate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-
-    }
-
-    private void postUpdate(ArrayList toSave, ArrayList toUpdate, ArrayList toDelete) {
-    }
 
     public void delete(Object selectedObject) {
         if (service == null) {

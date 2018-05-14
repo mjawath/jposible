@@ -3,8 +3,10 @@ package org.biz.invoicesystem.service.master;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Vector;
+import org.biz.app.ui.util.StringUtility;
 import org.biz.dao.service.Service;
 import org.biz.invoicesystem.dao.master.ItemDAO;
 import org.biz.invoicesystem.entity.master.Item;
@@ -29,29 +31,19 @@ public class ItemService extends Service<Item>{
     public Service categoryServise() {
         return new CategoryService();//get the service from cache
     }
-    
-    
-    public static List getItemForPopup(String qry){
-        Set lst=new HashSet();
-        ArrayList list =new ArrayList();
-        Object ob=dao.getByCode(qry);
-        if(ob!=null && !((Vector)ob).isEmpty()){
-           lst.add(ob);
-           list.add(lst);
-          return list; 
-        }
-        final List<Item> byCodeLike = dao.getByCodeLike(qry);
-        if(!byCodeLike.isEmpty()){
-                lst.addAll(byCodeLike);        
-        }else{
-                lst.addAll( dao.getByCodeOrDescriptionLike(qry)); 
-        }                
-        list.clear();
-        list.addAll(lst);
-        return list;
-        
-        
+
+    @Override
+    protected boolean isValideEntity(Item busObject) {
+
+        return super.isValideEntity(busObject)
+                && !StringUtility.isEmptyString(busObject.getCode())
+                && !StringUtility.isEmptyString(busObject.getDescription())
+                && !Objects.isNull(busObject.getCategory());
     }
+    
+    
+    
+    
     
 
 

@@ -215,7 +215,7 @@ public class Service<T extends BusObj> {
         }
    
         thingsToCreate.add(0, busObject);
-        
+        isValideEntity(busObject);
         T saved = (T) (getDao().saveUpdateDelete(thingsToCreate, thingsToUpdate, thingsToDelete)).get(0);
 //                auditPersistenceData(busObject);
 //                System.out.println("saved " + (System.currentTimeMillis() - x));  
@@ -236,7 +236,8 @@ public class Service<T extends BusObj> {
         if (thingsToUpdate == null) {
             thingsToUpdate = new ArrayList();
             }
-         thingsToUpdate.add(busObject); 
+        isValideEntity(busObject);
+        thingsToUpdate.add(busObject); 
         getDao().saveUpdateDelete(thingsToCreate, thingsToUpdate, thingsToDelete);
         return busObject;
     }

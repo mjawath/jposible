@@ -6,10 +6,7 @@
 
 package org.biz.invoicesystem.ui.list.master;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.components.windows.SearchQueryUIPanel;
-import static org.components.windows.SearchQueryUIPanel.QRY;
 
 /**
  *
@@ -21,7 +18,7 @@ public class ItemSUI extends  SearchQueryUIPanel {
      * Creates new form ItemSUI
      */
     public ItemSUI() {
-//        super();
+        super();
     }
 
   
@@ -31,16 +28,11 @@ public class ItemSUI extends  SearchQueryUIPanel {
         initComponents();
         super.init();
         
-        
+//       tbtnSearch.setAction();
     }
     
     
-    public Map<String, Object> getQueryParameterMap() {
 
-        Map<String, Object> p = new HashMap<>();
-        p.put(QRY, ttSearch.getText());
-        return p;
-    }
     
     public boolean isOrderByCreationDate(){
         return tchkCreation.isSelected();
@@ -124,8 +116,7 @@ public class ItemSUI extends  SearchQueryUIPanel {
 
     private void tbtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSearchActionPerformed
     
-        ((ItemController)controller).executeSearchForCustom();
-      
+        executeCustomSearch();      
 //      qms.executeToFirstPageTask();
         
     }//GEN-LAST:event_tbtnSearchActionPerformed

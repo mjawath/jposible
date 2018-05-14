@@ -16,7 +16,7 @@ public class GDNDAO extends GenericDAO<GDN>{
 
     
     public GDNDAO() {
-    setCls(GDN.class);
+            setCls(GDN.class);
     }
 
 

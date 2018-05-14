@@ -4,10 +4,7 @@
  */
 package org.components.windows;
 
-import com.components.custom.TextFieldWithPopUP;
-import com.components.custom.TextFieldWithPopUP.ActionTest;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.Component;
 import org.biz.app.ui.util.QueryManager;
 import org.biz.app.ui.util.UIListener;
 import org.biz.dao.service.Service;
@@ -25,8 +22,7 @@ public class SearchQueryUIPanel<T extends BusObj> extends javax.swing.JPanel{
     protected UIController<T> controller;
     protected static final int Listview_searchUIType = 0;
     protected static final int POPUP_searchUIType = 1;
-    private int searchUIType = Listview_searchUIType;
-    private UISQLParameter uisqlp;
+    private int searchUIType = Listview_searchUIType;  
     protected int UIType = POPUP_searchUIType;
     
     public static final String QRY="SEARCH";
@@ -62,18 +58,6 @@ public class SearchQueryUIPanel<T extends BusObj> extends javax.swing.JPanel{
         
     }
 
-    private void initSearchTextField() {
-//        sl =new simpleSearchListener();
-        qms.addUIListener(sl);
-       ActionTest at = new TextFieldWithPopUP.ActionTest(){            
-            public void action() {
-                qms.executeToFirstPageTask();
-            }        
-        };
-        ttxtsearch.setAt(at);        
-
-    }
-
     
      simpleSearchListener sl =new simpleSearchListener();
     
@@ -100,14 +84,6 @@ public class SearchQueryUIPanel<T extends BusObj> extends javax.swing.JPanel{
     
 
 
-    public Map<String, Object> getQueryParameterMap() {
-        if (uisqlp != null) {
-            return uisqlp.getQueryParameterMap();
-        }
-        Map<String, Object> p = new HashMap<>();
-        p.put(QRY, ttxtsearch.getText());
-        return p;
-    }
 
     public void setServiceForQuery(Service service) {
 //    qms=getQueryManager();
@@ -116,26 +92,7 @@ public class SearchQueryUIPanel<T extends BusObj> extends javax.swing.JPanel{
         }
         qms.setService(service);
     }
-
-
-    public void findAction() {
-         //get list view
-        // listview get the pageer
-        //pager e=> execute the find action
-        if (listView == null) {
-            return;
-        }
-        listView.findCommand();
-    }
-
-    public void setUISQLParameter(UISQLParameter sql) {
-        uisqlp = sql;
-    }
-
-    public interface UISQLParameter {
-
-        public Map<String, Object> getQueryParameterMap();
-    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -170,9 +127,9 @@ public class SearchQueryUIPanel<T extends BusObj> extends javax.swing.JPanel{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ttxtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tbtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tbtnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ttxtsearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -207,9 +164,19 @@ public class SearchQueryUIPanel<T extends BusObj> extends javax.swing.JPanel{
       public String getSearchTextFieldValue(){
         return ttxtsearch.getText();
     }
+      
+    public Component getSearchTextField(){
+        return ttxtsearch;
+    }
     
     public String getAttribute() {
         return "code";
+    }
+    
+    
+    protected void executeCustomSearch(){
+        controller.executeSearchForCustom();
+        getSearchTextField().requestFocus();
     }
     
 }

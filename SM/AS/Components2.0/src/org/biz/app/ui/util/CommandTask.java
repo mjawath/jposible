@@ -36,7 +36,9 @@ public class CommandTask extends SwingWorker<Object, Object>{
     @Override
     protected Object doInBackground() throws Exception {
         state = EXECUTION;
-        return command.doBackgroundTask(objs);
+        Object ob =command.doBackgroundTask(objs);
+        
+        return ob;
     }
 
     public Object executeTask() {
@@ -54,7 +56,8 @@ public class CommandTask extends SwingWorker<Object, Object>{
             obj = get();
         } catch (Exception ex) {
             state = EXCEPTION;
-            ex.printStackTrace();//if anything goes wrong an state should be set 
+            command.doResultTask(ex);
+            return;
         }
         state = state == EXCEPTION ? EXCEPTION : SUCCESS;
         command.doResultTask(obj);

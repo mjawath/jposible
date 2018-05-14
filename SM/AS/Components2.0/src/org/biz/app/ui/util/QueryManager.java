@@ -207,7 +207,6 @@ public  class QueryManager {
     private Command command = new Command() {
 
         public Object doBackgroundTask(Object... objs) {
-
        
             Long count = QueryManager.this.executeCountQuery();
             int noOfRowsPerPage = QueryManager.this.getNoOfRowsPerPage();
@@ -233,9 +232,11 @@ public  class QueryManager {
             return rp;
         }
 
-        public void doResultTask(Object... objs) {
+        public void doResultTask(Object... objs) {            
             if (objs == null) {
                 return;
+            }else if(objs[0] instanceof Exception ){
+                throw  new RuntimeException("some error",(Throwable)objs[0]);
             }
             ResultPage resultPage = (ResultPage) objs[0];
             if (resultPage == null) {

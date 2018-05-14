@@ -50,4 +50,5 @@ public class MessageBoxes {
         return JOptionPane.showConfirmDialog(component, msg,
                 title, JOptionPane.YES_NO_OPTION);
     }
+
 }

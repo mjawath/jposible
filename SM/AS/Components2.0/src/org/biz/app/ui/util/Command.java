@@ -25,11 +25,11 @@ public class Command implements ICommand{
     }
 
     public void start() {
-        CommandTask com = new CommandTask(command);
+        CommandTask com = new CommandTask(this);
     }
     
      public void start(Object... params) {
-        CommandTask com = new CommandTask(command,params);
+        CommandTask com = new CommandTask(this,params);
     }
 
     public void setParam(Object object) {

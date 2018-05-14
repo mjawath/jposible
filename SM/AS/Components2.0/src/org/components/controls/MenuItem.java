@@ -5,14 +5,13 @@
  */
 package org.components.controls;
 
-import javax.persistence.Entity;
+
 import org.biz.entity.BusObj;
 
 /**
  *
  * @author jawa
  */
-@Entity
 public class MenuItem extends BusObj {
     
     private String parentMenu;//An object Menu typ will be nice
